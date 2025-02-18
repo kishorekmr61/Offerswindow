@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.ClosureGroup" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <import type="android.view.View"/>
+
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:onClick="@{onItemClick}"
+        android:id="@+id/card_view_customer_list_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingRight="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_16sdp">
+
+
+            <TextView
+                style="@style/Ag_metadata_500"
+                android:textColor="@color/black"
+                android:id="@+id/textView27"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_weight="1"
+                tools:text="title"
+                android:text="@{item.closureGroupName}"
+                app:layout_constraintEnd_toStartOf="@+id/textView28"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView28"
+                style="@style/Ag_metadata"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textColor="@color/color_7C7C7C"
+                app:layout_constraintBottom_toBottomOf="@+id/textView27"
+                app:layout_constraintEnd_toStartOf="@+id/textView29"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/textView27"
+                app:layout_constraintTop_toTopOf="@+id/textView27"
+                tools:text="TextView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView29"
+                style="@style/Ag_metadata"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                setTextviewDate="@{item.time}"
+                android:textColor="@color/color_7C7C7C"
+                app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toTopOf="@+id/textView28"
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView33"
+                style="@style/Ag_metadata"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textColor="@color/color_7C7C7C"
+                app:layout_constraintEnd_toEndOf="@+id/textView28"
+                app:layout_constraintStart_toStartOf="@+id/textView27"
+                app:layout_constraintTop_toBottomOf="@+id/textView27"
+                tools:text="TextView" />
+
+            <TextView
+                style="@style/Ag_metadata"
+                android:textColor="@color/white"
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.count}"
+                android:background="@drawable/backgroundgreen"
+                android:padding="@dimen/_6sdp"
+                android:visibility="@{!item.count.equals(`0`) ?View.VISIBLE : View.GONE}"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintEnd_toEndOf="@+id/textView29"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+            <ImageView
+                android:id="@+id/textView342"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:src="@drawable/tickseen"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/textView29"
+                app:layout_constraintTop_toBottomOf="@+id/textView29"
+                tools:visibility="visible" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

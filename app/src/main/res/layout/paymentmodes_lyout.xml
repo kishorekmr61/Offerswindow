@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_white_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/total_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_9sdp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:contentPadding="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_stockpurchase">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/totalamount_lbl"
+                    style="@style/AG_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|left"
+                    android:text="Total"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/totalamount_txt"
+                    style="@style/AG_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|right"
+                    android:gravity="end|right"
+                     android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Rs 1243" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bmswallet_ti"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:drawableEnd="@drawable/ic_drop_down"
+            android:focusableInTouchMode="true"
+            android:hint="@string/bms_wallet"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary"
+            app:counterTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_bmswallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:drawableStart="@drawable/ic_wallet"
+                android:drawablePadding="@dimen/_8sdp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/color_EFF1F4"
+                app:cornerRadius="@dimen/_2sdp"
+                app:iconTint="@color/primary"
+                tools:text="@string/wallet" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bmscash_ti"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:focusableInTouchMode="true"
+            android:hint="Cash"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary"
+            app:counterTextColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cash_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_cash"
+                android:drawablePadding="@dimen/_8sdp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/color_EFF1F4"
+                app:cornerRadius="@dimen/_2sdp"
+                app:iconTint="@color/primary"
+                tools:text="@string/cash" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bmsonline_ti"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:drawableEnd="@drawable/ic_drop_down"
+            android:focusableInTouchMode="true"
+            android:hint="Online"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary"
+            app:counterTextColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/online_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_online"
+                android:drawablePadding="@dimen/_8sdp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/color_EFF1F4"
+                app:cornerRadius="@dimen/_2sdp"
+                app:iconTint="@color/primary"
+                tools:text="@string/online" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submit_btn"
+            style="@style/AG_regular"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:backgroundTint="@color/primary"
+            app:cornerRadius="@dimen/_25sdp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

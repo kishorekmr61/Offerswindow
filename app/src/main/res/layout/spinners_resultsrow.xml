@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="spinneritem"
+            type="com.customer.bms.model.SpinnerRowModel" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.appcompat.widget.AppCompatCheckedTextView
+            android:id="@+id/tvresult_lbl"
+            android:layout_width="match_parent"
+            style="@style/AG_regular"
+            android:layout_height="wrap_content"
+            android:checkMark="@drawable/spinnerselction_chkbx"
+            android:layout_margin="@dimen/_15sdp"
+            android:checked="@{spinneritem.ischecked}"
+            android:text="@{spinneritem.title}"
+            android:gravity="center"
+            android:onClick="@{onItemClick}"
+            android:textColor="@{spinneritem.ischecked? @color/primary : @color/black}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

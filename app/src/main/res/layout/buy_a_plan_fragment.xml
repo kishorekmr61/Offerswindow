@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onItemClick"
+            type="com.customer.bms.utils.CustomClickListener" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.stock.buyaplan.BuyAPlanViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_8sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            tools:context=".ui.stock.buyindividualproducts.BuyInvidualFragment">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/selectplan_ti"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:focusableInTouchMode="true"
+                android:hint="Select Plan From List"
+                android:paddingBottom="@dimen/_15sdp"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary"
+                app:counterTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_tselectplan"
+                    style="@style/AG_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:drawableEnd="@drawable/ic_drop_down"
+                    android:drawablePadding="@dimen/_12sdp"
+                    android:focusable="false"
+                    android:textColorHint="@color/color_7C7C7C"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Plan1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_buyaplan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EFF1F4"
+                android:padding="@dimen/_4sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/total_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/selectplan_ti"
+                tools:itemCount="9"
+                tools:listitem="@layout/buyaplan_row" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.isloading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/total_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_6sdp"
+                android:visibility="@{viewModel.isvisiblepayment ? View.VISIBLE : View.GONE}"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:contentPadding="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_buyaplan"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/totalamount_lbl"
+                        style="@style/AG_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|left"
+                        android:text="Total Amount"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/totalamount_txt"
+                        style="@style/AG_bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|right"
+                        android:gravity="end|right"
+                        android:text="@{`Rs. ` + viewModel.totalvpcount.toString()}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/paymentdtls_lbl"
+                style="@style/AG_altbold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EFF1F4"
+                android:padding="@dimen/_4sdp"
+                android:text="Payment Details"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/total_card" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_btn"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="@{viewModel.isvisiblepayment ? View.VISIBLE : View.GONE}"
+                app:cornerRadius="@dimen/_25sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_card" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

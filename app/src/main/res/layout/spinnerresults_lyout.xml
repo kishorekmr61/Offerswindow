@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <!--<variable
+            name="addressviewmodel"
+            type="com.tatamotors.oneapp.ui.accounts.address.AddressViewModel" />-->
+
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        android:visibility="visible"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+        <View
+            android:id="@+id/viewPullbar"
+            style="@style/pull_bar"
+            android:layout_gravity="center"
+            android:background="@color/color_CCCCCC" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/locate_edt"
+            style="@style/Ag_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@color/color_EFF1F4"
+            android:drawablePadding="@dimen/_8sdp"
+            android:gravity="center_vertical"
+            android:hint="Search"
+            android:includeFontPadding="false"
+            android:longClickable="false"
+            android:padding="@dimen/_10sdp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textIsSelectable="false"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewPullbar"
+            tools:text="@string/app_name" />
+
+        <View
+            android:id="@+id/startviewdivider"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_8sdp"
+            android:background="@color/color_A7AEB1"  />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="end"
+            android:text="Done"
+            android:visibility="gone"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_14sdp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locate_edt"
+            tools:itemCount="200"
+            tools:listitem="@layout/spinners_resultsrow" />
+
+
+        <include
+            android:id="@+id/calenderlyout"
+            layout="@layout/calender_lyout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/noreults"
+            layout="@layout/no_resultsfoundlyout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_20sdp" />
+
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progressBackgroundTint="@color/primary"
+            android:progressTint="@color/primary"
+            android:visibility="gone" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

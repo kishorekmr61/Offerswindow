@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.closuregroups.ChatData" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_9sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date"
+            style="@style/AG_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="@{item.setChatDate(item.created_Date)}"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12 April 2023" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/backgroundgreen"
+            android:backgroundTint="@color/white"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingRight="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/messageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:text="@{item.Created_By}"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_10ssp"
+                    style="@style/AG_bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="TTTTTTTTTTT"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/rubik"
+                    android:text="@{item.chat_Text}"
+                    android:textColor="@{TextUtils.isEmpty(item.chat_Text) ?  @color/black : item.isValidUrl(item.chat_Text) ? @color/color_2B83ED : @color/black}"
+                    android:textSize="@dimen/_13ssp"
+                    android:onClick="@{onItemClick}"
+                    android:clickable="@{TextUtils.isEmpty(item.chat_Text) ? false : item.isValidUrl(item.chat_Text)}"
+                    android:visibility="@{item.post_Type.equals(`Text`) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_txt"
+                    tools:text="TTTTTTTTsdsddsdsdsdsdsdsdsdsdsdsddssdsddsdsdsdsdsdTTT"
+                    tools:visibility="visible" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/chat_img"
+                    android:layout_width="@dimen/_185sdp"
+                    android:layout_height="@dimen/_185sdp"
+                    loadUrl="@{item.chat_Text}"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:onClick="@{onItemClick}"
+                    android:visibility="@{item.post_Type.equals(`Image`) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_txt"
+                    tools:src="@drawable/ic_stock_balances"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/chat_video"
+                    android:layout_width="@dimen/_185sdp"
+                    android:layout_height="@dimen/_185sdp"
+                    setThumbnail="@{item.chat_Text}"
+                    android:onClick="@{onItemClick}"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:visibility="@{item.post_Type.equals(`Video`) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_txt"
+                    android:background="@color/black"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/chat_video_thumb"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:onClick="@{onItemClick}"
+                    android:visibility="@{item.post_Type.equals(`Video`) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_txt"
+                    android:src="@drawable/play"
+                    android:tint="@color/white"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/audio_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/record_voice"
+                    tools:src="@drawable/record_voice"
+                    android:gravity="center"
+                    android:drawablePadding="@dimen/_14ssp"
+                    android:onClick="@{onItemClick}"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:drawableStart="@drawable/record_voice"
+                    android:visibility="@{item.post_Type.equals(`Voice`) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text=""
+                    android:textSize="@dimen/_14ssp"
+                    style="@style/AG_bold"
+                    app:layout_constraintTop_toBottomOf="@+id/name_txt"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView36"
+                style="@style/AG_bold"
+                setTextviewChat="@{item.created_Date}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_10sdp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/messageview"
+                tools:text="02:35" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

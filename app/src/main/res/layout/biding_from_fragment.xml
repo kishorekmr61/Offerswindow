@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.bid.bidingFrom.BidingFromViewModel" />
+
+
+        <import type="android.view.View" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_EFF1F4">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_18sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:contentPadding="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_25sdp"
+                tools:context=".ui.bid.bidingFrom.BidingFromFragment">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/challengename_txt"
+                    style="@style/AG_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_8sdp"
+                    tools:text="Product Name "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/biddingdate_ti"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:focusableInTouchMode="true"
+                    android:hint="Biding Date"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/challengename_txt">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_date"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:focusable="false"
+                        android:enabled="false"
+                        android:textColorHint="@color/color_7C7C7C"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="@string/app_name" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/biddingstarttime_ti"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:focusableInTouchMode="true"
+                    android:hint="Bidding Start Time"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/biddingdate_ti">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_starttime"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:enabled="false"
+                        android:drawableStart="@drawable/ic_bidding_time"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:focusable="false"
+                        android:textColorHint="@color/color_7C7C7C"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="@string/app_name" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/biddingendtime_ti"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:focusableInTouchMode="true"
+                    android:hint="Bidding End Time"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/biddingstarttime_ti">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_endtime"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_bidding_time"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:focusable="false"
+                        android:enabled="false"
+                        android:textColorHint="@color/color_7C7C7C"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="@string/app_name" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/amount_ti"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@color/color_EFF1F4"
+                    android:focusableInTouchMode="true"
+                    android:hint="Bid Amount"
+                    app:boxBackgroundMode="none"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/biddingendtime_ti">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_value"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:textColorHint="@color/color_7C7C7C"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="0000000" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submit_btn"
+                    style="@style/Ag_label"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_28sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:layout_weight="0.5"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    app:cornerRadius="@dimen/_25sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/amount_ti" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

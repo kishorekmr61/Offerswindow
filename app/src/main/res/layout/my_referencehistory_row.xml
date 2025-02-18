@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.CustomerReferenceHistoryList" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sdfdsfds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/reference_txt"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                android:gravity="center"
+                android:padding="@dimen/_6sdp"
+                android:text="@{`Reference Name :  ` + item.reference_Name}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingRight="@dimen/_12sdp"
+                android:paddingBottom="@dimen/_12sdp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/mobileno_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="@dimen/_45sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Mobile  : "
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                        <TextView
+                            android:id="@+id/mobilenumber_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{item.reference_Mobile_No}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10ssp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/statuslbl_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="@dimen/_45sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Status   : "
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                        <TextView
+                            android:id="@+id/status_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{item.lead_Status_Desc}"
+                            android:textColor="@color/primary"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:background="@color/light_black" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/datelbl_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="@dimen/_65sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Date             :"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/date_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            setTextviewDate="@{item.call_Date}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/pointsernedlbl_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="@dimen/_65sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Reward pt.    :"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_10ssp" />
+
+                        <TextView
+                            android:id="@+id/rewardpoints_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(item.rewards_Balance1)}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

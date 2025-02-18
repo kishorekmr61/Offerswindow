@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.customer.bms.ui.home.HomeFragment"
+        android:label=""
+        tools:layout="@layout/fragment_home_customer" />
+
+
+    <fragment
+        android:id="@+id/nav_checkUpGraphFragment"
+        android:name="com.customer.bms.ui.checkupgraph.CheckUpGraphFragment"
+        android:label="fragment_check_up_graph"
+        tools:layout="@layout/fragment_check_up_graph" />
+    <fragment
+        android:id="@+id/nav_customerActivitiesFragment"
+        android:name="com.customer.bms.ui.customeractivities.CustomerActivitiesFragment"
+        android:label="fragment_customer_activities"
+        tools:layout="@layout/fragment_customer_activities" />
+    <fragment
+        android:id="@+id/nav_customerCheckUpsFragment"
+        android:name="com.customer.bms.ui.customerscheckup.CustomerCheckUpsFragment"
+        android:label="fragment_customer_check_ups"
+        tools:layout="@layout/fragment_customer_check_ups" />
+
+
+    <fragment
+        android:id="@+id/nav_testimonialsFragment"
+        android:name="com.customer.bms.ui.testimonials.TestimonialsFragment"
+        android:label="fragment_testimonials"
+        tools:layout="@layout/fragment_testimonials" />
+    <fragment
+        android:id="@+id/nav_customerProfileFragment"
+        android:name="com.customer.bms.ui.customerprofile.CustomerProfileFragment"
+        android:label="fragment_customer_profile"
+        tools:layout="@layout/fragment_customer_profile" />
+
+
+    <fragment
+        android:id="@+id/nav_stockPurchasesFragment"
+        android:name="com.customer.bms.ui.stock.stockpurchases.StockPurchasesFragment"
+        android:label="stock_purchases_fragment"
+        tools:layout="@layout/stock_purchases_fragment" />
+
+    <fragment
+        android:id="@+id/nav_invoiceFragment"
+        android:name="com.customer.bms.ui.customerInvoice.CustomerInvoiceFragment"
+        android:label="customer_invoice_fragment"
+        tools:layout="@layout/customer_invoice_fragment" />
+    <fragment
+        android:id="@+id/nav_QRCodeFragment"
+        android:name="com.customer.bms.ui.qrcode.QRCodeFragment"
+        android:label="QRCodeFragment"
+        tools:layout="@layout/fragment_q_r_code" />
+
+
+    <fragment
+        android:id="@+id/nav_walletBalanceFragment"
+        android:name="com.customer.bms.ui.wallet.walletbalance.WalletBalanceFragment"
+        android:label="WalletBalanceFragment" />
+
+    <fragment
+        android:id="@+id/nav_rewardshistory"
+        android:name="com.customer.bms.ui.wallet.rewardPointHistory.RewarPointHistoryFragment"
+        android:label="RewardsHistory" />
+    <fragment
+        android:id="@+id/nav_walletTransferFragment"
+        android:name="com.customer.bms.ui.wallet.wallettransfer.WalletTransferFragment"
+        android:label="WalletTransferFragment"
+        tools:layout="@layout/fragment_wallet_transfer" />
+    <fragment
+        android:id="@+id/nav_redemptionApproval"
+        android:name="com.customer.bms.ui.wallet.redemption.RedemptionApprovalFragment"
+        android:label="RedemptionApprovalFragment"
+        tools:layout="@layout/redemption_approval_fragment" />
+
+    <fragment
+        android:id="@+id/nav_eventsListFragment"
+        android:name="com.customer.bms.ui.eventslist.EventsListFragment"
+        android:label="EventsListFragment" />
+    <fragment
+        android:id="@+id/nav_purchaseHistoryFragment"
+        android:name="com.customer.bms.ui.purchasehistory.PurchaseHistoryFragment"
+        android:label="PurchaseHistoryFragment" />
+
+
+    <fragment
+        android:id="@+id/nav_closureGroupFragment"
+        android:name="com.customer.bms.ui.closuregroups.ClosureGroupFragment"
+        android:label="ClosureGroupFragment" />
+    <fragment
+        android:id="@+id/nav_challengesFragment"
+        android:name="com.customer.bms.ui.challenges.challengesList.ChallengesFragment"
+        android:label="ChallengesFragment" />
+
+    <fragment
+        android:id="@+id/nav_challengeswinnersFragment"
+        android:name="com.customer.bms.ui.challenges.winners.ChallengesWinnerFragment"
+        android:label="ChallengesDetailsFragment" />
+
+
+    <fragment
+        android:id="@+id/nav_chatFragment"
+        android:name="com.customer.bms.ui.chat.ChatFragment"
+        android:label="ChatFragment" />
+
+    <fragment
+        android:id="@+id/nav_chatimageFragment"
+        android:name="com.customer.bms.ui.chat.chatimage.ChatImageFragment"
+        android:label="ChatImageFragment" />
+    <fragment
+        android:id="@+id/nav_calorieFragment"
+        android:name="com.customer.bms.ui.calorie.CalorieFragment"
+        android:label="CalorieFragment" />
+    <fragment
+        android:id="@+id/nav_dailyCalorieFragment"
+        android:name="com.customer.bms.ui.calorie.DailyCalorieFragment"
+        android:label="DailyCalorieFragment" />
+
+
+    <fragment
+        android:id="@+id/nav_orderHistoryFragment"
+        android:name="com.customer.bms.ui.stock.orderhistory.OrderHistoryFragment"
+        android:label="OrderHistoryFragment" />
+    <fragment
+        android:id="@+id/nav_myrefereces"
+        android:name="com.customer.bms.ui.myReferences.MyReferencesFragment"
+        android:label="MyReferencesFragment" />
+
+    <fragment
+        android:id="@+id/nav_myprograms"
+        android:name="com.customer.bms.ui.myPrograms.MyProgramsFragment"
+        android:label="MyProgramsFragment" />
+
+    <fragment
+        android:id="@+id/nav_myplans"
+        android:name="com.customer.bms.ui.myplans.MyPlansFragment"
+        android:label="MyPlansFragment" />
+    <fragment
+        android:id="@+id/nav_reportissue"
+        android:name="com.customer.bms.ui.reportissue.ReportIssueFragment"
+        android:label="ReportIssueFragment" />
+
+    <fragment
+        android:id="@+id/nav_shareapp"
+        android:name="com.customer.bms.ui.shareapp.ShareAppFragment"
+        android:label="ShareApp" />
+    <fragment
+        android:id="@+id/nav_eventDetails"
+        android:name="com.customer.bms.ui.eventslist.eventsdetails.EventsDetailsFragment"
+        android:label="Event Details" />
+    <fragment
+        android:id="@+id/nav_customerstockSalesFragment"
+        android:name="com.customer.bms.ui.stock.customerstocks.CustomerStocksFragment"
+        android:label="CustomerStockSalesFragment"
+        tools:layout="@layout/customer_stocks_fragment" />
+    <fragment
+        android:id="@+id/nav_walletpendingrequestFragment"
+        android:name="com.customer.bms.ui.wallet.wallettransfersApproval.WalletTransfersApprovalFragment"
+        android:label="WalletPendingRequestFragment"
+        tools:layout="@layout/wallet_transfers_approval_fragment" />
+    <fragment
+        android:id="@+id/nav_achievementFragment"
+        android:name="com.customer.bms.ui.achievement.AchievementFragment"
+        android:label="AchievementFragment" />
+
+    <fragment
+        android:id="@+id/nav_productview"
+        android:name="com.customer.bms.ui.stock.productView.ProductViewFragment"
+        android:label="ProductFragment"/>
+
+    <fragment
+        android:id="@+id/nav_bid"
+        android:name="com.customer.bms.ui.bid.BidTabsFragment"
+        android:label="TabBiddingFragment" />
+    <fragment
+        android:id="@+id/nav_biddingfrom"
+        android:name="com.customer.bms.ui.bid.bidingFrom.BidingFromFragment"
+        android:label="BiddingFromFragment" />
+    <fragment
+        android:id="@+id/nav_topbidders"
+        android:name="com.customer.bms.ui.bid.topbidders.TopBiddersFragment"
+        android:label="TopBiddingFragment" />
+
+    <fragment
+        android:id="@+id/nav_activitydetails"
+        android:name="com.customer.bms.ui.customeractivities.activirtydeatils.ActivityDetailsFragment"
+        android:label="ActivityDetailsFragment" />
+    <fragment
+        android:id="@+id/nav_ConfirmedTickets"
+        android:name="com.customer.bms.ui.confirmedTickets.ConfirmedTicketsFragment"
+        android:label="ConfirmedTicketsFragment" />
+
+    <fragment
+        android:id="@+id/nav_Webpage"
+        android:name="com.customer.bms.ui.webpages.CMSWebFragment"
+        android:label="CMSWebFragment" />
+    <fragment
+        android:id="@+id/nav_scanner"
+        android:name="com.customer.bms.ui.scanner.ScannerFragment"
+        android:label="ScanFragment" />
+    <fragment
+        android:id="@+id/nav_bmsservices"
+        android:name="com.customer.bms.ui.servicesOffered.BmsServicesFragment"
+        android:label="Services Offerd" />
+    <fragment
+        android:id="@+id/nav_orderdetails"
+        android:name="com.customer.bms.ui.stock.orderhistory.orderDetails.OrderDetailsFragment"
+        android:label="Order Details" />
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.customer.bms.ui.notifications.NotificationsFragment"
+        android:label="Banner Notifications" />
+
+    <fragment
+        android:id="@+id/nav_notificationsdetails"
+        android:name="com.customer.bms.ui.notifications.notificationDetails.NotificationDetailsFragment"
+        android:label="Banner Notifications Details" />
+
+    <fragment
+        android:id="@+id/nav_pdf_viewer"
+        android:name="com.customer.bms.ui.customerInvoice.PDFViewerFragment"
+        tools:layout="@layout/fragment_pdf_viewer" />
+
+    <fragment
+        android:id="@+id/nav_resetpassword"
+        android:name="com.customer.bms.ui.resetpassword.ResetPasswordFragment"
+        android:label="ResetPasswordFragment" />
+    <fragment
+        android:id="@+id/nav_completedprogram"
+        android:name="com.customer.bms.ui.mymembership.completedprogram.CompletedProgramFragment"
+        android:label="CompletedProgram" />
+
+    <fragment
+        android:id="@+id/nav_manage_profile"
+        android:name="com.customer.bms.ui.manageprofile.ManageProfileFragment"
+        android:label="ManageProfile" />
+</navigation>

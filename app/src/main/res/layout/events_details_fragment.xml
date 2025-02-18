@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.eventslist.eventsdetails.EventsDetailsViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:fitsSystemWindows="true"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/eventdetails_lyout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            tools:context=".ui.eventslist.eventsdetails.EventsDetailsFragment">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/name_txt"
+                style="@style/AG_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="start"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Event Name" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/walletcard"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:textColor="@color/color_7C7C7C"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="@{viewModel.iswalletCard ? View.VISIBLE : View.GONE}"
+                app:cardBackgroundColor="#329AAFCF"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name_txt">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/eventamount_lbl"
+                        style="@style/Ag_metadata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@{viewModel.walletbalance.toString()}"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_18ssp"
+                        tools:text="0.00" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/walletbl_lbl"
+                        style="@style/Ag_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Wallet Balance"
+                        android:textColor="@color/color_CCCCCC"
+                        android:textSize="@dimen/_16ssp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/walletdivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#A59B9B"
+                android:visibility="@{viewModel.iswalletCard ? View.VISIBLE:View.GONE }"
+                app:layout_constraintTop_toBottomOf="@+id/walletcard" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/eventname_txt"
+                style="@style/AG_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="start"
+                android:text="@{viewModel.eventname}"
+                android:textColor="@color/color_C7D1E0"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/walletdivider"
+                tools:text="Event Name" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/event_img"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_145sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                setThumbnail="@{viewModel.eventimage}"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_upcoming_sales"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventname_txt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/eventdesc_txt"
+                style="@style/Ag_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="start"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:text="@{viewModel.eventdesc}"
+                android:textColor="@color/color_C7D1E0"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_img"
+                tools:text="Golden opportunity to participate in this event along with all your coaches" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/dates_lyout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventdesc_txt">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/date_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Date : "
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/color_C7D1E0" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="start|center"
+                    android:textSize="@dimen/_14ssp"
+                    setTextviewDate="@{viewModel.eventdate}"
+                    android:textColor="@color/primary" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/nooftckts_lyout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.iswalletCard ?View.GONE:View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dates_lyout"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="No. Of Tickets : "
+                    android:textColor="@color/color_C7D1E0" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nooftckts_txt"
+                    style="@style/AG_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="start|center"
+                    tools:text="1"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/primary" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/cnfrmation_lyout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.iswalletCard ? View.GONE:View.VISIBLE }"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nooftckts_lyout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Confirmation No : "
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/color_C7D1E0" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/confirmationtxt"
+                    style="@style/AG_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="start|center"
+                    tools:text="AX123456789"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/primary" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/share_btn"
+                style="@style/Ag_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                android:layout_weight="0.5"
+                android:text="Share Tickets"
+                android:textColor="@color/white"
+                app:icon="@drawable/share_app"
+                app:iconSize="@dimen/_15sdp"
+                app:iconGravity="textStart"
+                android:visibility="@{viewModel.iswalletCard ? View.GONE:View.VISIBLE }"
+                android:textSize="@dimen/_12ssp"
+                app:cornerRadius="@dimen/_25sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qr_img" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/qr_img"
+                android:layout_width="@dimen/_115sdp"
+                android:layout_height="@dimen/_115sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                imgNormalUrl="@{viewModel.QRPath}"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="@{viewModel.iswalletCard ? View.GONE:View.VISIBLE }"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cnfrmation_lyout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/scanqttxt"
+                style="@style/AG_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|center"
+                android:text="Scan QR Code"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:visibility="@{viewModel.iswalletCard ? View.GONE:View.VISIBLE }"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_25sdp"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintTop_toBottomOf="@+id/qr_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/car_grey_600" />
+
+            <View
+                android:id="@+id/datedivider"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cnfrmation_lyout" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/termsandconditionlist"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datedivider"
+                tools:visibility="gone"
+                tools:listitem="@layout/eventsrow_tandc" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/paymentifno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/backgroundgrey"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingRight="@dimen/_12sdp"
+                android:paddingBottom="@dimen/_12sdp"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="@{viewModel.iswalletCard ? View.VISIBLE:View.GONE }"
+                app:layout_constraintTop_toBottomOf="@+id/termsandconditionlist">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/purchasefrom_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Date "
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_12ssp" />
+
+
+                        <TextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/eventdate"
+                            style="@style/AG_bold"
+                            setTextviewDate="@{viewModel.eventdate}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/purchasename_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="No Of Tickets"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <TextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/nooftickets_edt"
+                            style="@style/AG_bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_weight="5"
+                            app:layout_constraintStart_toEndOf="@+id/textView10"
+                            app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/qantitylbl_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Amount"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_12ssp" />
+
+
+                        <TextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <TextView
+                            android:id="@+id/amount_txt"
+                            style="@style/AG_bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="@{viewModel.ticketsvalue.toString()}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_weight="5"
+                            app:layout_constraintStart_toEndOf="@+id/textView10"
+                            app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_weight="13"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/pointsernedlbl_txt"
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Pay by Wallet"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <TextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":"
+                            android:textColor="@color/color_A7AEB1"
+                            android:textSize="@dimen/_12ssp" />
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6">
+
+                            <TextView
+                                android:id="@+id/pointserned_txt"
+                                style="@style/AG_bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:text="@{viewModel.ticketsvalue.toString()}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10ssp" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/booktickets_btn"
+                style="@style/AG_altbold"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="@string/confirm_ticket"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                android:padding="6dp"
+                app:cornerRadius="@dimen/_25sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{viewModel.iswalletCard ? View.VISIBLE:View.GONE }"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/paymentifno" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

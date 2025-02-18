@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.challenges.Table2Data" />
+
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sdfdsfds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_4sdp"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="@dimen/_6sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/challengedesc_txt"
+            style="@style/AG_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp"
+            android:gravity="start"
+            android:text="@{item.term_Desc}"
+            android:textColor="@color/color_A7AEB1"
+            android:textSize="@dimen/_12ssp"
+            tools:text="@string/coach" />
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

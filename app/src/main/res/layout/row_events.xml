@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.EventsList" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/event_lyout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/color_D1F6E4"
+        android:padding="@dimen/_8sdp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/eventname_txt"
+                style="@style/AG_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="0.6"
+                android:gravity="start"
+                android:text="@{item.event_Name}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                tools:text="Event Name" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/scan_txt"
+                style="@style/Ag_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:drawableStart="@drawable/ic_qr_code_"
+                android:drawableTint="@color/primary"
+                android:gravity="end|right"
+                android:textColor="@color/primary"
+                android:includeFontPadding="false"
+                android:onClick="@{onItemClick}"
+                android:textSize="@dimen/_12sdp"
+                android:drawablePadding="4dp"
+                android:text="Scan Tickets"
+                android:visibility="@{item.scan_Status.equals(`Y`) ? View.VISIBLE : View.GONE}" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            setThumbnail="@{item.image_URL}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_175sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/events_banner" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/eventsbottom_lyout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/backgroundevents"
+            android:padding="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
+            app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
+            app:layout_constraintTop_toBottomOf="@+id/eventviewpager">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/dhfjsdfg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Ag_body_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date : "
+                        android:textColor="@color/color_C7D1E0"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/eventdate_txt"
+                        style="@style/AG_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:textColor="@color/white"
+                        android:text="@{item.convertToDate(item.Event_Date)}"
+                        android:textSize="@dimen/_10sdp"
+                        tools:text="20 May 2023 - 2 Jun 2023" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="0.3"
+                    android:gravity="end">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/AG_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Price : "
+                        android:textColor="@color/color_C7D1E0"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/eventprice_txt"
+                        style="@style/AG_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:gravity="start|center"
+                        android:textColor="@color/white"
+                        android:text="@{item.ticket_Cost}"
+                        android:textSize="@dimen/_10sdp"
+                        tools:text="200000" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/booktickets_btn"
+                style="@style/AG_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:onClick="@{onItemClick}"
+                android:text="Book My Ticket"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp"
+                app:cornerRadius="@dimen/_25sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dhfjsdfg" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@color/color_C7D1E0" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>

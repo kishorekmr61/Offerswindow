@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/group_home"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/home" />
+    </group>
+
+    <group
+        android:id="@+id/group_vehicle"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_customers_list"
+            android:title="Customers List" />
+
+        <item
+            android:id="@+id/menu_customers_menu"
+            android:title="Customers Menu" />
+
+
+        <item
+            android:id="@+id/menu_customers_reference_history"
+            android:title="Customers Reference History" />
+
+        <item
+            android:id="@+id/menu_logout"
+            android:title="Logout" />
+
+
+
+
+    </group>
+
+    <!--<group
+        android:id="@+id/group_navigation"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_navigation"
+            android:title="@string/navigation" />
+
+        <item
+            android:id="@+id/nav_trip"
+            android:title="@string/trip_history" />
+
+        <item
+            android:id="@+id/nav_driving_score"
+            android:title="@string/driving_score" />
+
+
+    </group>
+
+    <group
+        android:id="@+id/group_soul"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_tribes"
+            android:title="@string/tribes" />
+
+        <item
+            android:id="@+id/nav_news_and_events"
+            android:title="@string/news_and_events" />
+
+        <item
+            android:id="@+id/nav_soul"
+            android:title="@string/soul" />
+
+        <item
+            android:id="@+id/nav_menu_accessories"
+            android:title="@string/accessories" />
+
+
+        <item
+            android:id="@+id/nav_tml_rewards"
+            android:title="@string/tml_rewards" />
+
+
+    </group>
+
+    <group
+        android:id="@+id/group_help_and_support"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_help_and_support"
+            android:title="@string/help_and_support" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:title="@string/settings" />
+
+        <item
+            android:id="@+id/nav_home19"
+            android:title="" />
+
+    </group>-->
+
+</menu>

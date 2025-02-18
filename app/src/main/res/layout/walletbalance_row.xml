@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.wallet.Table1" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_customer_list_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{onItemClick}"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingRight="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_8sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/circleImageView"
+                setImage="@{item.pay_Type.equals(`Paid`) ? @drawable/ic_paid_red :@drawable/ic_received }"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:src="@drawable/ic_received" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_9sdp"
+                android:layout_weight="0.6"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_txt"
+                    style="@style/Ag_body_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{item.cust_Name}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                       tools:text="@string/app_name" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@{item.pay_Type}"
+                    android:textColor="@color/color_A7AEB1"
+                    android:textSize="@dimen/_10sdp"  />
+
+                <TextView
+                    android:id="@+id/wallet_lbl"
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="@{item.trans_Type}"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_10sdp"  />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/_4sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/amount_txt"
+                    style="@style/AG_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@{`Rs. ` +item.received_Amount}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    tools:text="RS.255" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/date_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    setTextviewDate="@{item.transaction_Date}"
+                    android:textColor="@color/color_A7AEB1"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/name_txt"
+                    app:layout_constraintTop_toBottomOf="@id/amount_txt"
+                    tools:text="1 Mar 2023" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

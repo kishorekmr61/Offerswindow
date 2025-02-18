@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="bmsserviceViewModel"
+            type="com.customer.bms.ui.servicesOffered.BmsServicesViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_EFF1F4"
+        tools:context=".ui.servicesOffered.BmsServicesFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/headlbl_txt"
+            style="@style/AG_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/desc_txt"
+            style="@style/AG_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18ssp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:fontFamily="@font/actor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headlbl_txt"
+            tools:text="We offer below services to the users, who visit our BMS club physically.  If you want to experience these phyical services, you can attend one complimentary 1 hr session . Registration time is morning between 7:30 AM to 8:00 AM. And session starts at 8:00 AM and ends at 9:00 AM.  Please come without having breakfast. Contact your coach for location or any other assistance." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/link_txt"
+            style="@style/AG_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18ssp"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_14ssp"
+            app:fontFamily="@font/actor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/desc_txt"
+            tools:text="https://meet.google.com/gpf-ffax-ywi" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/serviceslbl_txt"
+            style="@style/Ag_metadata_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:text="@string/ListOfService"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="@+id/desc_txt"
+            app:layout_constraintTop_toBottomOf="@id/link_txt" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_18ssp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="@+id/serviceslbl_txt"
+            app:layout_constraintTop_toBottomOf="@id/serviceslbl_txt"
+            tools:listitem="@layout/row_servicestandc" />
+
+        <ProgressBar
+            android:id="@+id/pggBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{bmsserviceViewModel.isloading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

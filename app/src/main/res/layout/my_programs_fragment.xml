@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.myPrograms.MyProgramsViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.myPrograms.MyProgramsFragment">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/header_lyout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_85sdp"
+            android:background="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/serchedit"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="start|center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/et_background"
+                android:drawableStart="@drawable/programsearch"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableTint="@color/primary"
+                android:gravity="start|center"
+                android:paddingStart="@dimen/_10sdp"
+                android:hint="Search Program"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_programlist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.nodata ? View.GONE : View.VISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/color_EFF1F4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_lyout"
+            tools:listitem="@layout/row_myprogram"
+            tools:visibility="visible" />
+
+        <include
+            android:id="@+id/nodataavaliable"
+            layout="@layout/no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.nodata ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

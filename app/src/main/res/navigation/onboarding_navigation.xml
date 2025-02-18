@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_navigation">
+
+
+    <fragment
+        android:id="@+id/nav_sign_in"
+        android:name="com.customer.bms.ui.onboarding.signIn.SignInFragment"
+        android:label="@string/more"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_nav_sign_in_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_sign_up"
+        android:name="com.customer.bms.ui.onboarding.signup.SignUpFragment"
+        android:label="@string/more"
+        tools:layout="@layout/sign_up_fragment">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_welcome_info"
+        android:name="com.customer.bms.ui.onboarding.welcome.WelcomeFragment"
+        android:label="@string/welcome"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_nav_welcome_info_to_nav_sign_in"
+            app:destination="@id/nav_sign_in" />
+    </fragment>
+ <fragment
+        android:id="@+id/nav_referencenumber"
+        android:name="com.customer.bms.ui.onboarding.ReferenceMember.ReferenceMemberFragment"
+        android:label="@string/reference_mobilenumber"
+        tools:layout="@layout/reference_member_fragment">
+     <action
+         android:id="@+id/action_nav_welcome_info_to_nav_sign_in"
+         app:destination="@id/nav_sign_in" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.customer.bms.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home"/>
+
+    <fragment
+        android:id="@+id/nav_content"
+        android:name="com.customer.bms.ui.ContentFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_content">
+
+    </fragment>
+
+
+</navigation>

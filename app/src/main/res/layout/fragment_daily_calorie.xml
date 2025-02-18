@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.calorie.CalorieViewModel" />
+
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/calories_lyout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Ag_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Weight Loss Plan"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:visibility="@{viewModel.isloading ? View.GONE : View.VISIBLE}"
+            app:cardBackgroundColor="@color/color_F9EDF9"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="0dp"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_260sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/calries_img" />
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/currentwieght_txt"
+                                style="@style/AG_bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textSize="@dimen/_16ssp"
+                                tools:text="110kg" />
+
+                            <TextView
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Current Weight"
+                                android:textSize="@dimen/_12ssp" />
+
+                            <TextView
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tergetweight_txt"
+                                style="@style/AG_bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="@color/car_green_500"
+                                android:textSize="@dimen/_16ssp"
+                                tools:text="60kg" />
+
+                            <TextView
+                                android:id="@+id/targetweight_txt"
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Target Weight"
+                                android:textSize="@dimen/_12ssp" />
+
+                            <TextView
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/totalweightloss"
+                                style="@style/AG_bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textSize="@dimen/_16ssp"
+                                tools:text="110kg" />
+
+                            <TextView
+                                android:id="@+id/targetweightloss_lbl"
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                tools:text="Total Weight Loss"
+                                android:textSize="@dimen/_12ssp" />
+
+                            <TextView
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/weeklyweightloss_txt"
+                                style="@style/AG_bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textSize="@dimen/_16ssp"
+                                tools:text="110kg" />
+
+                            <TextView
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Weekly Weight Loss"
+                                android:textSize="@dimen/_12ssp" />
+
+                            <TextView
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/primary"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp">
+
+
+                        <TextView
+                            android:id="@+id/goalend_txt"
+                            style="@style/Ag_metadata_500"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="@+id/textView24"
+                            app:layout_constraintStart_toStartOf="@+id/textView24"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="18 Sep 2023" />
+
+                        <TextView
+                            android:id="@+id/noofdays_txt"
+                            style="@style/AG_bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintEnd_toEndOf="@+id/textView25"
+                            app:layout_constraintStart_toStartOf="@+id/textView25"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="70" />
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            style="@style/Ag_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="Goal End Date"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="@+id/goalend_txt"
+                            app:layout_constraintStart_toStartOf="@+id/goalend_txt"
+                            app:layout_constraintTop_toBottomOf="@+id/goalend_txt" />
+
+                        <TextView
+                            android:id="@+id/textView25"
+                            style="@style/Ag_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="No. Of Days"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/noofdays_txt" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/color_EFF1F4" />
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/calories_white_bg"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/proteins_txt"
+                            style="@style/AG_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_12ssp"
+                            tools:text="96.42 gm" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Proteins"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:drawableStartCompat="@drawable/round_img"
+                            app:drawableTint="@color/primary" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/carbs_txt"
+                            style="@style/AG_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_12ssp"
+                            tools:text="96.42 gm" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Cabs"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:drawableStartCompat="@drawable/round_img"
+                            app:drawableTint="@color/color_F5991C" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fat_txt"
+                            style="@style/AG_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_12ssp"
+                            tools:text="96.42 gm" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fats"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:drawableStartCompat="@drawable/round_img"
+                            app:drawableTint="@color/secondary_red" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/update_btn"
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:text="Done"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp"
+                    android:visibility="gone"
+                    app:cornerRadius="@dimen/_25sdp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

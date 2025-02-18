@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.customer.bms.model.challenges.WinnersData" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sdfdsfds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/image_lyout"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_130sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/user_img"
+                        image="@{item.Cust_Image_Path}"
+                        android:layout_width="@dimen/_140sdp"
+                        android:layout_height="@dimen/_130sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:src="@drawable/profile" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@drawable/linear_gradient_bg"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rewards_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_1sdp"
+                    android:text="@{`Rewards : ` +item.rewards_Balance}"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/image_lyout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Rewards :123" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/customername_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.cust_Name}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rewards_txt"
+                    tools:text="@string/product_category" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/scorelbl_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="Score : "
+                    android:textColor="@color/color_C7D1E0"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_lyout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/score_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="@{item.acchieved_Score}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintStart_toEndOf="@id/scorelbl_txt"
+                    app:layout_constraintTop_toBottomOf="@id/image_lyout"
+                    tools:text="1234" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/Ranklbl_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="Rank : "
+                    android:textColor="@color/color_C7D1E0"
+                    android:textSize="@dimen/_10ssp"
+
+                    app:layout_constraintEnd_toStartOf="@id/rank_txt"
+                    app:layout_constraintTop_toBottomOf="@id/image_lyout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rank_txt"
+                    style="@style/AG_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="@{item.rank}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_lyout"
+                    tools:text="1234" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

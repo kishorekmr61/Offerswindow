@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.customer.ChatViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wpbackdemo"
+        tools:context=".ui.customer.CustomerListFragment">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/outer_Guide_Line_Start"
+            style="@style/outer_MarginLeft_For_Home_Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="invisible" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/outer_Guide_Line_End"
+            style="@style/outer_MarginRight_For_Home_Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="invisible" />
+
+        <include
+            android:id="@+id/challengeheader"
+            layout="@layout/challengechat_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_chat_id"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
+            app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
+            app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
+            app:layout_constraintTop_toBottomOf="@+id/challengeheader"
+            app:reverseLayout="true"
+            app:stackFromEnd="true"
+            tools:itemCount="6"
+            tools:listitem="@layout/row_chat_item_their"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isloading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:text="@string/not_interested"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_35sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView9"
+            app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginBottom="@dimen/_9sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/smily" />
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:layout_marginEnd="@dimen/_9sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11"
+                    app:srcCompat="@drawable/camera" />
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_12sdp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="@+id/imageView8"
+                    app:srcCompat="@drawable/attach" />
+
+                <EditText
+                    android:id="@+id/textView35"
+                    style="@style/Ag_metadata_500"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:background="@null"
+                    android:gravity="center|start"
+                    android:hint="Type a message"
+                    android:paddingTop="@dimen/_1sdp"
+                    android:paddingBottom="@dimen/_1sdp"
+                    android:textColorHint="@color/color_7C7C7C"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView11"
+                    app:layout_constraintStart_toEndOf="@+id/imageView8"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Type a messagemessage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="@dimen/_37sdp"
+            android:layout_height="0dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/color_0CA95B"
+            android:padding="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
+            app:layout_constraintTop_toTopOf="@+id/textView8"
+            app:srcCompat="@drawable/search_speaker"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/imageView91"
+            android:layout_width="@dimen/_37sdp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
+            app:layout_constraintTop_toTopOf="@+id/textView8"
+            app:srcCompat="@drawable/baseline_send_24" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

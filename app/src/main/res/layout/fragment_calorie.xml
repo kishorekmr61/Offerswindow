@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="viewModel"
+            type="com.customer.bms.ui.calorie.CalorieViewModel" />
+
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_EFF1F4"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.reference.ReferenceHistoryFragment">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/not_interested"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="2dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="BMR" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="@{viewModel.bmr}"
+                            android:textColor="@color/black"
+                            tools:text="6754" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/goals"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Goal" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:textColor="@color/black"
+                            tools:text="6754" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:scrollbars="none"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/goals">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="packed">
+
+                            <TextView
+                                android:id="@+id/textView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@{viewModel.selectedItem.equals(@string/weightloss) ? @drawable/backgroundgreen : @drawable/background}"
+                                android:onClick="@{() -> viewModel.hi(@string/weightloss)}"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_6sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_6sdp"
+                                android:text="@string/weightloss"
+                                android:textColor="@{viewModel.selectedItem.equals(@string/weightloss) ? @color/white : @color/black}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_6sdp"
+                                android:background="@{viewModel.selectedItem.equals(@string/gain) ? @drawable/backgroundgreen : @drawable/background}"
+                                android:onClick="@{() -> viewModel.hi(@string/gain)}"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_6sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_6sdp"
+                                android:text="@string/gain"
+                                android:textColor="@{viewModel.selectedItem.equals(@string/gain) ? @color/white : @color/black}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textView1"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_6sdp"
+                                android:background="@{viewModel.selectedItem.equals(@string/maintain) ? @drawable/backgroundgreen : @drawable/background}"
+
+                                android:onClick="@{() -> viewModel.hi(@string/maintain)}"
+
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_6sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_6sdp"
+                                android:text="@string/maintain"
+                                android:textColor="@{viewModel.selectedItem.equals(@string/maintain) ? @color/white : @color/black}"
+
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textView2"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </HorizontalScrollView>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Current Weight" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:textColor="@color/black"
+                            android:text="@{viewModel.currentweight}"
+                            tools:text="6754" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Target Weight" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_targetweight"
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/black"
+                            tools:text="6754" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Age" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=":" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:textColor="@color/black"
+                            android:text="@{viewModel.age}"
+                            tools:text="6754" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/not_interested"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="2dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/cal_daily_activity"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:hint="Daily Activity Level"
+                        android:focusableInTouchMode="true"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary"
+                        app:counterTextColor="@color/black">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_daily_activity"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:clickable="false"
+                            android:drawableEnd="@drawable/ic_drop_down"
+                            android:textColorHint="@color/color_7C7C7C"
+                            android:textSize="@dimen/_12ssp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/speed_lbl"
+                        style="@style/AG_bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:text="Speed" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:scrollbars="none"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/speed_lbl">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintHorizontal_chainStyle="packed">
+
+                                <TextView
+                                    android:id="@+id/textView123"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@{viewModel.selectedspeedItem.equals(@string/onekgperweek) ? @drawable/backgroundgreen : @drawable/background}"
+                                    android:onClick="@{() -> viewModel.speed(@string/onekgperweek)}"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:paddingTop="@dimen/_6sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:paddingBottom="@dimen/_6sdp"
+                                    android:text="@string/onekgperweek"
+                                    android:textColor="@{viewModel.selectedItem.equals(@string/onekgperweek) ? @color/white : @color/black}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/textView2434"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_6sdp"
+                                    android:background="@{viewModel.selectedspeedItem.equals(@string/zeropoint5perweek) ? @drawable/backgroundgreen : @drawable/background}"
+                                    android:onClick="@{() -> viewModel.speed(@string/onekgperweek)}"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:paddingTop="@dimen/_6sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:paddingBottom="@dimen/_6sdp"
+                                    android:text="@string/zeropoint5perweek"
+                                    android:textColor="@{viewModel.selectedItem.equals(@string/zeropoint5perweek) ? @color/white : @color/black}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/textView123"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </HorizontalScrollView>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/not_interested"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="2dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Protein %" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_per_protein"
+                            style="@style/AG_bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="0 %"
+                            android:textSize="@dimen/_16ssp" />
+
+                        <androidx.appcompat.widget.AppCompatSeekBar
+                            android:id="@+id/seekbar_protien"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:maxHeight="10dp"
+                            android:max="100"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/custom_seek_bar_drawable"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/ic_seekbar_radius_thumb"
+                            android:thumbOffset="-0dp" />
+
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/AG_regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_weight="1"
+                                android:text="0 %" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/AG_regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="100 %" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fat %" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_bold"
+                            android:id="@+id/tv_per_fat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="0 %"
+                            android:textSize="@dimen/_16ssp" />
+
+                        <androidx.appcompat.widget.AppCompatSeekBar
+                            android:id="@+id/seekbar_fat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:maxHeight="10dp"
+                            android:max="100"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/custom_seek_bar_drawable"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/ic_seekbar_radius_thumb"
+                            android:thumbOffset="-0dp" />
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/AG_regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_weight="1"
+                                android:text="0 %" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/AG_regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="100 %" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cabs %" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/AG_bold"
+                            android:id="@+id/tv_per_cabs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:text="0 %"
+                            android:textSize="@dimen/_16ssp" />
+
+                        <androidx.appcompat.widget.AppCompatSeekBar
+                            android:id="@+id/seekbar_cabs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:maxHeight="10dp"
+                            android:max="100"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/custom_seek_bar_drawable"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/ic_seekbar_radius_thumb"
+                            android:thumbOffset="-0dp" />
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/AG_regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_weight="1"
+                                android:text="0 %" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/AG_regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="100 %" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/calculator_btn"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:clickable="@{viewModel.enableNextButton}"
+                android:enabled="@{viewModel.enableNextButton}"
+                android:backgroundTint="@{viewModel.enableNextButton ? @color/primary : @color/color_A7AEB1}"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="Calculator"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:cornerRadius="@dimen/_25sdp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>
