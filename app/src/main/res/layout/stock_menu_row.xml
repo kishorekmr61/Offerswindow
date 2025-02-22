@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.StockMenuModel" />
+            type="com.customer.offerswindow.model.StockMenuModel" />
 
         <variable
             name="onItemClick"

@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.StockPurchaseModel" />
+            type="com.customer.offerswindow.model.StockPurchaseModel" />
 
         <variable
             name="onItemClick"

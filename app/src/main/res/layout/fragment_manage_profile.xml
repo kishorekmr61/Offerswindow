@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.customer.bms.ui.manageprofile.ManageProfileViewModel" />
+            type="com.customer.offerswindow.ui.manageprofile.ManageProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

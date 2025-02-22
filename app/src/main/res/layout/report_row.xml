@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.report.ReportData" />
+            type="com.customer.offerswindow.model.report.ReportData" />
 
         <import type="android.text.TextUtils" />
 

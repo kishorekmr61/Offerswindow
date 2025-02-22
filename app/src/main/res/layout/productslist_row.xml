@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.stock.ProductsResponse" />
+            type="com.customer.offerswindow.model.stock.ProductsResponse" />
 
         <variable
             name="onItemClick"

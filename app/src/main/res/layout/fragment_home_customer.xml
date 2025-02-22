@@ -12,11 +12,11 @@
 
         <variable
             name="customerdata"
-            type="com.customer.bms.model.CustomerData" />
+            type="com.customer.offerswindow.model.CustomerData" />
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.home.HomeViewModel" />
+            type="com.customer.offerswindow.ui.home.HomeViewModel" />
 
         <import type="android.text.TextUtils" />
         <import type="android.view.View" />
@@ -833,7 +833,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
 
-                <com.customer.bms.utils.customSeekBar.CustomProgressBar
+                <com.customer.offerswindow.utils.customSeekBar.CustomProgressBar
                     android:id="@+id/seekBar0"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_12sdp"

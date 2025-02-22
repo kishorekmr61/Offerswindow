@@ -9,11 +9,11 @@
 
         <import type="android.graphics.Color" />
 
-        <import type="com.customer.bms.R" />
+        <import type="com.customer.offerswindow.R" />
 
         <variable
             name="viewModelChild"
-            type="com.customer.bms.ui.dashboard.DashBoardViewModel" />
+            type="com.customer.offerswindow.ui.dashboard.DashBoardViewModel" />
     </data>
 
 

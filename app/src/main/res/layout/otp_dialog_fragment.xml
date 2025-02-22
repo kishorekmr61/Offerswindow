@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.wallet.otpdialog.OtpDialogViewModel" />
+            type="com.customer.offerswindow.ui.wallet.otpdialog.OtpDialogViewModel" />
 
     </data>
 

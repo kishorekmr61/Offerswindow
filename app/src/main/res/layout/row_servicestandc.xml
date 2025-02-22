@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.masters.CommonDataResponse" />
+            type="com.customer.offerswindow.model.masters.CommonDataResponse" />
 
 
     </data>

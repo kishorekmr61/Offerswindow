@@ -9,11 +9,11 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.CustomerData" />
+            type="com.customer.offerswindow.model.CustomerData" />
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.purchasehistory.PurchaseHistoryViewModel" />
+            type="com.customer.offerswindow.ui.purchasehistory.PurchaseHistoryViewModel" />
 
     </data>
 

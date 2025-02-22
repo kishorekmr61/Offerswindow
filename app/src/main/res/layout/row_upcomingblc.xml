@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.stock.UpcomingBalanceModel" />
+            type="com.customer.offerswindow.model.stock.UpcomingBalanceModel" />
 
     </data>
 

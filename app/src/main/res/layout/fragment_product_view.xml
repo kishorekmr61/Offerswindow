@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.stock.productView.ProductViewViewModel" />
+            type="com.customer.offerswindow.ui.stock.productView.ProductViewViewModel" />
 
 
 

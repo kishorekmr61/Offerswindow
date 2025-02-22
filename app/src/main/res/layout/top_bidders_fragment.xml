@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.bid.topbidders.TopBiddersViewModel" />
+            type="com.customer.offerswindow.ui.bid.topbidders.TopBiddersViewModel" />
 
 
         <import type="android.view.View" />

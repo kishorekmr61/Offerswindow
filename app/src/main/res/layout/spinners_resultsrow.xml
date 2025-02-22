@@ -10,7 +10,7 @@
 
         <variable
             name="spinneritem"
-            type="com.customer.bms.model.SpinnerRowModel" />
+            type="com.customer.offerswindow.model.SpinnerRowModel" />
 
         <variable
             name="onItemClick"

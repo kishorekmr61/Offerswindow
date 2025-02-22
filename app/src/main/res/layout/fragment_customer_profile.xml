@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.CustomerData" />
+            type="com.customer.offerswindow.model.CustomerData" />
 
         <variable
             name="onItemClick"
@@ -17,7 +17,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.customerprofile.CustomerProfileViewModel" />
+            type="com.customer.offerswindow.ui.customerprofile.CustomerProfileViewModel" />
 
     </data>
 

@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.closuregroups.ChatData" />
+            type="com.customer.offerswindow.model.closuregroups.ChatData" />
 
         <variable
             name="onItemClick"

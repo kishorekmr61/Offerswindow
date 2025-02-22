@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.wallet.wallettransfer.WalletTransferViewModel" />
+            type="com.customer.offerswindow.ui.wallet.wallettransfer.WalletTransferViewModel" />
 
     </data>
 

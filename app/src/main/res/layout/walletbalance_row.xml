@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.wallet.Table1" />
+            type="com.customer.offerswindow.model.wallet.Table1" />
 
         <variable
             name="onItemClick"

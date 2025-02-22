@@ -7,7 +7,7 @@
 
         <!--<variable
             name="viewModel"
-            type="com.customer.bms.ui.customer.CustomerListViewModel" />
+            type="com.customer.offerswindow.ui.customer.CustomerListViewModel" />
 
         <import type="android.view.View" />-->
 

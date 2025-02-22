@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.dashboard.DashBoardViewModel" />
+            type="com.customer.offerswindow.ui.dashboard.DashBoardViewModel" />
 
     </data>
 

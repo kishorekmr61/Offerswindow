@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.wallet.WalletPendingData" />
+            type="com.customer.offerswindow.model.wallet.WalletPendingData" />
 
         <variable
             name="onItemClick"

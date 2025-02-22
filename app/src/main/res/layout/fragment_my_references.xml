@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.myReferences.MyReferencesViewModel" />
+            type="com.customer.offerswindow.ui.myReferences.MyReferencesViewModel" />
 
         <import type="android.view.View" />
     </data>

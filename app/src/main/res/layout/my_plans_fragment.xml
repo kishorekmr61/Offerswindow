@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.CustomerData" />
+            type="com.customer.offerswindow.model.CustomerData" />
 
         <variable
             name="onItemClick"
@@ -16,11 +16,11 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.myplans.MyPlansViewModel" />
+            type="com.customer.offerswindow.ui.myplans.MyPlansViewModel" />
 
         <variable
             name="currentplanitem"
-            type="com.customer.bms.model.masters.PlanDataResponse" />
+            type="com.customer.offerswindow.model.masters.PlanDataResponse" />
 
         <import type="android.view.View" />
 

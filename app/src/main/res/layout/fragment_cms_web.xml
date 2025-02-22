@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.customer.bms.ui.webpages.CMSWebViewModel" />
+            type="com.customer.offerswindow.ui.webpages.CMSWebViewModel" />
     </data>
 
 

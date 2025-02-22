@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.myprogram.MyProgramdata" />
+            type="com.customer.offerswindow.model.myprogram.MyProgramdata" />
 
         <variable
             name="onItemClick"

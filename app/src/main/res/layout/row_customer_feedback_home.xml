@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.CustomerFeedBackHome" />
+            type="com.customer.offerswindow.model.CustomerFeedBackHome" />
         <variable
             name="onItemClick"
             type="android.view.View.OnClickListener" />

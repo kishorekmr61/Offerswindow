@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.wallet.RewardHistory" />
+            type="com.customer.offerswindow.model.wallet.RewardHistory" />
 
         <variable
             name="onItemClick"

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.wallet.walletbalance.WalletBalanceViewModel" />
+            type="com.customer.offerswindow.ui.wallet.walletbalance.WalletBalanceViewModel" />
 
         <import type="android.view.View" />
     </data>

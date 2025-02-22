@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.challenges.WinnersData" />
+            type="com.customer.offerswindow.model.challenges.WinnersData" />
 
     </data>
 

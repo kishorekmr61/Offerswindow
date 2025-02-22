@@ -8,11 +8,11 @@
 
     <fragment
         android:id="@+id/nav_buyAPlanFragment"
-        android:name="com.customer.bms.ui.stock.buyindividualproducts.BuyInvidualFragment"
+        android:name="com.customer.offerswindow.ui.stock.buyindividualproducts.BuyInvidualFragment"
         android:label="buy_a_plan_fragment"
         tools:layout="@layout/buy_a_plan_fragment" />
     <fragment
         android:id="@+id/nav_buyInvidualplanFragment"
-        android:name="com.customer.bms.ui.stock.buyindividualProducts.BuyInvidualProductsFragment"
+        android:name="com.customer.offerswindow.ui.stock.buyindividualProducts.BuyInvidualProductsFragment"
         android:label="BuyInvidualplanFragment" />
 </navigation>

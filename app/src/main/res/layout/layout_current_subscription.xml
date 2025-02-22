@@ -13,7 +13,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.CustomerData" />
+            type="com.customer.offerswindow.model.CustomerData" />
 
     </data>
 

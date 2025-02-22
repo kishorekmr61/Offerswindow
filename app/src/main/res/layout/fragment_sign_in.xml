@@ -15,7 +15,7 @@
 
         <variable
             name="vm"
-            type="com.customer.bms.ui.onboarding.signIn.SignInViewModel" />
+            type="com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

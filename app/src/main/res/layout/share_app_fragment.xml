@@ -11,7 +11,7 @@
 
         <variable
             name="shareviewModel"
-            type="com.customer.bms.ui.shareapp.ShareAppViewModel" />
+            type="com.customer.offerswindow.ui.shareapp.ShareAppViewModel" />
 
     </data>
 

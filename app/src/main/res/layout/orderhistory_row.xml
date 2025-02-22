@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.StockOrderHistory" />
+            type="com.customer.offerswindow.model.StockOrderHistory" />
 
         <variable
             name="onItemClick"

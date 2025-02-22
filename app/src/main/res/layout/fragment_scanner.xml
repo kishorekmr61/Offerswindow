@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.scanner.ScannerViewModel" />
+            type="com.customer.offerswindow.ui.scanner.ScannerViewModel" />
 
         <import type="android.view.View" />
     </data>

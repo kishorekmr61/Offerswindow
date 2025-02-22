@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.stock.orderhistory.OrderHistoryViewModel" />
+            type="com.customer.offerswindow.ui.stock.orderhistory.OrderHistoryViewModel" />
 
     </data>
 

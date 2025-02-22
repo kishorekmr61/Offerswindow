@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.EventsList" />
+            type="com.customer.offerswindow.model.EventsList" />
 
         <import type="android.view.View" />
 

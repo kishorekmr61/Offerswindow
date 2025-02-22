@@ -6,12 +6,12 @@
 
         <variable
             name="onItemClick"
-            type="com.customer.bms.utils.CustomClickListener" />
+            type="com.customer.offerswindow.utils.CustomClickListener" />
 
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.customeractivities.activirtydeatils.ActivityDetailsViewModel" />
+            type="com.customer.offerswindow.ui.customeractivities.activirtydeatils.ActivityDetailsViewModel" />
 
 
     </data>

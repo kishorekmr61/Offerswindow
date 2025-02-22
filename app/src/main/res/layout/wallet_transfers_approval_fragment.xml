@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.wallet.wallettransfersApproval.WalletTransfersApprovalViewModel" />
+            type="com.customer.offerswindow.ui.wallet.wallettransfersApproval.WalletTransfersApprovalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.customerInvoice.CustomerInvoiceViewModel" />
+            type="com.customer.offerswindow.ui.customerInvoice.CustomerInvoiceViewModel" />
 
     </data>
 

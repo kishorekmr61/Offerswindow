@@ -8,7 +8,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="com.customer.bms.ui.notifications.NotificationsViewModel" />
+            type="com.customer.offerswindow.ui.notifications.NotificationsViewModel" />
 
     </data>
 

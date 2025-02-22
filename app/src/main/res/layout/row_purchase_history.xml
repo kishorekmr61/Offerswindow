@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.customer.bms.model.PurchaseHistorySingleObject" />
+            type="com.customer.offerswindow.model.PurchaseHistorySingleObject" />
 
         <variable
             name="onItemClick"
