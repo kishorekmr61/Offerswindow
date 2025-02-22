@@ -25,7 +25,6 @@ class DashBoardRepositry @Inject constructor(
     }
 
 
-
     suspend fun getBannersData(
         Userid: String
     ): Flow<NetworkResult<DashBoardBannerData>> {

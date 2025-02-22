@@ -28,5 +28,5 @@ abstract class BaseBottomSheetDialog<VB : ViewBinding> : BottomSheetDialogFragme
     }
 
     abstract fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
-    
+
 }

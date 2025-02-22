@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1031150278762",
+    "project_id": "bmscustomer-48055",
+    "storage_bucket": "bmscustomer-48055.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031150278762:android:478433e99431c0c3809213",
+        "android_client_info": {
+          "package_name": "customer.bms.wellnest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA56rkcgoVbUte04J3RmvLfRoi5zVoC25o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

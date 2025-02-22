@@ -40,8 +40,7 @@
                 android:id="@+id/circleImageView"
                 setImage="@{item.setImage(item.Redemption_Status)}"
                 android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/ic_reject" />
+                android:layout_height="@dimen/_40sdp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"

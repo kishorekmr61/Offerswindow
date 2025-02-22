@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">OffersWindow</string>
+    <string name="restart">Restart</string>
+    <string name="new_app_ready">New app is ready</string>
+    <string name="downloading_start">Downloading started</string>
+    <string name="update_failed">Update failed</string>
+    <string name="temp_images_dir">temp_images</string>
+    <string name="temp_image">temp_image.jpg</string>
+    <string name="authorities">com.customer.offerswindow.fileprovider</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="signup"><b>Became a member!</b> \n \n Healthy active life style starts with YOU and BMS Wellnest always supports you</string>
+    <string name="mobile_number">Mobile Number*</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>

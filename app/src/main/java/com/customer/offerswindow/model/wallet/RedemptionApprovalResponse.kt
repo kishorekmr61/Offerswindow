@@ -52,19 +52,6 @@ data class RedemptionApproval(
     override fun layoutId(): Int {
         return R.layout.redemptionapproval_row
     }
-    fun setImage(status: String): Int {
-
-        if (status.equals("Approved")) {
-            return R.drawable.ic_success
-        }
-        if (status.equals("Pending")) {
-            return R.drawable.ic_pending
-        }
-        if (status.equals("Rejected")) {
-            return R.drawable.ic_reject
-        }
-        return R.drawable.pending
-    }
 
     fun setTextColor(status: String): Int {
 

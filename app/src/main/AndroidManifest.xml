@@ -53,7 +53,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OffersWindow"
+        android:theme="@style/Theme.OfferWindow"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">>
@@ -74,7 +74,7 @@
             android:exported="true"
             android:hardwareAccelerated="true"
             android:screenOrientation="locked"
-            android:theme="@style/Theme.OneApp.NoActionBar">
+            android:theme="@style/Theme.OfferWindow.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -87,7 +87,7 @@
             android:exported="false"
             android:hardwareAccelerated="true"
             android:screenOrientation="locked"
-            android:theme="@style/Theme.OneApp.NoActionBar"
+            android:theme="@style/Theme.OfferWindow.NoActionBar"
             android:windowSoftInputMode="adjustResize">
 
         </activity>
@@ -98,7 +98,7 @@
             android:exported="true"
             android:hardwareAccelerated="true"
             android:screenOrientation="locked"
-            android:theme="@style/Theme.OneApp.NoActionBar"
+            android:theme="@style/Theme.OfferWindow.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
 

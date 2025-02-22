@@ -28,7 +28,7 @@ object Util {
 }
 
 
-fun getCustomerData(arguments: Bundle?) : CustomerData{
+fun getCustomerData(arguments: Bundle?): CustomerData {
     if (arguments != null) {
         arguments?.let {
             return Gson().fromJson(it.getString(Constants.Customertype), CustomerData::class.java)

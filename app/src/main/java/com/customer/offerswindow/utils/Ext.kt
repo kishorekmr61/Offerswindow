@@ -41,7 +41,6 @@ import com.customer.offerswindow.R
 import com.customer.offerswindow.application.OfferWindowApplication.Companion.context
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.model.ErrorData
-import com.customer.offerswindow.utils.convertDate
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

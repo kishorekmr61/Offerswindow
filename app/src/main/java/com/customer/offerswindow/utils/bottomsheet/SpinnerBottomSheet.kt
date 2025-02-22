@@ -242,6 +242,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
                 spinnervalues.addAll(updateList(mspinnervalues, value))
                 updateRecyclerview(spinnervalues, value)
             }
+
             Constants.TASK -> {
                 spinnervalues.clear()
                 binding.locateEdt.visibility = View.VISIBLE

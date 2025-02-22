@@ -2,7 +2,11 @@ package com.customer.offerswindow.utils.segmentedview
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 
@@ -83,22 +87,22 @@ class SegmentProgressBar : View {
 
     private fun init() {
 
-/*
-        val viewTreeObserver = viewTreeObserver
+        /*
+                val viewTreeObserver = viewTreeObserver
 
-        if (viewTreeObserver.isAlive) {
-            viewTreeObserver.addOnGlobalLayoutListener(object :
-                ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
+                if (viewTreeObserver.isAlive) {
+                    viewTreeObserver.addOnGlobalLayoutListener(object :
+                        ViewTreeObserver.OnGlobalLayoutListener {
+                        override fun onGlobalLayout() {
 
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this)
-                    if (width > 0) {
+                            getViewTreeObserver().removeOnGlobalLayoutListener(this)
+                            if (width > 0) {
 
-                    }
+                            }
 
-                }
-            })
-        }*/
+                        }
+                    })
+                }*/
 
     }
 

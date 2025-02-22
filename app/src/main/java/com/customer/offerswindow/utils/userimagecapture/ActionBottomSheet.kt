@@ -193,13 +193,13 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
     private fun openCamera() {
         selectedtype = "Camera"
         tempImageUri = initTempUri()
-        resultLauncherFromCamera.launch(tempImageUri)
+        resultLauncherFromCamera.launch(tempImageUri!!)
     }
 
     private fun openVideo() {
         selectedtype = "Camera"
         tempVideoUri = initVideoTempUri()
-        resultLauncherFromVideo.launch(tempVideoUri)
+        tempVideoUri?.let { resultLauncherFromVideo.launch(it) }
 
         /*val videoIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
         resultLauncherFromGallery.launch(videoIntent)*/

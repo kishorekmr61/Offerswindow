@@ -2,6 +2,9 @@ package com.customer.offerswindow.data.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.customer.offerswindow.BuildConfig
 
 
 /*
