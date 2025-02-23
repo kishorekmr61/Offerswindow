@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,8 +11,8 @@
             android:id="@+id/view"
             android:layout_width="40dp"
             android:layout_height="2dp"
-            android:layout_marginTop="@dimen/_6sdp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_6sdp"
             android:background="@color/car_green_500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,16 +51,10 @@
             android:layout_marginEnd="@dimen/_9sdp"
             android:text="@string/actionSheet_camera"
             app:layout_constraintEnd_toStartOf="@+id/view_image"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/iv_camera"
-            app:layout_constraintTop_toBottomOf="@+id/iv_camera"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/iv_camera" />
 
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="iv_camera,tv_camera"
-            android:id="@+id/group_image" />
 
         <View
             android:id="@+id/view_image"
@@ -71,50 +64,8 @@
             android:layout_marginTop="@dimen/_28sdp"
             android:layout_marginEnd="@dimen/_19sdp"
             android:background="@color/car_grey_600"
-            app:layout_constraintEnd_toStartOf="@+id/iv_video"
-            app:layout_constraintStart_toEndOf="@id/iv_camera"
-            app:layout_constraintTop_toBottomOf="@+id/tv_choose_action" />
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_23sdp"
-            app:layout_constraintEnd_toStartOf="@+id/view_video"
-            app:layout_constraintStart_toEndOf="@+id/view_image"
-            app:layout_constraintTop_toBottomOf="@+id/tv_choose_action"
-            app:srcCompat="@drawable/ic_video" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_video"
-            style="@style/AG_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_9sdp"
-            android:text="@string/actionSheet_video"
-            app:layout_constraintEnd_toStartOf="@+id/view_image"
-            app:layout_constraintStart_toEndOf="@+id/view_video"
-            app:layout_constraintTop_toBottomOf="@+id/iv_video" />
-
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="iv_video,tv_video"
-            android:id="@+id/group_video" />
-        <View
-            android:id="@+id/view_video"
-            android:layout_width="@dimen/_1sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginStart="@dimen/_19sdp"
-            android:layout_marginTop="@dimen/_28sdp"
-            android:layout_marginEnd="@dimen/_19sdp"
-            android:background="@color/car_grey_600"
             app:layout_constraintEnd_toStartOf="@+id/iv_gallery"
-            app:layout_constraintStart_toEndOf="@id/iv_video"
+            app:layout_constraintStart_toEndOf="@id/iv_camera"
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_action" />
 
 
@@ -124,8 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_23sdp"
             android:layout_marginEnd="@dimen/_16ssp"
-            app:layout_constraintStart_toEndOf="@+id/view_gallery"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_action"
             app:srcCompat="@drawable/ic_gallery" />
 
@@ -135,65 +86,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginEnd="@dimen/_16ssp"
             android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_16ssp"
             android:text="@string/actionSheet_gallery"
-            app:layout_constraintStart_toEndOf="@+id/view_gallery"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_image"
             app:layout_constraintTop_toBottomOf="@+id/iv_gallery" />
 
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="iv_gallery,tv_gallery"
-            android:id="@+id/group_gallery" />
-
-        <View
-            android:id="@+id/view_gallery"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="@dimen/_19sdp"
-            android:layout_marginTop="@dimen/_28sdp"
-            android:layout_marginEnd="@dimen/_19sdp"
-            android:background="@color/car_grey_600"
-            app:layout_constraintEnd_toStartOf="@+id/iv_myFiles"
-            app:layout_constraintStart_toEndOf="@id/iv_gallery"
-            app:layout_constraintTop_toBottomOf="@+id/tv_choose_action" />
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_myFiles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_23sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/view_gallery"
-            app:layout_constraintTop_toBottomOf="@+id/tv_choose_action"
-            app:srcCompat="@drawable/ic_myfiles" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_myFiles"
-            style="@style/AG_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/_22sdp"
-            android:text="@string/actionSheet_myfiles"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/view_gallery"
-            app:layout_constraintTop_toBottomOf="@+id/iv_myFiles" />
-
-        <androidx.constraintlayout.widget.Group
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="iv_myFiles,tv_myFiles"
-            android:id="@+id/group_myFiles" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

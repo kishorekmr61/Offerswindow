@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+
+        <variable
+            name="viewModel"
+            type="com.customer.offerswindow.ui.slotbooking.SelectSlotViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        tools:context=".ui.slotbooking.SelectSlotFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/location_txt"
+            style="@style/AG_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            android:drawableStart="@drawable/ic_location"
+            android:padding="@dimen/_6sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Malabar Gold &amp; Dimonds - KPHB" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_txt" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_calendar_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_previous"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_calendar_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_date_month"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_calendar_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_calendar_next"
+            tools:text="December 2020" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_calender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_month"
+            tools:listitem="@layout/row_calendar_date" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_avalibleslots"
+            style="@style/AG_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/available_slots"
+            android:textColor="@color/color_272727"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_calender"
+            tools:text="Available Slots" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_slotsfull"
+            style="@style/AG_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:drawableStart="@drawable/slotsfull"
+            android:drawablePadding="@dimen/_3sdp"
+            android:text="@string/slots_full"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_avalibleslots" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_fastfilling"
+            style="@style/AG_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:drawableStart="@drawable/fastfilling"
+            android:drawablePadding="@dimen/_3sdp"
+            android:text="@string/fast_filling"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toEndOf="@+id/tv_slotsfull"
+            app:layout_constraintTop_toBottomOf="@id/tv_avalibleslots" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_Available"
+            style="@style/AG_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:drawableStart="@drawable/avaliable"
+            android:drawablePadding="@dimen/_3sdp"
+            android:text="@string/available"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toEndOf="@+id/tv_fastfilling"
+            app:layout_constraintTop_toBottomOf="@id/tv_avalibleslots" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_timigs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_slotsfull"
+            tools:listitem="@layout/row_slotimings"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_noofpersons"
+            style="@style/AG_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_timigs"
+            tools:text="No of persons Coming : " />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_gray_bg"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_noofpersons">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contactdeatils_txt"
+                style="@style/AG_altbold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_details"
+                android:textColor="@color/color_272727"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contactname_txt"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawableStart="@drawable/ic_contact_name"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center|start"
+                android:textColor="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contactdeatils_txt"
+                tools:text="@string/app_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contactcall_txt"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawableStart="@drawable/ic_contact_call"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center|start"
+                android:textColor="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contactname_txt"
+                tools:text="@string/app_name" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/round_primary_bg"
+                android:padding="@dimen/_6sdp"
+                android:text="@string/book_now"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contactcall_txt" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

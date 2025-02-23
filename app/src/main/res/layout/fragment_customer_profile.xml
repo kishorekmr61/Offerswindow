@@ -21,7 +21,7 @@
 
     </data>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_20sdp"
@@ -32,7 +32,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp">
 
@@ -45,119 +45,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/changeprofile_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                app:cardBackgroundColor="@color/color_A7AEB1"
-                app:cardCornerRadius="@dimen/_18sdp"
-                app:contentPadding="@dimen/_4sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profilepic">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/AG_regular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_3sdp"
-                    android:paddingRight="@dimen/_3sdp"
-                    android:text="@string/change_picture"
-                    android:textSize="@dimen/_12ssp" />
-            </androidx.cardview.widget.CardView>
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/color_EFF1F4"
-                app:layout_constraintTop_toBottomOf="@id/changeprofile_card" />
-
-            <TextView
-                android:id="@+id/tv_uid"
-                style="@style/AG_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:text="@{`UID : ` +item.user_UID}"
-                app:layout_constraintEnd_toEndOf="@+id/changeprofile_card"
-                app:layout_constraintStart_toStartOf="@+id/changeprofile_card"
-                app:layout_constraintTop_toBottomOf="@+id/view2"
-                tools:text="UID :"/>
-
-            <TextView
-                android:id="@+id/tv_age"
-                style="@style/AG_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:text="@{`Age : ` +item.age}"
-                app:layout_constraintEnd_toEndOf="@+id/changeprofile_card"
-                app:layout_constraintStart_toStartOf="@+id/changeprofile_card"
-                app:layout_constraintTop_toBottomOf="@+id/tv_uid"
-                tools:text="Age : " />
-
-            <TextView
-                android:id="@+id/coachname_txt"
-                style="@style/AG_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:text="@{`Coach Name : ` +item.coach_Name}"
-                android:textColor="@color/primary"
-                app:layout_constraintEnd_toEndOf="@+id/changeprofile_card"
-                app:layout_constraintStart_toStartOf="@+id/changeprofile_card"
-                app:layout_constraintTop_toBottomOf="@+id/tv_age"
-                tools:text="Coach Nam : test users" />
-            <TextView
-                android:id="@+id/referencename_txt"
-                style="@style/AG_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:text="@{`Reference Name : ` +item.reference_Given_By}"
-                android:textColor="@color/primary"
-                app:layout_constraintEnd_toEndOf="@+id/changeprofile_card"
-                app:layout_constraintStart_toStartOf="@+id/changeprofile_card"
-                app:layout_constraintTop_toBottomOf="@+id/coachname_txt"
-                tools:text="Reference Nam : test users" />
-
-            <TextView
-                android:id="@+id/coachmobileno_txt"
-                style="@style/AG_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:text="@{`Coach Mobile number : ` +item.coach_Mobile_No}"
-                android:textColor="@color/primary"
-                app:layout_constraintEnd_toEndOf="@+id/changeprofile_card"
-                app:layout_constraintStart_toStartOf="@+id/changeprofile_card"
-                app:layout_constraintTop_toBottomOf="@+id/referencename_txt"
-                tools:text="Coach Mobile Number : 0987654321" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/resetpswrd_lbl"
-                style="@style/AG_altbold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:onClick="@{onItemClick}"
-                android:text="@string/resetpassword"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintTop_toBottomOf="@+id/coachmobileno_txt" />
-
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/color_EFF1F4"
-                app:layout_constraintTop_toBottomOf="@id/resetpswrd_lbl" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -167,7 +54,7 @@
                 android:layout_marginEnd="@dimen/_25sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view">
+                app:layout_constraintTop_toBottomOf="@id/profilepic">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/firstname_ti"
@@ -175,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/first_name"
+                    android:hint="Name"
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/primary"
                     app:counterTextColor="@color/black"
@@ -197,170 +84,19 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/surname_ti"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:focusableInTouchMode="true"
-                    android:hint="Sur Name"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/firstname_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_lastname"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="50"
-                        android:text="@={item.sur_Name}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="@string/app_name" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etgender_til"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_weight="0.5"
-                    android:focusableInTouchMode="true"
-                    android:hint="Gender"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/surname_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_gender"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:drawableEnd="@drawable/ic_drop_down"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:focusable="false"
-                        android:text="@={item.Gender}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/marital_status_til"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_weight="0.5"
-                    android:focusableInTouchMode="true"
-                    android:hint="Marital Status"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etgender_til">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_marital_status"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:cursorVisible="false"
-                        android:drawableEnd="@drawable/ic_drop_down"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:focusable="false"
-                        android:text="@={item.marital_Status}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Dob_ti"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:focusableInTouchMode="true"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/marital_status_til">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_dob"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_drop_down"
-                        android:focusable="false"
-                        android:hint="Date Of Birth DD MMM YYYY"
-                        android:text="@{item.DOB}"
-                        android:textColorHint="@color/color_7C7C7C"
-
-                        android:textSize="@dimen/_12ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mobilenumber_ti"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:focusableInTouchMode="true"
-                    android:hint="@string/mobile_number"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/Dob_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_mobileno"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:inputType="number"
-                        android:maxLength="10"
-                        android:text="@={item.mobile_No}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Email_ti"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/email"
+                    android:hint="Email"
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/primary"
                     app:counterTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/mobilenumber_ti">
+                    app:layout_constraintTop_toBottomOf="@id/firstname_ti">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_email"
@@ -375,15 +111,13 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/manniversiry_ti"
+                    android:id="@+id/Dob_ti"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/marriage_anniversary"
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/primary"
                     app:counterTextColor="@color/black"
@@ -392,160 +126,105 @@
                     app:layout_constraintTop_toBottomOf="@id/Email_ti">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_Manniversary"
+                        android:id="@+id/et_dob"
                         style="@style/AG_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="false"
-                        android:text="@={item.marriage_Anniversary}"
+                        android:hint="Date Of Birth DD MMM YYYY"
+                        android:text="@{item.DOB}"
+                        android:textColorHint="@color/color_7C7C7C"
+
+                        android:textSize="@dimen/_12ssp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/country_ti"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:focusableInTouchMode="true"
+                    android:hint="Country/Religion"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/Dob_ti">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_country"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="50"
+                        android:text="@={item.sur_Name}"
+                        android:textColorHint="@color/color_7C7C7C"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="@string/app_name" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etcity_til"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_weight="0.5"
+                    android:focusableInTouchMode="true"
+                    android:hint="City"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/country_ti">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_gender"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:focusable="false"
+                        android:text="@={item.Gender}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/category_ti"
+                    android:id="@+id/pincode_til"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_weight="0.5"
                     android:focusableInTouchMode="true"
-                    android:hint="Customer Category"
+                    android:hint="PinCode"
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/primary"
                     app:counterTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/manniversiry_ti">
+                    app:layout_constraintTop_toBottomOf="@+id/etcity_til">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_customercategory"
+                        android:id="@+id/et_pincode"
                         style="@style/AG_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="false"
                         android:cursorVisible="false"
-                        android:drawableEnd="@drawable/ic_drop_down"
-                        android:enabled="false"
+                        android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.cust_Category}"
+                        android:text="@={item.marital_Status}"
                         android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="@string/app_name" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fitnessgoal_ti"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:focusableInTouchMode="true"
-                    android:hint="Target Weight"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/category_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_fitnessgoal"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:text="@={item.fitness_Goal}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="@string/app_name" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/height_ti"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:focusableInTouchMode="true"
-                    android:hint="@string/height_cm"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fitnessgoal_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_height"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:text="@={item.height_CM}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="@string/app_name" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/weight_ti"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:focusableInTouchMode="true"
-                    android:hint="@string/weight_kg"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/height_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_weight"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:text="@={item.initial_Weight}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="@string/app_name" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/location"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:focusableInTouchMode="true"
-                    android:hint="Area"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary"
-                    app:counterTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/weight_ti">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_location"
-                        style="@style/AG_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:singleLine="true"
-                        android:text="@={item.location}"
-                        android:textColorHint="@color/color_7C7C7C"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="Location" />
+                        android:textSize="@dimen/_12ssp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -559,13 +238,13 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="@string/update"
+                    android:text="@string/save"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     app:cornerRadius="@dimen/_25sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/location" />
+                    app:layout_constraintTop_toBottomOf="@+id/pincode_til" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/deleteaccount_lbl"
@@ -577,7 +256,7 @@
                     android:gravity="center"
                     android:onClick="@{onItemClick}"
                     android:text="Delete Account"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/primary"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/update_btn" />
@@ -597,5 +276,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

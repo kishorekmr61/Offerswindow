@@ -5,10 +5,6 @@
 
     <data>
 
-        <variable
-            name="item"
-            type="com.customer.offerswindow.model.challenges.Table2Data" />
-
 
     </data>
 
@@ -32,10 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_4sdp"
             android:gravity="start"
-            android:text="@{item.term_Desc}"
             android:textColor="@color/color_A7AEB1"
             android:textSize="@dimen/_12ssp"
-            tools:text="@string/coach" />
+            tools:text="@string/app_name" />
 
 
     </androidx.cardview.widget.CardView>

@@ -26,7 +26,7 @@
             android:layout_marginTop="@dimen/_18sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:text="Reward Points"
+            android:text="@string/reward_points"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +65,24 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/redeem_txt"
+            style="@style/AG_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_35sdp"
+            android:background="@drawable/round_primary_bg"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/redeem_now"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/walletcard" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_rewardpoints"
             android:layout_width="match_parent"
@@ -81,9 +99,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/walletcard"
+            app:layout_constraintTop_toBottomOf="@+id/redeem_txt"
             tools:listitem="@layout/rewardshistory_row"
             tools:visibility="visible" />
+
 
         <ProgressBar
             android:id="@+id/pgBar"

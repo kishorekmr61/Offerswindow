@@ -210,6 +210,7 @@ dependencies {
 
     implementation "androidx.viewpager2:viewpager2:1.1.0"
     implementation "com.tbuonomo:dotsindicator:4.3"
+    implementation 'com.github.gastricspark:scrolldatepicker:0.0.1'
 //
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 //    implementation("com.google.firebase:firebase-analytics")

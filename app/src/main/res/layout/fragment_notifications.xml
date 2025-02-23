@@ -25,7 +25,7 @@
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/challengesrow" />
+            tools:listitem="@layout/row_notifications" />
 
         <include
             android:id="@+id/nodataavaliable"

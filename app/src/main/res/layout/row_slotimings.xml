@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Ag_body_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_black_bg"
+        android:gravity="center"
+        android:paddingStart="@dimen/_24sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_24sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10:30 AM" />
+</androidx.constraintlayout.widget.ConstraintLayout>

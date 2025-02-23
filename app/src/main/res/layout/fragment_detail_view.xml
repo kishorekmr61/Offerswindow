@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="ViewModel"
+            type="com.customer.offerswindow.ui.detailview.DetailViewViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_8sdp"
+        tools:context=".ui.detailview.DetailViewFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/img_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_110sdp"
+            app:cardBackgroundColor="@color/color_F0F0F0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_dummyimg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/favouriteselected" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/offer_txt"
+            style="@style/Ag_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_6sdp"
+            android:maxLines="3"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/contact_lyout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_card"
+            tools:text="@string/categoriename" />
+
+        <include
+            android:id="@+id/contact_lyout"
+            layout="@layout/contactinfo_lyout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/offer_txt" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title_txt"
+            style="@style/Ag_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_6sdp"
+            android:maxLines="3"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_lyout"
+            tools:text="@string/categoriename" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/location_txt"
+            style="@style/AG_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_6sdp"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/_4sdp"
+            android:maxLines="3"
+            android:textColor="@color/color_939393"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_txt"
+            tools:text="@string/categoriename" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tandc_txt"
+            style="@style/Ag_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_6sdp"
+            android:maxLines="3"
+            android:text="@string/terms_amp_condition"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_txt" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_tanc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tandc_txt"
+            tools:listitem="@layout/row_tandc"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/slotbooking_txt"
+            style="@style/AG_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_black_bg"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/slot_booking"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@id/bookoffer_txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_tanc" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookoffer_txt"
+            style="@style/AG_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_primary_bg"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/book_this_offer"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/slotbooking_txt"
+            app:layout_constraintTop_toBottomOf="@id/rv_tanc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

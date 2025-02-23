@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+
+        <variable
+            name="viewModel"
+            type="com.customer.offerswindow.ui.CategoriesViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@color/color_EFF1F4"
+        tools:context=".ui.home.HomeFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/outer_Guide_Line_Start"
+            style="@style/outer_MarginLeft_For_Home_Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="invisible" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/outer_Guide_Line_End"
+            style="@style/outer_MarginRight_For_Home_Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_listdata"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
+            app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
+            app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/catrgoriesrow"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

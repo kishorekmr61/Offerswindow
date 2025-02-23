@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/nav_sign_in"
         android:name="com.customer.offerswindow.ui.onboarding.signIn.SignInFragment"
-        android:label="@string/more"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_nav_sign_in_to_nav_home"
@@ -17,43 +16,28 @@
     <fragment
         android:id="@+id/nav_sign_up"
         android:name="com.customer.offerswindow.ui.onboarding.signup.SignUpFragment"
-        android:label="@string/more"
-        tools:layout="@layout/sign_up_fragment">
-    </fragment>
+        tools:layout="@layout/sign_up_fragment" />
 
 
     <fragment
         android:id="@+id/nav_welcome_info"
         android:name="com.customer.offerswindow.ui.onboarding.welcome.WelcomeFragment"
-        android:label="@string/welcome"
         tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_nav_welcome_info_to_nav_sign_in"
             app:destination="@id/nav_sign_in" />
     </fragment>
- <fragment
-        android:id="@+id/nav_referencenumber"
-        android:name="com.customer.offerswindow.ui.onboarding.ReferenceMember.ReferenceMemberFragment"
-        android:label="@string/reference_mobilenumber"
-        tools:layout="@layout/reference_member_fragment">
-     <action
-         android:id="@+id/action_nav_welcome_info_to_nav_sign_in"
-         app:destination="@id/nav_sign_in" />
-    </fragment>
+
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.customer.offerswindow.ui.home.HomeFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_home"/>
+        android:id="@+id/navforgotpassword"
+        android:name="com.customer.offerswindow.ui.onboarding.forgotpassword.ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password" />
 
     <fragment
-        android:id="@+id/nav_content"
-        android:name="com.customer.offerswindow.ui.ContentFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_content">
-
-    </fragment>
+        android:id="@+id/navaccountrecovery"
+        android:name="com.customer.offerswindow.ui.onboarding.forgotpassword.AccountRecoverFragment"
+        tools:layout="@layout/fragment_account_recover" />
 
 
 </navigation>

@@ -95,29 +95,6 @@ class HomeFragment : Fragment() {
                 else -> {}
             }
         }
-
-        signInViewModel.masterdata.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    response.data.let { resposnes ->
-                        if (resposnes?.Status == 200) {
-                            var responsevalue = getData(response, "Soruces_Link")
-                            soruces_link = responsevalue?.MstDesc ?: ""
-                            if (soruces_link.isEmpty()) {
-                                binding.bmilblTxt.visibility = View.GONE
-                            }
-                        }
-                    }
-                }
-
-                is NetworkResult.Error -> {
-
-                }
-
-                is NetworkResult.Loading -> {
-                }
-            }
-        }
     }
 
 

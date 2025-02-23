@@ -38,4 +38,22 @@
     <string name="categories">Categories</string>
     <string name="view_all">View All</string>
     <string name="categoriename">Apartments</string>
+    <string name="available_balance">Available Balance</string>
+    <string name="choose_an_action">Choose an action:</string>
+    <string name="actionSheet_camera">Image</string>
+    <string name="actionSheet_video">Video</string>
+    <string name="actionSheet_gallery">Gallery</string>
+    <string name="actionSheet_myfiles">My files</string>
+    <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="book_this_offer">Book this offer</string>
+    <string name="slot_booking">Slot booking</string>
+    <string name="available_slots">Available Slots</string>
+    <string name="slots_full">Slots Full</string>
+    <string name="fast_filling">Fast filling</string>
+    <string name="available">Available</string>
+    <string name="contact_details">Contact Details:</string>
+    <string name="book_now">Book Now</string>
+    <string name="save">Save</string>
+    <string name="reward_points">Reward Points</string>
+    <string name="redeem_now">Redeem now</string>
 </resources>

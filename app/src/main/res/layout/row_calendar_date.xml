@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardMaxElevation="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_calendar_day"
+                style="@style/TextAppearance.MaterialComponents.Overline"
+                android:layout_width="wrap_content"
+                tools:text="Sun"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_calendar_date"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                tools:text="06"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,7 +1,12 @@
 package com.customer.offerswindow.ui.wallet.rewardPointHistory
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -131,25 +136,4 @@ class RewarPointHistoryFragment : Fragment() {
         super.onCreateOptionsMenu(menu, menuInflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_rewardpointshistory -> {
-                showDialog()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun showDialog() {
-        val modalBottomSheet = RedemptionApproveBottomSheet()
-        var bundle = Bundle()
-        bundle.putString("REWARDBALANCE",viewModel.rewardBalance.value?.data?.rewardsHistory?.firstOrNull()?.RewardsBalance)
-        modalBottomSheet.arguments = bundle
-        modalBottomSheet.show(
-            requireActivity().supportFragmentManager,
-            "Rewards Redemption"
-        )
-    }
 }

@@ -7,9 +7,7 @@
 
         <import type="android.view.View" />
 
-        <!--<variable
-            name="addressviewmodel"
-            type="com.tatamotors.oneapp.ui.accounts.address.AddressViewModel" />-->
+
 
 
     </data>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <!--  <variable
+              name="item"
+              type="com.customer.bms.model.challenges.ChallengeData" />-->
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bookings_lyout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/gray_round_bg"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_12sdp">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/offer_img"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bg_dummyimg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/offertitle_txt"
+            style="@style/AG_altbold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/offer_img"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/location_txt"
+            style="@style/AG_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:gravity="start"
+            android:textColor="@color/color_A7AEB1"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/offer_img"
+            app:layout_constraintTop_toBottomOf="@id/offertitle_txt"
+            tools:text="@string/app_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/duration_txt"
+            style="@style/AG_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:gravity="start"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/offer_img"
+            app:layout_constraintTop_toBottomOf="@id/location_txt"
+            tools:text="@string/app_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
