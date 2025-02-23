@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">OffersWindow</string>
-    <string name="splash_msg">Open the offers window to see the exciting offers & deals.</string>
+    <string name="splash_msg">Open the offers window to see the exciting offers &amp; deals.</string>
     <string name="restart">Restart</string>
     <string name="new_app_ready">New app is ready</string>
     <string name="downloading_start">Downloading started</string>
@@ -9,8 +9,33 @@
     <string name="temp_image">temp_image.jpg</string>
     <string name="authorities">com.customer.offerswindow.fileprovider</string>
     <string name="permission_denied">Permission Denied</string>
-    <string name="signup"><b>Became a member!</b> \n \n Healthy active life style starts with YOU and BMS Wellnest always supports you</string>
+    <string name="signup">Create Account</string>
     <string name="mobile_number">Mobile Number*</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="signin">Sign in</string>
+    <string name="something_went_wrong">Oops! Something went wrong.</string>
+    <string name="okay">Okay</string>
+    <string name="resend">We have sent Otp to your email/number ? <b> Resend</b></string>
+    <string name="create_account">Don\'t have an Account ?<b>  Create One</b></string>
+    <string name="email_address_or_phone_number">Email Address or phone number</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="verify">Verify</string>
+    <string name="_email_number_resend">We have sent Otp to your email/number ? <b> Resend</b></string>
+    <string name="already_have_an_account_signin">Already have an Account ?<b> signin</b></string>
+    <string name="phone_number">Phone number</string>
+    <string name="email_address">Email Address</string>
+    <string name="lastname">Lastname</string>
+    <string name="firstname">Firstname</string>
+    <string name="we_have_sent_otp_to">We have sent Otp to</string>
+    <string name="Continue">Continue</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="recovered_account">"You have successfully \n Recovered account"</string>
+    <string name="return_to_login">Return to Login</string>
+    <string name="search_offers_any_brand">Search offers any brand</string>
+    <string name="categories">Categories</string>
+    <string name="view_all">View All</string>
+    <string name="categoriename">Apartments</string>
 </resources>

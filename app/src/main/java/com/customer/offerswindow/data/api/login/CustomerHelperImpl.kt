@@ -1,6 +1,8 @@
 package com.customer.offerswindow.data.api.login
 
 import com.customer.offerswindow.data.api.login.ApiServices.CustomerApiService
+import com.customer.offerswindow.model.PostNewEnquiry
+import com.customer.offerswindow.model.PostPhoneNumber
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -118,12 +120,15 @@ class CustomerHelperImpl @Inject constructor(private val customerApiService: Cus
 //    suspend fun postNewEnquiry(postNewEnquiry: PostNewEnquiry) =
 //        customerApiService.postNewEnquiry(postNewEnquiry)
 
-//    suspend fun postSignUp(postNewEnquiry: PostNewEnquiry) =
-//        customerApiService.postSignUP(postNewEnquiry)
+    suspend fun postSignUp(postNewEnquiry: PostNewEnquiry) =
+        customerApiService.postSignUP(postNewEnquiry)
 
 
     suspend fun postOTPVerificationData(mobileno: String, otp: String) =
         customerApiService.postVerifyOTPData(mobileno, otp)
+
+    suspend fun postOTPData(postPhoneNumber: PostPhoneNumber) =
+        customerApiService.postOTPData(postPhoneNumber)
 
 //    suspend fun getConfirmedTickets(userid: String, lMaximumTransactionID: Long) =
 //        customerApiService.getConfirmedTickets(userid, lMaximumTransactionID)

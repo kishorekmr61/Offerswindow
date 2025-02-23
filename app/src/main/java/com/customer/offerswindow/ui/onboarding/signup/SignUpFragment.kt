@@ -14,7 +14,7 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.SignUpFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.PostNewEnquiry
-import com.customer.offerswindow.model.stock.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.ui.onboarding.otpdialog.OtpDialogFragment
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.getDateTime
@@ -151,8 +151,7 @@ class SignUpFragment : Fragment() {
             PostNewEnquiry(
                 binding.etName.text.toString(),
                 binding.etMobilenumber.text.toString(),
-                binding.etEmail.text.toString(),
-                binding.etRefmno.text.toString(),
+                binding.etEmail.text.toString(),"",
                 0,
                 0,
                 "",

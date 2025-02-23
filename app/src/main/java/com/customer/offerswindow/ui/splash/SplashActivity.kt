@@ -3,9 +3,11 @@ package com.customer.offerswindow.ui.splash
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -34,10 +36,15 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(android.R.style.Theme_NoTitleBar_Fullscreen)
+        }else {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
         setContentView(R.layout.activity_splash)
         setStatusBar(R.color.transparent, false)
 

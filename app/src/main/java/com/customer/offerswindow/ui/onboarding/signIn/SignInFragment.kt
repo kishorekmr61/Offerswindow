@@ -103,16 +103,16 @@ class SignInFragment : Fragment() {
 
     private fun validateUserLogin(): Boolean {
         if (binding.etMobilenumber.text.isNullOrEmpty()) {
-            binding.mobilenumberField.error = "Please enter valid mobile number"
+            binding.etMobilenumber.error = "Please enter valid mobile number"
             return false
         }
         if (binding.etPswrd.text.isNullOrEmpty()) {
             binding.etMobilenumber.error = null
-            binding.pswrdField.error = "Please enter valid password"
+            binding.etPswrd.error = "Please enter valid password"
             return false
         }
-        binding.mobilenumberField.error = null
-        binding.pswrdField.error = null
+        binding.etMobilenumber.error = null
+        binding.etPswrd.error = null
         return true
     }
 
@@ -154,29 +154,11 @@ class SignInFragment : Fragment() {
                         }
                         if (resposnes?.Status == 200) {
                             if (!resposnes.Data.firstOrNull()?.Cust_Version.isNullOrEmpty()) {
-                                if (resposnes.Data.firstOrNull()?.Cust_Version != BuildConfig.VERSION_NAME) {
-                                    showCommonCustomIOSDialog(
-                                        requireActivity(),
-                                        "Note",
-                                        "Please contact your coach to get latest version of the app",
-                                        getString(R.string.okay),
-                                        {},
-                                        "",
-                                        {}, false
-                                    )
-                                } else {
-                                    navigateUser(resposnes, response)
-                                }
-                            } else {
                                 navigateUser(resposnes, response)
                             }
                         } else {
                             signInViewModel.isloading.set(false)
                             ShowFullToast(response.data?.Message ?: "")
-//                            if (response.data?.Message?.contains("password") == true) {
-////                                binding.pswrdField.error = response.data?.Message
-//                                ShowFullToast(response.data?.Message?: getString(R.string.something_went_wrong))
-//                            }
                         }
                     }
                 }
@@ -261,7 +243,7 @@ class SignInFragment : Fragment() {
             Constants.DEFAULT_PHOTO,
             resposnes.Data.firstOrNull()?.Cust_Image_Path ?: ""
         )
-        OneSignal.setEmail(resposnes.Data.firstOrNull()?.Email_ID ?: "");
+//        OneSignal.setEmail(resposnes.Data.firstOrNull()?.Email_ID ?: "");
         AppPreference.write(
             Constants.NAME,
             resposnes.Data.firstOrNull()?.Cust_Name ?: ""
@@ -282,10 +264,10 @@ class SignInFragment : Fragment() {
             Constants.MOBILENO,
             resposnes.Data.firstOrNull()?.User_ID ?: ""
         )
-        OneSignal.sendTag(
-            "CustomerUID",
-            resposnes.Data.firstOrNull()?.User_UID ?: ""
-        )
+//        OneSignal.sendTag(
+//            "CustomerUID",
+//            resposnes.Data.firstOrNull()?.User_UID ?: ""
+//        )
         // Pass in phone number provided by customer
         //OneSignal.setSMSNumber(resposnes.data.firstOrNull()?.Email_ID);
         response.data?.Data?.get(0)?.User_UID?.let {

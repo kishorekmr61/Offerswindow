@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
-import com.customer.offerswindow.model.stock.StockPurchsasePostingResponse
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
@@ -41,7 +41,7 @@ class SignInViewModel @Inject constructor(
 //                    response.value?.data = values.data
                 }
             } else {
-                com.customer.offerswindow.utils.showToast("No Internet")
+               showToast("No Internet")
             }
         }
     }
@@ -54,7 +54,7 @@ class SignInViewModel @Inject constructor(
 //                    response.value?.data = values.data
                 }
             } else {
-                com.customer.offerswindow.utils.showToast("No Internet")
+               showToast("No Internet")
             }
         }
     }
@@ -66,7 +66,7 @@ class SignInViewModel @Inject constructor(
                     forgotpasswordResponse.postValue(values)
                 }
             } else {
-                com.customer.offerswindow.utils.showToast("No Internet")
+                showToast("No Internet")
             }
         }
     }
@@ -78,7 +78,7 @@ class SignInViewModel @Inject constructor(
                     masterdata.postValue(values)
                 }
             } else {
-                com.customer.offerswindow.utils.showToast("No Internet")
+                showToast("No Internet")
             }
         }
     }

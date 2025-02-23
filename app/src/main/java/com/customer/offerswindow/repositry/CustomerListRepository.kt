@@ -4,6 +4,9 @@ import com.customer.offerswindow.data.api.login.CustomerHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerListResponse
+import com.customer.offerswindow.model.PostNewEnquiry
+import com.customer.offerswindow.model.PostPhoneNumber
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.customersdata.ProfileUpdateResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -76,6 +79,16 @@ class CustomerListRepository @Inject constructor(
 //            emit(safeApiCall { customerHelperImpl.submitProfileUpdateData(part, formDataBody) })
 //        }.flowOn(Dispatchers.IO)
 //    }
+suspend fun postSignUp(postNewEnquiry: PostNewEnquiry): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    return flow {
+        emit(safeApiCall { customerHelperImpl.postSignUp(postNewEnquiry) })
+    }.flowOn(Dispatchers.IO)
+}
 
+    suspend fun postOTPData(postPhoneNumber: PostPhoneNumber): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+        return flow {
+            emit(safeApiCall { customerHelperImpl.postOTPData(postPhoneNumber) })
+        }.flowOn(Dispatchers.IO)
+    }
 
 }

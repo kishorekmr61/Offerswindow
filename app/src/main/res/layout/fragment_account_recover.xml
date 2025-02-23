@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="vm"
+            type="com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.onboarding.forgotpassword.AccountRecoverFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/success_img"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/success"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/success_msg"
+            style="@style/Ag_h4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recovered_account"
+            android:textColor="@color/color_272727"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_18sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/success_img" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_btn"
+            style="@style/Ag_body_copy_small"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:text="@string/return_to_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:cornerRadius="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/success_msg" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

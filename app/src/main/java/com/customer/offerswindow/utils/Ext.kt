@@ -484,6 +484,7 @@ fun Fragment.showCommonCustomIOSDialog(
 }
 
 
+@SuppressLint("RestrictedApi")
 fun Fragment.ShowFullToast(message: String) {
     if (!TextUtils.isEmpty(message)) {
         val snackbar = Snackbar.make(

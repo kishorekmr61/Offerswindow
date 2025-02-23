@@ -7,5 +7,11 @@
         <item>@font/aladin</item>
         <item>@font/archivo_black</item>
         <item>@font/inter</item>
+        <item>@font/poppins</item>
+        <item>@font/poppins_black</item>
+        <item>@font/poppins_bold</item>
+        <item>@font/poppins_light</item>
+        <item>@font/poppins_medium</item>
+        <item>@font/poppins_semibold</item>
     </array>
 </resources>

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.PostNewEnquiry
 import com.customer.offerswindow.model.PostPhoneNumber
-import com.customer.offerswindow.model.stock.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.repositry.CustomerListRepository
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
@@ -33,7 +33,7 @@ class SignUpViewModel @Inject constructor(
                     signUpResponse.postValue(values)
                 }
             } else {
-                com.customer.offerswindow.utils.showToast("No Internet")
+                 showToast("No Internet")
             }
         }
     }
@@ -49,7 +49,7 @@ class SignUpViewModel @Inject constructor(
                     otpResponse.postValue(values)
                 }
             } else {
-                com.customer.offerswindow.utils.showToast("No Internet")
+                showToast("No Internet")
             }
         }
     }
