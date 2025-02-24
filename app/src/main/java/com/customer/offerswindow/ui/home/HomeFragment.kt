@@ -148,14 +148,7 @@ class HomeFragment : Fragment() {
         try {
             if (AppPreference?.read("ISFROM", "") == "NOTIFICATIONS") {
                 AppPreference.write("ISFROM", "")
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2001") {
-                    findNavController().navigate(R.id.nav_orderHistoryFragment)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2002") {
-                    findNavController().navigate(R.id.nav_walletpendingrequestFragment)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
+
                 if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2003") {
                     findNavController().navigate(R.id.nav_notifications)
                     AppPreference.write(Constants.Screen_Code, "")
@@ -166,10 +159,7 @@ class HomeFragment : Fragment() {
                 }
 
 
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2006") {
-                    findNavController().navigate(R.id.nav_ConfirmedTickets)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
+
                 if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2008") {
                     findNavController().navigate(R.id.nav_rewardshistory)
                     AppPreference.write(Constants.Screen_Code, "")
@@ -179,10 +169,7 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(R.id.nav_rewardshistory)
                     AppPreference.write(Constants.Screen_Code, "")
                 }
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2010") {
-                    findNavController().navigate(R.id.nav_invoiceFragment)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
+
                 if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2011") {
                     findNavController().navigate(R.id.nav_walletBalanceFragment)
                     AppPreference.write(Constants.Screen_Code, "")

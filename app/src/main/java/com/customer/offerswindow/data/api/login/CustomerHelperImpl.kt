@@ -1,6 +1,6 @@
 package com.customer.offerswindow.data.api.login
 
-import com.customer.offerswindow.data.api.login.ApiServices.CustomerApiService
+import com.customer.offerswindow.data.api.login.apiServices.CustomerApiService
 import com.customer.offerswindow.model.PostNewEnquiry
 import com.customer.offerswindow.model.PostPhoneNumber
 import okhttp3.MultipartBody
@@ -103,8 +103,8 @@ class CustomerHelperImpl @Inject constructor(private val customerApiService: Cus
 //            lMaximumProgramID
 //        )
 
-    suspend fun getCustomerplans(lUserID: String) =
-        customerApiService.getCustomerPlans(lUserID)
+//    suspend fun getCustomerplans(lUserID: String) =
+//        customerApiService.getCustomerPlans(lUserID)
 
 //    suspend fun getReportIssues(mastertype: String, iParentMasterID: Long) =
 //        customerApiService.getReportIssues(mastertype, iParentMasterID)

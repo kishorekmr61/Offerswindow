@@ -1,6 +1,7 @@
 package com.customer.offerswindow.application
 
 import android.app.Application
+import androidx.multidex.MultiDex
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.google.firebase.Firebase
@@ -33,7 +34,7 @@ class OfferWindowApplication : Application() {
         }
 //        OneSignal.setNotificationOpenedHandler(OneSignalNotificationOpenHandler(this))
         // OneSignal Initialization
-//         MultiDex.install(this)
+         MultiDex.install(this)
 //        OneSignal.promptForPushNotifications();
 //        val crashlytics = Firebase.crashlytics
 //        crashlytics.setCustomKeys {

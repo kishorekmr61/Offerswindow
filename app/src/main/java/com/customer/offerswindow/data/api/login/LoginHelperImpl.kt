@@ -1,6 +1,6 @@
 package com.customer.offerswindow.data.api.login
 
-import com.customer.offerswindow.data.api.login.ApiServices.MasterApiService
+import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
 import javax.inject.Inject
 
 class LoginHelperImpl @Inject constructor(private val masterApiService: MasterApiService) {

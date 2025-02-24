@@ -33,7 +33,7 @@ class SignUpViewModel @Inject constructor(
                     signUpResponse.postValue(values)
                 }
             } else {
-                 showToast("No Internet")
+//                 showToast("No Internet")
             }
         }
     }
@@ -49,7 +49,7 @@ class SignUpViewModel @Inject constructor(
                     otpResponse.postValue(values)
                 }
             } else {
-                showToast("No Internet")
+//                showToast("No Internet")
             }
         }
     }

@@ -1,8 +1,5 @@
 package com.customer.offerswindow.model.masters
 
-import androidx.databinding.BaseObservable
-import com.customer.offerswindow.R
-import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -35,8 +32,5 @@ data class CommonDataResponse(
     var CreatedBy: String = "",
     @SerializedName("Created_Date")
     var CreatedDate: String = "",
-): WidgetViewModel, BaseObservable() {
-    override fun layoutId(): Int {
-        return R.layout.row_servicestandc
-    }
-}
+)
+

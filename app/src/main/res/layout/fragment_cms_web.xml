@@ -4,9 +4,9 @@
 
     <data>
 
-        <variable
+        <!--<variable
             name="vm"
-            type="com.customer.offerswindow.ui.webpages.CMSWebViewModel" />
+            type="com.customer.offerswindow.ui.webpages.CMSWebViewModel" />-->
     </data>
 
 

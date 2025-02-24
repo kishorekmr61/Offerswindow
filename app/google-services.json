@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "544253157009",
+    "project_id": "offerswindow-4f0f8",
+    "storage_bucket": "offerswindow-4f0f8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544253157009:android:2694520df75f84d51f2930",
+        "android_client_info": {
+          "package_name": "com.customer.offerswindow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlQpWv0t_bw3Kq4Tj8zRq81iitCVCm2R4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

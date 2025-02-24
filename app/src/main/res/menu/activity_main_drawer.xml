@@ -8,7 +8,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="@string/home" />
+            android:title="home" />
     </group>
 
     <group

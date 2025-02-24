@@ -79,7 +79,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:layout_marginEnd="@dimen/_55sdp"
-                            android:background="null"
+                            android:background="@null"
                             android:hint="@string/email_address_or_phone_number"
                             android:imeOptions="actionNext"
                             android:inputType="number"

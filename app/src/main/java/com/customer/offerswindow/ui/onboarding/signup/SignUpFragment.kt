@@ -15,7 +15,6 @@ import com.customer.offerswindow.databinding.SignUpFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.PostNewEnquiry
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
-import com.customer.offerswindow.ui.onboarding.otpdialog.OtpDialogFragment
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.getDateTime
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
@@ -39,7 +38,7 @@ class SignUpFragment : Fragment() {
         setObserver()
         binding.signupBtn.setOnClickListener {
             if (isValidate()) {
-               signInViewModel.postOtp(binding.etMobilenumber.text.toString())
+                signInViewModel.postOtp(binding.etMobilenumber.text.toString())
             }
         }
         binding.signinLbl.setOnClickListener {
@@ -61,7 +60,7 @@ class SignUpFragment : Fragment() {
             showToast("Please enter Valid Mobile Number")
             return false
         }
-        if (binding.etEmail.text.toString().isNullOrEmpty()){
+        if (binding.etEmail.text.toString().isNullOrEmpty()) {
             showToast("Please enter Email")
         }
 
@@ -73,12 +72,11 @@ class SignUpFragment : Fragment() {
     }
 
 
-
     private fun setObserver() {
-        signInViewModel.signUpResponse.observe(viewLifecycleOwner){response->
+        signInViewModel.signUpResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    response.data.let { resposnes->
+                    response.data.let { resposnes ->
                         if (resposnes?.Status == 200) {
                             ShowFullToast(response.data?.Message ?: "")
                             findNavController().navigate(R.id.nav_sign_in)
@@ -87,19 +85,21 @@ class SignUpFragment : Fragment() {
                         }
                     }
                 }
+
                 is NetworkResult.Error -> {
                     signInViewModel.isloading.set(false)
                     response.message?.let { ShowFullToast(response.message) }
                 }
+
                 is NetworkResult.Loading -> {
                     signInViewModel.isloading.set(true)
                 }
             }
         }
-        signInViewModel.otpResponse.observe(viewLifecycleOwner){response->
+        signInViewModel.otpResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    response.data.let { resposnes->
+                    response.data.let { resposnes ->
                         if (resposnes?.Status == 200) {
                             ShowFullToast(response.data?.Message ?: "")
                             openOTPScreen()
@@ -108,10 +108,12 @@ class SignUpFragment : Fragment() {
                         }
                     }
                 }
+
                 is NetworkResult.Error -> {
                     signInViewModel.isloading.set(false)
                     response.message?.let { ShowFullToast(response.message) }
                 }
+
                 is NetworkResult.Loading -> {
                     signInViewModel.isloading.set(true)
                 }
@@ -120,27 +122,13 @@ class SignUpFragment : Fragment() {
     }
 
     private fun openOTPScreen() {
-        val modalBottomSheet = OtpDialogFragment.newInstance(binding.etMobilenumber.text.toString(), "",object :
-            OtpDialogFragment.OtpStatusListener {
-            override fun OTPSuccess(stockPurchsasePostingResponse: StockPurchsasePostingResponse) {
-                if (stockPurchsasePostingResponse.Status == 200) {
-                    signInViewModel.isloading.set(true)
-                    postSignUpInfo()
-                }
-            }
 
-            override fun OtpFailure(stockPurchsasePostingResponse: StockPurchsasePostingResponse) {
-                if (stockPurchsasePostingResponse.Status != 200) {
-                    ShowFullToast(stockPurchsasePostingResponse.Message)
-                }
-            }
-        })
-        modalBottomSheet.show(requireActivity().supportFragmentManager, "OTPDIALOG")
     }
 
     private fun isValidMail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+
     private fun isValidMobile(phone: String): Boolean {
         return phone.length >= 10
     }
@@ -151,7 +139,7 @@ class SignUpFragment : Fragment() {
             PostNewEnquiry(
                 binding.etName.text.toString(),
                 binding.etMobilenumber.text.toString(),
-                binding.etEmail.text.toString(),"",
+                binding.etEmail.text.toString(), "",
                 0,
                 0,
                 "",

@@ -1,7 +1,8 @@
 package com.customer.offerswindow.ui.onboarding.forgotpassword
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 
 class ForgotPasswordViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+    var isloading = ObservableField<Boolean>()
 }

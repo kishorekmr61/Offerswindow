@@ -84,9 +84,6 @@ class CustomerProfileFragment : Fragment() {
     private fun setInputFilters() {
         // Set input filters for name and height fields
         binding.etFirstname.filters = arrayOf(NameInputFilter())
-        binding.etLastname.filters = arrayOf(NameInputFilter())
-        binding.etHeight.filters = arrayOf(HeightInputFilter())
-        binding.etWeight.filters = arrayOf(HeightInputFilter())
     }
 
     private fun setUpListeners() {
@@ -116,102 +113,11 @@ class CustomerProfileFragment : Fragment() {
             }
         }
 
-        binding.etMaritalStatus.setOnClickListener {
-            val masterdata = arrayListOf<SpinnerRowModel>()
-            masterdata.add(SpinnerRowModel("Single", false, false, "", ""))
-            masterdata.add(SpinnerRowModel("Married", false, false, "", ""))
-//            masterdata.add(SpinnerRowModel("Divorced", false, false, "",""))
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
-                    binding.etMaritalStatus.text.toString(), masterdata, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?, datevalue: String
-                        ) {
-                            if (titleData != null) {
-                                if (titleData.title == "Married" || titleData.title == "M") {
-                                    binding.etManniversary.setText("")
-                                    binding.manniversiryTi.visibility = View.VISIBLE
-                                } else {
-                                    binding.manniversiryTi.visibility = View.GONE
-                                }
-                                binding.etMaritalStatus.setText(titleData.title)
 
-                            }
-                        }
-
-                        override fun onItemmultipleSelectedListner(
-                            titleData: ArrayList<SpinnerRowModel>?,
-                            value: ArrayList<SpinnerRowModel>
-                        ) {
-
-                        }
-                    })
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
-            }
-        }
-
-
-        binding.etCustomercategory.setOnClickListener {
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
-                    binding.etCustomercategory.text.toString(), masterdata, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?,
-                            datevalue: String
-                        ) {
-                            if (titleData != null) {
-                                binding.etCustomercategory.setText(titleData.title)
-                            }
-                        }
-
-                        override fun onItemmultipleSelectedListner(
-                            titleData: ArrayList<SpinnerRowModel>?,
-                            value: ArrayList<SpinnerRowModel>
-                        ) {
-
-                        }
-                    })
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
-            }
-        }
         binding.etDob.setOnClickListener {
             openCalendar(binding.etDob)
         }
-        binding.etManniversary.setOnClickListener {
-            openCalendar(binding.etManniversary)
-        }
 
-        binding.changeprofileCard.setOnClickListener {
-            triggerCameraOrGallerySelection(binding.profilepic)
-        }
-        binding.etLocation.setOnClickListener {
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.LOCATION,
-                    binding.etLocation.text.toString(), locationmasterdata, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?,
-                            datevalue: String
-                        ) {
-                            if (titleData != null) {
-                                binding.etLocation.setText(titleData.title)
-                            } else if (datevalue != null) {
-                                binding.etLocation.setText(datevalue)
-                            }
-                        }
-
-                        override fun onItemmultipleSelectedListner(
-                            titleData: java.util.ArrayList<SpinnerRowModel>?,
-                            value: java.util.ArrayList<SpinnerRowModel>
-                        ) {
-
-                        }
-                    })
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
-            }
-        }
         binding.updateBtn.setOnClickListener {
             try {
                 if (isEmailValid(binding.etEmail.text.toString())) {
@@ -235,9 +141,7 @@ class CustomerProfileFragment : Fragment() {
             val bundle = Bundle()
             bundle.putString(Constants.ISFROM, "")
             when (it.id) {
-                R.id.resetpswrd_lbl -> {
-                    findNavController().navigate(R.id.nav_resetpassword)
-                }
+
 
                 R.id.deleteaccount_lbl -> {
                     showCommonCustomIOSDialog(
@@ -263,9 +167,6 @@ class CustomerProfileFragment : Fragment() {
             val formDataJson = JsonObject()
             formDataJson.addProperty("CustomerUID", CustomerUID)
             formDataJson.addProperty("CustomerName", binding.etFirstname.text.toString())
-            formDataJson.addProperty("CustomerCategory", binding.etCustomercategory.text.toString())
-            formDataJson.addProperty("MobileNo", binding.etMobileno.text.toString())
-            formDataJson.addProperty("SurName", binding.etLastname.text.toString())
             formDataJson.addProperty(
                 "DoB",
                 convertDate(
@@ -275,26 +176,10 @@ class CustomerProfileFragment : Fragment() {
                 )
             )
             formDataJson.addProperty("EmailID", binding.etEmail.text.toString())
-            formDataJson.addProperty("Location", binding.etLocation.text.toString())
             formDataJson.addProperty("Gender", getGenderType(binding.etGender.text.toString()))
-            formDataJson.addProperty(
-                "MaritalStatus",
-                getMaritalStatusType(binding.etMaritalStatus.text.toString())
-            )
-            if (binding.etMaritalStatus.text.toString() == "Married") {
-                formDataJson.addProperty(
-                    "MarriageAnniversaryDate",
-                    convertDate(
-                        binding.etManniversary.text.toString() ,
-                        Constants.DDMMMYYYY,
-                        Constants.YYY_HIFUN_MM_DD
-                    )
-                )
-            }
 
-            formDataJson.addProperty("FitnessGoal", binding.etFitnessgoal.text.toString())
-            formDataJson.addProperty("CustomerHeight", binding.etHeight.text.toString())
-            formDataJson.addProperty("CustomerWeight", binding.etWeight.text.toString())
+
+
             formDataJson.addProperty(
                 "CustomerPhotoFilePath",
                 if (!isPhotoAvailable) CustomerImageUrl else ""
@@ -409,29 +294,7 @@ class CustomerProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.masterdata.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    viewModel.isloading.set(false)
-                    response.data.let { resposnes ->
-                        if (resposnes?.Status == 200) {
-                            updateMasterdata(resposnes)
-                        } else {
-                            ShowFullToast(response.data?.Message ?: "")
-                        }
-                    }
-                }
 
-                is NetworkResult.Error -> {
-                    viewModel.isloading.set(false)
-                    response.message?.let { ShowFullToast(response.message) }
-                }
-
-                is NetworkResult.Loading -> {
-
-                }
-            }
-        }
         viewModel.locationsmasterdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -530,20 +393,7 @@ class CustomerProfileFragment : Fragment() {
         binding.etGender.isEnabled = customerData?.Gender?.trim().isNullOrEmpty()
         binding.etDob.isEnabled = customerData?.DOB?.trim().isNullOrEmpty()
         binding.etEmail.isEnabled = customerData?.Email_ID?.trim().isNullOrEmpty()
-        binding.etLocation.isEnabled = customerData?.Location?.trim().isNullOrEmpty()
-        binding.etMaritalStatus.isEnabled = customerData?.Marital_Status?.trim().isNullOrEmpty()
-         binding.etFitnessgoal.isEnabled =
-             customerData.Fitness_Goal.isNullOrEmpty() || customerData?.Fitness_Goal == "0.0"
-        binding.etHeight.isEnabled =
-            customerData.Height_CM.isNullOrEmpty() ||customerData.Initial_Weight == "0.0"
-        binding.etWeight.isEnabled =
-            customerData.Initial_Weight.isNullOrEmpty() || customerData.Initial_Weight == "0.0"
 
-        if (customerData?.Marital_Status == "Married" || customerData?.Marital_Status == "M" ) {
-            binding.manniversiryTi.visibility = View.VISIBLE
-        }else{
-            binding.manniversiryTi.visibility = View.GONE
-        }
         viewModel.bindCustomerData(customerData)
         binding.executePendingBindings()
     }

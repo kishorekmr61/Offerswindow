@@ -4,7 +4,6 @@ import com.customer.offerswindow.data.api.login.DashBoardHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerListResponse
-import com.customer.offerswindow.model.dashboard.DashBoardBannerData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -25,12 +24,6 @@ class DashBoardRepositry @Inject constructor(
     }
 
 
-    suspend fun getBannersData(
-        Userid: String
-    ): Flow<NetworkResult<DashBoardBannerData>> {
-        return flow {
-            emit(safeApiCall { dashBoardHelperImpl.getBannerdata(userid = Userid, "0") })
-        }.flowOn(Dispatchers.IO)
-    }
+
 
 }

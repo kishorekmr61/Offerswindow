@@ -1,14 +1,12 @@
 package com.customer.offerswindow.ui.manageprofile
 
 import android.util.Pair
-import com.theartofdev.edmodo.cropper.CropImageView
-import com.theartofdev.edmodo.cropper.CropImageView.CropShape
-import com.theartofdev.edmodo.cropper.CropImageView.Guidelines
+import com.canhub.cropper.CropImageView
 
 internal class CropImageViewOptions {
     var scaleType = CropImageView.ScaleType.CENTER_INSIDE
-    var cropShape = CropShape.RECTANGLE
-    var guidelines = Guidelines.ON_TOUCH
+    var cropShape = CropImageView.CropShape.RECTANGLE
+    var guidelines = CropImageView.Guidelines.ON_TOUCH
     var aspectRatio = Pair(1, 1)
     var autoZoomEnabled = false
     var maxZoomLevel = 0

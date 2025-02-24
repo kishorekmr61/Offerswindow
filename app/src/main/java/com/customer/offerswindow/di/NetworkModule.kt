@@ -1,7 +1,7 @@
 package com.customer.offerswindow.di
 
 import com.customer.offerswindow.BuildConfig
-import com.customer.offerswindow.data.api.login.ApiServices.*
+import com.customer.offerswindow.data.api.login.apiServices.*
 import com.customer.offerswindow.helper.AuthInterceptor
 import com.customer.offerswindow.helper.AuthAuthenticator
 import dagger.Module
@@ -81,34 +81,9 @@ object NetworkModule {
         retrofit.create(CustomerApiService::class.java)
 
 
-//    @Singleton
-//    @Provides
-//    fun provideWalletApiServicedata(retrofit: Retrofit): WalletApiService =
-//        retrofit.create(WalletApiService::class.java)
-//
-//    @Singleton
-//    @Provides
-//    fun provideStocksApiServicedata(retrofit: Retrofit): StocksApiService =
-//        retrofit.create(StocksApiService::class.java)
-//
-//    @Singleton
-//    @Provides
-//    fun provideChallengesApiServicedata(retrofit: Retrofit): ChallengesApiService =
-//        retrofit.create(ChallengesApiService::class.java)
-//
-//    @Singleton
-//    @Provides
-//    fun provideMembershipApiServicedata(retrofit: Retrofit): MemberShipApiService =
-//        retrofit.create(MemberShipApiService::class.java)
-//
-//    @Singleton
-//    @Provides
-//    fun provideClosureGroupApiServicedata(retrofit: Retrofit): ClosureGroupsApiService =
-//        retrofit.create(ClosureGroupsApiService::class.java)
-//
-//    @Singleton
-//    @Provides
-//    fun provideScannerApiServicedata(retrofit: Retrofit): ScannerApiService =
-//        retrofit.create(ScannerApiService::class.java)
+    @Singleton
+    @Provides
+    fun provideWalletApiServicedata(retrofit: Retrofit): WalletApiService =
+        retrofit.create(WalletApiService::class.java)
 
 }

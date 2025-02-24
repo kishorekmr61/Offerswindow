@@ -87,12 +87,7 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         //mBehavior.isDraggable = false
         mBehavior.skipCollapsed = true
         if (isLivecamera) {
-            binding?.groupVideo?.visibility = View.GONE
             binding.viewImage.visibility = View.GONE
-            binding.viewVideo.visibility = View.GONE
-            binding.viewGallery.visibility = View.GONE
-            binding?.groupGallery?.visibility = View.GONE
-            binding?.groupMyFiles?.visibility = View.GONE
         }
         initialize()
 
@@ -104,10 +99,8 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         super.onStart()
         mBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         if (isFromReview) {
-            binding.groupVideo.visibility = View.VISIBLE
             binding.viewImage.visibility = View.VISIBLE
         } else {
-            binding.groupVideo.visibility = View.GONE
             binding.viewImage.visibility = View.GONE
         }
         setClickListener()
@@ -115,25 +108,17 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
 
 
     private fun setClickListener() {
-        binding.groupImage.setAllOnClickListener {
-            if (checkPermission()) openCamera()
-            else requestPermission(101)
-        }
+//        binding.ivCamera.setAllOnClickListener {
+//            if (checkPermission()) openCamera()
+//            else requestPermission(101)
+//        }
+//
+//
+//        binding.ivGallery.setAllOnClickListener {
+//            if (checkPermission()) openGallery()
+//            else requestPermission(102)
+//        }
 
-        binding.groupVideo.setAllOnClickListener {
-            if (checkPermission()) openVideo()
-            else requestPermission(104)
-        }
-
-        binding.groupGallery.setAllOnClickListener {
-            if (checkPermission()) openGallery()
-            else requestPermission(102)
-        }
-
-        binding.groupMyFiles.setAllOnClickListener {
-            if (checkPermission()) openMyFiles()
-            else requestPermission(103)
-        }
     }
 
     private fun checkPermission(): Boolean {

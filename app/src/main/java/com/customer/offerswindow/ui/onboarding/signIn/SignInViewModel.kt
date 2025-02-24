@@ -12,7 +12,6 @@ import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
-import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,7 +40,7 @@ class SignInViewModel @Inject constructor(
 //                    response.value?.data = values.data
                 }
             } else {
-               showToast("No Internet")
+//               showToast("No Internet")
             }
         }
     }
@@ -54,7 +53,7 @@ class SignInViewModel @Inject constructor(
 //                    response.value?.data = values.data
                 }
             } else {
-               showToast("No Internet")
+              ("No Internet")
             }
         }
     }
@@ -66,7 +65,7 @@ class SignInViewModel @Inject constructor(
                     forgotpasswordResponse.postValue(values)
                 }
             } else {
-                showToast("No Internet")
+//                showToast("No Internet")
             }
         }
     }
@@ -78,7 +77,7 @@ class SignInViewModel @Inject constructor(
                     masterdata.postValue(values)
                 }
             } else {
-                showToast("No Internet")
+//                showToast("No Internet")
             }
         }
     }

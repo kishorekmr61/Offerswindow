@@ -34,7 +34,7 @@ class RewardPointHistoryViewModel @Inject constructor(
                     rewardsHistorydata.postValue(values)
                 }
             } else {
-              showToast("No Internet")
+//              showToast("No Internet")
             }
         }
     }
@@ -46,7 +46,7 @@ class RewardPointHistoryViewModel @Inject constructor(
                     rewardBalance.postValue(values)
                 }
             } else {
-               showToast("No Internet")
+//               showToast("No Internet")
             }
         }
     }

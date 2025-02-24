@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.canhub.cropper.CropImageView
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
@@ -31,9 +32,6 @@ import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showToast
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.theartofdev.edmodo.cropper.CropImageView
-import com.theartofdev.edmodo.cropper.CropImageView.CropResult
-import com.theartofdev.edmodo.cropper.CropImageView.OnCropImageCompleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default
@@ -47,7 +45,7 @@ import java.io.File
 
 
 @AndroidEntryPoint
-class ManageProfileFragment : Fragment(), OnCropImageCompleteListener {
+class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListener {
     private var _binding: FragmentManageProfileBinding? = null
     private val binding get() = _binding!!
     private val manageProfileViewModel: ManageProfileViewModel by viewModels()
@@ -119,7 +117,7 @@ class ManageProfileFragment : Fragment(), OnCropImageCompleteListener {
 
         }
         binding.btnDone.setOnClickListener {
-            binding.cropImageView.getCroppedImageAsync()
+            binding.cropImageView.getCroppedImage()
         }
     }
 
@@ -134,7 +132,7 @@ class ManageProfileFragment : Fragment(), OnCropImageCompleteListener {
     }
 
 
-    override fun onCropImageComplete(view: CropImageView?, result: CropImageView.CropResult?) {
+    override fun onCropImageComplete(view: CropImageView, result: CropImageView.CropResult) {
         if (result != null) {
             handleCropResult(result)
         } else {
@@ -142,24 +140,28 @@ class ManageProfileFragment : Fragment(), OnCropImageCompleteListener {
         }
     }
 
-    private fun handleCropResult(result: CropResult) {
+    private fun handleCropResult(result: CropImageView.CropResult) {
         var photoFile: File? = null
         if (result.error == null) {
-            if (result.uri != null) {
-                getFilePathFromUri(context?.contentResolver!!, result.uri as Uri)?.let {
-                    photoFile = File(it)
+            if (result.uriContent != null) {
+                context?.contentResolver?.let {
+                    getFilePathFromUri(it, result.uriContent as Uri)?.let {
+                        photoFile = File(it)
+                    }
                 }
                 photoFile?.let { compressAndPostImage(it) }
             } else {
-                val uriinfo = getImageUriFromBitmap(result.bitmap)
-                getFilePathFromUri(context?.contentResolver!!, uriinfo)?.let {
-                    photoFile = File(it)
+                val uriinfo = result.bitmap?.let { getImageUriFromBitmap(it) }
+                if (uriinfo != null) {
+                    getFilePathFromUri(context?.contentResolver!!, uriinfo)?.let {
+                        photoFile = File(it)
+                    }
                 }
                 photoFile?.let { compressAndPostImage(it) }
 //                updateProfileImage(result.bitmap.rowBytes.toString())
             }
         } else {
-            activity?.showToast("Image crop failed:" + result.error.message)
+            activity?.showToast("Image crop failed:" + result.error?.message)
         }
     }
 
@@ -321,5 +323,7 @@ class ManageProfileFragment : Fragment(), OnCropImageCompleteListener {
             }
         }
     }
+
+
 
 }

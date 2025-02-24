@@ -52,14 +52,14 @@ class WalletBalanceRepositry @Inject constructor(
 //        ).flow.flowOn(Dispatchers.IO)
 
 
-    suspend fun getRedemptionApprovalData(
-        userid: String,
-        maxid: Int
-    ): Flow<NetworkResult<RedemptionApprovalResponse>> {
-        return flow {
-            emit(safeApiCall { walletHelperImpl.getRedemptionApprovalData(userid, maxid) })
-        }.flowOn(Dispatchers.IO)
-    }
+//    suspend fun getRedemptionApprovalData(
+//        userid: String,
+//        maxid: Int
+//    ): Flow<NetworkResult<RedemptionApprovalResponse>> {
+//        return flow {
+//            emit(safeApiCall { walletHelperImpl.getRedemptionApprovalData(userid, maxid) })
+//        }.flowOn(Dispatchers.IO)
+//    }
 
     suspend fun postRedemptionApprovalData(
         postRedemptionApproval: PostRedemptionApproval

@@ -8,18 +8,14 @@ import android.webkit.MimeTypeMap
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
-import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.application.OfferWindowApplication.Companion.context
 import com.customer.offerswindow.data.constant.Constants
-import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.google.android.material.textfield.TextInputEditText
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
@@ -110,22 +106,6 @@ fun setText(layout: AppCompatTextView, text: String?) {
 @BindingAdapter("setVisibility")
 fun visibility(view: View, showView: Boolean) {
     if (showView) view.visibility = View.VISIBLE else view.visibility = View.GONE
-}
-
-
-@BindingAdapter("setRelatedFAQ", "onItemClicked")
-fun setRelatedFAQ(
-    rv: RecyclerView,
-    cards: ArrayList<WidgetViewModel>,
-    onItemClicked: CustomClickListener
-) {
-    rv.setUpMultiViewRecyclerAdapter(
-        cards
-    ) { item: WidgetViewModel, binder: ViewDataBinding, position: Int ->
-        binder.setVariable(BR.item, item)
-        binder.setVariable(BR.onItemClicked, onItemClicked)
-        binder.executePendingBindings()
-    }
 }
 
 

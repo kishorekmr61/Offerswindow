@@ -21,7 +21,7 @@
 
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_20sdp"
@@ -276,5 +276,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -2,9 +2,6 @@ package com.customer.offerswindow.ui.wallet.rewardPointHistory
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -12,13 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.customer.offerswindow.BR
-import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.RewarPointHistoryFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.wallet.RewardHistory
-import com.customer.offerswindow.ui.wallet.redemptionApproveDialog.RedemptionApproveBottomSheet
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showToast
@@ -131,9 +126,5 @@ class RewarPointHistoryFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_rewardpointshistory, menu)
-        super.onCreateOptionsMenu(menu, menuInflater)
-    }
 
 }

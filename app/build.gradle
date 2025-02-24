@@ -50,11 +50,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     buildFeatures {
         dataBinding = true
@@ -75,6 +75,7 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    namespace 'com.customer.offerswindow'
 
 }
 
@@ -215,4 +216,10 @@ dependencies {
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 //    implementation("com.google.firebase:firebase-analytics")
 //Onesignal Appid :9f59fbca-9f27-41bc-ab7d-aa9ac245690f
+    implementation("com.vanniktech:android-image-cropper:4.6.0")
+    implementation("com.google.crypto.tink:tink-android:1.9.0")
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+
 }

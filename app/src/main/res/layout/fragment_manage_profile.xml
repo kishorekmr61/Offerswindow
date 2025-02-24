@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.accounts.manageprofile.ManageProfileFragment">
 
-        <com.theartofdev.edmodo.cropper.CropImageView
+        <com.canhub.cropper.CropImageView
             android:id="@+id/cropImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -41,7 +41,7 @@
             android:id="@+id/done_view"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:background="@color/bluey_grey"
+            android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/view_next"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
             android:id="@+id/view_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -65,7 +65,7 @@
                 android:layout_marginTop="@dimen/_19sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginBottom="@dimen/_18sdp"
-                android:background="@drawable/round_toast"
+                android:background="@drawable/round_primary_bg"
                 android:gravity="center"
                 android:text="Done"
                 android:textAllCaps="false"

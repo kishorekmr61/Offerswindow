@@ -179,7 +179,7 @@ fun View.hideKeyboard() {
     }
 }
 
-fun Fragment.showToast(message: String) {
+public fun Fragment.showToast(message: String) {
     Toast.makeText(this.requireActivity(), message, Toast.LENGTH_SHORT).show()
 }
 
@@ -484,7 +484,6 @@ fun Fragment.showCommonCustomIOSDialog(
 }
 
 
-@SuppressLint("RestrictedApi")
 fun Fragment.ShowFullToast(message: String) {
     if (!TextUtils.isEmpty(message)) {
         val snackbar = Snackbar.make(

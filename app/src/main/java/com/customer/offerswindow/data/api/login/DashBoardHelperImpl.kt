@@ -1,6 +1,6 @@
 package com.customer.offerswindow.data.api.login
 
-import com.customer.offerswindow.data.api.login.ApiServices.DashboardApiService
+import com.customer.offerswindow.data.api.login.apiServices.DashboardApiService
 import javax.inject.Inject
 
 class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: DashboardApiService) {
@@ -9,8 +9,7 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
         dashboardApiService.getCustomerData(userid)
 
 
-    suspend fun getBannerdata(userid: String,maxtrasid : String) =
-        dashboardApiService.getBannerData(userid,maxtrasid)
+
 
     suspend fun getSubCoachesData(userid: String) =
         dashboardApiService.getSubCoachesData(userid)

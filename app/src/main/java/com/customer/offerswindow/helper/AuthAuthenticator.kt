@@ -1,7 +1,7 @@
 package com.customer.offerswindow.helper
 
 import com.customer.offerswindow.BuildConfig
-import com.customer.offerswindow.data.api.login.ApiServices.MasterApiService
+import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.model.TokenResponse

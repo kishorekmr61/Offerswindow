@@ -15,7 +15,6 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.customersdata.ProfileUpdateRequest
 import com.customer.offerswindow.model.customersdata.ProfileUpdateResponse
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
-import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.CustomerListRepository
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
@@ -39,7 +38,6 @@ class CustomerProfileViewModel @Inject constructor(
 
     var customerinfo = MutableLiveData<NetworkResult<CustomerListResponse>>()
     val registrationData = MutableLiveData(ProfileUpdateRequest())
-    var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var deleteResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var isloading = ObservableField(false)
     var customerdata = MutableLiveData<NetworkResult<CustomerListResponse>>()
@@ -101,40 +99,27 @@ class CustomerProfileViewModel @Inject constructor(
     }
 
     fun updateProfileData(photoPart: MultipartBody.Part?, formDataBody: RequestBody) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                customerrepository.submitProfileUpdateData(photoPart, formDataBody)
-                    .collect { values ->
-                        customersdata.postValue(values)
-                        app.showToast(values.data?.Message ?: values.message ?: "")
-                    }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
+//        viewModelScope.launch {
+//            if (networkHelper.isNetworkConnected()) {
+//                customerrepository.submitProfileUpdateData(photoPart, formDataBody)
+//                    .collect { values ->
+//                        customersdata.postValue(values)
+//                        app.showToast(values.data?.Message ?: values.message ?: "")
+//                    }
+//            } else {
+//                app.showToast("No Internet")
+//            }
+//        }
 
     }
 
-    fun getCustomerData(userid: String) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                customerrepository.getCustomerData(userid).collect { values ->
-                    if (values.data?.Status == 200) {
-                        customerdata.postValue(values)
-                        getDashboardData(userid)
-                    }
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-    }
+
 
     fun getStatusMstData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 repository.getCommonbMaster("Common").collect { values ->
-                    masterdata.postValue(values)
+//                    masterdata.postValue(values)
                 }
             } else {
                 app.showToast("No Internet")
