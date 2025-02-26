@@ -217,8 +217,8 @@ dependencies {
 //    implementation("com.google.firebase:firebase-analytics")
 //Onesignal Appid :9f59fbca-9f27-41bc-ab7d-aa9ac245690f
     implementation("com.vanniktech:android-image-cropper:4.6.0")
-    implementation("com.google.crypto.tink:tink-android:1.9.0")
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.AppIntro:AppIntro:6.3.1'
 
 
 
