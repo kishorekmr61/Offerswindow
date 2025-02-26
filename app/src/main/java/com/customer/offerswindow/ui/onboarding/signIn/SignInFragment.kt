@@ -69,16 +69,18 @@ class SignInFragment : Fragment() {
         //9619117769
         //9000099288
         binding.versionTextview.text = "Version :".plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
-        binding.loginBtn.setOnClickListener {
+        binding.verify.setOnClickListener {
             if (validateUserLogin()) {
                 signInViewModel.isloading.set(true)
                 AppPreference.write(Constants.LOGINUSERNAME, binding.etMobilenumber.text.toString())
                 AppPreference.write(Constants.LOGINPASSWORD, binding.etPswrd.text.toString())
-                signInViewModel.getToken(
-                    binding.etMobilenumber.text.toString(),
-                    binding.etPswrd.text.toString()
+                signInViewModel.verifyLogin(
+                    binding.etMobilenumber.text.toString()
                 )
             }
+
+            val intent = Intent(requireActivity(), DashboardActivity::class.java)
+            startActivity(intent)
         }
         binding.privacyTxt.setOnClickListener {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl)))
@@ -106,13 +108,13 @@ class SignInFragment : Fragment() {
             binding.etMobilenumber.error = "Please enter valid mobile number"
             return false
         }
-        if (binding.etPswrd.text.isNullOrEmpty()) {
-            binding.etMobilenumber.error = null
-            binding.etPswrd.error = "Please enter valid password"
-            return false
-        }
+//        if (binding.etPswrd.text.isNullOrEmpty()) {
+//            binding.etMobilenumber.error = null
+//            binding.etPswrd.error = "Please enter valid password"
+//            return false
+//        }
         binding.etMobilenumber.error = null
-        binding.etPswrd.error = null
+//        binding.etPswrd.error = null
         return true
     }
 

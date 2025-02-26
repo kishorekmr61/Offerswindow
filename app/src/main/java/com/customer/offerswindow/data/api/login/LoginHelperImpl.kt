@@ -13,6 +13,10 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
         masterApiService.verifylogin(mobilenumber, password)
 
 
+    suspend fun getOtp(mobilenumber: String) =
+        masterApiService.verifyPhone(mobilenumber)
+
+
 
     suspend fun getCommonLocationMasterData(mastertype: String) = masterApiService.getCommonLocationMaster(mastertype)
 

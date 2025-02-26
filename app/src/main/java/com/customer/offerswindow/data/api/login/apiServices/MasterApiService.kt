@@ -43,6 +43,11 @@ interface MasterApiService {
     ): Response<UserResponse>
 
 
+
+    suspend fun verifyPhone(
+        @Query("sPhoneNumber") mobileno: String,
+    ): Response<UserResponse>
+
     @GET("Transactions/ForgotPassword?")
     suspend fun forgotPassword(
         @Query("lUserID") mobileno: String,

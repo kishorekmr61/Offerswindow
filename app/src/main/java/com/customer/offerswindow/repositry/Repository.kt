@@ -57,6 +57,13 @@ class Repository @Inject constructor(
             emit(safeApiCall { loginHelperImpl.getUserinfo(mobilenumber, password) })
         }.flowOn(Dispatchers.IO)
     }
+    suspend fun verifyPhone(
+        mobilenumber: String
+    ): Flow<NetworkResult<UserResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.getOtp(mobilenumber) })
+        }.flowOn(Dispatchers.IO)
+    }
 
 
     suspend fun forgotPassword(

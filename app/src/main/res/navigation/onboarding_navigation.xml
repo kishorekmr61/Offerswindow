@@ -30,14 +30,19 @@
 
 
     <fragment
-        android:id="@+id/navforgotpassword"
+        android:id="@+id/nav_forgot_password"
         android:name="com.customer.offerswindow.ui.onboarding.forgotpassword.ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password" />
 
     <fragment
-        android:id="@+id/navaccountrecovery"
+        android:id="@+id/nav_account_recovery"
         android:name="com.customer.offerswindow.ui.onboarding.forgotpassword.AccountRecoverFragment"
         tools:layout="@layout/fragment_account_recover" />
+
+    <fragment
+        android:id="@+id/nav_intro"
+        android:name="com.customer.offerswindow.ui.onboarding.intro.IntroFragment"
+        tools:layout="@layout/fragment_intro" />
 
 
 </navigation>

@@ -15,7 +15,7 @@ class DotIndicatorPager2Adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return object : RecyclerView.ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.material_page, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.intro_row, parent, false)
         ) {}
     }
 

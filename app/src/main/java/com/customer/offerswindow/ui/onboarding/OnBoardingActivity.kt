@@ -30,9 +30,9 @@ class OnBoardingActivity : AppCompatActivity() {
             if (intent.getStringExtra(Constants.ISFROM) == "LOGOUT") {
                 bundle.putString(Constants.MOBILENO,intent.getStringExtra(Constants.MOBILENO))
                 bundle.putString("Message",intent.getStringExtra("Message"))
-                navGraph.setStartDestination(R.id.nav_sign_in)
+                navGraph.setStartDestination(R.id.nav_intro)
             } else {
-                navGraph.setStartDestination(R.id.nav_sign_in)
+                navGraph.setStartDestination(R.id.nav_intro)
             }
             navController.setGraph(navGraph, bundle)
         } else {

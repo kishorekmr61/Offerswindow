@@ -58,6 +58,19 @@ class SignInViewModel @Inject constructor(
         }
     }
 
+    fun verifyLogin(mobileno: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.verifyPhone(mobileno).collect { values ->
+                    userResponse.postValue(values)
+//                    response.value?.data = values.data
+                }
+            } else {
+              ("No Internet")
+            }
+        }
+    }
+
     fun forgotPassword(mobileno: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
