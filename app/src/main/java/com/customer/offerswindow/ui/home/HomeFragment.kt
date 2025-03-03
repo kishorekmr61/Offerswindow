@@ -4,14 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BuildConfig
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
@@ -24,15 +28,11 @@ import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.PermissionsUtil
-import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
-import com.customer.offerswindow.utils.customSeekBar.ProgressItem
 import com.customer.offerswindow.utils.setToolbarVisibility
 import com.customer.offerswindow.utils.showToast
-import com.github.mikephil.charting.data.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeCustomerBinding? = null
     private val binding get() = _binding!!
     private val vm: DashBoardViewModel by activityViewModels()
-    var soruces_link = ""
+    var categoryList = arrayListOf<CommonDataResponse>()
 
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -95,19 +95,25 @@ class HomeFragment : Fragment() {
                 else -> {}
             }
         }
-    }
-
-
-    private fun runTimer(viewPager2: ViewPager2, images: ArrayList<String>) {
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                viewPager2.post {
-                    viewPager2.currentItem = (viewPager2.currentItem + 1) % images.size
+        homeViewModel.masterdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { resposnes ->
+                        response?.data?.data?.forEach {
+                            if (it.MstType == "Service") {
+                                categoryList.add(it)
+                            }
+                        }
+                    }
                 }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
             }
         }
-        var timer = Timer()
-        timer?.schedule(timerTask, 30000, 3000)
     }
 
 
@@ -116,11 +122,9 @@ class HomeFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = false
         homeViewModel.isloading.set(true)
-
-
+        homeViewModel.getMstData()
         binding.versionTextview.text = "Version :".plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
-
 
     }
 
@@ -186,7 +190,6 @@ class HomeFragment : Fragment() {
             s == it.MstType
         }
     }
-
 
 
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -66,9 +67,14 @@ class SignInFragment : Fragment() {
         setObserver()
         signInViewModel.isloading.set(true)
         signInViewModel.getMstData()
-        //9619117769
-        //9000099288
         binding.versionTextview.text = "Version :".plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
+        binding.etMobilenumber.doAfterTextChanged {
+            if (it?.length!! >= 9) {
+                binding.verify.visibility = View.VISIBLE
+            } else {
+                binding.verify.visibility = View.INVISIBLE
+            }
+        }
         binding.verify.setOnClickListener {
             if (validateUserLogin()) {
                 signInViewModel.isloading.set(true)

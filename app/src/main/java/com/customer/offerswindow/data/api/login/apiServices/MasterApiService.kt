@@ -18,22 +18,28 @@ import retrofit2.http.Query
 
 interface MasterApiService {
     @GET("Masters/Masters")
-    suspend fun getHubMaster(@Query("sMasterType") mastertype: String,@Query("iParentMasterID") parentid :String): Response<List<HubMaster>>
+    suspend fun getHubMaster(
+        @Query("sMasterType") mastertype: String,
+        @Query("iParentMasterID") parentid: String
+    ): Response<List<HubMaster>>
 
     @GET("Masters/Masters")
-    suspend fun getCommonMaster(@Query("sMasterType") mastertype: String,@Query("iParentMasterID") parentid :String,@Query("lUserID") lUserID :String): Response<CommonMasterResponse>
-
+    suspend fun getCommonMaster(
+        @Query("sMasterType") mastertype: String,
+        @Query("iParentMasterID") parentid: String
+    ): Response<CommonMasterResponse>
 
 
     @GET("Masters/Masters")
     suspend fun getCommonLocationMaster(@Query("sMasterType") mastertype: String): Response<CommonLocationMasterResponse>
-    @POST("token")
-    @FormUrlEncoded
-    @Headers("Content-Type: application/x-www-form-urlencoded")
+
+    @GET("token")
+//    @FormUrlEncoded
+//    @Headers("Content-Type: application/x-www-form-urlencoded")
     suspend fun getToken(
-        @Field("username") username: String,
+        /*@Field("username") username: String,
         @Field("password") password: String,
-        @Field("grant_type") grant_type: String="password",
+        @Field("grant_type") grant_type: String="password",*/
     ): Response<TokenResponse>
 
     @GET("UserManagement/CheckUserLogin?")
@@ -43,15 +49,26 @@ interface MasterApiService {
     ): Response<UserResponse>
 
 
-
+    @GET("UserManagement/PostSendOtp?")
     suspend fun verifyPhone(
         @Query("sPhoneNumber") mobileno: String,
     ): Response<UserResponse>
+
+    @POST("UserManagement/PostSignUp")
+    suspend fun signupUser(
+
+    ): Response<UserResponse>
+
+
+
+
+
 
     @GET("Transactions/ForgotPassword?")
     suspend fun forgotPassword(
         @Query("lUserID") mobileno: String,
     ): Response<StockPurchsasePostingResponse>
+
     @POST("UserManagement/ResetPassword")
     suspend fun resetPassword(
         @Body postResetPassword: PostResetPassword,

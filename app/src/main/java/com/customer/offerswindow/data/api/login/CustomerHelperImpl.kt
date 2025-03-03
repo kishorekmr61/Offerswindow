@@ -1,13 +1,17 @@
 package com.customer.offerswindow.data.api.login
 
 import com.customer.offerswindow.data.api.login.apiServices.CustomerApiService
+import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
 import com.customer.offerswindow.model.PostNewEnquiry
 import com.customer.offerswindow.model.PostPhoneNumber
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
-class CustomerHelperImpl @Inject constructor(private val customerApiService: CustomerApiService) {
+class CustomerHelperImpl @Inject constructor(
+    private val customerApiService: CustomerApiService,
+    private val masterApiService: MasterApiService
+) {
     suspend fun getCustomerList(userid: String, imaxid: Int) =
         customerApiService.getCustomerList(userid, imaxid)
 
@@ -130,8 +134,10 @@ class CustomerHelperImpl @Inject constructor(private val customerApiService: Cus
     suspend fun postOTPData(postPhoneNumber: PostPhoneNumber) =
         customerApiService.postOTPData(postPhoneNumber)
 
-//    suspend fun getConfirmedTickets(userid: String, lMaximumTransactionID: Long) =
+    //    suspend fun getConfirmedTickets(userid: String, lMaximumTransactionID: Long) =
 //        customerApiService.getConfirmedTickets(userid, lMaximumTransactionID)
+    suspend fun getCommonMasterData(mastertype: String, parentid: String) =
+        masterApiService.getCommonMaster(mastertype, parentid)
 
 
 }

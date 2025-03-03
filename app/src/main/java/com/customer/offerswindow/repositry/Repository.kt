@@ -23,11 +23,11 @@ class Repository @Inject constructor(
 ) : BaseApiResponse() {
 
     suspend fun getToken(
-        mobilenumber: String,
-        password: String
+        /*mobilenumber: String,
+        password: String*/
     ): Flow<NetworkResult<TokenResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.getUserToken(mobilenumber, password) })
+            emit(safeApiCall { loginHelperImpl.getUserToken(/*mobilenumber, password*/) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -37,11 +37,11 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getCommonbMaster(mastertype: String): Flow<NetworkResult<CommonMasterResponse>> {
-        return flow {
-            emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype, "0", "0") })
-        }.flowOn(Dispatchers.IO)
-    }
+//    suspend fun getCommonbMaster(mastertype: String): Flow<NetworkResult<CommonMasterResponse>> {
+//        return flow {
+//            emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype, "0", "0") })
+//        }.flowOn(Dispatchers.IO)
+//    }
 
     suspend fun getCommonLocationMaster(mastertype: String): Flow<NetworkResult<CommonLocationMasterResponse>> {
         return flow {
@@ -87,6 +87,12 @@ class Repository @Inject constructor(
     ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.deleteUserAccount(Userid) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getCommonbMaster(mastertype: String): Flow<NetworkResult<CommonMasterResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype,"0","0") })
         }.flowOn(Dispatchers.IO)
     }
 

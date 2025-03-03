@@ -32,22 +32,7 @@ data class ProfileUpdateRequest(
     var CustomerWeight: String? = "",
     var CustomerPhotoFilePath: String = "",
 
-    @Transient
-    var CustomerLocation: String = "",
-    @Transient
-    var CustomerImageUrl: String = "",
-    @Transient
-    var Coachname: String = "",
-    @Transient
-    var CoachMobileno: String = "",
-    var Gender: String = "",
-    var MaritalStatus: String = "",
-    var CoachUserID: String = "",
-    var CreatedBy: String = AppPreference.read(Constants.USERUID, "") ?: "",
-    var CreatedDateTime: String = getDateTime(),
-    var UpdatedBy: String = AppPreference.read(Constants.USERUID, "") ?: "",
-    var UpdatedDateTime: String = getDateTime()
-)
+   )
 
 
 data class ProfileUpdateResponse(
@@ -60,21 +45,3 @@ data class Data(
     val ID: Int?
 )
 
-
-data class FamilyMemberPostRequest(
-    var RecordID: String = "",
-    var CustomerUID: String? = "",
-    var RelationshipType: String? = "",
-    var Name: String? = "",
-    var Age: String? = "",
-    var Remarks: String? = "",
-    var Diabetic: String? = "N",
-    var Obesity: String? = "N",
-    var Thyroid: String? = "N",
-    var BP: String? = "N",
-    var Others: String? = "N",
-    var CreatedBy: String? = "",
-    var CreatedDateTime: String? = "",
-    var UpdatedBy: String? = "",
-    var UpdatedDateTime: String? = ""
-)

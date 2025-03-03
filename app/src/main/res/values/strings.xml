@@ -18,7 +18,7 @@
     <string name="okay">Okay</string>
     <string name="resend">We have sent Otp to your email/number ? <b> Resend</b></string>
     <string name="create_account">Don\'t have an Account ?<b>  Create One</b></string>
-    <string name="email_address_or_phone_number">Email Address or phone number</string>
+    <string name="email_address_or_phone_number">Phone Number</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>

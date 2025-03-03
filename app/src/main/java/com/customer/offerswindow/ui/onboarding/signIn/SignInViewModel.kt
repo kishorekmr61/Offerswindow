@@ -35,7 +35,7 @@ class SignInViewModel @Inject constructor(
     fun getToken(mobileno: String, passowrd: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getToken(mobileno, passowrd).collect { values ->
+                repository.getToken(/*"9533586878", "welcome"*/).collect { values ->
                     tokenResponse.postValue(values)
 //                    response.value?.data = values.data
                 }
