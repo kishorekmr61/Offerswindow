@@ -30,6 +30,7 @@ class IntroFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentIntroBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.lifecycleOwner = viewLifecycleOwner
@@ -56,7 +57,7 @@ class IntroFragment : Fragment() {
                 getString(R.string.grab_the_best_deal),
                 "Track order !!",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
-                R.drawable.ic_gift_img,
+                R.drawable.ic_offer_tag,
                 R.drawable.ic_leftcurve,
                 Gravity.LEFT
             )
@@ -67,7 +68,7 @@ class IntroFragment : Fragment() {
                 getString(R.string.grab_the_best_deal),
                 "Track order !!",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
-                R.drawable.ic_gift_img,
+                R.drawable.ic_announcment,
                 R.drawable.ic_leftcurve,
                 Gravity.LEFT
             )
@@ -93,7 +94,7 @@ class IntroFragment : Fragment() {
             // triggered when you select a new page
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position >= 2){
+                if (position >= 3){
                     findNavController().navigate(R.id.nav_sign_in)
                 }
             }

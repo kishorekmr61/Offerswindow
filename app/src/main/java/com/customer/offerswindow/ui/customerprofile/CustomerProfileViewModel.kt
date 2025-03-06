@@ -55,16 +55,16 @@ class CustomerProfileViewModel @Inject constructor(
             registrationData.value?.CustomerHeight = customerData.Height_CM
             registrationData.value?.FitnessGoal = customerData.Fitness_Goal
             registrationData.value?.CustomerWeight = customerData.Initial_Weight
-            registrationData.value?.CustomerLocation = customerData.Location
-            registrationData.value?.CoachUserID = customerData.Coach_User_UID
-            registrationData.value?.CustomerImageUrl = customerData.Cust_Image_Path
-            registrationData.value?.CoachUserID = customerData.Coach_User_UID
-            registrationData.value?.Coachname = customerData.Coach_Name
-            registrationData.value?.CoachMobileno = customerData.Coach_Mobile_No
-            registrationData.value?.Gender = customerData.Gender
-            registrationData.value?.EmailID = customerData.Email_ID
-            registrationData.value?.DoB = customerData.DOB ?: ""
-            registrationData.value?.MaritalStatus = customerData.Marital_Status ?: ""
+//            registrationData.value?.CustomerLocation = customerData.Location
+//            registrationData.value?.CoachUserID = customerData.Coach_User_UID
+//            registrationData.value?.CustomerImageUrl = customerData.Cust_Image_Path
+//            registrationData.value?.CoachUserID = customerData.Coach_User_UID
+//            registrationData.value?.Coachname = customerData.Coach_Name
+//            registrationData.value?.CoachMobileno = customerData.Coach_Mobile_No
+//            registrationData.value?.Gender = customerData.Gender
+//            registrationData.value?.EmailID = customerData.Email_ID
+//            registrationData.value?.DoB = customerData.DOB ?: ""
+//            registrationData.value?.MaritalStatus = customerData.Marital_Status ?: ""
         } catch (e: Exception) {
             e.printStackTrace()
         }

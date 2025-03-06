@@ -221,14 +221,14 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
             formDataJson.addProperty("FitnessGoal", customerinfo.Fitness_Goal)
             formDataJson.addProperty("CustomerHeight", customerinfo.Height_CM)
             formDataJson.addProperty("CustomerWeight", customerinfo.Initial_Weight)
-            formDataJson.addProperty(
-                "CustomerPhotoFilePath",
-                if (!isPhotoAvailable) CustomerImageUrl else ""
-            )
-            formDataJson.addProperty("CreatedBy", customerinfo.Cust_Code)
-            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
-            formDataJson.addProperty("UpdatedBy", customerinfo.Cust_Code)
-            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
+//            formDataJson.addProperty(
+//                "CustomerPhotoFilePath",
+//                if (!isPhotoAvailable) CustomerImageUrl else ""
+//            )
+//            formDataJson.addProperty("CreatedBy", customerinfo.Cust_Code)
+//            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
+//            formDataJson.addProperty("UpdatedBy", customerinfo.Cust_Code)
+//            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
             val formDataBody: RequestBody =
                 RequestBody.create("application/json".toMediaTypeOrNull(), formDataJson.toString())
             viewModel.updateProfileData(

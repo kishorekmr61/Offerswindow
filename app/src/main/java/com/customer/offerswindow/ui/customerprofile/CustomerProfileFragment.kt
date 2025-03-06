@@ -180,14 +180,14 @@ class CustomerProfileFragment : Fragment() {
 
 
 
-            formDataJson.addProperty(
-                "CustomerPhotoFilePath",
-                if (!isPhotoAvailable) CustomerImageUrl else ""
-            )
-            formDataJson.addProperty("CreatedBy", CreatedBy)
-            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
-            formDataJson.addProperty("UpdatedBy", UpdatedBy)
-            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
+//            formDataJson.addProperty(
+//                "CustomerPhotoFilePath",
+//                if (!isPhotoAvailable) CustomerImageUrl else ""
+//            )
+//            formDataJson.addProperty("CreatedBy", CreatedBy)
+//            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
+//            formDataJson.addProperty("UpdatedBy", UpdatedBy)
+//            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
             val formDataBody: RequestBody =
                 RequestBody.create("application/json".toMediaTypeOrNull(), formDataJson.toString())
             viewModel.updateProfileData(

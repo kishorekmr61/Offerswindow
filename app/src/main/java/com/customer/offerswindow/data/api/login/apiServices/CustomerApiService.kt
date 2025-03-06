@@ -22,8 +22,6 @@ interface CustomerApiService {
     @POST("Transactions/customerCheck")
     suspend fun submitCustomerCheckUp(@Body customerCheckUpRequest: CustomerCheckUpRequest): Response<ProfileUpdateResponse>
 
-    @POST("Transactions/CustomerFamily")
-    suspend fun submitFamilyDetails(@Body familyMemberPostRequest: FamilyMemberPostRequest): Response<ProfileUpdateResponse>
 
     @Multipart
     @POST("Transactions/ProfileUpdate")
