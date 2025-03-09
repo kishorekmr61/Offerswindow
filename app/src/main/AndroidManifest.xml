@@ -53,8 +53,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OfferWindow"
         android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.OfferWindow"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
 
