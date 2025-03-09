@@ -89,7 +89,7 @@
 
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_mobilenumber"
+                            android:id="@+id/et_lastname"
                             style="@style/AG_regular"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_34sdp"
@@ -123,27 +123,66 @@
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/et_mobilenumber" />
+                            app:layout_constraintTop_toBottomOf="@id/et_lastname" />
 
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_mobileno"
-                            style="@style/AG_regular"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/mobileno_lyout"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_34sdp"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_18sdp"
                             android:background="@drawable/et_style"
-                            android:hint="@string/phone_number"
-                            android:imeOptions="actionNext"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
-                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_email" />
+                            app:layout_constraintTop_toBottomOf="@+id/et_email">
 
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_mobilenumber"
+                                style="@style/AG_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_32sdp"
+                                android:layout_marginEnd="@dimen/_55sdp"
+                                android:background="@null"
+                                android:hint="@string/email_address_or_phone_number"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="12"
+                                android:maxLines="1"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:singleLine="true"
+                                android:textColorHint="@color/color_272727"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/verify"
+                                style="@style/Ag_body_copy_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingEnd="@dimen/_8sdp"
+                                android:text="@string/verify"
+                                android:textColor="@color/color_0044FF"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/resendotp_lbl"
+                            style="@style/Ag_body_copy_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:text="@string/_email_number_resend"
+                            android:textColor="@color/color_272727"
+                            android:textSize="@dimen/_8ssp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/mobileno_lyout" />
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_Otp"
@@ -161,7 +200,7 @@
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_mobileno" />
+                            app:layout_constraintTop_toBottomOf="@+id/resendotp_lbl" />
 
 
                         <com.google.android.material.button.MaterialButton
@@ -169,28 +208,16 @@
                             style="@style/Ag_h3"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_45sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
                             android:text="@string/sign_up"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp"
                             app:cornerRadius="@dimen/_8sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/resendotp_lbl" />
+                            app:layout_constraintTop_toBottomOf="@+id/et_Otp" />
 
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/resendotp_lbl"
-                            style="@style/Ag_body_copy_small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_18sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:text="@string/_email_number_resend"
-                            android:textColor="@color/color_272727"
-                            android:textSize="@dimen/_8ssp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/et_Otp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -202,8 +229,8 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="@string/already_have_an_account_signin"
                         android:textColor="@color/color_272727"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:textSize="@dimen/_9ssp"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cell_lyout" />
 
                     <ProgressBar

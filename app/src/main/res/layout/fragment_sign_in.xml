@@ -121,6 +121,7 @@
                         android:hint="@string/enter_otp"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
+                        android:visibility="gone"
                         android:maxLines="1"
                         android:paddingStart="@dimen/_8sdp"
                         android:singleLine="true"
@@ -145,13 +146,14 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp"
                         app:cornerRadius="@dimen/_8sdp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_pswrd" />
 
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/forgotpswrd"
+                        android:id="@+id/resend_txt"
                         style="@style/Ag_body_copy_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,7 +162,7 @@
                         android:layout_marginEnd="@dimen/_25sdp"
                         android:text="@string/resend"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+                        app:layout_constraintTop_toBottomOf="@+id/mobileno_lyout" />
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/terms_txt"

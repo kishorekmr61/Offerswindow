@@ -19,16 +19,17 @@
         tools:layout="@layout/fragment_customer_profile" />
 
 
-    <fragment
-        android:id="@+id/nav_walletBalanceFragment"
-        android:name="com.customer.offerswindow.ui.wallet.walletbalance.WalletBalanceFragment"
-        android:label="WalletBalanceFragment" />
 
     <fragment
         android:id="@+id/nav_rewardshistory"
         android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.RewarPointHistoryFragment"
         android:label="RewardsHistory" />
 
+
+    <fragment
+        android:id="@+id/nav_categories"
+        android:name="com.customer.offerswindow.ui.categories.CategoriesFragment"
+        android:label="@string/categories" />
 
     <fragment
         android:id="@+id/nav_notifications"

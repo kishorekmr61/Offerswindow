@@ -5,25 +5,24 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.R
-import com.customer.offerswindow.data.constant.Constants
-import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.SignUpFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.PostNewEnquiry
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.ShowFullToast
-import com.customer.offerswindow.utils.getDateTime
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
-    private val signInViewModel: SignUpViewModel by viewModels()
+    private val signUpViewModel: SignUpViewModel by viewModels()
+    private val signInViewModel: SignInViewModel by viewModels()
     private var _binding: SignUpFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -38,7 +37,38 @@ class SignUpFragment : Fragment() {
         setObserver()
         binding.signupBtn.setOnClickListener {
             if (isValidate()) {
-                signInViewModel.postOtp(binding.etMobilenumber.text.toString())
+                postSignUpInfo()
+            }
+        }
+        binding.signinLbl.setOnClickListener {
+            findNavController().navigate(R.id.nav_sign_in)
+        }
+        binding.etMobilenumber.doAfterTextChanged {
+            if (it?.length!! >= 9) {
+                binding.verify.visibility = View.VISIBLE
+            } else {
+                binding.verify.visibility = View.INVISIBLE
+            }
+        }
+
+        binding.verify.setOnClickListener {
+            if (binding.etMobilenumber.text.isNullOrEmpty()) {
+                binding.etMobilenumber.error = "Please enter valid mobile number"
+            } else {
+                signInViewModel.isloading.set(true)
+                signInViewModel.getOTP(
+                    binding.etMobilenumber.text.toString()
+                )
+            }
+        }
+        binding.resendotpLbl.setOnClickListener {
+            if (binding.etMobilenumber.text.toString().isEmpty()) {
+                showToast("Please enter Mobile number")
+            } else {
+                signInViewModel.isloading.set(true)
+                signInViewModel.getOTP(
+                    binding.etMobilenumber.text.toString()
+                )
             }
         }
         binding.signinLbl.setOnClickListener {
@@ -48,11 +78,15 @@ class SignUpFragment : Fragment() {
     }
 
     private fun isValidate(): Boolean {
-        if (binding.etName.text.toString().isNullOrEmpty()) {
+        if (binding.etName.text.toString().isEmpty()) {
             showToast("Please enter name")
             return false
         }
-        if (binding.etMobilenumber.text.toString().isNullOrEmpty()) {
+        if (binding.etLastname.text.toString().isEmpty()) {
+            showToast("Please enter LastName")
+            return false
+        }
+        if (binding.etMobilenumber.text.toString().isEmpty()) {
             showToast("Please enter Mobile number")
             return false
         }
@@ -60,7 +94,7 @@ class SignUpFragment : Fragment() {
             showToast("Please enter Valid Mobile Number")
             return false
         }
-        if (binding.etEmail.text.toString().isNullOrEmpty()) {
+        if (binding.etEmail.text.toString().isEmpty()) {
             showToast("Please enter Email")
         }
 
@@ -68,12 +102,16 @@ class SignUpFragment : Fragment() {
             showToast("Please enter valid Email")
             return false
         }
+        if (!isValidMail(binding.etOtp.text.toString())) {
+            showToast("Please enter OTP")
+            return false
+        }
         return true
     }
 
 
     private fun setObserver() {
-        signInViewModel.signUpResponse.observe(viewLifecycleOwner) { response ->
+        signUpViewModel.signUpResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     response.data.let { resposnes ->
@@ -96,34 +134,9 @@ class SignUpFragment : Fragment() {
                 }
             }
         }
-        signInViewModel.otpResponse.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    response.data.let { resposnes ->
-                        if (resposnes?.Status == 200) {
-                            ShowFullToast(response.data?.Message ?: "")
-                            openOTPScreen()
-                        } else {
-                            ShowFullToast(response.data?.Message ?: "")
-                        }
-                    }
-                }
-
-                is NetworkResult.Error -> {
-                    signInViewModel.isloading.set(false)
-                    response.message?.let { ShowFullToast(response.message) }
-                }
-
-                is NetworkResult.Loading -> {
-                    signInViewModel.isloading.set(true)
-                }
-            }
-        }
-    }
-
-    private fun openOTPScreen() {
 
     }
+
 
     private fun isValidMail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -135,21 +148,15 @@ class SignUpFragment : Fragment() {
 
     fun postSignUpInfo() {
         signInViewModel.isloading.set(true)
-        signInViewModel.postSignUp(
-            PostNewEnquiry(
-                binding.etName.text.toString(),
-                binding.etMobilenumber.text.toString(),
-                binding.etEmail.text.toString(), "",
-                0,
-                0,
-                "",
-                "",
-                arrayListOf(),
-                AppPreference.read(Constants.USERUID, "") ?: "",
-                getDateTime(),
-                AppPreference.read(Constants.USERUID, "") ?: "",
-                getDateTime()
-            )
+        var postSignup = PostSignUp(
+            binding.etMobilenumber.text.toString(),
+            binding.etEmail.text.toString(),
+            binding.etName.text.toString(),
+            binding.etLastname.text.toString(),
+            binding.etOtp.text.toString()
+        )
+        signUpViewModel.postSignUp(
+            postSignup
         )
     }
 

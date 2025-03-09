@@ -16,7 +16,7 @@
     <string name="signin">Sign in</string>
     <string name="something_went_wrong">Oops! Something went wrong.</string>
     <string name="okay">Okay</string>
-    <string name="resend">We have sent Otp to your email/number ? <b> Resend</b></string>
+    <string name="resend">We have sent Otp to your number ? <b> Resend</b></string>
     <string name="create_account">Don\'t have an Account ?<b>  Create One</b></string>
     <string name="email_address_or_phone_number">Phone Number</string>
     <string name="enter_otp">Enter OTP</string>
@@ -60,4 +60,8 @@
     <string name="please_check_your_search_query_or_try_a_new_search">Please check your search query or try a new search</string>
     <string name="grab_the_best_deal">Grab the Best Deals –\n Limited-Time Offers Await!</string>
     <string name="track_order">Track order !!</string>
+    <string name="proceed">Proceed</string>
+    <string name="version">Version :</string>
+    <string name="all">All</string>
+    <string name="more_offers_you_may_like">More offers you may Like</string>
 </resources>

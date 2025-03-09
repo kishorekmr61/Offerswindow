@@ -1,4 +1,4 @@
-package com.customer.offerswindow.ui.notifications
+package com.customer.offerswindow.ui.categories
 
 import android.app.Application
 import androidx.databinding.ObservableField
@@ -6,31 +6,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.notification.NotificationResponse
+import com.customer.offerswindow.model.masters.CommonMasterResponse
+import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NotificationsViewModel @Inject constructor(
-    private val dashBoardRepositry: Repository,
+@HiltViewModel
+class CategoriesViewModel @Inject constructor(
+    private val dashBoardRepositry: DashBoardRepositry,
+    private val repository: Repository,
     private var networkHelper: NetworkHelper,
-    var app: Application
-) : ViewModel() {
-
-    var nodata = ObservableField<Boolean>()
-
+    var app: Application,
+) :  ViewModel() {
+    var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var isloading = ObservableField(false)
-    var customerinfo = MutableLiveData<NetworkResult<NotificationResponse>>()
 
-    fun getUserInfo(lCustomerID: String) {
+    fun getMstData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                dashBoardRepositry.getNotifications(lCustomerID).collect { values ->
-                    customerinfo.postValue(values)
+                repository.getCommonMaster("Common").collect { values ->
+                    masterdata.postValue(values)
                 }
-
             } else {
                 app.showToast("No Internet")
             }

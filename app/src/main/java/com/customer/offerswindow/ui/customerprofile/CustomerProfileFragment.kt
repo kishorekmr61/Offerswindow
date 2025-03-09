@@ -75,7 +75,7 @@ class CustomerProfileFragment : Fragment() {
         setObserver()
         viewModel.isloading.set(true)
         viewModel.getDashboardData(AppPreference.read(Constants.USERUID, "") ?: "")
-        viewModel.getStatusMstData()
+
         viewModel.getLocationsMst()
 
 
@@ -87,31 +87,31 @@ class CustomerProfileFragment : Fragment() {
     }
 
     private fun setUpListeners() {
-        binding.etGender.setOnClickListener {
-            val masterdata = arrayListOf<SpinnerRowModel>()
-            masterdata.add(SpinnerRowModel("Male", false, false, "", ""))
-            masterdata.add(SpinnerRowModel("Female", false, false, "", ""))
-//            masterdata.add(SpinnerRowModel("TransGender", false, false, "",""))
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
-                    binding.etGender.text.toString(), masterdata, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?, datevalue: String
-                        ) {
-                            if (titleData != null) binding.etGender.setText(titleData.title)
-                        }
-
-                        override fun onItemmultipleSelectedListner(
-                            titleData: ArrayList<SpinnerRowModel>?,
-                            value: ArrayList<SpinnerRowModel>
-                        ) {
-
-                        }
-                    })
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
-            }
-        }
+//        binding.etGender.setOnClickListener {
+//            val masterdata = arrayListOf<SpinnerRowModel>()
+//            masterdata.add(SpinnerRowModel("Male", false, false, "", ""))
+//            masterdata.add(SpinnerRowModel("Female", false, false, "", ""))
+////            masterdata.add(SpinnerRowModel("TransGender", false, false, "",""))
+//            activity?.let { it1 ->
+//                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+//                    binding.etGender.text.toString(), masterdata, false, object :
+//                        OnItemSelectedListner {
+//                        override fun onItemSelectedListner(
+//                            titleData: SpinnerRowModel?, datevalue: String
+//                        ) {
+//                            if (titleData != null) binding.etGender.setText(titleData.title)
+//                        }
+//
+//                        override fun onItemmultipleSelectedListner(
+//                            titleData: ArrayList<SpinnerRowModel>?,
+//                            value: ArrayList<SpinnerRowModel>
+//                        ) {
+//
+//                        }
+//                    })
+//                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+//            }
+//        }
 
 
         binding.etDob.setOnClickListener {
@@ -163,38 +163,7 @@ class CustomerProfileFragment : Fragment() {
     }
 
     private fun postData(isPhotoAvailable: Boolean, photoPart: MultipartBody.Part) {
-        viewModel.registrationData.value?.apply {
-            val formDataJson = JsonObject()
-            formDataJson.addProperty("CustomerUID", CustomerUID)
-            formDataJson.addProperty("CustomerName", binding.etFirstname.text.toString())
-            formDataJson.addProperty(
-                "DoB",
-                convertDate(
-                    binding.etDob.text.toString(),
-                    Constants.DDMMMYYYY,
-                    Constants.YYY_HIFUN_MM_DD
-                )
-            )
-            formDataJson.addProperty("EmailID", binding.etEmail.text.toString())
-            formDataJson.addProperty("Gender", getGenderType(binding.etGender.text.toString()))
 
-
-
-//            formDataJson.addProperty(
-//                "CustomerPhotoFilePath",
-//                if (!isPhotoAvailable) CustomerImageUrl else ""
-//            )
-//            formDataJson.addProperty("CreatedBy", CreatedBy)
-//            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
-//            formDataJson.addProperty("UpdatedBy", UpdatedBy)
-//            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
-            val formDataBody: RequestBody =
-                RequestBody.create("application/json".toMediaTypeOrNull(), formDataJson.toString())
-            viewModel.updateProfileData(
-                photoPart,
-                formDataBody
-            )
-        }
 
     }
 
@@ -271,29 +240,29 @@ class CustomerProfileFragment : Fragment() {
 
 
     private fun setObserver() {
-        viewModel.customersdata.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    viewModel.isloading.set(false)
-                    response.data.let { resposnes ->
-                        if (resposnes?.Status == 200) {
-                            findNavController().popBackStack(R.id.nav_home, false)
-                        } else {
-                            ShowFullToast(response.data?.Message ?: "")
-                        }
-                    }
-                }
-
-                is NetworkResult.Error -> {
-                    viewModel.isloading.set(false)
-                    response.message?.let { ShowFullToast(response.data?.Message ?: "") }
-                }
-
-                is NetworkResult.Loading -> {
-                    viewModel.isloading.set(true)
-                }
-            }
-        }
+//        viewModel.customersdata.observe(viewLifecycleOwner) { response ->
+//            when (response) {
+//                is NetworkResult.Success -> {
+//                    viewModel.isloading.set(false)
+//                    response.data.let { resposnes ->
+//                        if (resposnes?.Status == 200) {
+//                            findNavController().popBackStack(R.id.nav_home, false)
+//                        } else {
+//                            ShowFullToast(response.data?.Message ?: "")
+//                        }
+//                    }
+//                }
+//
+//                is NetworkResult.Error -> {
+//                    viewModel.isloading.set(false)
+//                    response.message?.let { ShowFullToast(response.data?.Message ?: "") }
+//                }
+//
+//                is NetworkResult.Loading -> {
+//                    viewModel.isloading.set(true)
+//                }
+//            }
+//        }
 
         viewModel.locationsmasterdata.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -376,22 +345,10 @@ class CustomerProfileFragment : Fragment() {
 
     private fun updateUI(customerData: CustomerData) {
 
-        if (!TextUtils.isEmpty(customerData.DOB)) {
-            customerData.DOB = convertDate(customerData.DOB?:"",Constants.YYYYMMDDTHH,Constants.DDMMMYYYY)
-        }
-        if (!TextUtils.isEmpty(customerData.Marriage_Anniversary)) {
-            customerData.Marriage_Anniversary = convertDate(customerData.Marriage_Anniversary?:"",Constants.YYYYMMDDTHH,Constants.DDMMMYYYY)
-        }
-        if (!TextUtils.isEmpty(customerData.Marital_Status)) {
-            customerData.Marital_Status =  viewModel.getMaritalinfo(customerData.Marital_Status?:"")
-        }
-        if (!TextUtils.isEmpty(customerData.Gender)) {
-            customerData.Gender =  viewModel.getGenderinfo(customerData.Gender)
-        }
+
 
         binding.item = customerData
-        binding.etGender.isEnabled = customerData?.Gender?.trim().isNullOrEmpty()
-        binding.etDob.isEnabled = customerData?.DOB?.trim().isNullOrEmpty()
+//        binding.etDob.isEnabled = customerData?.DOB?.trim().isNullOrEmpty()
         binding.etEmail.isEnabled = customerData?.Email_ID?.trim().isNullOrEmpty()
 
         viewModel.bindCustomerData(customerData)

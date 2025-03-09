@@ -1,6 +1,5 @@
 package com.customer.offerswindow.model.masters
 
-import com.customer.offerswindow.utils.getDateTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -28,10 +27,10 @@ data class CommonDataResponse(
     @SerializedName("Mst_Status")
     var MstStatus: String = "",
     @SerializedName("Image_path")
-    var Image_path: String ="",
+    var Image_path: String = "",
     @SerializedName("Created_By")
     var CreatedBy: String = "",
     @SerializedName("Created_Date")
-    var CreatedDate: String = getDateTime(),
+    var CreatedDate: String = "",
 )
 

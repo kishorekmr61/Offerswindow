@@ -1,63 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:padding="@dimen/_4sdp"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/share_img"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/drawable_bg"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/share" />
+    <data>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/call_img"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/drawable_bg"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintStart_toEndOf="@id/share_img"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/call" />
+        <import type="android.text.TextUtils" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/directions_img"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/drawable_bg"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintStart_toEndOf="@+id/call_img"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/direction" />
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/website_img"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/drawable_bg"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintStart_toEndOf="@id/directions_img"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/website" />
+        <variable
+            name="item"
+            type="com.customer.offerswindow.model.dashboard.DashboardData" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/whatsapp_img"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/drawable_bg"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintStart_toEndOf="@id/website_img"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/whatsapp" />
+    </data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/share_img"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/drawable_bg"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/share" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/call_img"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/drawable_bg"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@id/share_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/call" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/directions_img"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/drawable_bg"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@+id/call_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/direction" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/website_img"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/drawable_bg"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@id/directions_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/website" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/whatsapp_img"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/drawable_bg"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@id/website_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/whatsapp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

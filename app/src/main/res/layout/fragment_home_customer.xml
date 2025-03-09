@@ -67,13 +67,13 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imageView14"
-                    imgUrl="@{customerdata.cust_Image_Path}"
+                    imgUrl="@{viewModel.profilepic}"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_margin="@dimen/_8sdp"
                     android:onClick="@{onItemClick}"
                     app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -84,6 +84,7 @@
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
                     android:gravity="bottom"
+                    android:text="@{viewModel.username}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintBottom_toTopOf="@+id/location_txt"
@@ -98,13 +99,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/_4sdp"
+                    android:drawableEnd="@drawable/arrow_drop_down"
                     android:gravity="center"
-                    android:text=""
+                    android:text="@string/all"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView14"
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+                    app:layout_constraintTop_toBottomOf="@+id/loginusername" />
 
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -113,7 +115,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="start|center"
-                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/etsearch_bg"
                     android:drawableStart="@drawable/programsearch"
@@ -125,8 +128,8 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/color_424242"
                     android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_Start"
+                    app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/imageView14" />
 
 
@@ -135,13 +138,13 @@
                     style="@style/AG_altbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
                     android:text="@string/categories"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/searchedit" />
 
 
@@ -155,7 +158,7 @@
                     android:text="@string/view_all"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintTop_toBottomOf="@+id/searchedit" />
 
 
@@ -192,7 +195,7 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_listdata"
+                    android:id="@+id/rv_offerslist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
@@ -202,7 +205,7 @@
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_categories"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_filter"
                     tools:listitem="@layout/homelist_item"
                     tools:visibility="visible" />
 

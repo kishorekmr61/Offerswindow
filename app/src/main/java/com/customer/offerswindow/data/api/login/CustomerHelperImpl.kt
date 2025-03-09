@@ -2,8 +2,8 @@ package com.customer.offerswindow.data.api.login
 
 import com.customer.offerswindow.data.api.login.apiServices.CustomerApiService
 import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
-import com.customer.offerswindow.model.PostNewEnquiry
 import com.customer.offerswindow.model.PostPhoneNumber
+import com.customer.offerswindow.model.customersdata.PostSignUp
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -19,43 +19,6 @@ class CustomerHelperImpl @Inject constructor(
         customerApiService.getCustomerDeatilsByid(userid)
 
 
-    suspend fun submitProfileUpdateData(
-        part: MultipartBody.Part,
-        CustomerUID: RequestBody,
-        CustomerCategory: RequestBody,
-        CustomerName: RequestBody,
-        SurName: RequestBody,
-        MobileNo: RequestBody,
-        DoB: RequestBody,
-        EmailID: RequestBody,
-        MarriageAnniversaryDate: RequestBody,
-        FitnessGoal: RequestBody,
-        CustomerHeight: RequestBody,
-        CustomerWeight: RequestBody,
-        CustomerPhotoFilePath: RequestBody,
-        CreatedBy: RequestBody,
-        CreatedDateTime: RequestBody,
-        UpdatedBy: RequestBody,
-        UpdatedDateTime: RequestBody
-    ) = customerApiService.submitProfileUpdateData(
-        part,
-        CustomerUID,
-        CustomerCategory,
-        CustomerName,
-        SurName,
-        MobileNo,
-        DoB,
-        EmailID,
-        MarriageAnniversaryDate,
-        FitnessGoal,
-        CustomerHeight,
-        CustomerWeight,
-        CustomerPhotoFilePath,
-        CreatedBy,
-        CreatedDateTime,
-        UpdatedBy,
-        UpdatedDateTime
-    )
 
 //    suspend fun submitProfileUpdateData(
 //        part: MultipartBody.Part?,
@@ -121,11 +84,8 @@ class CustomerHelperImpl @Inject constructor(
 //        formDataBody: RequestBody
 //    ) = customerApiService.postTask(part, formDataBody)
 
-//    suspend fun postNewEnquiry(postNewEnquiry: PostNewEnquiry) =
-//        customerApiService.postNewEnquiry(postNewEnquiry)
-
-    suspend fun postSignUp(postNewEnquiry: PostNewEnquiry) =
-        customerApiService.postSignUP(postNewEnquiry)
+    suspend fun postSignUp(postSignUp: PostSignUp) =
+        customerApiService.postSignUp(postSignUp)
 
 
     suspend fun postOTPVerificationData(mobileno: String, otp: String) =

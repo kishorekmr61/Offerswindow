@@ -1,5 +1,6 @@
 package com.customer.offerswindow.data.api.login.apiServices
 
+import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.PostResetPassword
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
@@ -7,6 +8,8 @@ import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.notification.NotificationResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -37,9 +40,9 @@ interface MasterApiService {
 //    @FormUrlEncoded
 //    @Headers("Content-Type: application/x-www-form-urlencoded")
     suspend fun getToken(
-        /*@Field("username") username: String,
+        @Field("username") username: String,
         @Field("password") password: String,
-        @Field("grant_type") grant_type: String="password",*/
+        @Field("grant_type") grant_type: String="password",
     ): Response<TokenResponse>
 
     @GET("UserManagement/CheckUserLogin?")
@@ -54,10 +57,16 @@ interface MasterApiService {
         @Query("sPhoneNumber") mobileno: String,
     ): Response<UserResponse>
 
-    @POST("UserManagement/PostSignUp")
-    suspend fun signupUser(
 
-    ): Response<UserResponse>
+    @GET("UserManagement/PostSendOtp?")
+    suspend fun validateOTP(
+        @Query("sCustomerMobileNo") mobileno: String,
+        @Query("sOTP") sOTP: String,
+    ): Response<OTPResponse>
+
+    @POST("UserManagement/PostSignUp")
+    suspend fun signupUser(postSignUp: PostSignUp
+    ): Response<StockPurchsasePostingResponse>
 
 
 
@@ -78,4 +87,10 @@ interface MasterApiService {
     suspend fun deleteUserAccount(
         @Query("lUserID") mobileno: String,
     ): Response<StockPurchsasePostingResponse>
+
+
+    @GET("ShowRoomOffers/GetNotifications?")
+    suspend fun getNotifications(
+        @Query("lCustomerID") mobileno: String,
+    ): Response<NotificationResponse>
 }

@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="com.customer.offerswindow.ui.CategoriesViewModel" />
+            type="com.customer.offerswindow.ui.categories.CategoriesViewModel" />
 
     </data>
 

@@ -3,7 +3,12 @@ package com.customer.offerswindow.model
 data class UserResponse(
     var Status: Int,
     val Message: String,
-    var Data: List<Data>
+    var Data: String
+)
+
+data class OTPResponse(
+    var Status: Int,
+    val Message: String
 )
 
 data class Data(

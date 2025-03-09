@@ -54,23 +54,23 @@ class IntroFragment : Fragment() {
         introList.add(
             IntroModel(
                 getString(R.string.app_name),
-                getString(R.string.grab_the_best_deal),
-                "Track order !!",
+                "Exclusive Discounts Just for You –\n Don’t Miss Out!",
+                "Purchase Online !!",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
                 R.drawable.ic_offer_tag,
-                R.drawable.ic_leftcurve,
+                R.drawable.ic_curve,
                 Gravity.LEFT
             )
         )
         introList.add(
             IntroModel(
                 getString(R.string.app_name),
-                getString(R.string.grab_the_best_deal),
-                "Track order !!",
+                "Unbeatable Offers Inside –\n Shop & Save Now!",
+                "Get your order !!",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
                 R.drawable.ic_announcment,
-                R.drawable.ic_leftcurve,
-                Gravity.LEFT
+                R.drawable.ic_rightcurve,
+                Gravity.RIGHT
             )
         )
         _binding?.slideVP?.setUpViewPagerAdapter(
@@ -94,8 +94,12 @@ class IntroFragment : Fragment() {
             // triggered when you select a new page
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position >= 3){
-                    findNavController().navigate(R.id.nav_sign_in)
+                if (position == 2) {
+                    binding.dotsIndicator.visibility = View.INVISIBLE
+                    binding.finishTxt.visibility = View.VISIBLE
+                } else {
+                    binding.dotsIndicator.visibility = View.VISIBLE
+                    binding.finishTxt.visibility = View.INVISIBLE
                 }
             }
 
@@ -106,5 +110,9 @@ class IntroFragment : Fragment() {
             }
         })
         _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
+        _binding?.slideVP?.let { binding.dotsIndicator.attachTo(it) }
+        binding.finishTxt.setOnClickListener {
+            findNavController().navigate(R.id.nav_sign_in)
+        }
     }
 }

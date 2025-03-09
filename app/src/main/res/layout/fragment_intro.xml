@@ -13,20 +13,12 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/slideVP"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/gl_SlidePage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_SlidePage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="150dp" />
 
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -40,6 +32,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:selectedDotColor="@color/primary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/finish_txt"
+            style="@style/AG_altbold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/proceed"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_18ssp"
+            android:layout_marginBottom="@dimen/_60sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:background="@drawable/gray_round_bg"
+            android:padding="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"  />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

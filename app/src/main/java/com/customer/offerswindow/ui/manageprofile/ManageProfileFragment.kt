@@ -179,63 +179,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
     }
 
     private fun postData(isPhotoAvailable: Boolean, photoPart: MultipartBody.Part) {
-        viewModel.registrationData.value?.apply {
-            val customerinfo = Gson().fromJson(
-                arguments?.getString(Constants.PROFILEINFO),
-                CustomerData::class.java
-            )
-            // Prepare the form data in JSON format
-            // Prepare the form data in JSON format
-            val formDataJson = JsonObject()
-            formDataJson.addProperty("CustomerUID", customerinfo.User_UID)
-            formDataJson.addProperty("CustomerName", customerinfo.Cust_Name)
-            formDataJson.addProperty("CustomerCategory", customerinfo.Cust_Category)
-            formDataJson.addProperty("MobileNo", customerinfo.Mobile_No)
-            formDataJson.addProperty("SurName", customerinfo.Sur_Name)
-            formDataJson.addProperty(
-                "DoB",
-                convertDate(
-                    customerinfo.DOB?:"",
-                    Constants.DDMMMYYYY,
-                    Constants.YYY_HIFUN_MM_DD
-                )
-            )
-            formDataJson.addProperty("EmailID", customerinfo.Email_ID)
-            formDataJson.addProperty("Location", customerinfo.Location)
-            formDataJson.addProperty("Gender", getGenderType(customerinfo.Gender))
-            formDataJson.addProperty(
-                "MaritalStatus",
-                getMaritalStatusType(customerinfo.Marital_Status?:"")
-            )
-            if (customerinfo.Marital_Status == "Married") {
-                formDataJson.addProperty(
-                    "MarriageAnniversaryDate",
-                    convertDate(
-                        MarriageAnniversaryDate?:"",
-                        Constants.DDMMMYYYY,
-                        Constants.YYY_HIFUN_MM_DD
-                    )
-                )
-            }
 
-            formDataJson.addProperty("FitnessGoal", customerinfo.Fitness_Goal)
-            formDataJson.addProperty("CustomerHeight", customerinfo.Height_CM)
-            formDataJson.addProperty("CustomerWeight", customerinfo.Initial_Weight)
-//            formDataJson.addProperty(
-//                "CustomerPhotoFilePath",
-//                if (!isPhotoAvailable) CustomerImageUrl else ""
-//            )
-//            formDataJson.addProperty("CreatedBy", customerinfo.Cust_Code)
-//            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
-//            formDataJson.addProperty("UpdatedBy", customerinfo.Cust_Code)
-//            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
-            val formDataBody: RequestBody =
-                RequestBody.create("application/json".toMediaTypeOrNull(), formDataJson.toString())
-            viewModel.updateProfileData(
-                photoPart,
-                formDataBody
-            )
-        }
 
     }
 
@@ -275,29 +219,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
     }
 
     fun setObserver() {
-        viewModel.customersdata.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    binding.llLoader.visibility = View.GONE
-                    response.data.let { resposnes ->
-                        if (resposnes?.Status == 200) {
-                            findNavController().popBackStack()
-                        } else {
-                            ShowFullToast(response.data?.Message ?: "")
-                        }
-                    }
-                }
 
-                is NetworkResult.Error -> {
-                    binding.llLoader.visibility = View.GONE
-                    response.message?.let { ShowFullToast(response.data?.Message ?: "") }
-                }
-
-                is NetworkResult.Loading -> {
-                    viewModel.isloading.set(true)
-                }
-            }
-        }
     }
 
     private fun compressAndPostImage(photoFile: File) {
@@ -323,7 +245,6 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
             }
         }
     }
-
 
 
 }

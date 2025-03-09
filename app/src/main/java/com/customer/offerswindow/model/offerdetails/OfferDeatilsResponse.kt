@@ -1,18 +1,18 @@
-package com.customer.offerswindow.model.dashboard
+package com.customer.offerswindow.model.offerdetails
 
 import com.customer.offerswindow.R
+import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class DashBoardDataResponse(
-
-    @Expose @SerializedName("Status") var Status: Int,
-    @Expose @SerializedName("Message") val Message: String,
-    @Expose @SerializedName("Data") var dashboardData: ArrayList<DashboardData>?
+data class OfferDeatilsResponse(
+    var Status: Int,
+    val Message: String,
+    var Data: OfferDeatils
 )
 
-data class DashboardData(
+data class OfferDeatils(
     @Expose @SerializedName("Rec_ID") val id: String,
     @Expose @SerializedName("Showroom_UID") val showroomid: String,
     @Expose @SerializedName("Showroom_Name") val showroomname: String,
@@ -30,19 +30,16 @@ data class DashboardData(
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
     @Expose @SerializedName("End_Date") val endate: String,
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
-    var isfavourite: Boolean = true,
-    @Expose @SerializedName("Image_Details") val ImagesList: ArrayList<Images>,
-) : WidgetViewModel {
-    override fun layoutId(): Int {
-        return R.layout.homelist_item
-    }
-}
+    val Terms_Conditions: ArrayList<Termsandconditions>,
+    val Other_Offer_Details: ArrayList<DashboardData>,
+)
 
-data class Images(
-    @Expose @SerializedName("Rec_ID") val imageid: String,
-    @Expose @SerializedName("Image_Path") val imagepath: String,
+data class Termsandconditions(
+    @Expose @SerializedName("Rec_ID") val id: String,
+    @Expose @SerializedName("Sort_Order") val sortorder: String,
+    @Expose @SerializedName("Description") val Description: String,
 ): WidgetViewModel {
     override fun layoutId(): Int {
-        return R.layout.homeroww_img
+        return R.layout.row_tandc
     }
 }

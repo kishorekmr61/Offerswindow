@@ -38,7 +38,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/profilepic"
-                profileImgUrlRound="@{item.cust_Image_Path}"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +131,6 @@
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:hint="Date Of Birth DD MMM YYYY"
-                        android:text="@{item.DOB}"
                         android:textColorHint="@color/color_7C7C7C"
 
                         android:textSize="@dimen/_12ssp" />
@@ -160,7 +158,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="50"
-                        android:text="@={item.sur_Name}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp"
                         tools:text="@string/app_name" />
@@ -184,14 +181,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/country_ti">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_gender"
+                        android:id="@+id/et_city"
                         style="@style/AG_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:cursorVisible="false"
                         android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.Gender}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 
@@ -222,7 +218,6 @@
                         android:cursorVisible="false"
                         android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.marital_Status}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 

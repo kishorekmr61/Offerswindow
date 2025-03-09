@@ -10,10 +10,8 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
-import com.customer.offerswindow.model.CustomerListResponse
+import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
-import com.customer.offerswindow.model.customersdata.ProfileUpdateRequest
-import com.customer.offerswindow.model.customersdata.ProfileUpdateResponse
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.repositry.CustomerListRepository
 import com.customer.offerswindow.repositry.DashBoardRepositry
@@ -34,27 +32,27 @@ class CustomerProfileViewModel @Inject constructor(
     private var networkHelper: NetworkHelper,
     var app: Application,
 ) : ViewModel() {
-    var customersdata = MutableLiveData<NetworkResult<ProfileUpdateResponse>>()
+//    var customersdata = MutableLiveData<NetworkResult<ProfileUpdateResponse>>()
 
-    var customerinfo = MutableLiveData<NetworkResult<CustomerListResponse>>()
-    val registrationData = MutableLiveData(ProfileUpdateRequest())
+    var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
+//    val registrationData = MutableLiveData(ProfileUpdateRequest())
     var deleteResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var isloading = ObservableField(false)
-    var customerdata = MutableLiveData<NetworkResult<CustomerListResponse>>()
+    var customerdata = MutableLiveData<NetworkResult<CustomerDataResponse>>()
     var locationsmasterdata = MutableLiveData<NetworkResult<CommonLocationMasterResponse>>()
 
 
 
     fun bindCustomerData(customerData: CustomerData) {
         try {
-            registrationData.value?.CustomerUID = customerData.User_UID
-            registrationData.value?.CustomerCategory = customerData.Cust_Category
-            registrationData.value?.CustomerName = customerData.Cust_Name ?: ""
-            registrationData.value?.SurName = customerData.Sur_Name ?: ""
-            registrationData.value?.Mobile_No = customerData.Mobile_No ?: ""
-            registrationData.value?.CustomerHeight = customerData.Height_CM
-            registrationData.value?.FitnessGoal = customerData.Fitness_Goal
-            registrationData.value?.CustomerWeight = customerData.Initial_Weight
+//            registrationData.value?.CustomerUID = customerData.User_UID
+//            registrationData.value?.CustomerCategory = customerData.Cust_Category
+//            registrationData.value?.CustomerName = customerData.Cust_Name ?: ""
+//            registrationData.value?.SurName = customerData.Sur_Name ?: ""
+//            registrationData.value?.Mobile_No = customerData.Mobile_No ?: ""
+//            registrationData.value?.CustomerHeight = customerData.Height_CM
+//            registrationData.value?.FitnessGoal = customerData.Fitness_Goal
+//            registrationData.value?.CustomerWeight = customerData.Initial_Weight
 //            registrationData.value?.CustomerLocation = customerData.Location
 //            registrationData.value?.CoachUserID = customerData.Coach_User_UID
 //            registrationData.value?.CustomerImageUrl = customerData.Cust_Image_Path
@@ -114,18 +112,6 @@ class CustomerProfileViewModel @Inject constructor(
     }
 
 
-
-    fun getStatusMstData() {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getCommonbMaster("Common").collect { values ->
-//                    masterdata.postValue(values)
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-    }
 
     fun deleteUserAccount() {
         viewModelScope.launch {

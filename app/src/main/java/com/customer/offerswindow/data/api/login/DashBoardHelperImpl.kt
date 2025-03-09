@@ -9,9 +9,10 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
         dashboardApiService.getCustomerData(userid)
 
 
+    suspend fun getDashBoardOffersList(lShowroomId: String,lLocationId: String,lServiceId: String) =
+        dashboardApiService.getDashBoardOffersList(lShowroomId,lLocationId,lServiceId)
 
-
-    suspend fun getSubCoachesData(userid: String) =
-        dashboardApiService.getSubCoachesData(userid)
+    suspend fun getIndividualOfferDetails(lRecordId: String) =
+        dashboardApiService.getIndividualOfferDetails(lRecordId)
 
 }

@@ -26,7 +26,7 @@ class AuthAuthenticator @Inject constructor() : Authenticator {
             val newToken = getNewToken(token)
 
             if (newToken?.isSuccessful == true || newToken?.body() != null) {
-                AppPreference.write(Constants.TOKEN, newToken.body()?.access_token?:"")
+                AppPreference.write(Constants.TOKEN, newToken.body()?.access_token ?: "")
             }
 
             newToken?.body()?.let {
@@ -54,7 +54,7 @@ class AuthAuthenticator @Inject constructor() : Authenticator {
         return AppPreference.read(Constants.LOGINUSERNAME, "")
             ?.let {
                 AppPreference.read(Constants.LOGINPASSWORD, "")
-                    ?.let { it1 -> service.getToken(/*it, it1*/) }
+                    ?.let { it1 -> service.getToken("8374810383", "Welcome") }
             }
     }
 }

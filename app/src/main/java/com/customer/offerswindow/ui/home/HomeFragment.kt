@@ -1,7 +1,6 @@
 package com.customer.offerswindow.ui.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,24 +10,33 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.MenuProvider
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.customer.offerswindow.BR
 import com.customer.offerswindow.BuildConfig
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentHomeCustomerBinding
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.dashboard.CategoriesData
+import com.customer.offerswindow.model.dashboard.DashboardData
+import com.customer.offerswindow.model.dashboard.FilterData
+import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
-import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.setToolbarVisibility
+import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
+import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -36,14 +44,16 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MenuProvider {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private val signInViewModel: SignInViewModel by viewModels()
     private var _binding: FragmentHomeCustomerBinding? = null
     private val binding get() = _binding!!
     private val vm: DashBoardViewModel by activityViewModels()
-    var categoryList = arrayListOf<CommonDataResponse>()
+    var categoryList = ArrayList<CategoriesData>()
+    var locationList = arrayListOf<CommonDataResponse>()
+    var offertypeList = arrayListOf<FilterData>()
+    var dashboaroffersList = arrayListOf<DashboardData>()
 
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -75,16 +85,8 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
-                        if (resposnes.Data?.firstOrNull()?.Login_Status == "A") {
-                            homeViewModel.isloading.set(false)
+                        homeViewModel.isloading.set(false)
 
-
-                        } else {
-                            AppPreference.clearAll()
-                            showToast("Looks you are not active user,please contact your coach to access app")
-                            var intent = Intent(requireActivity(), OnBoardingActivity::class.java)
-                            startActivity(intent)
-                        }
                     }
                 }
 
@@ -99,9 +101,30 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
+                        categoryList.add(
+                            CategoriesData(
+                                "https://cdn.pixabay.com/photo/2021/10/11/23/49/app-6702045_1280.png",
+                                "All",
+                                "0",
+                                true
+                            )
+                        )
+                        offertypeList.add(FilterData("All", true))
                         response?.data?.data?.forEach {
                             if (it.MstType == "Service") {
-                                categoryList.add(it)
+                                categoryList.add(
+                                    CategoriesData(
+                                        it.Image_path,
+                                        it.MstDesc,
+                                        it.MstCode
+                                    )
+                                )
+                            }
+                            if (it.MstType == "Location") {
+                                locationList.add(it)
+                            }
+                            if (it.MstType == "Offer_Type") {
+                                offertypeList.add(FilterData(it.MstDesc))
                             }
                         }
                     }
@@ -114,35 +137,81 @@ class HomeFragment : Fragment() {
                 else -> {}
             }
         }
+        homeViewModel.dashboardresponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    dashboaroffersList.addAll(response.data?.dashboardData ?: arrayListOf())
+                    setRecyclervewData(dashboaroffersList)
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
+    }
+
+    private fun setRecyclervewData(dashboaroffersList: ArrayList<DashboardData>) {
+        binding.rvOfferslist.setUpMultiViewRecyclerAdapter(
+            dashboaroffersList
+        ) { item: DashboardData, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, item)
+            binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
+                item.ImagesList
+            ) { item: Images, binder: ViewDataBinding, position: Int ->
+                binder.setVariable(BR.item, item)
+                binder.setVariable(BR.onItemClick, View.OnClickListener {
+
+                })
+            }
+            binder.setVariable(BR.onItemClick, View.OnClickListener {
+                when (it.id) {
+                    R.id.favourite -> {
+                        item.isfavourite = false
+                    }
+                }
+                binder.executePendingBindings()
+            })
+        }
+        binding.rvCategories.setUpMultiViewRecyclerAdapter(
+            categoryList
+        ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, item)
+            binder.setVariable(BR.onItemClick, View.OnClickListener {
+
+                binder.executePendingBindings()
+            })
+        }
+        binding.rvFilter.setUpMultiViewRecyclerAdapter(
+            offertypeList
+        ) { item: FilterData, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, item)
+            binder.setVariable(BR.onItemClick, View.OnClickListener {
+
+                binder.executePendingBindings()
+            })
+        }
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         setObserver()
         vm.hidetoolbar.value = false
         homeViewModel.isloading.set(true)
         homeViewModel.getMstData()
-        binding.versionTextview.text = "Version :".plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
+        homeViewModel.profilepic.set("https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg?semt=ais_hybrid")
+        binding.versionTextview.text =
+            getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
-
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_dashboard, menu)
-        super.onCreateOptionsMenu(menu, menuInflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_notification -> {
-                showToast("Notification clicked")
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
+        homeViewModel.getMstData()
+        AppPreference.read(Constants.MOBILENO, "")?.let { homeViewModel.getUserInfo(it) }
+        homeViewModel.getDashboardData("", "", "")
+        binding.viewallTxt.setOnClickListener {
+            findNavController().navigate(R.id.nav_categories)
         }
     }
 
@@ -162,8 +231,6 @@ class HomeFragment : Fragment() {
                     AppPreference.write(Constants.Screen_Code, "")
                 }
 
-
-
                 if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2008") {
                     findNavController().navigate(R.id.nav_rewardshistory)
                     AppPreference.write(Constants.Screen_Code, "")
@@ -174,10 +241,7 @@ class HomeFragment : Fragment() {
                     AppPreference.write(Constants.Screen_Code, "")
                 }
 
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2011") {
-                    findNavController().navigate(R.id.nav_walletBalanceFragment)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -186,9 +250,21 @@ class HomeFragment : Fragment() {
 
 
     private fun getData(data: NetworkResult<CommonMasterResponse>, s: String): CommonDataResponse? {
-        return data?.data?.data?.find {
+        return data.data?.data?.find {
             s == it.MstType
         }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_dashboard, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.action_notification) {
+            showToast("Notification clicked")
+            return true
+        }
+        return false
     }
 
 
