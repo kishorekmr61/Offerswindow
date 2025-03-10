@@ -31,6 +31,7 @@
             android:layout_margin="@dimen/_8sdp"
             android:drawableStart="@drawable/ic_location"
             android:padding="@dimen/_6sdp"
+            android:text="@{viewModel.location}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -153,11 +154,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:clipToPadding="false"
-            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_slotsfull"
+            app:spanCount="3"
             tools:listitem="@layout/row_slotimings"
             tools:visibility="visible" />
 
@@ -166,6 +167,7 @@
             style="@style/AG_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_timigs"
             tools:text="No of persons Coming : " />
@@ -202,6 +204,7 @@
                 android:drawableStart="@drawable/ic_contact_name"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center|start"
+                android:text=""
                 android:textColor="@color/color_272727"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -226,10 +229,12 @@
                 tools:text="@string/app_name" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/booknow_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:background="@drawable/round_primary_bg"
+                android:onClick="@{onItemClick}"
                 android:padding="@dimen/_6sdp"
                 android:text="@string/book_now"
                 android:textColor="@color/white"

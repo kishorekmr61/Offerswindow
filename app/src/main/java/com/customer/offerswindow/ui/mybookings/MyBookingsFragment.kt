@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import com.customer.offerswindow.R
 import com.customer.offerswindow.databinding.FragmentMyBookingsBinding
 import com.customer.offerswindow.databinding.FragmentNotificationsBinding
+import com.customer.offerswindow.utils.setWhiteToolBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyBookingsFragment : Fragment() {
 
     private var _binding: FragmentMyBookingsBinding? = null
@@ -25,6 +28,8 @@ class MyBookingsFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        activity?.setWhiteToolBar("My Bookings", true)
         return root
     }
 }

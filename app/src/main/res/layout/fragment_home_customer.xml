@@ -200,13 +200,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:clipToPadding="false"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_filter"
                     tools:listitem="@layout/homelist_item"
+                    tools:itemCount="5"
                     tools:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -219,6 +220,7 @@
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_offerslist"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="@string/app_name" />
 

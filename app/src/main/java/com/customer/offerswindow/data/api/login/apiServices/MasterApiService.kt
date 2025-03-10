@@ -2,13 +2,13 @@ package com.customer.offerswindow.data.api.login.apiServices
 
 import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.PostResetPassword
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
+import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
-import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.notification.NotificationResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,29 +20,23 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface MasterApiService {
-    @GET("Masters/Masters")
-    suspend fun getHubMaster(
-        @Query("sMasterType") mastertype: String,
-        @Query("iParentMasterID") parentid: String
-    ): Response<List<HubMaster>>
-
-    @GET("Masters/Masters")
+    @GET("ShowRoomOffers/Masters?")
     suspend fun getCommonMaster(
         @Query("sMasterType") mastertype: String,
         @Query("iParentMasterID") parentid: String
     ): Response<CommonMasterResponse>
 
 
-    @GET("Masters/Masters")
+    @GET("ShowRoomOffers/Masters?")
     suspend fun getCommonLocationMaster(@Query("sMasterType") mastertype: String): Response<CommonLocationMasterResponse>
 
-    @GET("token")
-//    @FormUrlEncoded
-//    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @POST("token")
+    @FormUrlEncoded
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     suspend fun getToken(
         @Field("username") username: String,
         @Field("password") password: String,
-        @Field("grant_type") grant_type: String="password",
+        @Field("grant_type") grant_type: String = "password",
     ): Response<TokenResponse>
 
     @GET("UserManagement/CheckUserLogin?")
@@ -58,19 +52,16 @@ interface MasterApiService {
     ): Response<UserResponse>
 
 
-    @GET("UserManagement/PostSendOtp?")
+    @GET("UserManagement/GetValidateOtp?")
     suspend fun validateOTP(
         @Query("sCustomerMobileNo") mobileno: String,
         @Query("sOTP") sOTP: String,
     ): Response<OTPResponse>
 
     @POST("UserManagement/PostSignUp")
-    suspend fun signupUser(postSignUp: PostSignUp
+    suspend fun signupUser(
+        postSignUp: PostSignUp
     ): Response<StockPurchsasePostingResponse>
-
-
-
-
 
 
     @GET("Transactions/ForgotPassword?")

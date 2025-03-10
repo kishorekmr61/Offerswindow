@@ -11,13 +11,37 @@
         android:label=""
         tools:layout="@layout/fragment_home_customer" />
 
+    <fragment
+        android:id="@+id/nav_offer_details"
+        android:name="com.customer.offerswindow.ui.detailview.DetailViewFragment"
+        android:label=""
+        tools:layout="@layout/fragment_detail_view" />
+
+    <fragment
+        android:id="@+id/nav_slots"
+        android:name="com.customer.offerswindow.ui.slotbooking.SelectSlotFragment"
+        android:label=""
+        tools:layout="@layout/fragment_select_slot" />
+
+
+    <fragment
+        android:id="@+id/nav_success"
+        android:name="com.customer.offerswindow.ui.success.SuccessFragment"
+        android:label=""
+        tools:layout="@layout/fragment_success" />
+
+    <fragment
+        android:id="@+id/nav_mybookings"
+        android:name="com.customer.offerswindow.ui.mybookings.MyBookingsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_my_bookings" />
+
 
     <fragment
         android:id="@+id/nav_customerProfileFragment"
         android:name="com.customer.offerswindow.ui.customerprofile.CustomerProfileFragment"
         android:label="fragment_customer_profile"
         tools:layout="@layout/fragment_customer_profile" />
-
 
 
     <fragment

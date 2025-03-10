@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import com.customer.offerswindow.R
 import com.customer.offerswindow.databinding.FragmentCategoriesBinding
 import com.customer.offerswindow.databinding.FragmentForgotPasswordBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForgotPasswordFragment : Fragment() {
 
     private var _binding: FragmentForgotPasswordBinding? = null

@@ -5,8 +5,11 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
+import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
@@ -31,6 +34,7 @@ class HomeViewModel @Inject constructor(
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
+    var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
 
     fun getDashboardData(lShowroomId: String, lLocationId: String, lServiceId: String) {
         viewModelScope.launch {
@@ -71,4 +75,19 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun getToken() {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getToken(/*"9533586878", "welcome"*/).collect { values ->
+                    AppPreference.write(Constants.TOKEN, values.data?.access_token ?: "")
+                    tokenResponse.postValue(values)
+//                    response.value?.data = values.data
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
 }

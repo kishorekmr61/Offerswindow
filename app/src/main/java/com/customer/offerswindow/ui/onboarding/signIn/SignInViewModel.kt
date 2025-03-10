@@ -5,6 +5,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
@@ -38,15 +40,15 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 repository.getToken(/*"9533586878", "welcome"*/).collect { values ->
+                    AppPreference.write(Constants.TOKEN, values.data?.access_token ?: "")
                     tokenResponse.postValue(values)
 //                    response.value?.data = values.data
                 }
             } else {
-               app.showToast("No Internet")
+                app.showToast("No Internet")
             }
         }
     }
-
 
 
     fun getOTP(mobileno: String) {
@@ -57,20 +59,20 @@ class SignInViewModel @Inject constructor(
 //                    response.value?.data = values.data
                 }
             } else {
-              app.showToast("No Internet")
+                app.showToast("No Internet")
             }
         }
     }
 
-    fun validateOTP(mobileno: String,OTP :String) {
+    fun validateOTP(mobileno: String, OTP: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.validateOTP(mobileno,OTP).collect { values ->
+                repository.validateOTP(mobileno, OTP).collect { values ->
                     OtpResponse.postValue(values)
 //                    response.value?.data = values.data
                 }
             } else {
-              app.showToast("No Internet")
+                app.showToast("No Internet")
             }
         }
     }

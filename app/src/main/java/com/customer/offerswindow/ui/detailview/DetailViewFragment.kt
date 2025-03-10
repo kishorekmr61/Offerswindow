@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
@@ -19,7 +20,10 @@ import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
+import com.customer.offerswindow.utils.setWhiteToolBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailViewFragment : Fragment() {
 
     private var _binding: FragmentDetailViewBinding? = null
@@ -39,15 +43,16 @@ class DetailViewFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        activity?.setWhiteToolBar("Offer detail", true)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
-        vm.hidetoolbar.value = false
+        setListeners()
         viewModel.isloading.set(true)
-        viewModel.getDetailData("1")
+        arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
     }
 
     private fun setRecyclervewData(dashboaroffersList: ArrayList<DashboardData>) {
@@ -68,6 +73,10 @@ class DetailViewFragment : Fragment() {
                     R.id.favourite -> {
                         item.isfavourite = false
                     }
+
+                    R.id.title_txt -> {
+                        viewModel.getDetailData(item.id)
+                    }
                 }
                 binder.executePendingBindings()
             })
@@ -77,7 +86,6 @@ class DetailViewFragment : Fragment() {
         ) { item: Termsandconditions, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
-
                 binder.executePendingBindings()
             })
         }
@@ -88,12 +96,14 @@ class DetailViewFragment : Fragment() {
         viewModel.deatiledresponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    termslist.clear()
                     response.data?.let { resposnes ->
                         viewModel.isloading.set(false)
                         viewModel.OfferDeatils.set(response.data?.Data)
                         dashboaroffersList.addAll(
                             response.data?.Data?.Other_Offer_Details ?: arrayListOf()
                         )
+                        viewModel.imagepath.set(resposnes.Data.ImagesList.firstOrNull()?.imagepath)
                         termslist.addAll(response.data?.Data?.Terms_Conditions ?: arrayListOf())
                         setRecyclervewData(dashboaroffersList)
                     }
@@ -108,5 +118,28 @@ class DetailViewFragment : Fragment() {
         }
     }
 
+    private fun setListeners() {
+        binding.setVariable(BR.onItemClick, View.OnClickListener {
 
+            when (it.id) {
+                R.id.slotbooking_txt, R.id.bookoffer_txt -> {
+                    var dataobj =  viewModel.OfferDeatils.get()
+                    val bundle = Bundle()
+                    bundle.putString(
+                        "Location",
+                        dataobj?.showroomname + " - " + dataobj?.locationname
+                    )
+                    bundle.putString("OfferID",dataobj?.id)
+                    bundle.putString("SERVICEID", dataobj?.serviceid)
+                    bundle.putString("LOCATIONID", dataobj?.locationid)
+                    bundle.putString("SHOWROOMID", dataobj?.showroomid)
+                    bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
+                    findNavController().navigate(R.id.nav_slots, bundle)
+                }
+            }
+
+        })
+
+
+    }
 }

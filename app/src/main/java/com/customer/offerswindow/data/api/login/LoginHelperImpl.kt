@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class LoginHelperImpl @Inject constructor(private val masterApiService: MasterApiService) {
     suspend fun getUserToken(/*mobilenumber: String, password: String*/) =
-        masterApiService.getToken("8374810383", "Welcome")
+        masterApiService.getToken("8374810383", "welcome")
 
     suspend fun getCommonMasterData(mastertype: String, parentid: String) =
         masterApiService.getCommonMaster(mastertype, parentid)

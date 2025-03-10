@@ -160,7 +160,7 @@ class SignInFragment : Fragment() {
                     response.data.let { resposnes ->
                         signInViewModel.isloading.set(false)
                         if (!response.data?.Message.isNullOrEmpty()) {
-                            if (response.data?.Message == "ok") {
+                            if (response.data?.Status == 200) {
                                 binding.etPswrd.visibility = View.VISIBLE
                                 binding.loginBtn.visibility = View.VISIBLE
                                 showToast("OTP sent Successfully")
@@ -177,6 +177,8 @@ class SignInFragment : Fragment() {
                         } else {
                             signInViewModel.isloading.set(false)
                             ShowFullToast(response.data?.Message ?: "")
+
+
                         }
                     }
                 }
@@ -203,6 +205,11 @@ class SignInFragment : Fragment() {
                                 resposnes?.Message ?: getString(R.string.something_went_wrong)
                             )
                         } else {
+                            AppPreference.write(
+                                Constants.MOBILENO,
+                                binding.etMobilenumber.text.toString()
+                            )
+                            AppPreference.write(Constants.ISLOGGEDIN, true)
                             val intent =
                                 Intent(requireActivity(), DashboardActivity::class.java)
                             startActivity(intent)

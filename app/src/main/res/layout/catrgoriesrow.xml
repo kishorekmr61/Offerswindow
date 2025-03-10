@@ -19,9 +19,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/category_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_2sdp">
+        android:onClick="@{onItemClick}">
 
 
         <androidx.cardview.widget.CardView
@@ -29,19 +30,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_3sdp"
-            app:cardBackgroundColor="@color/color_F0F0F0"
             app:cardCornerRadius="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:padding="@dimen/_8sdp"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:padding="@dimen/_5sdp"
-                android:src="@{item.category_img}"
+                imgUrl="@{item.category_img}"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:padding="@dimen/_3sdp"
+                tools:background="@drawable/bottomstroke_bg"
+                android:background="@{item.isselected ? @drawable/bottomstroke_bg : @drawable/et_style}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/catregories_icon" />
@@ -49,18 +52,21 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/catregory_desc"
+            style="@style/Ag_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:maxLines="2"
+            android:padding="@dimen/_4sdp"
             android:text="@{item.category_desc}"
-            android:background="@{item.isselected ? @drawable/round_primary_bg : @drawable/et_style}"
-            android:textColor="@{item.isselected ? @color/white : @color/black}"
-            android:textSize="@dimen/_10ssp"
+            android:textColor="@{item.isselected ? @color/primary : @color/black}"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_card"
             tools:text="@string/categoriename" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

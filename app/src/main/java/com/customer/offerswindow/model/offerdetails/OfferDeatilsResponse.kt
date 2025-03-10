@@ -2,6 +2,7 @@ package com.customer.offerswindow.model.offerdetails
 
 import com.customer.offerswindow.R
 import com.customer.offerswindow.model.dashboard.DashboardData
+import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -30,6 +31,7 @@ data class OfferDeatils(
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
     @Expose @SerializedName("End_Date") val endate: String,
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
+    @Expose @SerializedName("Image_Details") val ImagesList: ArrayList<Images>,
     val Terms_Conditions: ArrayList<Termsandconditions>,
     val Other_Offer_Details: ArrayList<DashboardData>,
 )
@@ -38,7 +40,7 @@ data class Termsandconditions(
     @Expose @SerializedName("Rec_ID") val id: String,
     @Expose @SerializedName("Sort_Order") val sortorder: String,
     @Expose @SerializedName("Description") val Description: String,
-): WidgetViewModel {
+) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.row_tandc
     }

@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
-    private val dashBoardRepositry: DashBoardRepositry,
-    private val repository: Repository,
+     private val repository: Repository,
     private var networkHelper: NetworkHelper,
     var app: Application,
 ) :  ViewModel() {

@@ -26,14 +26,14 @@ class DetailViewViewModel @Inject constructor(
 
 
     var isloading = ObservableField(false)
+    var imagepath = ObservableField<String>()
     var deatiledresponse = MutableLiveData<NetworkResult<OfferDeatilsResponse>>()
     var OfferDeatils = ObservableField<OfferDeatils>()
 
     fun getDetailData(lRecordId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                dashBoardRepositry.getIndividualOfferDetails(lRecordId)
-                    .collect { values ->
+                dashBoardRepositry.getIndividualOfferDetails(lRecordId).collect { values ->
                         deatiledresponse.postValue(values)
                     }
 

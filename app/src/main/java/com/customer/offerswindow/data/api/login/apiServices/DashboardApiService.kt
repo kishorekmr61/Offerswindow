@@ -1,10 +1,15 @@
 package com.customer.offerswindow.data.api.login.apiServices
 
 import com.customer.offerswindow.model.CustomerDataResponse
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
+import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface DashboardApiService {
@@ -25,5 +30,18 @@ interface DashboardApiService {
         @Query("lRecordId") lRecordId: String,
     ): Response<OfferDeatilsResponse>
 
+
+    @GET("ShowRoomOffers/GetSlotAvailability?")
+    suspend fun getofferTimeSlots(
+        @Query("lShowroomId") mobileno: String,
+        @Query("lLocationId") lLocationId: String,
+        @Query("lServiceId") lServiceId: String,
+        @Query("sSlotRequiredDate") date: String,
+    ): Response<SlotsDataResponse>
+
+    @POST("ShowRoomOffers/PostSlotBooking")
+    suspend fun postSlotBooking(
+         @Body postSlotBooking: PostSlotBooking
+    ): Response<StockPurchsasePostingResponse>
 
 }

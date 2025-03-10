@@ -1,0 +1,67 @@
+package com.customer.offerswindow.ui.success
+
+import androidx.fragment.app.viewModels
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.customer.offerswindow.BR
+import com.customer.offerswindow.R
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
+import com.customer.offerswindow.databinding.FragmentSelectSlotBinding
+import com.customer.offerswindow.databinding.FragmentSuccessBinding
+import com.customer.offerswindow.model.customersdata.PostSlotBooking
+import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.ui.slotbooking.SelectSlotViewModel
+import com.customer.offerswindow.utils.setWhiteToolBar
+import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+@AndroidEntryPoint
+class SuccessFragment : Fragment() {
+
+    private var _binding: FragmentSuccessBinding? = null
+    private val binding get() = _binding!!
+    private val vm: DashBoardViewModel by activityViewModels()
+    private val viewModel: SuccessViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // TODO: Use the ViewModel
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSuccessBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        vm.hidetoolbar.value = true
+        viewModel.message.set("You have successfully \n Booked your slot")
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.setVariable(BR.onItemClick, View.OnClickListener {
+            when (it.id) {
+                R.id.bookdetails_btn -> {
+                    findNavController().navigate(R.id.nav_mybookings)
+                }
+            }
+        })
+    }
+}

@@ -12,8 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentIntroBinding
-import com.customer.offerswindow.databinding.FragmentSignInBinding
 import com.customer.offerswindow.model.intro.IntroModel
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 
@@ -109,6 +110,8 @@ class IntroFragment : Fragment() {
                 super.onPageScrollStateChanged(state)
             }
         })
+        AppPreference.write(Constants.LOGINUSERNAME, "8374810383")
+        AppPreference.write(Constants.LOGINPASSWORD, "Welcome")
         _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
         _binding?.slideVP?.let { binding.dotsIndicator.attachTo(it) }
         binding.finishTxt.setOnClickListener {

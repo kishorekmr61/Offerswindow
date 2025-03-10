@@ -34,6 +34,7 @@ import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.utils.PermissionsUtil
+import com.customer.offerswindow.utils.notifyDataChange
 import com.customer.offerswindow.utils.setToolbarVisibility
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
@@ -71,6 +72,28 @@ class HomeFragment : Fragment(), MenuProvider {
         return root
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        setObserver()
+        vm.hidetoolbar.value = false
+        homeViewModel.isloading.set(true)
+        homeViewModel.getMstData()
+        homeViewModel.profilepic.set("https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg?semt=ais_hybrid")
+        binding.versionTextview.text =
+            getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
+        handleNotificationClick()
+        homeViewModel.getToken()
+        homeViewModel.getMstData()
+        AppPreference.read(Constants.MOBILENO, "")
+            ?.let { homeViewModel.getUserInfo(/*it*/"9533586878") }
+        homeViewModel.getDashboardData("0", "0", "0")
+        binding.viewallTxt.setOnClickListener {
+            findNavController().navigate(R.id.nav_categories)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
@@ -86,7 +109,8 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         homeViewModel.isloading.set(false)
-
+                        AppPreference.write(Constants.NAME, resposnes?.Data?.firstOrNull()?.Cust_Name?:"")
+                        AppPreference.write(Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No?:"")
                     }
                 }
 
@@ -100,6 +124,8 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.masterdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    categoryList.clear()
+                    offertypeList.clear()
                     response.data?.let { resposnes ->
                         categoryList.add(
                             CategoriesData(
@@ -140,6 +166,7 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.dashboardresponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    dashboaroffersList.clear()
                     dashboaroffersList.addAll(response.data?.dashboardData ?: arrayListOf())
                     setRecyclervewData(dashboaroffersList)
                 }
@@ -170,48 +197,54 @@ class HomeFragment : Fragment(), MenuProvider {
                 when (it.id) {
                     R.id.favourite -> {
                         item.isfavourite = false
+                        binding.rvOfferslist.notifyDataChange()
+                    }
+
+                    R.id.title_txt -> {
+                        var bundle = Bundle()
+                        bundle.putString("OfferID", item.id)
+                        bundle.putString("Imagepath", item.ImagesList.firstOrNull()?.imagepath)
+                        findNavController().navigate(R.id.nav_offer_details, bundle)
                     }
                 }
                 binder.executePendingBindings()
             })
         }
+        var previouscat = 0
+        categoryList.firstOrNull()?.isselected = true
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
-
+                when (it.id) {
+                    R.id.category_item -> {
+                        categoryList[previouscat].isselected = false
+                        previouscat = position
+                        categoryList[previouscat].isselected = true
+                        binding.rvCategories.notifyDataChange()
+                    }
+                }
                 binder.executePendingBindings()
             })
         }
+        var previousfilter = 0
+        offertypeList.firstOrNull()?.filetrselection = true
         binding.rvFilter.setUpMultiViewRecyclerAdapter(
             offertypeList
         ) { item: FilterData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
-
+                when (it.id) {
+                    R.id.img_card -> {
+                        offertypeList[previousfilter].filetrselection = false
+                        previousfilter = position
+                        offertypeList[previousfilter].filetrselection = true
+                        binding.rvFilter.notifyDataChange()
+                    }
+                }
                 binder.executePendingBindings()
             })
-        }
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        setObserver()
-        vm.hidetoolbar.value = false
-        homeViewModel.isloading.set(true)
-        homeViewModel.getMstData()
-        homeViewModel.profilepic.set("https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg?semt=ais_hybrid")
-        binding.versionTextview.text =
-            getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
-        handleNotificationClick()
-        homeViewModel.getMstData()
-        AppPreference.read(Constants.MOBILENO, "")?.let { homeViewModel.getUserInfo(it) }
-        homeViewModel.getDashboardData("", "", "")
-        binding.viewallTxt.setOnClickListener {
-            findNavController().navigate(R.id.nav_categories)
         }
     }
 

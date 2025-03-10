@@ -13,7 +13,10 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.model.notification.NotificationsData
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
+import com.customer.offerswindow.utils.setWhiteToolBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotificationsFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
@@ -28,6 +31,7 @@ class NotificationsFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        activity?.setWhiteToolBar("Notifications", true)
         return root
     }
 

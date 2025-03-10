@@ -29,12 +29,12 @@ fun setImageUrl(img: AppCompatImageView, url: String?) {
     if (!TextUtils.isEmpty(url)) {
         img.load(url) {
             crossfade(false)
-            placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+            placeholder(R.drawable.default_img)
+                .error(R.drawable.default_img)
             transformations(RoundedCornersTransformation(25f))
         }
     } else {
-        img.setImageResource(R.mipmap.ic_launcher)
+        img.setImageResource(R.drawable.default_img)
     }
 }
 
@@ -43,11 +43,11 @@ fun setImageNormalUrl(img: AppCompatImageView, url: String?) {
     if (!TextUtils.isEmpty(url)) {
         img.load(url) {
             crossfade(false)
-            placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher)
+            placeholder(R.drawable.default_img).error(R.drawable.default_img)
             transformations(RoundedCornersTransformation(25f))
         }
     } else {
-        img.setImageResource(R.mipmap.ic_launcher)
+        img.setImageResource(R.drawable.default_img)
     }
 }
 
@@ -60,11 +60,11 @@ fun loadUrl(img: AppCompatImageView, url: String?) {
         if (m.matches()) {
             img.load(url) {
                 crossfade(false)
-                placeholder(R.mipmap.ic_launcher)
+                placeholder(R.drawable.default_img)
             }
         }
     } else {
-        img.setImageResource(R.mipmap.ic_launcher)
+        img.setImageResource(R.drawable.default_img)
     }
 }
 
@@ -151,7 +151,7 @@ fun setThumbnail(img: AppCompatImageView, videourl: String?) {
     if (!videourl.isNullOrEmpty() && videourl.contains("http") && fileExt != "m4a") {
         Glide.with(context)
             .asBitmap()
-            .load(videourl).error(R.mipmap.ic_launcher)
+            .load(videourl).error(R.drawable.default_img)
             .into(img);
     }
 }
@@ -162,7 +162,7 @@ fun setProfileImageUrl(img: AppCompatImageView, url: String?, modifiedDate: Stri
         Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: ""))
             .apply(RequestOptions.circleCropTransform()).into(img)
     } else {
-        img.setImageResource(R.mipmap.ic_launcher)
+        img.setImageResource(R.drawable.default_img)
     }
 }
 
@@ -171,7 +171,7 @@ fun setImageUrl(img: AppCompatImageView, url: String?, modifiedDate: String?) {
     if (!url.isNullOrEmpty()) {
         Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: "")).into(img)
     } else {
-        img.setImageResource(R.mipmap.ic_launcher)
+        img.setImageResource(R.drawable.default_img)
     }
 }
 

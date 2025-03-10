@@ -94,7 +94,7 @@ fun Activity.setWhiteToolBar(
         showToolbar()
         if (isBackDisplay) {
             toolbar?.navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_back)
-            toolbar?.navigationIcon?.setTint(getColor(R.color.black))
+            toolbar?.navigationIcon?.setTint(getColor(R.color.white))
         } else {
             toolbar.navigationIcon = null
         }
@@ -108,12 +108,12 @@ fun Activity.setWhiteToolBar(
 
         findViewById<AppCompatTextView>(R.id.tvToolBarTitle)?.setTextColor(
             resources.getColor(
-                R.color.black, null
+                R.color.white, null
             )
         )
         findViewById<Toolbar>(R.id.toolbar)?.setBackgroundColor(
             ContextCompat.getColor(
-                this, R.color.white
+                this, R.color.primary
             )
         )
         showStatusBar()

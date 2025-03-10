@@ -14,7 +14,10 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
+import com.customer.offerswindow.utils.setWhiteToolBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
@@ -31,13 +34,14 @@ class CategoriesFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        activity?.setWhiteToolBar("Categories", true)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
-        vm.hidetoolbar.value = false
+        vm.hidetoolbar.value = true
         viewModel.isloading.set(true)
         viewModel.getMstData()
     }
