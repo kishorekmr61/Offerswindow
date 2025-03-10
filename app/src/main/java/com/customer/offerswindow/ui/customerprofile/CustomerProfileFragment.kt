@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.Spanned
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +24,6 @@ import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
-import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
-import com.customer.offerswindow.utils.convertDate
 import com.customer.offerswindow.utils.isEmailValid
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showCalenderDialog
@@ -35,11 +32,8 @@ import com.customer.offerswindow.utils.showToast
 import com.customer.offerswindow.utils.userimagecapture.ActionBottomSheet
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.Calendar

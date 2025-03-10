@@ -26,6 +26,7 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentHomeCustomerBinding
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.FilterData
@@ -84,6 +85,7 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
+        setListeners()
         homeViewModel.getToken()
         homeViewModel.getMstData()
         AppPreference.read(Constants.MOBILENO, "")
@@ -300,5 +302,15 @@ class HomeFragment : Fragment(), MenuProvider {
         return false
     }
 
+    private fun setListeners() {
+        binding.setVariable(BR.onItemClick, View.OnClickListener {
+            when (it.id) {
+                R.id.imageView14 -> {
+                  findNavController().navigate(R.id.nav_customerProfileFragment)
+                }
+            }
+
+        })
+    }
 
 }
