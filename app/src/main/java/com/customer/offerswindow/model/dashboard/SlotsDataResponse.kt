@@ -1,5 +1,6 @@
 package com.customer.offerswindow.model.dashboard
 
+import android.graphics.Color
 import com.customer.offerswindow.R
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 
@@ -15,7 +16,7 @@ data class SlotsData(
     val From_Time: String,
     val To_Time: String,
     val Slot_Colour: String,
-    val isselected: Boolean = false,
+    var isselected: Boolean = false,
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.row_slotimings
@@ -24,14 +25,14 @@ data class SlotsData(
 
     fun getColor(colorname: String): Int {
         if (colorname == "Green") {
-            return R.color.car_green_500
+            return Color.parseColor("#ff0f9d58")//R.color.car_green_500
         } else if (colorname == "Yellow") {
-            return R.color.color_FBBA18
+            return Color.parseColor("#FBBA18")//R.color.color_FBBA18
         }
         if (isselected) {
-            return R.color.primary
+            return Color.parseColor("#4C1012")
         }
-        return R.color.color_CDCDCD
+        return Color.parseColor("#CDCDCD")
     }
 
 

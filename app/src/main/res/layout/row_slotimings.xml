@@ -24,7 +24,8 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Ag_body_large"
+            android:id="@+id/timeslot_txt"
+            style="@style/AG_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_4sdp"
@@ -32,8 +33,10 @@
             android:gravity="center"
             android:paddingStart="@dimen/_10sdp"
             android:paddingTop="@dimen/_6sdp"
+            android:onClick="@{onItemClick}"
             android:paddingEnd="@dimen/_10sdp"
             android:paddingBottom="@dimen/_6sdp"
+            android:text="@{item.slot_Desc}"
             android:textColor="@{item.getColor(item.slot_Colour)}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"

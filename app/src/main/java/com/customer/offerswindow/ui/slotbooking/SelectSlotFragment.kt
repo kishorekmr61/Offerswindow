@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,6 +22,8 @@ import com.customer.offerswindow.model.dashboard.SlotsData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.utils.CalendarAdapter
 import com.customer.offerswindow.utils.HorizontalItemDecoration
+import com.customer.offerswindow.utils.notifyDataChange
+import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,7 +71,7 @@ class SelectSlotFragment : Fragment() {
         showroom = arguments?.getString("SHOWROOMID") ?: ""
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         pcurrentDate = sdf.format(Date())
-        viewModel.getSlotsData(servicwe, location, showroom, pcurrentDate)
+        viewModel.getSlotsData("1", "4", "18",/*servicwe, location, showroom,*/ pcurrentDate)
         binding.contactnameTxt.text = AppPreference.read(Constants.NAME, "")
         binding.contactcallTxt.text = AppPreference.read(Constants.MOBILENO, "")
         return root
@@ -98,8 +101,8 @@ class SelectSlotFragment : Fragment() {
 
     private fun setUpAdapter() {
         var int = 10
-        val spacingInPixels = resources.getDimensionPixelSize(int)
-        binding.rvCalender.addItemDecoration(HorizontalItemDecoration(spacingInPixels))
+//        val spacingInPixels = arguments.getDimensionPixelSize(int)
+        binding.rvCalender.addItemDecoration(HorizontalItemDecoration(8))
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvCalender)
         adapter = CalendarAdapter { calendarDateModel: CalendarDateModel, position: Int ->
@@ -118,12 +121,16 @@ class SelectSlotFragment : Fragment() {
         val maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
         dates.clear()
         monthCalendar.set(Calendar.DAY_OF_MONTH, 1)
+        val ccalender = Calendar.getInstance()
+        val day = ccalender.get(Calendar.DAY_OF_MONTH)
         while (dates.size < maxDaysInMonth) {
             dates.add(monthCalendar.time)
             calendarList.add(CalendarDateModel(monthCalendar.time))
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
         calendarList2.clear()
+        calendarList[day].isSelected = true
+        binding.rvCalender.scrollToPosition(day)
         calendarList2.addAll(calendarList)
         adapter.setData(calendarList)
     }
@@ -133,7 +140,19 @@ class SelectSlotFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
+                        slotList.clear()
+                        var slots = arrayListOf<SlotsData>()
+                        slots.add(SlotsData("2","13:00 PM","","","Green",false))
+                        slots.add(SlotsData("2","13:30 PM","","","Green",false))
+                        slots.add(SlotsData("2","14:00 PM","","","Green",false))
+                        slots.add(SlotsData("2","14:30 PM","","","Yellow",false))
+                        slots.add(SlotsData("2","15:00 PM","","","Green",false))
+                        slots.add(SlotsData("2","15:30 PM","","","Yellow",false))
+                        slots.add(SlotsData("2","16:00 PM","","","Green",false))
+                        slots.add(SlotsData("2","16:30 PM","","","Yellow",false))
                         slotList.addAll(resposnes.Data ?: arrayListOf())
+                        slotList.addAll(slots)
+                        setupRecyclerview(slotList)
                     }
                 }
 
@@ -159,6 +178,27 @@ class SelectSlotFragment : Fragment() {
 
                 else -> {}
             }
+        }
+    }
+
+    private fun setupRecyclerview(slotList: ArrayList<SlotsData>) {
+        var previousslot = 0
+        slotList.firstOrNull()?.isselected = true
+        binding.rvTimigs.setUpMultiViewRecyclerAdapter(
+            slotList
+        ) { item: SlotsData, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, item)
+            binder.setVariable(BR.onItemClick, View.OnClickListener {
+                when (it.id) {
+                    R.id.timeslot_txt -> {
+                        slotList[previousslot].isselected = false
+                        previousslot = position
+                        slotList[previousslot].isselected = true
+                        binding.rvTimigs.notifyDataChange()
+                    }
+                }
+                binder.executePendingBindings()
+            })
         }
     }
 

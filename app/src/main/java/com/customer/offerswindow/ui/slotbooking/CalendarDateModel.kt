@@ -3,7 +3,7 @@ package com.customer.offerswindow.ui.slotbooking
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class CalendarDateModel(var data: Date, var isSelected: Boolean = false) {
+data class CalendarDateModel(var data: Date, var isSelected: Boolean = false, var isenable : Boolean =false) {
 
     val calendarDay: String
         get() = SimpleDateFormat("EE", Locale.getDefault()).format(data)
