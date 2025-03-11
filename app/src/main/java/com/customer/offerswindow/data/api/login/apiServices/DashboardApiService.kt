@@ -3,8 +3,10 @@ package com.customer.offerswindow.data.api.login.apiServices
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
+import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
+import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -43,5 +45,17 @@ interface DashboardApiService {
     suspend fun postSlotBooking(
          @Body postSlotBooking: PostSlotBooking
     ): Response<StockPurchsasePostingResponse>
+
+    @GET("ShowRoomOffers/GetMyBookings?")
+    suspend fun getBookings(
+        @Query("lCustomerID") lCustomerID: String,
+    ): Response<BookingsResponse>
+
+
+    @GET("ShowRoomOffers/GetWishlist?")
+    suspend fun getWishList(
+        @Query("lCustomerID") lCustomerID: String,
+        @Query("iCategoryType") iCategoryType: String,
+    ): Response<WishListResponse>
 
 }

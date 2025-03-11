@@ -5,9 +5,9 @@
 
     <data>
 
-        <!--  <variable
-              name="item"
-              type="com.customer.bms.model.challenges.ChallengeData" />-->
+        <variable
+            name="item"
+            type="com.customer.offerswindow.model.dashboard.BookingData" />
 
         <variable
             name="onItemClick"
@@ -31,8 +31,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/offer_img"
             android:layout_width="@dimen/_65sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:scaleType="fitCenter"
+            android:layout_height="@dimen/_65sdp"
+            android:scaleType="fitXY"
             android:src="@drawable/bg_dummyimg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,8 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_6sdp"
             android:maxLines="2"
+            android:text="@{item.showroom_Name}"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/offer_img"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,8 +60,9 @@
             android:layout_marginStart="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:gravity="start"
+            android:text="@{item.branch_Address}"
             android:textColor="@color/color_A7AEB1"
-            android:textSize="@dimen/_8ssp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/offer_img"
             app:layout_constraintTop_toBottomOf="@id/offertitle_txt"
@@ -74,8 +76,9 @@
             android:layout_marginStart="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:gravity="start"
+            android:text="@{item.getDateTime()}"
             android:textColor="@color/color_272727"
-            android:textSize="@dimen/_8ssp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/offer_img"
             app:layout_constraintTop_toBottomOf="@id/location_txt"

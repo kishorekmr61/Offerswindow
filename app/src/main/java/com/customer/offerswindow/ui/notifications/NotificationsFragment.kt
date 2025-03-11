@@ -38,6 +38,7 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
+        viewModel.isloading.set(true)
         viewModel.getUserInfo("28")
     }
 

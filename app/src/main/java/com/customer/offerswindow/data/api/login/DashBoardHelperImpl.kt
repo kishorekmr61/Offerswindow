@@ -22,4 +22,10 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
     suspend fun postSlotBooking(postSlotBooking: PostSlotBooking) =
         dashboardApiService.postSlotBooking(postSlotBooking)
 
+    suspend fun getBooking(lCustomerID : String) =
+        dashboardApiService.getBookings(lCustomerID)
+
+    suspend fun getWishList(lCustomerID : String,iCategoryType : String) =
+        dashboardApiService.getWishList(lCustomerID,iCategoryType)
+
 }

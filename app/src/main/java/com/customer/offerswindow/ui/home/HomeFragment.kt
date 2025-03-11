@@ -87,10 +87,8 @@ class HomeFragment : Fragment(), MenuProvider {
         handleNotificationClick()
         setListeners()
         homeViewModel.getToken()
-        homeViewModel.getMstData()
-        AppPreference.read(Constants.MOBILENO, "")
-            ?.let { homeViewModel.getUserInfo(/*it*/"9533586878") }
-        homeViewModel.getDashboardData("0", "0", "0")
+        setListeners()
+
         binding.viewallTxt.setOnClickListener {
             findNavController().navigate(R.id.nav_categories)
         }
@@ -106,12 +104,31 @@ class HomeFragment : Fragment(), MenuProvider {
 
 
     private fun setObserver() {
+        homeViewModel.tokenResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { resposnes ->
+                        homeViewModel.getMstData()
+                        AppPreference.read(Constants.MOBILENO, "")
+                            ?.let { homeViewModel.getUserInfo(/*it*/"9533586878") }
+                        homeViewModel.getDashboardData("0", "0", "0")
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
         homeViewModel.customerinfo.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         homeViewModel.isloading.set(false)
                         AppPreference.write(Constants.NAME, resposnes?.Data?.firstOrNull()?.Cust_Name?:"")
+                        AppPreference.write(Constants.USERUID, resposnes?.Data?.firstOrNull()?.Cust_UID?:"")
                         AppPreference.write(Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No?:"")
                     }
                 }
@@ -307,6 +324,12 @@ class HomeFragment : Fragment(), MenuProvider {
             when (it.id) {
                 R.id.imageView14 -> {
                   findNavController().navigate(R.id.nav_customerProfileFragment)
+                }
+                R.id.notofication_img -> {
+                  findNavController().navigate(R.id.nav_notifications)
+                }
+                R.id.favourite_img -> {
+                  findNavController().navigate(R.id.nav_wishlist)
                 }
             }
 

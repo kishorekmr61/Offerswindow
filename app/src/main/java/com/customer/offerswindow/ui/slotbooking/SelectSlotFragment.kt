@@ -51,6 +51,9 @@ class SelectSlotFragment : Fragment() {
     var servicwe = ""
     var location = ""
     var showroom = ""
+    var previousslot = 0;
+    var selectedslotid = ""
+    var selectedDate = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +66,11 @@ class SelectSlotFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.location.set(arguments?.getString("Location"))
         activity?.setWhiteToolBar("Slot Bookings", true)
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setObserver()
         vm.hidetoolbar.value = false
         viewModel.isloading.set(true)
@@ -70,15 +78,10 @@ class SelectSlotFragment : Fragment() {
         location = arguments?.getString("LOCATIONID") ?: ""
         showroom = arguments?.getString("SHOWROOMID") ?: ""
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        pcurrentDate = sdf.format(Date())
-        viewModel.getSlotsData("1", "4", "18",/*servicwe, location, showroom,*/ pcurrentDate)
+        selectedDate = sdf.format(Date())
+        viewModel.getSlotsData("1", "2", "19",/*servicwe, location, showroom,selectedDate*/ "2025-03-11")
         binding.contactnameTxt.text = AppPreference.read(Constants.NAME, "")
         binding.contactcallTxt.text = AppPreference.read(Constants.MOBILENO, "")
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setUpAdapter()
         setListeners()
         setUpClickListener()
@@ -111,6 +114,7 @@ class SelectSlotFragment : Fragment() {
             }
             adapter.setData(calendarList2)
         }
+
         binding.rvCalender.adapter = adapter
     }
 
@@ -139,19 +143,11 @@ class SelectSlotFragment : Fragment() {
         viewModel.slotsDataResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+
+                    viewModel.isloading.set(false)
                     response.data?.let { resposnes ->
                         slotList.clear()
-                        var slots = arrayListOf<SlotsData>()
-                        slots.add(SlotsData("2","13:00 PM","","","Green",false))
-                        slots.add(SlotsData("2","13:30 PM","","","Green",false))
-                        slots.add(SlotsData("2","14:00 PM","","","Green",false))
-                        slots.add(SlotsData("2","14:30 PM","","","Yellow",false))
-                        slots.add(SlotsData("2","15:00 PM","","","Green",false))
-                        slots.add(SlotsData("2","15:30 PM","","","Yellow",false))
-                        slots.add(SlotsData("2","16:00 PM","","","Green",false))
-                        slots.add(SlotsData("2","16:30 PM","","","Yellow",false))
                         slotList.addAll(resposnes.Data ?: arrayListOf())
-                        slotList.addAll(slots)
                         setupRecyclerview(slotList)
                     }
                 }
@@ -166,6 +162,7 @@ class SelectSlotFragment : Fragment() {
         viewModel.slotPostingResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    viewModel.isloading.set(false)
                     response.data?.let { resposnes ->
                         showLongToast(resposnes.Message)
                         findNavController().navigate(R.id.nav_success)
@@ -182,8 +179,8 @@ class SelectSlotFragment : Fragment() {
     }
 
     private fun setupRecyclerview(slotList: ArrayList<SlotsData>) {
-        var previousslot = 0
         slotList.firstOrNull()?.isselected = true
+        selectedslotid = slotList.firstOrNull()?.Slot_UID ?:""
         binding.rvTimigs.setUpMultiViewRecyclerAdapter(
             slotList
         ) { item: SlotsData, binder: ViewDataBinding, position: Int ->
@@ -194,6 +191,7 @@ class SelectSlotFragment : Fragment() {
                         slotList[previousslot].isselected = false
                         previousslot = position
                         slotList[previousslot].isselected = true
+                        selectedslotid = item.Slot_UID
                         binding.rvTimigs.notifyDataChange()
                     }
                 }
@@ -207,11 +205,23 @@ class SelectSlotFragment : Fragment() {
             when (it.id) {
                 R.id.booknow_btn -> {
                     viewModel.isloading.set(true)
-                    var postbooking = PostSlotBooking(pcurrentDate, showroom, "1", servicwe, "1")
+                   selectedDate = getCalenderSeleteddate(calendarList2)
+                    var postbooking =
+                        PostSlotBooking(selectedDate, showroom, location, servicwe, selectedslotid)
                     viewModel.postSlotBooking(postbooking)
                 }
             }
 
         })
+    }
+
+    private fun getCalenderSeleteddate(calendarList2: ArrayList<CalendarDateModel>): String {
+        calendarList2.forEach {
+            if (it.isSelected){
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+               return sdf.format(it.data)
+            }
+        }
+        return selectedDate
     }
 }

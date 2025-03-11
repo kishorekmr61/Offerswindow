@@ -14,24 +14,15 @@
     <group
         android:id="@+id/group_vehicle"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/menu_customers_list"
-            android:title="Customers List" />
-
-        <item
-            android:id="@+id/menu_customers_menu"
-            android:title="Customers Menu" />
 
 
         <item
-            android:id="@+id/menu_customers_reference_history"
-            android:title="Customers Reference History" />
+            android:id="@+id/menu_rewards"
+            android:title="Rewards" />
 
         <item
             android:id="@+id/menu_logout"
             android:title="Logout" />
-
-
 
 
     </group>

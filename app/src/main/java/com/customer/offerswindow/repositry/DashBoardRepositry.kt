@@ -6,8 +6,10 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
+import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
+import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -67,6 +69,18 @@ class DashBoardRepositry @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun getBookings(
+        lCustomerID: String
+    ): Flow<NetworkResult<BookingsResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.getBooking(
+                    lCustomerID
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun postSlotBooking(
         postSlotBooking: PostSlotBooking
     ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
@@ -74,6 +88,18 @@ class DashBoardRepositry @Inject constructor(
             emit(safeApiCall {
                 dashBoardHelperImpl.postSlotBooking(
                    postSlotBooking
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getWishList(
+        lCustomerID: String,iCategoryType:String
+    ): Flow<NetworkResult<WishListResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.getWishList(
+                    lCustomerID,iCategoryType
                 )
             })
         }.flowOn(Dispatchers.IO)

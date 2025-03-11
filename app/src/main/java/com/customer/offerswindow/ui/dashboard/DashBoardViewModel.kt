@@ -1,6 +1,7 @@
 package com.customer.offerswindow.ui.dashboard
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.customer.offerswindow.repositry.DashBoardRepositry
@@ -16,5 +17,7 @@ class DashBoardViewModel @Inject constructor(
 ) : ViewModel() {
 
     var hidetoolbar= MutableLiveData<Boolean>()
+    var profilepic = ObservableField<String>()
+    var username = ObservableField<String>()
 
 }

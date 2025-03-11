@@ -1,40 +1,50 @@
-package com.customer.offerswindow.ui.categories
+package com.customer.offerswindow.ui.wishlist
 
+import androidx.fragment.app.viewModels
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.customer.offerswindow.BR
-import com.customer.offerswindow.databinding.FragmentCategoriesBinding
+import com.customer.offerswindow.R
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
+import com.customer.offerswindow.databinding.FragmentHomeCustomerBinding
+import com.customer.offerswindow.databinding.FragmentWishListBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.dashboard.CategoriesData
+import com.customer.offerswindow.model.dashboard.WishListData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
-import com.customer.offerswindow.utils.setWhiteToolBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoriesFragment : Fragment() {
-    private var _binding: FragmentCategoriesBinding? = null
+class WishListFragment : Fragment() {
+
+    private var _binding: FragmentWishListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CategoriesViewModel by viewModels()
-    var categoryList = ArrayList<CategoriesData>()
     private val vm: DashBoardViewModel by activityViewModels()
+    var wishlistData = ArrayList<WishListData>()
+    private val viewModel: WishListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // TODO: Use the ViewModel
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        _binding = FragmentWishListBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        activity?.setWhiteToolBar("Categories", true)
         return root
     }
 
@@ -43,27 +53,16 @@ class CategoriesFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = true
         viewModel.isloading.set(true)
-        viewModel.getMstData()
+        viewModel.getWishListData(AppPreference.read(Constants.USERUID, "") ?: "", "0")
     }
 
     private fun setObserver() {
-        viewModel.masterdata.observe(viewLifecycleOwner) { response ->
+        viewModel.wishlistResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         viewModel.isloading.set(false)
-                        response?.data?.data?.forEach {
-                            if (it.MstType == "Service") {
-                                categoryList.add(
-                                    CategoriesData(
-                                        it.Image_path,
-                                        it.MstDesc,
-                                        it.MstCode
-                                    )
-                                )
-                            }
-
-                        }
+                        wishlistData.addAll(resposnes.Data ?: arrayListOf())
                         setRecyclervewData()
                     }
                 }
@@ -80,14 +79,13 @@ class CategoriesFragment : Fragment() {
 
     private fun setRecyclervewData() {
         binding.rvListdata.setUpMultiViewRecyclerAdapter(
-            categoryList
-        ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
+            wishlistData
+        ) { item: WishListData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 binder.executePendingBindings()
             })
         }
     }
-
 
 }

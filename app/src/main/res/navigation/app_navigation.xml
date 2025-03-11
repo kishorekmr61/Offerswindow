@@ -55,6 +55,12 @@
         android:name="com.customer.offerswindow.ui.categories.CategoriesFragment"
         android:label="@string/categories" />
 
+
+    <fragment
+        android:id="@+id/nav_wishlist"
+        android:name="com.customer.offerswindow.ui.wishlist.WishListFragment"
+        android:label="@string/categories" />
+
     <fragment
         android:id="@+id/nav_notifications"
         android:name="com.customer.offerswindow.ui.notifications.NotificationsFragment"

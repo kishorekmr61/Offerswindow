@@ -5,9 +5,9 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.utils.getDateTime
 
 data class PostSlotBooking(
-    var bookingDate: String,
-    var showRoomId: String,
-    var branchId: String,
+    var BookingDate: String,
+    var ShowRoomId: String,
+    var LocationId: String,
     var serviceId: String,
     var slotId: String,
     var customerId: String = AppPreference.read(Constants.USERUID,"") ?:"",
