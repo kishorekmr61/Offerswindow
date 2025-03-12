@@ -65,4 +65,6 @@
     <string name="all">All</string>
     <string name="more_offers_you_may_like">More offers you may Like</string>
     <string name="booking_details">Booking Details</string>
+    <string name="gold_price_today">Gold Price Today</string>
+    <string name="view_history">View History</string>
 </resources>

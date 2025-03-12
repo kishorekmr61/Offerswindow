@@ -26,7 +26,6 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentHomeCustomerBinding
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.FilterData
@@ -88,7 +87,10 @@ class HomeFragment : Fragment(), MenuProvider {
         setListeners()
         homeViewModel.getToken()
         setListeners()
-
+        binding.goldratesLyout.updatelblTxt.setOnClickListener {
+            homeViewModel.isloading.set(true)
+            homeViewModel.getGoldRatesData()
+        }
         binding.viewallTxt.setOnClickListener {
             findNavController().navigate(R.id.nav_categories)
         }
@@ -109,6 +111,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         homeViewModel.getMstData()
+                        homeViewModel.getGoldRatesData()
                         AppPreference.read(Constants.MOBILENO, "")
                             ?.let { homeViewModel.getUserInfo(/*it*/"9533586878") }
                         homeViewModel.getDashboardData("0", "0", "0")
@@ -127,9 +130,18 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         homeViewModel.isloading.set(false)
-                        AppPreference.write(Constants.NAME, resposnes?.Data?.firstOrNull()?.Cust_Name?:"")
-                        AppPreference.write(Constants.USERUID, resposnes?.Data?.firstOrNull()?.Cust_UID?:"")
-                        AppPreference.write(Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No?:"")
+                        AppPreference.write(
+                            Constants.NAME,
+                            resposnes?.Data?.firstOrNull()?.Cust_Name ?: ""
+                        )
+                        AppPreference.write(
+                            Constants.USERUID,
+                            resposnes?.Data?.firstOrNull()?.Cust_UID ?: ""
+                        )
+                        AppPreference.write(
+                            Constants.MOBILENO,
+                            resposnes?.Data?.firstOrNull()?.Mobile_No ?: ""
+                        )
                     }
                 }
 
@@ -182,6 +194,40 @@ class HomeFragment : Fragment(), MenuProvider {
                 else -> {}
             }
         }
+        homeViewModel.goldratesdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    homeViewModel.isloading.set(false)
+                    response.data?.let { resposnes ->
+                        val gold24 = "Gold 24K :  ".plus(
+                            ("₹ " + resposnes.data.firstOrNull()?.Gold_24c)
+                        )
+                        val gold22 = " Gold 22K :  ".plus(
+                            ("₹ " + resposnes.data.firstOrNull()?.Gold_22c)
+                        )
+                        val gold18 = " Gold 28K : ".plus(
+                            ("₹ " + resposnes.data.firstOrNull()?.Gold_18c)
+                        )
+                        val silver = " Silver :".plus(
+                            ("₹ " + resposnes.data.firstOrNull()?.Silver)
+                        )
+                        val diamond = " Diamond :  ".plus(
+                            ("₹ " + resposnes.data.firstOrNull()?.Diamonds)
+                        )
+                        binding.pricerates = resposnes.data.firstOrNull()
+                        binding.goldratesTxt.text =
+                            gold24.plus(gold22).plus(gold18).plus(silver).plus(diamond)
+                        binding.goldratesTxt.isSelected = true
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
         homeViewModel.dashboardresponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -205,7 +251,7 @@ class HomeFragment : Fragment(), MenuProvider {
         ) { item: DashboardData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
-                item.ImagesList
+                item.ImagesList ?: arrayListOf()
             ) { item: Images, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
@@ -222,7 +268,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     R.id.title_txt -> {
                         var bundle = Bundle()
                         bundle.putString("OfferID", item.id)
-                        bundle.putString("Imagepath", item.ImagesList.firstOrNull()?.imagepath)
+                        bundle.putString("Imagepath", item.ImagesList?.firstOrNull()?.imagepath)
                         findNavController().navigate(R.id.nav_offer_details, bundle)
                     }
                 }
@@ -323,13 +369,15 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
             when (it.id) {
                 R.id.imageView14 -> {
-                  findNavController().navigate(R.id.nav_customerProfileFragment)
+                    findNavController().navigate(R.id.nav_customerProfileFragment)
                 }
+
                 R.id.notofication_img -> {
-                  findNavController().navigate(R.id.nav_notifications)
+                    findNavController().navigate(R.id.nav_notifications)
                 }
+
                 R.id.favourite_img -> {
-                  findNavController().navigate(R.id.nav_wishlist)
+                    findNavController().navigate(R.id.nav_wishlist)
                 }
             }
 

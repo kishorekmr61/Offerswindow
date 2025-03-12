@@ -60,8 +60,11 @@ class DetailViewFragment : Fragment() {
             dashboaroffersList
         ) { item: DashboardData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
+            if (item.ImagesList.isNullOrEmpty()){
+                item.ImagesList =  arrayListOf()
+            }
             binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
-                item.ImagesList
+                item.ImagesList ?: arrayListOf()
             ) { item: Images, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
@@ -103,8 +106,12 @@ class DetailViewFragment : Fragment() {
                         dashboaroffersList.addAll(
                             response.data?.Data?.Other_Offer_Details ?: arrayListOf()
                         )
-                        viewModel.imagepath.set(resposnes.Data.ImagesList.firstOrNull()?.imagepath)
-                        termslist.addAll(response.data?.Data?.Terms_Conditions ?: arrayListOf())
+                        if (!resposnes.Data.ImagesList.isNullOrEmpty()) {
+                            viewModel.imagepath.set(resposnes.Data.ImagesList?.firstOrNull()?.imagepath?:"")
+                        }
+                        if (!response.data?.Data?.Terms_Conditions.isNullOrEmpty()) {
+                            termslist.addAll(response.data?.Data?.Terms_Conditions ?: arrayListOf())
+                        }
                         setRecyclervewData(dashboaroffersList)
                     }
                 }

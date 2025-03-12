@@ -11,6 +11,7 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
+import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
@@ -32,6 +33,8 @@ class HomeViewModel @Inject constructor(
     var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
     var dashboardresponse = MutableLiveData<NetworkResult<DashBoardDataResponse>>()
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
+    var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
+    var goldratesGridvalues = ObservableField<CommonDataResponse>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
     var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
@@ -69,6 +72,18 @@ class HomeViewModel @Inject constructor(
             if (networkHelper.isNetworkConnected()) {
                 repository.getCommonMaster("Common").collect { values ->
                     masterdata.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun getGoldRatesData() {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getCommonMaster("Price").collect { values ->
+                    goldratesdata.postValue(values)
                 }
             } else {
                 app.showToast("No Internet")

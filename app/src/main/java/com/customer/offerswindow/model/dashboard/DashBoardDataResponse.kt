@@ -31,7 +31,7 @@ data class DashboardData(
     @Expose @SerializedName("End_Date") val endate: String,
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
     var isfavourite: Boolean = true,
-    @Expose @SerializedName("Image_Details") val ImagesList: ArrayList<Images>,
+    @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<Images>? = arrayListOf(),
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.homelist_item
@@ -46,3 +46,6 @@ data class Images(
         return R.layout.homeroww_img
     }
 }
+
+
+

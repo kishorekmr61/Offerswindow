@@ -96,6 +96,7 @@ class Repository @Inject constructor(
             emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype,"0") })
         }.flowOn(Dispatchers.IO)
     }
+
     suspend fun getNotifications(lCustomerID: String): Flow<NetworkResult<NotificationResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.getNotifications(lCustomerID) })
