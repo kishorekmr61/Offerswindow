@@ -107,6 +107,7 @@ class DetailViewFragment : Fragment() {
                             response.data?.Data?.Other_Offer_Details ?: arrayListOf()
                         )
                         if (!resposnes.Data.ImagesList.isNullOrEmpty()) {
+                            binding.tandcTxt.visibility = View.VISIBLE
                             viewModel.imagepath.set(resposnes.Data.ImagesList?.firstOrNull()?.imagepath?:"")
                         }
                         if (!response.data?.Data?.Terms_Conditions.isNullOrEmpty()) {
