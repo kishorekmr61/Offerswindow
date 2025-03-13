@@ -121,16 +121,16 @@
                         android:hint="@string/enter_otp"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
-                        android:visibility="gone"
                         android:maxLines="1"
                         android:paddingStart="@dimen/_8sdp"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/color_272727"
                         android:textSize="@dimen/_12ssp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/mobileno_lyout"
+                        app:layout_constraintTop_toBottomOf="@+id/resend_txt"
                         app:passwordToggleEnabled="true" />
 
 
@@ -145,8 +145,8 @@
                         android:text="@string/login"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp"
-                        app:cornerRadius="@dimen/_8sdp"
                         android:visibility="gone"
+                        app:cornerRadius="@dimen/_8sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_pswrd" />
@@ -158,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_25sdp"
-                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_25sdp"
                         android:text="@string/resend"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -195,7 +195,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
                 <ProgressBar
                     android:id="@+id/pgBar"
                     android:layout_width="wrap_content"
@@ -208,9 +207,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/skip_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/round_primary_bg"
+                android:padding="@dimen/_10sdp"
+                android:text="Skip Login"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/auth_lay" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/siginup_txt"
                 style="@style/Ag_body_copy_small"
@@ -221,9 +233,10 @@
                 android:layout_marginBottom="@dimen/_35sdp"
                 android:text="@string/create_account"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/skip_txt" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/version_textview"
                 style="@style/AG_regular"
@@ -232,9 +245,9 @@
                 android:textColor="@color/primary"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
                 tools:text="@string/app_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

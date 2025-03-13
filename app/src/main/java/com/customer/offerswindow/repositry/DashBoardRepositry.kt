@@ -31,14 +31,14 @@ class DashBoardRepositry @Inject constructor(
     }
 
     suspend fun getDashBoardOffersList(
-        lShowroomId: String, lLocationId: String, lServiceId: String
+        lShowroomId: String, lLocationId: String, lServiceId: String,lCustomerId: String, lMaximumTransactionId: String
     ): Flow<NetworkResult<DashBoardDataResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.getDashBoardOffersList(
                     lShowroomId,
                     lLocationId,
-                    lServiceId
+                    lServiceId,lCustomerId,lMaximumTransactionId
                 )
             })
         }.flowOn(Dispatchers.IO)

@@ -50,6 +50,6 @@ data class SelectedOffers(
     @Expose @SerializedName("Image_url") val imagepath: String,
 ) : WidgetViewModel {
     override fun layoutId(): Int {
-        return R.layout.homeroww_img
+        return R.layout.wishlistrow_img
     }
 }

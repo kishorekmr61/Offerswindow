@@ -210,9 +210,13 @@ class SignInFragment : Fragment() {
                                 binding.etMobilenumber.text.toString()
                             )
                             AppPreference.write(Constants.ISLOGGEDIN, true)
-                            val intent =
-                                Intent(requireActivity(), DashboardActivity::class.java)
-                            startActivity(intent)
+                            if (arguments?.getBoolean("isFrom") == true){
+                                findNavController().popBackStack()
+                            }else {
+                                val intent =
+                                    Intent(requireActivity(), DashboardActivity::class.java)
+                                startActivity(intent)
+                            }
                         }
                     }
                 }

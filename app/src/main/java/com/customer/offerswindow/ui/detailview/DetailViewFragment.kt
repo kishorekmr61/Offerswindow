@@ -12,12 +12,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentDetailViewBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.utils.notifyDataChange
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
@@ -64,7 +67,7 @@ class DetailViewFragment : Fragment() {
                 item.ImagesList =  arrayListOf()
             }
             binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
-                item.ImagesList ?: arrayListOf()
+                getImageList(item.ImagesList) ?: arrayListOf()
             ) { item: Images, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
@@ -74,7 +77,11 @@ class DetailViewFragment : Fragment() {
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.favourite -> {
-                        item.isfavourite = false
+                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                            item.isfavourite = false
+                        } else {
+                            findNavController().navigate(R.id.nav_sign_in)
+                        }
                     }
 
                     R.id.title_txt -> {
@@ -131,23 +138,34 @@ class DetailViewFragment : Fragment() {
 
             when (it.id) {
                 R.id.slotbooking_txt, R.id.bookoffer_txt -> {
-                    var dataobj =  viewModel.OfferDeatils.get()
-                    val bundle = Bundle()
-                    bundle.putString(
-                        "Location",
-                        dataobj?.showroomname + " - " + dataobj?.locationname
-                    )
-                    bundle.putString("OfferID",dataobj?.id)
-                    bundle.putString("SERVICEID", dataobj?.serviceid)
-                    bundle.putString("LOCATIONID", dataobj?.locationid)
-                    bundle.putString("SHOWROOMID", dataobj?.showroomid)
-                    bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
-                    findNavController().navigate(R.id.nav_slots, bundle)
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        var dataobj = viewModel.OfferDeatils.get()
+                        val bundle = Bundle()
+                        bundle.putString(
+                            "Location",
+                            dataobj?.showroomname + " - " + dataobj?.locationname
+                        )
+                        bundle.putString("OfferID", dataobj?.id)
+                        bundle.putString("SERVICEID", dataobj?.serviceid)
+                        bundle.putString("LOCATIONID", dataobj?.locationid)
+                        bundle.putString("SHOWROOMID", dataobj?.showroomid)
+                        bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
+                        findNavController().navigate(R.id.nav_slots, bundle)
+                    } else {
+                        var  bundle =Bundle()
+                        bundle.putBoolean("isFrom",true)
+                        findNavController().navigate(R.id.nav_sign_in,bundle)
+                    }
                 }
             }
 
         })
+    }
 
-
+    private fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
+        if (imagesList.isNullOrEmpty()) {
+            imagesList?.add(Images("0", ""))
+        }
+        return imagesList
     }
 }

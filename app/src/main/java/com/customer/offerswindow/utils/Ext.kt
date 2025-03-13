@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
@@ -34,6 +35,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -587,6 +589,43 @@ fun Fragment.openURL(uri: Uri?) {
         showToast("Please check meeting Link ,looks invited link is not valid.")
     }
 
+
+}
+
+fun handleNaviagtions(activity: Activity, flag: String,bundle :Bundle) {
+    when (flag) {
+        "Signin" -> {
+            activity.findNavController(R.id.nav_slots)
+        }
+
+        "Home" -> {
+            activity.findNavController(R.id.nav_home)
+        }
+
+        "Details" -> {
+            activity.findNavController(R.id.nav_offer_details)
+        }
+
+        "SelectSlot" -> {
+            activity.findNavController(R.id.nav_slots)
+        }
+
+        "Wishlist" -> {
+            activity.findNavController(R.id.nav_wishlist)
+        }
+
+        "profile" -> {
+            activity.findNavController(R.id.nav_manage_profile)
+        }
+
+        "Bookings" -> {
+            activity.findNavController(R.id.nav_mybookings)
+        }
+
+        else -> {
+            activity.findNavController(R.id.nav_home)
+        }
+    }
 
 }
 

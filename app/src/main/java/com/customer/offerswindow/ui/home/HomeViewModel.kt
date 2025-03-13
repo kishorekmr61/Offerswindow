@@ -39,10 +39,10 @@ class HomeViewModel @Inject constructor(
     var username = ObservableField<String>()
     var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
 
-    fun getDashboardData(lShowroomId: String, lLocationId: String, lServiceId: String) {
+    fun getDashboardData(lShowroomId: String, lLocationId: String, lServiceId: String ,lCustomerId: String, lMaximumTransactionId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                dashBoardRepositry.getDashBoardOffersList(lShowroomId, lLocationId, lServiceId)
+                dashBoardRepositry.getDashBoardOffersList(lShowroomId, lLocationId, lServiceId,lCustomerId,lMaximumTransactionId)
                     .collect { values ->
                         dashboardresponse.postValue(values)
                     }

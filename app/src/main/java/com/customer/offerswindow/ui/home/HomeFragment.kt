@@ -114,7 +114,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.getGoldRatesData()
                         AppPreference.read(Constants.MOBILENO, "")
                             ?.let { homeViewModel.getUserInfo(/*it*/"9533586878") }
-                        homeViewModel.getDashboardData("0", "0", "0")
+                        homeViewModel.getDashboardData("0", "0", "0", "0", "1")
                     }
                 }
 
@@ -215,6 +215,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             ("₹ " + resposnes.data.firstOrNull()?.Diamonds)
                         )
                         binding.pricerates = resposnes.data.firstOrNull()
+                        binding.goldratesLyout.goldcLyout.visibility = View.VISIBLE
                         binding.goldratesTxt.text =
                             gold24.plus(gold22).plus(gold18).plus(silver).plus(diamond)
                         binding.goldratesTxt.isSelected = true
@@ -251,7 +252,7 @@ class HomeFragment : Fragment(), MenuProvider {
         ) { item: DashboardData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
-                item.ImagesList ?: arrayListOf()
+                getImageList(item.ImagesList) ?: arrayListOf()
             ) { item: Images, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
@@ -261,8 +262,14 @@ class HomeFragment : Fragment(), MenuProvider {
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.favourite -> {
-                        item.isfavourite = false
-                        binding.rvOfferslist.notifyDataChange()
+                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                            item.isfavourite = false
+                            binding.rvOfferslist.notifyDataChange()
+                        } else {
+                            var bundle = Bundle()
+                            bundle.putBoolean("isFrom", true)
+                            findNavController().navigate(R.id.nav_sign_in, bundle)
+                        }
                     }
 
                     R.id.title_txt -> {
@@ -311,6 +318,13 @@ class HomeFragment : Fragment(), MenuProvider {
                 binder.executePendingBindings()
             })
         }
+    }
+
+    private fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
+        if (imagesList.isNullOrEmpty()) {
+            imagesList?.add(Images("0", ""))
+        }
+        return imagesList
     }
 
 
@@ -369,15 +383,34 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
             when (it.id) {
                 R.id.imageView14 -> {
-                    findNavController().navigate(R.id.nav_customerProfileFragment)
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        findNavController().navigate(R.id.nav_customerProfileFragment)
+                    } else {
+                        var bundle = Bundle()
+                        bundle.putBoolean("isFrom", true)
+                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                    }
                 }
 
                 R.id.notofication_img -> {
-                    findNavController().navigate(R.id.nav_notifications)
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        findNavController().navigate(R.id.nav_notifications)
+                    } else {
+                        var bundle = Bundle()
+                        bundle.putBoolean("isFrom", true)
+                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                    }
                 }
 
                 R.id.favourite_img -> {
-                    findNavController().navigate(R.id.nav_wishlist)
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        findNavController().navigate(R.id.nav_wishlist)
+                    } else {
+
+                        var bundle = Bundle()
+                        bundle.putBoolean("isFrom", true)
+                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                    }
                 }
             }
 

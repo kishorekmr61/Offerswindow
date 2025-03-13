@@ -6,6 +6,30 @@
     app:startDestination="@+id/nav_home">
 
     <fragment
+        android:id="@+id/nav_sign_in"
+        android:name="com.customer.offerswindow.ui.onboarding.signIn.SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_nav_sign_in_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_sign_up"
+        android:name="com.customer.offerswindow.ui.onboarding.signup.SignUpFragment"
+        tools:layout="@layout/sign_up_fragment" />
+
+    <fragment
+        android:id="@+id/nav_forgot_password"
+        android:name="com.customer.offerswindow.ui.onboarding.forgotpassword.ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password" />
+
+    <fragment
+        android:id="@+id/nav_account_recovery"
+        android:name="com.customer.offerswindow.ui.onboarding.forgotpassword.AccountRecoverFragment"
+        tools:layout="@layout/fragment_account_recover" />
+
+    <fragment
         android:id="@+id/nav_home"
         android:name="com.customer.offerswindow.ui.home.HomeFragment"
         android:label=""

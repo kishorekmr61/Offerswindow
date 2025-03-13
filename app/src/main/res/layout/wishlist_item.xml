@@ -53,6 +53,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:onClick="@{onItemClick}"
+                android:visibility="gone"
                 android:src="@{item.isfavourite ? @drawable/favouriteselected :  @drawable/favourite_unselected}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

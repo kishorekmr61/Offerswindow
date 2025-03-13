@@ -25,6 +25,8 @@ interface DashboardApiService {
         @Query("lShowroomId") mobileno: String,
         @Query("lLocationId") lLocationId: String,
         @Query("lServiceId") lServiceId: String,
+        @Query("lCustomerId") lCustomerId: String,
+        @Query("lMaximumTransactionId") lMaximumTransactionId: String,
     ): Response<DashBoardDataResponse>
 
     @GET("ShowRoomOffers/GetIndividualOfferDetails?")

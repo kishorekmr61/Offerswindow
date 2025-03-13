@@ -32,15 +32,15 @@ data class CommonDataResponse(
     @SerializedName("Price_Date")
     var Price_Date: String = "",
     @SerializedName("Gold_24c")
-    var Gold_24c: String = "",
+    var Gold_24c: String = "0",
     @SerializedName("Gold_22c")
-    var Gold_22c: String = "",
+    var Gold_22c: String = "0",
     @SerializedName("Gold_18c")
-    var Gold_18c: String = "",
+    var Gold_18c: String = "0",
     @SerializedName("Silver")
-    var Silver: String = "",
+    var Silver: String = "0",
     @SerializedName("Diamonds")
-    var Diamonds: String = "",
+    var Diamonds: String = "0",
     @SerializedName("Created_By")
     var CreatedBy: String = "",
     @SerializedName("Created_Date")

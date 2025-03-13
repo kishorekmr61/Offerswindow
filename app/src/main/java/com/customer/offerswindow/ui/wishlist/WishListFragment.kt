@@ -1,25 +1,27 @@
 package com.customer.offerswindow.ui.wishlist
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
-import com.customer.offerswindow.databinding.FragmentHomeCustomerBinding
 import com.customer.offerswindow.databinding.FragmentWishListBinding
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.dashboard.CategoriesData
+import com.customer.offerswindow.model.dashboard.Images
+import com.customer.offerswindow.model.dashboard.SelectedOffers
 import com.customer.offerswindow.model.dashboard.WishListData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
+import com.customer.offerswindow.utils.setUpViewPagerAdapter
+import com.customer.offerswindow.utils.setWhiteToolBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +42,7 @@ class WishListFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        activity?.setWhiteToolBar("WishList", true)
         return root
     }
 
@@ -77,10 +80,26 @@ class WishListFragment : Fragment() {
             wishlistData
         ) { item: WishListData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
+            binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
+                getImageList(item.Wishlist.firstOrNull()?.Selected_Offers) ?: arrayListOf()
+            ) { item: SelectedOffers, binder: ViewDataBinding, position: Int ->
+                binder.setVariable(BR.item, item)
+                binder.setVariable(BR.onItemClick, View.OnClickListener {
+
+                })
+            }
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 binder.executePendingBindings()
             })
         }
     }
+
+    private fun getImageList(imagesList: ArrayList<SelectedOffers>?): ArrayList<SelectedOffers>? {
+        if (imagesList.isNullOrEmpty()) {
+            imagesList?.add(SelectedOffers("0", "",""))
+        }
+        return imagesList
+    }
+
 
 }
