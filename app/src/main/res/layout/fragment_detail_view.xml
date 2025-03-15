@@ -65,13 +65,13 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/offer_txt"
-                style="@style/Ag_label"
+                style="@style/Ag_h4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:maxLines="3"
                 android:textColor="@color/color_272727"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_12ssp"
                 android:text="@{`Offer Validaity :`+ ViewModel.offerDeatils.convertEndDate()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/contact_lyout"

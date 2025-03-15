@@ -204,23 +204,23 @@ class DetailViewFragment : Fragment() {
                     }
                 }
 
-                R.id.share_img -> {
+                R.id.share_text -> {
                     activity?.openNativeSharingDialog(dataobj?.Website_link ?: "")
                 }
 
-                R.id.call_img -> {
+                R.id.call_txt -> {
                     activity?.openDialPad(dataobj?.contact ?: "")
                 }
 
-                R.id.directions_img -> {
+                R.id.directions_txt -> {
                     activity?.navigateToGoogleMap(dataobj?.GoogleLocation ?: "")
                 }
 
-                R.id.website_img -> {
+                R.id.website_txt -> {
                     activity?.openBrowser(dataobj?.Website_link ?: "")
                 }
 
-                R.id.whatsapp_img -> {
+                R.id.whatsapp_txt -> {
                     activity?.openWhatsAppConversation(dataobj?.contact ?: "", "")
                 }
             }
