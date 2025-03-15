@@ -31,7 +31,7 @@
             android:id="@+id/nodataavaliable"
             layout="@layout/no_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:visibility="@{viewModel.nodata ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

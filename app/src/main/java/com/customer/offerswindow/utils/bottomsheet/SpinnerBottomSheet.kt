@@ -99,10 +99,6 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
         return dialog
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
 
     override fun onStart() {
         super.onStart()
@@ -116,21 +112,20 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
     }
 
     fun setClicklistener() {
-        binding.calenderlyout.btnconfirm.setOnClickListener {
-            if (inItemSelectedListner != null) {
-                inItemSelectedListner?.onItemSelectedListner(
-                    null,
-                    if (outPutFormat.isEmpty()) date else convertDate(
-                        date,
-                        Constants.DDMMYYYY,
-                        outPutFormat
-                    )
-                )
-                dismiss()
-            }
-        }
+//        binding.calenderlyout.btnconfirm.setOnClickListener {
+//            if (inItemSelectedListner != null) {
+//                inItemSelectedListner?.onItemSelectedListner(
+//                    null,
+//                    if (outPutFormat.isEmpty()) date else convertDate(
+//                        date,
+//                        Constants.DDMMYYYY,
+//                        outPutFormat
+//                    )
+//                )
+//                dismiss()
+//            }
+//        }
         binding.doneBtn.setOnClickListener {
-
             var arrayList = ArrayList<SpinnerRowModel>()
             searchspinnervalues.forEach {
                 if (it.ischecked) {
@@ -235,53 +230,13 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
                 updateRecyclerview(spinnervalues, value)
             }
 
-            Constants.PRODUCTS -> {
-                spinnervalues.clear()
-                binding.locateEdt.visibility = View.VISIBLE
-                binding.doneBtn.visibility = View.GONE
-                spinnervalues.addAll(updateList(mspinnervalues, value))
-                updateRecyclerview(spinnervalues, value)
-            }
-
-            Constants.TASK -> {
-                spinnervalues.clear()
-                binding.locateEdt.visibility = View.VISIBLE
-                binding.doneBtn.visibility = View.GONE
-                spinnervalues.addAll(updateList(mspinnervalues, value))
-                updateRecyclerview(spinnervalues, value)
-            }
-
-//            Constants.CUSTOMERS -> {
-//                spinnervalues.clear()
-//                binding.doneBtn.visibility = View.GONE
-//                binding.locateEdt.visibility = View.VISIBLE
-//                spinnervalues.addAll(updateList(mspinnervalues, value))
-//                updateRecyclerview(spinnervalues, value)
-//            }
-
-            Constants.PURPOSE -> {
-                spinnervalues.clear()
-                binding.locateEdt.visibility = View.GONE
-                binding.doneBtn.visibility = View.VISIBLE
-                spinnervalues.addAll(updateList(mspinnervalues, value))
-                updateRecyclerview(spinnervalues, value)
-            }
-
             Constants.LOCATION -> {
                 spinnervalues.clear()
                 binding.locateEdt.visibility = View.VISIBLE
-                binding.doneBtn.visibility = View.VISIBLE
                 spinnervalues.addAll(updateList(mspinnervalues, value))
                 updateRecyclerview(spinnervalues, value)
             }
 
-            Constants.CHATCUSTOMERS -> {
-                spinnervalues.clear()
-                binding.locateEdt.visibility = View.GONE
-                binding.doneBtn.visibility = View.GONE
-                spinnervalues.addAll(updateList(mspinnervalues, value))
-                updateRecyclerview(spinnervalues, value)
-            }
 
             Constants.FILTER -> {
                 spinnervalues.clear()

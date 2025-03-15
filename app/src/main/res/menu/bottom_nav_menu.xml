@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/home"
+        android:title="" />
+    <!--<item
+        android:id="@+id/menu_option2"
+        android:icon="@drawable/option2"
+        android:title="" />-->
+    <item
+        android:id="@+id/menu_mybookings"
+        android:icon="@drawable/bookings"
+        android:title="" />
+    <item
+        android:id="@+id/menu_wishlist"
+        android:icon="@drawable/wishlist"
+        android:title="" />
+    <item
+        android:id="@+id/menu_offers"
+        android:icon="@drawable/offers"
+        android:title="" />
+
+    <item
+        android:id="@+id/menu_logout"
+        android:icon="@drawable/logout"
+        android:title="" />
+</menu>

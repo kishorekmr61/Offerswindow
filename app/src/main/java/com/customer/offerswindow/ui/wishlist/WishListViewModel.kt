@@ -6,11 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
-import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
-import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,11 +22,11 @@ class WishListViewModel @Inject constructor(
 ) : ViewModel() {
     var wishlistResponse = MutableLiveData<NetworkResult<WishListResponse>>()
     var isloading = ObservableField(false)
-
-    fun getWishListData( lCustomerID: String,iCategoryType:String) {
+    var nodata = ObservableField<Boolean>()
+    fun getWishListData(lCustomerID: String, iCategoryType: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getWishList( "2"/*lCustomerID*/,iCategoryType).collect { values ->
+                repository.getWishList("2"/*lCustomerID*/, iCategoryType).collect { values ->
                     wishlistResponse.postValue(values)
                 }
             } else {

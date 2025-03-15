@@ -68,9 +68,8 @@ class CustomerProfileFragment : Fragment() {
         setInputFilters()
         setObserver()
         viewModel.isloading.set(true)
-        viewModel.getDashboardData(AppPreference.read(Constants.USERUID, "") ?: "")
-
-        viewModel.getLocationsMst()
+        viewModel.getDashboardData(AppPreference.read(Constants.MOBILENO, "") ?: "")
+//        viewModel.getLocationsMst()
 
 
     }
@@ -344,7 +343,6 @@ class CustomerProfileFragment : Fragment() {
         binding.item = customerData
 //        binding.etDob.isEnabled = customerData?.DOB?.trim().isNullOrEmpty()
         binding.etEmail.isEnabled = customerData?.Email_ID?.trim().isNullOrEmpty()
-
         viewModel.bindCustomerData(customerData)
         binding.executePendingBindings()
     }

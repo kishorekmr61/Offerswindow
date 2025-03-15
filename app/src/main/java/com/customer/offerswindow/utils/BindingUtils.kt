@@ -162,7 +162,7 @@ fun setProfileImageUrl(img: AppCompatImageView, url: String?, modifiedDate: Stri
         Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: ""))
             .apply(RequestOptions.circleCropTransform()).into(img)
     } else {
-        img.setImageResource(R.drawable.default_img)
+        img.setImageResource(R.drawable.ic_profile)
     }
 }
 

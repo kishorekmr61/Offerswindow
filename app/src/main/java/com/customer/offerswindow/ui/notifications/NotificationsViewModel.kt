@@ -23,13 +23,13 @@ class NotificationsViewModel @Inject constructor(
     var nodata = ObservableField<Boolean>()
 
     var isloading = ObservableField(false)
-    var customerinfo = MutableLiveData<NetworkResult<NotificationResponse>>()
+    var notificationinfo = MutableLiveData<NetworkResult<NotificationResponse>>()
 
     fun getUserInfo(lCustomerID: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 dashBoardRepositry.getNotifications(lCustomerID).collect { values ->
-                    customerinfo.postValue(values)
+                    notificationinfo.postValue(values)
                 }
 
             } else {

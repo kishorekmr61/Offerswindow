@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -67,23 +68,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:maxLines="3"
+            android:onClick="@{onItemClick}"
             android:text="@{item.showroomname}"
             android:textColor="@color/color_272727"
-            android:onClick="@{onItemClick}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/share_img"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_card"
             tools:text="@string/categoriename" />
 
 
         <include
+            android:id="@+id/contactinfo"
             layout="@layout/contactinfo_lyout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_card" />
+            app:layout_constraintTop_toBottomOf="@id/img_card"
+            bind:onItemClick="@{onItemClick}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

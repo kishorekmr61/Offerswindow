@@ -42,6 +42,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.R
 import com.customer.offerswindow.application.OfferWindowApplication.Companion.context
 import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.model.ErrorData
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.google.android.material.appbar.AppBarLayout
@@ -592,7 +593,7 @@ fun Fragment.openURL(uri: Uri?) {
 
 }
 
-fun handleNaviagtions(activity: Activity, flag: String,bundle :Bundle) {
+fun handleNaviagtions(activity: Activity, flag: String, bundle: Bundle) {
     when (flag) {
         "Signin" -> {
             activity.findNavController(R.id.nav_slots)
@@ -629,6 +630,74 @@ fun handleNaviagtions(activity: Activity, flag: String,bundle :Bundle) {
 
 }
 
+private var accessTokenExpirationTime: Long? = AppPreference.read(Constants.TOKENTIMER, 0L)
+
+fun isAccessTokenExpired(): Boolean {
+    val currentTimeMillis = System.currentTimeMillis()
+    return accessTokenExpirationTime != null && currentTimeMillis >= accessTokenExpirationTime!!
+}
+
 fun Double.roundTo(n: Int): Double {
     return "%.${n}f".format(this).toDouble()
+}
+
+fun Activity.openWhatsAppConversation(
+    number: String,
+    message: String?,
+    isErrorMassage: Boolean = true
+) {
+    try {
+        var installed: Boolean = appInstalledOrNot("com.whatsapp")
+        if (!installed) {
+            installed = appInstalledOrNot("com.whatsapp.w4b")
+        }
+        if (installed) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data =
+                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$message")
+            startActivity(intent)
+        } else {
+            showToast(
+                "Whats app not installed on your device"
+            )
+        }
+    } catch (e: Exception) {
+        showToast("Please check mobile number to start chat in whatsapp")
+    }
+}
+
+fun Activity.openNativeSharingDialog(data: String) {
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, data)
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    startActivity(shareIntent)
+}
+
+fun Activity.navigateToGoogleMap(sourceLocation: String) {
+    val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse(
+            sourceLocation
+        )
+    )
+    this.startActivity(intent)
+}
+
+fun Activity.openDialPad(number: String) {
+    val intent = Intent(Intent.ACTION_DIAL)
+    if (number != Constants.EMPTY_HYPEN) {
+        intent.data = Uri.parse("tel:${number}")
+        startActivity(intent)
+    }
+}
+fun Activity.openBrowser(surl: String) {
+    var  url = ""
+    if (!surl.startsWith("http://") && !surl.startsWith("https://")) {
+        url = "http://$surl"
+    }
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    startActivity(browserIntent)
 }

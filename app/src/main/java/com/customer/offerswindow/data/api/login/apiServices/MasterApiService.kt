@@ -6,6 +6,7 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
@@ -84,4 +85,9 @@ interface MasterApiService {
     suspend fun getNotifications(
         @Query("lCustomerID") mobileno: String,
     ): Response<NotificationResponse>
+
+    @POST("ShowRoomOffers/PostWishlist")
+    suspend fun postWishList(
+        @Body postWishlist: PostWishlist,
+    ): Response<StockPurchsasePostingResponse>
 }

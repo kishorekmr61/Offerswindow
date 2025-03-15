@@ -18,7 +18,7 @@ data class DashboardData(
     @Expose @SerializedName("Showroom_Name") val showroomname: String,
     @Expose @SerializedName("Location_UID") val locationid: String,
     @Expose @SerializedName("Location_Desc") val locationname: String,
-    @Expose @SerializedName("Google_Location") val loction: String,
+    @Expose @SerializedName("Google_Location") val GoogleLocation: String,
     @Expose @SerializedName("Contact_No_1") val contact: String,
     @Expose @SerializedName("Contact_No_2") val alaternativecontact: String,
     @Expose @SerializedName("Open_Time") val opentime: String,
@@ -30,7 +30,8 @@ data class DashboardData(
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
     @Expose @SerializedName("End_Date") val endate: String,
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
-    var isfavourite: Boolean = true,
+    @Expose @SerializedName("Website_link") val Website_link: String,
+    var isfavourite: Boolean = false,
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<Images>? = arrayListOf(),
 ) : WidgetViewModel {
     override fun layoutId(): Int {

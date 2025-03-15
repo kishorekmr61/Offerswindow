@@ -36,11 +36,14 @@ class SignInViewModel @Inject constructor(
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
 
-    fun getToken() {
+    fun getToken(mobilenumber: String,
+                 password: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getToken(/*"9533586878", "welcome"*/).collect { values ->
+                repository.getToken(mobilenumber,
+                    password).collect { values ->
                     AppPreference.write(Constants.TOKEN, values.data?.access_token ?: "")
+                    AppPreference.write(Constants.TOKENTIMER, values.data?.expires_in ?: "")
                     tokenResponse.postValue(values)
 //                    response.value?.data = values.data
                 }

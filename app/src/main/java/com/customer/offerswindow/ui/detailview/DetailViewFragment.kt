@@ -16,14 +16,21 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentDetailViewBinding
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.utils.notifyDataChange
+import com.customer.offerswindow.ui.home.HomeViewModel
+import com.customer.offerswindow.utils.navigateToGoogleMap
+import com.customer.offerswindow.utils.openBrowser
+import com.customer.offerswindow.utils.openDialPad
+import com.customer.offerswindow.utils.openNativeSharingDialog
+import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.customer.offerswindow.utils.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +39,7 @@ class DetailViewFragment : Fragment() {
     private var _binding: FragmentDetailViewBinding? = null
     private val binding get() = _binding!!
     private val viewModel: DetailViewViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     var termslist = ArrayList<Termsandconditions>()
     var dashboaroffersList = arrayListOf<DashboardData>()
@@ -47,6 +55,7 @@ class DetailViewFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         activity?.setWhiteToolBar("Offer detail", true)
+        vm.isvisble.value = false
         return root
     }
 
@@ -63,8 +72,8 @@ class DetailViewFragment : Fragment() {
             dashboaroffersList
         ) { item: DashboardData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            if (item.ImagesList.isNullOrEmpty()){
-                item.ImagesList =  arrayListOf()
+            if (item.ImagesList.isNullOrEmpty()) {
+                item.ImagesList = arrayListOf()
             }
             binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
                 getImageList(item.ImagesList) ?: arrayListOf()
@@ -115,7 +124,9 @@ class DetailViewFragment : Fragment() {
                         )
                         if (!resposnes.Data.ImagesList.isNullOrEmpty()) {
                             binding.tandcTxt.visibility = View.VISIBLE
-                            viewModel.imagepath.set(resposnes.Data.ImagesList?.firstOrNull()?.imagepath?:"")
+                            viewModel.imagepath.set(
+                                resposnes.Data.ImagesList?.firstOrNull()?.imagepath ?: ""
+                            )
                         }
                         if (!response.data?.Data?.Terms_Conditions.isNullOrEmpty()) {
                             termslist.addAll(response.data?.Data?.Terms_Conditions ?: arrayListOf())
@@ -131,15 +142,50 @@ class DetailViewFragment : Fragment() {
                 else -> {}
             }
         }
+        homeViewModel.postwishlistdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    homeViewModel.isloading.set(false)
+                    showLongToast(response.message ?: "")
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                    showLongToast(response.message ?: "")
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun setListeners() {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
-
+            var dataobj = viewModel.OfferDeatils.get()
             when (it.id) {
+                R.id.favourite -> {
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        if (dataobj?.isfavourite == true) {
+                            dataobj.isfavourite = false
+                        } else {
+                            dataobj?.isfavourite = true
+                        }
+                        var postdata = PostWishlist(
+                            dataobj?.offertypecode ?: "",
+                            AppPreference.read(Constants.USERUID, "") ?: ""
+                        )
+                        viewModel.isloading.set(true)
+                        homeViewModel.postWishListItem(postdata)
+                    } else {
+                        var bundle = Bundle()
+                        bundle.putBoolean("isFrom", true)
+                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                    }
+                }
+
                 R.id.slotbooking_txt, R.id.bookoffer_txt -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        var dataobj = viewModel.OfferDeatils.get()
+
                         val bundle = Bundle()
                         bundle.putString(
                             "Location",
@@ -152,10 +198,30 @@ class DetailViewFragment : Fragment() {
                         bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
                         findNavController().navigate(R.id.nav_slots, bundle)
                     } else {
-                        var  bundle =Bundle()
-                        bundle.putBoolean("isFrom",true)
-                        findNavController().navigate(R.id.nav_sign_in,bundle)
+                        var bundle = Bundle()
+                        bundle.putBoolean("isFrom", true)
+                        findNavController().navigate(R.id.nav_sign_in, bundle)
                     }
+                }
+
+                R.id.share_img -> {
+                    activity?.openNativeSharingDialog(dataobj?.Website_link ?: "")
+                }
+
+                R.id.call_img -> {
+                    activity?.openDialPad(dataobj?.contact ?: "")
+                }
+
+                R.id.directions_img -> {
+                    activity?.navigateToGoogleMap(dataobj?.GoogleLocation ?: "")
+                }
+
+                R.id.website_img -> {
+                    activity?.openBrowser(dataobj?.Website_link ?: "")
+                }
+
+                R.id.whatsapp_img -> {
+                    activity?.openWhatsAppConversation(dataobj?.contact ?: "", "")
                 }
             }
 

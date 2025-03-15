@@ -47,7 +47,6 @@ class SelectSlotFragment : Fragment() {
     private lateinit var adapter: CalendarAdapter
     private val calendarList2 = ArrayList<CalendarDateModel>()
     var slotList = ArrayList<SlotsData>()
-    var pcurrentDate = ""
     var servicwe = ""
     var location = ""
     var showroom = ""
@@ -66,6 +65,8 @@ class SelectSlotFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.location.set(arguments?.getString("Location"))
         activity?.setWhiteToolBar("Slot Bookings", true)
+        vm.isvisble.value = false
+
         return root
     }
 
@@ -79,7 +80,7 @@ class SelectSlotFragment : Fragment() {
         showroom = arguments?.getString("SHOWROOMID") ?: ""
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         selectedDate = sdf.format(Date())
-        viewModel.getSlotsData("1", "2", "19",/*servicwe, location, showroom,selectedDate*/ "2025-03-11")
+        viewModel.getSlotsData(showroom, location, servicwe, selectedDate)
         binding.contactnameTxt.text = AppPreference.read(Constants.NAME, "")
         binding.contactcallTxt.text = AppPreference.read(Constants.MOBILENO, "")
         setUpAdapter()
@@ -112,6 +113,13 @@ class SelectSlotFragment : Fragment() {
             calendarList2.forEachIndexed { index, calendarModel ->
                 calendarModel.isSelected = index == position
             }
+            viewModel.isloading.set(true)
+            viewModel.getSlotsData(
+                showroom,
+                location,
+                servicwe,
+                getCalenderSeleteddate(calendarList2)
+            )
             adapter.setData(calendarList2)
         }
 
@@ -120,21 +128,16 @@ class SelectSlotFragment : Fragment() {
 
     private fun setUpCalendar() {
         val calendarList = ArrayList<CalendarDateModel>()
-        binding.tvDateMonth.text = sdf.format(cal.time)
         val monthCalendar = cal.clone() as Calendar
-        val maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val maxDaysInMonth = 7
         dates.clear()
-        monthCalendar.set(Calendar.DAY_OF_MONTH, 1)
-        val ccalender = Calendar.getInstance()
-        val day = ccalender.get(Calendar.DAY_OF_MONTH)
         while (dates.size < maxDaysInMonth) {
             dates.add(monthCalendar.time)
             calendarList.add(CalendarDateModel(monthCalendar.time))
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
         calendarList2.clear()
-        calendarList[day].isSelected = true
-        binding.rvCalender.scrollToPosition(day)
+        calendarList.firstOrNull()?.isSelected = true
         calendarList2.addAll(calendarList)
         adapter.setData(calendarList)
     }
@@ -180,7 +183,7 @@ class SelectSlotFragment : Fragment() {
 
     private fun setupRecyclerview(slotList: ArrayList<SlotsData>) {
         slotList.firstOrNull()?.isselected = true
-        selectedslotid = slotList.firstOrNull()?.Slot_UID ?:""
+        selectedslotid = slotList.firstOrNull()?.Slot_UID ?: ""
         binding.rvTimigs.setUpMultiViewRecyclerAdapter(
             slotList
         ) { item: SlotsData, binder: ViewDataBinding, position: Int ->
@@ -205,7 +208,7 @@ class SelectSlotFragment : Fragment() {
             when (it.id) {
                 R.id.booknow_btn -> {
                     viewModel.isloading.set(true)
-                   selectedDate = getCalenderSeleteddate(calendarList2)
+                    selectedDate = getCalenderSeleteddate(calendarList2)
                     var postbooking =
                         PostSlotBooking(selectedDate, showroom, location, servicwe, selectedslotid)
                     viewModel.postSlotBooking(postbooking)
@@ -217,9 +220,9 @@ class SelectSlotFragment : Fragment() {
 
     private fun getCalenderSeleteddate(calendarList2: ArrayList<CalendarDateModel>): String {
         calendarList2.forEach {
-            if (it.isSelected){
+            if (it.isSelected) {
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-               return sdf.format(it.data)
+                return sdf.format(it.data)
             }
         }
         return selectedDate

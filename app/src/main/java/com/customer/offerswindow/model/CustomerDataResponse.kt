@@ -14,5 +14,6 @@ data class CustomerData(
     var Location_Code: String = "",
     var Location_Desc: String = "",
     var Email_ID: String = "",
+    var Cust_Image_URL: String = "",
 
     )

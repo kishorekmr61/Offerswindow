@@ -8,6 +8,7 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
@@ -26,11 +27,11 @@ class Repository @Inject constructor(
 ) : BaseApiResponse() {
 
     suspend fun getToken(
-        /*mobilenumber: String,
-        password: String*/
+        mobilenumber: String,
+        password: String
     ): Flow<NetworkResult<TokenResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.getUserToken(/*mobilenumber, password*/) })
+            emit(safeApiCall { loginHelperImpl.getUserToken(mobilenumber, password) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -100,6 +101,12 @@ class Repository @Inject constructor(
     suspend fun getNotifications(lCustomerID: String): Flow<NetworkResult<NotificationResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.getNotifications(lCustomerID) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun postWishlistItem(postWishlist: PostWishlist): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.postWishList(postWishlist =postWishlist ) })
         }.flowOn(Dispatchers.IO)
     }
 

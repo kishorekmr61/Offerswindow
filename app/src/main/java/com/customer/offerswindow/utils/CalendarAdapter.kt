@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.customer.offerswindow.R
 import com.customer.offerswindow.ui.slotbooking.CalendarDateModel
+import java.util.Date
 
 class CalendarAdapter(private val listener: (calendarDateModel: CalendarDateModel, position: Int) -> Unit) :
     RecyclerView.Adapter<CalendarAdapter.MyViewHolder>() {
@@ -19,7 +20,6 @@ class CalendarAdapter(private val listener: (calendarDateModel: CalendarDateMode
             val calendarDay = itemView.findViewById<TextView>(R.id.tv_calendar_day)
             val calendarDate = itemView.findViewById<TextView>(R.id.tv_calendar_date)
             val cardView = itemView.findViewById<CardView>(R.id.card_calendar)
-
             if (calendarDateModel.isSelected) {
                 calendarDay.setTextColor(
                     ContextCompat.getColor(

@@ -35,10 +35,11 @@
                 android:background="@drawable/et_style"
                 android:drawableStart="@drawable/share"
                 android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_6sdp"
+                android:padding="@dimen/_4sdp"
                 android:text="Share"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
+                android:onClick="@{onItemClick}"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,10 +51,11 @@
                 android:background="@drawable/et_style"
                 android:drawableStart="@drawable/call"
                 android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_6sdp"
+                android:padding="@dimen/_4sdp"
                 android:text="Call"
+                android:onClick="@{onItemClick}"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toEndOf="@id/share_text"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,6 +71,7 @@
                 android:text="Location"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:onClick="@{onItemClick}"
                 android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/call_txt"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -81,10 +84,11 @@
                 android:background="@drawable/et_style"
                 android:drawableStart="@drawable/website"
                 android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_6sdp"
+                android:padding="@dimen/_4sdp"
                 android:text="Website"
+                android:onClick="@{onItemClick}"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toEndOf="@id/directions_txt"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,10 +101,11 @@
                 android:drawableStart="@drawable/whatsapp"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
-                android:padding="@dimen/_6sdp"
+                android:padding="@dimen/_4sdp"
                 android:text="what's App"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
+                android:onClick="@{onItemClick}"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/website_txt"
                 app:layout_constraintTop_toTopOf="parent" />

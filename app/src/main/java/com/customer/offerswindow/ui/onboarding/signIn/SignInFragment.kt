@@ -64,7 +64,12 @@ class SignInFragment : Fragment() {
         }
         setObserver()
         signInViewModel.isloading.set(true)
-        signInViewModel.getToken()
+        if (arguments?.getBoolean("isFrom") == true) {
+            binding.skipTxt.visibility = View.GONE
+        }
+        signInViewModel.getToken(
+            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", "welcome"
+        )
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         binding.etMobilenumber.doAfterTextChanged {
@@ -81,6 +86,12 @@ class SignInFragment : Fragment() {
                     binding.etMobilenumber.text.toString()
                 )
             }
+        }
+        binding.skipTxt.setOnClickListener {
+            AppPreference.write(Constants.SKIPSIGNIN, true)
+            val intent =
+                Intent(requireActivity(), DashboardActivity::class.java)
+            startActivity(intent)
         }
         binding.privacyTxt.setOnClickListener {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl)))
@@ -124,13 +135,7 @@ class SignInFragment : Fragment() {
             binding.etMobilenumber.error = "Please enter valid mobile number"
             return false
         }
-//        if (binding.etPswrd.text.isNullOrEmpty()) {
-//            binding.etMobilenumber.error = null
-//            binding.etPswrd.error = "Please enter valid password"
-//            return false
-//        }
         binding.etMobilenumber.error = null
-//        binding.etPswrd.error = null
         return true
     }
 
@@ -164,6 +169,8 @@ class SignInFragment : Fragment() {
                                 binding.etPswrd.visibility = View.VISIBLE
                                 binding.loginBtn.visibility = View.VISIBLE
                                 showToast("OTP sent Successfully")
+                                binding.etPswrd.requestFocus()
+                                binding.etPswrd.isSelected = true
                             } else {
                                 ShowFullToast(response.data?.Message ?: "")
                             }
@@ -209,10 +216,14 @@ class SignInFragment : Fragment() {
                                 Constants.MOBILENO,
                                 binding.etMobilenumber.text.toString()
                             )
+                            AppPreference.write(
+                                Constants.LOGINUSERNAME,
+                                binding.etMobilenumber.text.toString()
+                            )
                             AppPreference.write(Constants.ISLOGGEDIN, true)
-                            if (arguments?.getBoolean("isFrom") == true){
+                            if (arguments?.getBoolean("isFrom") == true) {
                                 findNavController().popBackStack()
-                            }else {
+                            } else {
                                 val intent =
                                     Intent(requireActivity(), DashboardActivity::class.java)
                                 startActivity(intent)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -33,7 +34,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/img_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_115sdp"
+                android:layout_height="@dimen/_165sdp"
                 app:cardBackgroundColor="@color/color_F0F0F0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,12 +52,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/favourite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:onClick="@{onItemClick}"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:src="@drawable/favouriteselected" />
+                    android:src="@{ViewModel.offerDeatils.isfavourite ? @drawable/favouriteselected :  @drawable/favourite_unselected}" />
 
             </androidx.cardview.widget.CardView>
 
@@ -81,6 +84,7 @@
                 layout="@layout/contactinfosecond_lyout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                bind:onItemClick="@{onItemClick}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/offer_txt" />
 

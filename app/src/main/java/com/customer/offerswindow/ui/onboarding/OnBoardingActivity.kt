@@ -25,11 +25,17 @@ class OnBoardingActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerViewOnBoarding) as NavHostFragment
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.onboarding_navigation)
-        if (!AppPreference.read(Constants.ISLOGGEDIN, false)) {
-            var  bundle = Bundle()
+        if (AppPreference.read(Constants.SKIPSIGNIN, false)) {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+        } else if (!AppPreference.read(
+                Constants.ISLOGGEDIN, false
+            )
+        ) {
+            var bundle = Bundle()
             if (intent.getStringExtra(Constants.ISFROM) == "LOGOUT") {
-                bundle.putString(Constants.MOBILENO,intent.getStringExtra(Constants.MOBILENO))
-                bundle.putString("Message",intent.getStringExtra("Message"))
+                bundle.putString(Constants.MOBILENO, intent.getStringExtra(Constants.MOBILENO))
+                bundle.putString("Message", intent.getStringExtra("Message"))
                 navGraph.setStartDestination(R.id.nav_intro)
             } else {
                 navGraph.setStartDestination(R.id.nav_intro)

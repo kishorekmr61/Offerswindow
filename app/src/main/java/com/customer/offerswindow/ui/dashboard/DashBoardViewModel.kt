@@ -19,5 +19,6 @@ class DashBoardViewModel @Inject constructor(
     var hidetoolbar= MutableLiveData<Boolean>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
+    var isvisble = MutableLiveData<Boolean>()
 
 }

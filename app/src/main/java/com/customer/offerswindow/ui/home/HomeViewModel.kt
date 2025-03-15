@@ -5,14 +5,18 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
-import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
+import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
+import com.customer.offerswindow.model.masters.ShowRoomsResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
@@ -31,18 +35,33 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     var isloading = ObservableField(false)
     var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
-    var dashboardresponse = MutableLiveData<NetworkResult<DashBoardDataResponse>>()
+    var dashboardresponse = MutableLiveData<PagingData<DashboardData>>()
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
+    var showRoomdata = MutableLiveData<NetworkResult<ShowRoomsResponse>>()
     var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
+    var postwishlistdata = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
+    var nodata = ObservableField(false)
     var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
 
-    fun getDashboardData(lShowroomId: String, lLocationId: String, lServiceId: String ,lCustomerId: String, lMaximumTransactionId: String) {
+    fun getDashboardData(
+        lShowroomId: String,
+        lLocationId: String,
+        lServiceId: String,
+        lCustomerId: String,
+        defaultindex: String
+    ) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                dashBoardRepositry.getDashBoardOffersList(lShowroomId, lLocationId, lServiceId,lCustomerId,lMaximumTransactionId)
+                dashBoardRepositry.getDashBoardOffersListPagenation(
+                    lShowroomId,
+                    lLocationId,
+                    lServiceId,
+                    defaultindex,
+                    lCustomerId
+                )
                     .collect { values ->
                         dashboardresponse.postValue(values)
                     }
@@ -79,6 +98,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getShowRoomsData(lShowroomId: String, lLocationId: String, lServiceId: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                dashBoardRepositry.getShowRooms(lShowroomId, lLocationId, lServiceId)
+                    .collect { values ->
+                        showRoomdata.postValue(values)
+                    }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
     fun getGoldRatesData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
@@ -90,14 +122,28 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-    fun getToken() {
+    fun postWishListItem(postWishlist: PostWishlist) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getToken(/*"9533586878", "welcome"*/).collect { values ->
+                repository.postWishlistItem(postWishlist).collect { values ->
+                    postwishlistdata.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun getToken(
+        mobilenumber: String,
+        password: String
+    ) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getToken(mobilenumber, password).collect { values ->
                     AppPreference.write(Constants.TOKEN, values.data?.access_token ?: "")
+                    AppPreference.write(Constants.TOKENTIMER, values.data?.expires_in ?: "")
                     tokenResponse.postValue(values)
-//                    response.value?.data = values.data
                 }
             } else {
                 app.showToast("No Internet")

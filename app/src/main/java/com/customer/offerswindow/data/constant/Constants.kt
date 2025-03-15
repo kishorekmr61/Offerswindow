@@ -77,7 +77,9 @@ object Constants {
     const val TOKENTIMER = "tokentimer"
     const val LOGINUSERNAME = "loginusername"
     const val LOGINPASSWORD = "loginpassword"
-    const val SIMNUMBER = "SIMNUMBER"
+    const val SKIPSIGNIN = "SKIPSIGNIN"
+
+    const val EMPTY_HYPEN = "---"
 }
 
 //tml-pv:location/faq/helpandsupport/contact-us/services/recommended-faqs

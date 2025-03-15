@@ -2,11 +2,12 @@ package com.customer.offerswindow.data.api.login
 
 import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.PostWishlist
 import javax.inject.Inject
 
 class LoginHelperImpl @Inject constructor(private val masterApiService: MasterApiService) {
-    suspend fun getUserToken(/*mobilenumber: String, password: String*/) =
-        masterApiService.getToken("8374810383", "welcome")
+    suspend fun getUserToken(mobilenumber: String, password: String) =
+        masterApiService.getToken(mobilenumber, password)
 
     suspend fun getCommonMasterData(mastertype: String, parentid: String) =
         masterApiService.getCommonMaster(mastertype, parentid)
@@ -32,4 +33,6 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
 
 
     suspend fun getNotifications(lCustomerID: String) = masterApiService.getNotifications(lCustomerID)
+
+    suspend fun postWishList(postWishlist: PostWishlist) = masterApiService.postWishList(postWishlist)
 }

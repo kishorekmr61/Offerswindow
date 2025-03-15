@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
@@ -61,6 +62,7 @@ class WishListFragment : Fragment() {
                     response.data?.let { resposnes ->
                         viewModel.isloading.set(false)
                         wishlistData.addAll(resposnes.Data ?: arrayListOf())
+                        viewModel.nodata.set(wishlistData.isEmpty())
                         setRecyclervewData()
                     }
                 }
@@ -78,14 +80,24 @@ class WishListFragment : Fragment() {
     private fun setRecyclervewData() {
         binding.rvListdata.setUpMultiViewRecyclerAdapter(
             wishlistData
-        ) { item: WishListData, binder: ViewDataBinding, position: Int ->
-            binder.setVariable(BR.item, item)
+        ) { witem: WishListData, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, witem)
             binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
-                getImageList(item.Wishlist.firstOrNull()?.Selected_Offers) ?: arrayListOf()
+                getImageList(witem.Wishlist.firstOrNull()?.Selected_Offers) ?: arrayListOf()
             ) { item: SelectedOffers, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
-
+                    when (it.id) {
+                        R.id.title_txt -> {
+                            var bundle = Bundle()
+                            bundle.putString("OfferID", witem.Offer_ID)
+                            bundle.putString(
+                                "Imagepath",
+                                item?.imagepath
+                            )
+                            findNavController().navigate(R.id.nav_offer_details, bundle)
+                        }
+                    }
                 })
             }
             binder.setVariable(BR.onItemClick, View.OnClickListener {

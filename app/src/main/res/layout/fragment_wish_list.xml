@@ -21,7 +21,7 @@
         android:id="@+id/clMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_55sdp"
         android:background="@color/color_EFF1F4"
         tools:context=".ui.home.HomeFragment">
 
@@ -52,6 +52,18 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/wishlist_item"
             tools:visibility="visible" />
+
+        <include
+            android:id="@+id/nodataavaliable"
+            layout="@layout/no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.nodata ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/pgBar"

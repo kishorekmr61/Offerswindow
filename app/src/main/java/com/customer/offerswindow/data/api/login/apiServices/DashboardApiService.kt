@@ -7,6 +7,7 @@ import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
+import com.customer.offerswindow.model.masters.ShowRoomsResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -28,6 +29,14 @@ interface DashboardApiService {
         @Query("lCustomerId") lCustomerId: String,
         @Query("lMaximumTransactionId") lMaximumTransactionId: String,
     ): Response<DashBoardDataResponse>
+
+
+    @GET("ShowRoomOffers/GetShowroomList?")
+    suspend fun getShowrooms(
+        @Query("iServiceType") iServiceType: String,
+        @Query("lLocationID") lLocationID: String,
+        @Query("lShowRoomID") lShowRoomID: String,
+    ): Response<ShowRoomsResponse>
 
     @GET("ShowRoomOffers/GetIndividualOfferDetails?")
     suspend fun getIndividualOfferDetails(

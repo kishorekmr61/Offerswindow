@@ -1,5 +1,9 @@
 package com.customer.offerswindow.repositry
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.customer.offerswindow.Pagenation.DashBoardPagenation
 import com.customer.offerswindow.data.api.login.DashBoardHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
@@ -8,8 +12,10 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
+import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
+import com.customer.offerswindow.model.masters.ShowRoomsResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -44,6 +50,27 @@ class DashBoardRepositry @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getDashBoardOffersListPagenation(lShowroomId: String, lLocationId: String, lServiceId: String,lCustomerId: String,defaultindex : String): Flow<PagingData<DashboardData>> =
+        Pager(
+            PagingConfig(1),
+            pagingSourceFactory = {
+                DashBoardPagenation(
+                    lShowroomId, lLocationId, lServiceId,lCustomerId,defaultindex,dashBoardHelperImpl
+                )
+            }
+        ).flow.flowOn(Dispatchers.IO)
+
+    suspend fun getShowRooms(
+        lShowroomId: String, lLocationId: String, lServiceId: String,
+    ): Flow<NetworkResult<ShowRoomsResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.getShowRooms(
+                    lShowroomId , lLocationId, lServiceId,
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
     suspend fun getIndividualOfferDetails(
         lRecordId: String
     ): Flow<NetworkResult<OfferDeatilsResponse>> {

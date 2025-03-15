@@ -37,6 +37,7 @@ class MyBookingsFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        vm.isvisble.value = false
         activity?.setWhiteToolBar("My Bookings", true)
         return root
     }
@@ -58,6 +59,7 @@ class MyBookingsFragment : Fragment() {
                         bookingData.clear()
                         bookingData.addAll(resposnes.Data ?: arrayListOf())
                         setupRecyclerview(bookingData)
+                        viewModel.nodata.set(bookingData.isEmpty())
                     }
                 }
 
