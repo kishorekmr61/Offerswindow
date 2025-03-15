@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -694,10 +695,19 @@ fun Activity.openDialPad(number: String) {
     }
 }
 fun Activity.openBrowser(surl: String) {
-    var  url = ""
-    if (!surl.startsWith("http://") && !surl.startsWith("https://")) {
-        url = "http://$surl"
+    try {
+        try {
+            val uri = Uri.parse("googlechrome://navigate?url=$surl")
+            val i = Intent(Intent.ACTION_VIEW, uri)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+        } catch (e: ActivityNotFoundException) {
+            val uri = Uri.parse(surl)
+            val i = Intent(Intent.ACTION_VIEW, uri)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+        }
+    } catch (ex: Exception) {
+        showToast("Unable to open the link")
     }
-    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    startActivity(browserIntent)
 }

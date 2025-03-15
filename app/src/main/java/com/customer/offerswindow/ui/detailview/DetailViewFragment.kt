@@ -1,5 +1,6 @@
 package com.customer.offerswindow.ui.detailview
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openBrowser
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openNativeSharingDialog
+import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
@@ -217,7 +219,7 @@ class DetailViewFragment : Fragment() {
                 }
 
                 R.id.website_txt -> {
-                    activity?.openBrowser(dataobj?.Website_link ?: "")
+                    openURL(Uri.parse(dataobj?.Website_link ?: ""))
                 }
 
                 R.id.whatsapp_txt -> {

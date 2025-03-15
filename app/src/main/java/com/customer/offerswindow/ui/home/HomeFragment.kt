@@ -1,6 +1,7 @@
 package com.customer.offerswindow.ui.home
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,9 +47,9 @@ import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.notifyDataChange
-import com.customer.offerswindow.utils.openBrowser
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openNativeSharingDialog
+import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.customer.offerswindow.utils.setToolbarVisibility
@@ -463,7 +464,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         }
 
                         R.id.website_img -> {
-                            activity?.openBrowser(datavalues.Website_link)
+                            openURL(Uri.parse(datavalues?.Website_link ?: ""))
                         }
 
                         R.id.whatsapp_img -> {
