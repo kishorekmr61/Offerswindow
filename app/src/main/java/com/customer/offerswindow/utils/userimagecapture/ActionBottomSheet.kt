@@ -108,16 +108,16 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
 
 
     private fun setClickListener() {
-//        binding.ivCamera.setAllOnClickListener {
-//            if (checkPermission()) openCamera()
-//            else requestPermission(101)
-//        }
+        binding.groupImage.setAllOnClickListener {
+            if (checkPermission()) openCamera()
+            else requestPermission(101)
+        }
 //
 //
-//        binding.ivGallery.setAllOnClickListener {
-//            if (checkPermission()) openGallery()
-//            else requestPermission(102)
-//        }
+        binding.groupGallery.setAllOnClickListener {
+            if (checkPermission()) openGallery()
+            else requestPermission(102)
+        }
 
     }
 

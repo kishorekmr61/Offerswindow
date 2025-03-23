@@ -38,7 +38,7 @@ class MyBookingsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         vm.isvisble.value = false
-        activity?.setWhiteToolBar("My Bookings", true)
+
         return root
     }
 
@@ -47,7 +47,14 @@ class MyBookingsFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = false
         viewModel.isloading.set(true)
-        viewModel.getBookingsData(AppPreference.read(Constants.USERUID, "") ?: "")
+        if (arguments?.getString("ISFROM", "") == "OFFERBOOKING") {
+            activity?.setWhiteToolBar("My Offer Bookings", true)
+            viewModel.getOffersData(AppPreference.read(Constants.USERUID, "") ?: "")
+        } else {
+            activity?.setWhiteToolBar("My Slot Bookings", true)
+            viewModel.getBookingsData(AppPreference.read(Constants.USERUID, "") ?: "")
+        }
+
     }
 
     private fun setObserver() {

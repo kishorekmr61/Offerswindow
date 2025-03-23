@@ -4,10 +4,10 @@
         android:id="@+id/menu_home"
         android:icon="@drawable/home"
         android:title="" />
-    <!--<item
-        android:id="@+id/menu_option2"
+    <item
+        android:id="@+id/menu_categories"
         android:icon="@drawable/option2"
-        android:title="" />-->
+        android:title="" />
     <item
         android:id="@+id/menu_mybookings"
         android:icon="@drawable/bookings"
@@ -21,8 +21,5 @@
         android:icon="@drawable/offers"
         android:title="" />
 
-    <item
-        android:id="@+id/menu_logout"
-        android:icon="@drawable/logout"
-        android:title="" />
+
 </menu>

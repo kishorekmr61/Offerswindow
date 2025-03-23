@@ -24,7 +24,7 @@ data class RewardHistory(
     val Cust_UID: String,
     val Cust_Name: String,
     val Transaction_Date: String,
-    val No_of_Reward_points: String,
+    val No_Of_Reward_Points: String,
     val Trans_Type: String,
     val Description: String,
 

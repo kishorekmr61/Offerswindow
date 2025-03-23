@@ -47,14 +47,19 @@
             style="@style/AG_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_marginEnd="@dimen/_9sdp"
             android:text="@string/actionSheet_camera"
-            app:layout_constraintEnd_toStartOf="@+id/view_image"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="@+id/iv_camera"
             app:layout_constraintStart_toStartOf="@+id/iv_camera"
             app:layout_constraintTop_toBottomOf="@+id/iv_camera" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="iv_camera,tv_camera" />
 
         <View
             android:id="@+id/view_image"
@@ -64,8 +69,8 @@
             android:layout_marginTop="@dimen/_28sdp"
             android:layout_marginEnd="@dimen/_19sdp"
             android:background="@color/car_grey_600"
-            app:layout_constraintEnd_toStartOf="@+id/iv_gallery"
-            app:layout_constraintStart_toEndOf="@id/iv_camera"
+            app:layout_constraintEnd_toStartOf="@+id/tv_camera"
+            app:layout_constraintStart_toEndOf="@id/iv_gallery"
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_action" />
 
 
@@ -74,7 +79,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_23sdp"
-            android:layout_marginEnd="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_action"
@@ -86,12 +90,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_9sdp"
             android:text="@string/actionSheet_gallery"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view_image"
+            app:layout_constraintEnd_toEndOf="@id/iv_gallery"
+            app:layout_constraintStart_toStartOf="@+id/iv_gallery"
             app:layout_constraintTop_toBottomOf="@+id/iv_gallery" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="iv_gallery,tv_gallery" />
+
+        <View
+            android:id="@+id/view_gallery"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_19sdp"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:layout_marginEnd="@dimen/_19sdp"
+            android:background="@color/car_grey_600"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_gallery"
+            app:layout_constraintTop_toBottomOf="@+id/tv_choose_action" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

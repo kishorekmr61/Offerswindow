@@ -2,7 +2,6 @@ package com.customer.offerswindow.ui.dashboard
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -23,7 +22,6 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.constant.Constants.UPDATE_REQUEST_CODE
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.ActivityDashboardBinding
-import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.showToast
 import com.google.android.material.snackbar.Snackbar
@@ -47,12 +45,8 @@ class DashboardActivity : AppCompatActivity() {
 
     private val vm: DashBoardViewModel by viewModels()
     private lateinit var navController: NavController
-    val REQUEST_READ_PHONE_STATE = 110
-    private val REQUEST_ACCESS_FINE_LOCATION: Int = 111
     val permissions = arrayOf(
-        Manifest.permission.RECORD_AUDIO,
-        Manifest.permission.CAMERA,
-        Manifest.permission.CALL_PHONE,
+        Manifest.permission.CAMERA
     )
 
     private lateinit var appUpdateManager: AppUpdateManager
@@ -121,36 +115,8 @@ class DashboardActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_rewards -> {
-                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        navController.navigate(R.id.nav_rewardshistory)
-                    } else {
-                        var bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
-                        navController.navigate(R.id.nav_sign_in, bundle)
-                    }
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.menu_offers -> {
-                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        navController.navigate(R.id.nav_rewardshistory)
-                    } else {
-                        var bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
-                        navController.navigate(R.id.nav_sign_in, bundle)
-                    }
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.menu_wishlist -> {
-                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        navController.navigate(R.id.nav_wishlist)
-                    } else {
-                        var bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
-                        navController.navigate(R.id.nav_sign_in, bundle)
-                    }
+                R.id.menu_categories -> {
+                    navController.navigate(R.id.nav_categories)
                     return@setOnItemSelectedListener true
                 }
 
@@ -159,29 +125,33 @@ class DashboardActivity : AppCompatActivity() {
                         navController.navigate(R.id.nav_mybookings)
                     } else {
                         var bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
                         navController.navigate(R.id.nav_sign_in, bundle)
                     }
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_logout -> {
-                    if (AppPreference.read(Constants.ISLOGGEDIN, true)) {
-                        val intent = Intent(this, OnBoardingActivity::class.java)
-                        intent.putExtra(
-                            Constants.MOBILENO,
-                            AppPreference.read(Constants.MOBILENO, "") ?: ""
-                        )
-                        AppPreference.write(Constants.ISLOGGEDIN, false)
-                        AppPreference.clearAll()
-                        AppPreference.write(Constants.SKIPSIGNIN, true)
-                        intent.flags =
-                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                        finish()
+                R.id.menu_wishlist -> {
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        navController.navigate(R.id.nav_rewardshistory)
+                    } else {
+                        var bundle = Bundle()
+                        navController.navigate(R.id.nav_sign_in, bundle)
                     }
                     return@setOnItemSelectedListener true
                 }
+
+                R.id.menu_offers -> {
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        var bundle = Bundle()
+                        bundle.putString("ISFROM", "OFFERBOOKING")
+                        navController.navigate(R.id.nav_mybookings, bundle)
+                    } else {
+                        var bundle = Bundle()
+                        navController.navigate(R.id.nav_sign_in, bundle)
+                    }
+                    return@setOnItemSelectedListener true
+                }
+
             }
             return@setOnItemSelectedListener true
         }
@@ -216,14 +186,6 @@ class DashboardActivity : AppCompatActivity() {
 
     open fun checkPermissions() {
         try {
-            val hasPermissionPhoneState = ContextCompat.checkSelfPermission(
-                this, Manifest.permission.RECORD_AUDIO
-            ) == PackageManager.PERMISSION_GRANTED
-            if (!hasPermissionPhoneState) {
-                ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_READ_PHONE_STATE
-                )
-            }
             val hasPermissionLocation = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.READ_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
@@ -231,7 +193,7 @@ class DashboardActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    REQUEST_ACCESS_FINE_LOCATION
+                    11
                 )
             }
         } catch (e: Exception) {

@@ -50,6 +50,8 @@ class HomeViewModel @Inject constructor(
         lShowroomId: String,
         lLocationId: String,
         lServiceId: String,
+        iCategoryId: String,
+        iCityId: String,
         lCustomerId: String,
         defaultindex: String
     ) {
@@ -58,9 +60,8 @@ class HomeViewModel @Inject constructor(
                 dashBoardRepositry.getDashBoardOffersListPagenation(
                     lShowroomId,
                     lLocationId,
-                    lServiceId,
-                    defaultindex,
-                    lCustomerId
+                    lServiceId,iCategoryId,iCityId,lCustomerId,
+                    defaultindex
                 )
                     .collect { values ->
                         dashboardresponse.postValue(values)

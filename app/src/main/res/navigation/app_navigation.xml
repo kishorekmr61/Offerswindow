@@ -95,4 +95,9 @@
         android:id="@+id/nav_manage_profile"
         android:name="com.customer.offerswindow.ui.manageprofile.ManageProfileFragment"
         android:label="ManageProfile" />
+
+    <fragment
+        android:id="@+id/nav_redeemption"
+        android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.redemption.RedemptionFragment"
+        android:label="Redemption" />
 </navigation>

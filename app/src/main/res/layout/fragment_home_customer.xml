@@ -142,8 +142,8 @@
                         android:layout_height="@dimen/_25sdp"
                         android:onClick="@{onItemClick}"
                         android:scaleType="fitXY"
-                        android:tint="@color/primary"
                         android:src="@drawable/notification"
+                        android:tint="@color/primary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -155,36 +155,75 @@
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:tint="@color/primary"
                         android:onClick="@{onItemClick}"
                         android:src="@drawable/favourite_heart"
+                        android:tint="@color/primary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/notofication_img"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/searchedit"
-                    style="@style/AG_regular"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/searchlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_gravity="start|center"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:background="@drawable/etsearch_bg"
-                    android:drawableStart="@drawable/programsearch"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTint="@color/primary"
-                    android:gravity="start|center"
-                    android:hint="@string/search_offers_any_brand"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/color_424242"
-                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/city_txt"
+                        style="@style/AG_altbold"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:drawableEnd="@drawable/arrow_drop_down"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="City" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/searchedit"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_gravity="start|center"
+                        android:background="@drawable/etsearch_bg"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/programsearch"
+                        android:drawablePadding="@dimen/_2sdp"
+                        android:drawableTint="@color/primary"
+                        android:focusable="false"
+                        android:gravity="start|center"
+                        android:hint="@string/search_offers_any_brand"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_2sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/color_424242"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/clear_img"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="-34dp"
+                        android:src="@drawable/ic_clear"
+                        tools:visibility ="visible"
+                        android:visibility="gone" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/goldrates_txt"
@@ -197,12 +236,12 @@
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
-                    android:text="@string/categories"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/searchedit" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchlayout"
+                    tools:text="@string/categories" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/categories_txt"
@@ -313,8 +352,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textColor="@color/primary"
-                    android:visibility="gone"
                     android:textSize="@dimen/_12ssp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

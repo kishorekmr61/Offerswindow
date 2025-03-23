@@ -24,10 +24,11 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentManageProfileBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
+import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.ui.customerprofile.CustomerProfileViewModel
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.convertDate
-import com.customer.offerswindow.utils.getFilePathFromUri
+import com.customer.offerswindow.utils.getFilePathFromURI
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showToast
 import com.google.gson.Gson
@@ -45,7 +46,9 @@ import java.io.File
 
 
 @AndroidEntryPoint
-class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListener {
+class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteListener,
+    CropImageView.OnCropImageCompleteListener {
+
     private var _binding: FragmentManageProfileBinding? = null
     private val binding get() = _binding!!
     private val manageProfileViewModel: ManageProfileViewModel by viewModels()
@@ -77,7 +80,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
         manageProfileViewModel.isImgCaptured.set(false)
         val profileURL = AppPreference.read(Constants.PROFILE_IMAGE_URL, "").toString()
         customerData =
-            Gson().fromJson(arguments?.getString(Constants.Customertype), CustomerData::class.java)
+            Gson().fromJson(arguments?.getString(Constants.PROFILEINFO), CustomerData::class.java)
         if (profileURL.isNullOrEmpty()) {
             arguments?.let {
                 binding.cropImageView.setImageUriAsync(
@@ -117,7 +120,8 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
 
         }
         binding.btnDone.setOnClickListener {
-            binding.cropImageView.getCroppedImage()
+            binding.cropImageView.croppedImageAsync()
+//            binding.cropImageView.getCroppedImage(500,500)
         }
     }
 
@@ -145,7 +149,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
         if (result.error == null) {
             if (result.uriContent != null) {
                 context?.contentResolver?.let {
-                    getFilePathFromUri(it, result.uriContent as Uri)?.let {
+                    getFilePathFromURI(context, result.uriContent as Uri)?.let {
                         photoFile = File(it)
                     }
                 }
@@ -153,7 +157,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
             } else {
                 val uriinfo = result.bitmap?.let { getImageUriFromBitmap(it) }
                 if (uriinfo != null) {
-                    getFilePathFromUri(context?.contentResolver!!, uriinfo)?.let {
+                    getFilePathFromURI(context, uriinfo)?.let {
                         photoFile = File(it)
                     }
                 }
@@ -169,7 +173,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
         photoFile?.let {
             val photoRequestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
             val photoPart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "ImageFile",
+                "CustomerPhotoFilePath",
                 it.name,
                 photoRequestBody
             )
@@ -179,32 +183,42 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
     }
 
     private fun postData(isPhotoAvailable: Boolean, photoPart: MultipartBody.Part) {
+        viewModel.registrationData.value?.apply {
+            val formDataJson = JsonObject()
+            formDataJson.addProperty("CustomerId", AppPreference.read(Constants.USERUID, "") ?: "")
+            formDataJson.addProperty("PhoneNo", AppPreference.read(Constants.MOBILENO, "") ?: "")
+            formDataJson.addProperty("CustomerName", customerData?.Cust_Name)
+            formDataJson.addProperty("LastName", customerData?.Cust_Last_Name)
+            formDataJson.addProperty("EmailID", customerData?.Email_ID)
+            formDataJson.addProperty(
+                "DoB",
+                convertDate(
+                    customerData?.DOB ?: "",
+                    Constants.DDMMYYYY,
+                    Constants.YYY_HIFUN_MM_DD
+                )
+            )
 
+            formDataJson.addProperty("LocationId", customerData?.Location_Code)
+            formDataJson.addProperty("CountryId", customerData?.Country_Code)
+            formDataJson.addProperty("PinCode", customerData?.Pin_No)
+            formDataJson.addProperty(
+                "CustomerPhotoFilePath",
+                if (!isPhotoAvailable) CustomerImageUrl else ""
+            )
+            formDataJson.addProperty("CreatedBy", CreatedBy)
+            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
+            formDataJson.addProperty("UpdatedBy", UpdatedBy)
+            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
+            val formDataBody: RequestBody =
+                RequestBody.create("application/json".toMediaTypeOrNull(), formDataJson.toString())
+            viewModel.updateProfileData(
+                photoPart,
+                formDataBody
+            )
+        }
 
     }
-
-
-    private fun getMaritalStatusType(maritalstatus: String): String? {
-        return if (maritalstatus == "Married") {
-            "M"
-        } else if (maritalstatus == "Single")
-            "S"
-        else if (maritalstatus == "Divorced")
-            "D"
-        else
-            maritalstatus
-    }
-
-    private fun getGenderType(gender: String): String {
-        return if (gender == "Female") {
-            "F"
-        } else if (gender == "Male")
-            "M"
-        else
-            ""
-
-    }
-
 
     fun getImageUriFromBitmap(bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
@@ -219,11 +233,32 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
     }
 
     fun setObserver() {
+        viewModel.customersdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.llLoader.visibility = View.GONE
+                    response.data.let { resposnes ->
+                        if (resposnes?.Status == 200) {
+                            findNavController().popBackStack()
+                        } else {
+                            ShowFullToast(response.data?.Message ?: "")
+                        }
+                    }
+                }
 
+                is NetworkResult.Error -> {
+                    binding.llLoader.visibility = View.GONE
+                    response.message?.let { ShowFullToast(response.data?.Message ?: "") }
+                }
+
+                is NetworkResult.Loading -> {
+                    viewModel.isloading.set(true)
+                }
+            }
+        }
     }
-
+    var photoPart: MultipartBody.Part? = null
     private fun compressAndPostImage(photoFile: File) {
-        var photoPart: MultipartBody.Part? = null
         lifecycleScope.launch {
             try {
                 val compressedImageFile =
@@ -244,6 +279,10 @@ class ManageProfileFragment : Fragment(), CropImageView.OnCropImageCompleteListe
                 showToast(getString(R.string.something_went_wrong))
             }
         }
+    }
+
+    override fun onSetImageUriComplete(view: CropImageView, uri: Uri, error: Exception?) {
+        binding.cropImageView.setImageUriAsync(uri);
     }
 
 

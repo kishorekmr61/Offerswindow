@@ -67,4 +67,10 @@
     <string name="booking_details">Booking Details</string>
     <string name="gold_price_today">Gold Price Today</string>
     <string name="view_history">View History</string>
+    <string name="wallet_number_amazon_a_c_no">Wallet Number/Amazon A/C No</string>
+    <string name="value_of_redemption">Value of Redemption</string>
+    <string name="no_of_points_to_redeem">No.of points to Redeem</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="transaction_type">Transaction Type</string>
+    <string name="delete_account">Delete Account</string>
 </resources>

@@ -37,4 +37,16 @@ class MyBookingsViewModel @Inject constructor(
             }
         }
     }
+    fun getOffersData(lCustomerID: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                dashBoardRepositry.getOffersData(lCustomerID)
+                    .collect { values ->
+                        bookingsList.postValue(values)
+                    }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
 }

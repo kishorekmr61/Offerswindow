@@ -1,4 +1,4 @@
-package com.customer.offerswindow.ui.wallet.rewardPointHistory
+package com.customer.offerswindow.ui.wallet.rewardPointHistory.redemption
 
 import android.app.Application
 import androidx.databinding.ObservableField
@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.wallet.RewardBalanceResponse
-import com.customer.offerswindow.model.wallet.RewardPointsHistoryResponse
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.repositry.WalletBalanceRepositry
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
@@ -16,25 +16,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RewardPointHistoryViewModel @Inject constructor(
+class RedemptionViewModel @Inject constructor(
     var application: Application,
     private val repository: WalletBalanceRepositry,
     private var networkHelper: NetworkHelper,
     var app: Application,
 ) : ViewModel() {
-    var rewardsHistorydata = MutableLiveData<NetworkResult<RewardPointsHistoryResponse>>()
-    var rewardBalance = MutableLiveData<NetworkResult<RewardBalanceResponse>>()
+
     var isloading = ObservableField(false)
+    var rewardsPostingResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var walletbalance = ObservableField("0")
 
-    fun getRewardsHistoryData(userid: String, imaxid: Int) {
+
+    fun postRedemption(redemptionRequestBody: RedemptionRequestBody) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getRewardsHistoryData(userid, imaxid).collect { values ->
-                    rewardsHistorydata.postValue(values)
-                }
+                repository.postRedemptionRequestData(redemptionRequestBody)
+                    .collect { values ->
+                        rewardsPostingResponse.postValue(values)
+                    }
+
             } else {
-//              showToast("No Internet")
+                app.showToast("No Internet")
             }
         }
     }

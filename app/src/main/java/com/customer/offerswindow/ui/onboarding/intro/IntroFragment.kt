@@ -1,5 +1,6 @@
 package com.customer.offerswindow.ui.onboarding.intro
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
@@ -16,6 +16,7 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentIntroBinding
 import com.customer.offerswindow.model.intro.IntroModel
+import com.customer.offerswindow.ui.dashboard.DashboardActivity
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 
 
@@ -115,7 +116,9 @@ class IntroFragment : Fragment() {
         _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
         _binding?.slideVP?.let { binding.dotsIndicator.attachTo(it) }
         binding.finishTxt.setOnClickListener {
-            findNavController().navigate(R.id.nav_sign_in)
+            val intent = Intent(requireActivity(), DashboardActivity::class.java)
+            AppPreference.write(Constants.SKIPSIGNIN, true)
+            startActivity(intent)
         }
     }
 }

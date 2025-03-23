@@ -6,18 +6,25 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.PostUpdateProfile
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
+import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
 import com.customer.offerswindow.model.notification.NotificationResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface MasterApiService {
@@ -90,4 +97,16 @@ interface MasterApiService {
     suspend fun postWishList(
         @Body postWishlist: PostWishlist,
     ): Response<StockPurchsasePostingResponse>
+
+    @POST("UserManagement/PostProfileUpdate")
+    suspend fun submitProfileUpdateData(
+        @Body profileUpdateRequest: ProfileUpdateRequest
+    ): Response<StockPurchsasePostingResponse>
+
+    @Multipart
+    @POST("UserManagement/PostProfileUpdate")
+    suspend fun submitProfileUpdateData(
+        @Part part: MultipartBody.Part?,
+        @Part("FormData") formDataBody: RequestBody
+    ): Response<ProfileUpdateResponse>
 }

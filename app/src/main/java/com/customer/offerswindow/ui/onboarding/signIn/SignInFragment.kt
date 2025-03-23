@@ -37,10 +37,6 @@ class SignInFragment : Fragment() {
     var emailUsertype = ""
     var privacyUrl = ""
     var termsurl = ""
-    val permissions = arrayOf(
-        Manifest.permission.READ_PHONE_STATE,
-        Manifest.permission.READ_PHONE_NUMBERS,
-    )
 
 
     override fun onCreateView(
@@ -64,9 +60,7 @@ class SignInFragment : Fragment() {
         }
         setObserver()
         signInViewModel.isloading.set(true)
-        if (arguments?.getBoolean("isFrom") == true) {
-            binding.skipTxt.visibility = View.GONE
-        }
+
         signInViewModel.getToken(
             AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", "welcome"
         )
@@ -87,12 +81,7 @@ class SignInFragment : Fragment() {
                 )
             }
         }
-        binding.skipTxt.setOnClickListener {
-            AppPreference.write(Constants.SKIPSIGNIN, true)
-            val intent =
-                Intent(requireActivity(), DashboardActivity::class.java)
-            startActivity(intent)
-        }
+
         binding.privacyTxt.setOnClickListener {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl)))
         }
@@ -362,7 +351,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun handleBackClick() {
-        activity?.finishAffinity()
+        findNavController().popBackStack()
     }
 
     private fun setDoneListener() {

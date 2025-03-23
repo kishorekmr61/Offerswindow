@@ -2,6 +2,7 @@ package com.customer.offerswindow.data.api.login.apiServices
 
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
@@ -26,6 +27,8 @@ interface DashboardApiService {
         @Query("lShowroomId") mobileno: String,
         @Query("lLocationId") lLocationId: String,
         @Query("lServiceId") lServiceId: String,
+        @Query("iCategoryId") iCategoryId: String,
+        @Query("iCityId") iCityId: String,
         @Query("lCustomerId") lCustomerId: String,
         @Query("lMaximumTransactionId") lMaximumTransactionId: String,
     ): Response<DashBoardDataResponse>
@@ -57,7 +60,7 @@ interface DashboardApiService {
          @Body postSlotBooking: PostSlotBooking
     ): Response<StockPurchsasePostingResponse>
 
-    @GET("ShowRoomOffers/GetMyBookings?")
+    @GET("ShowRoomOffers/GetSlotBookings?")
     suspend fun getBookings(
         @Query("lCustomerID") lCustomerID: String,
     ): Response<BookingsResponse>
@@ -69,4 +72,15 @@ interface DashboardApiService {
         @Query("iCategoryType") iCategoryType: String,
     ): Response<WishListResponse>
 
+
+    @POST("ShowRoomOffers/PostOfferBooking")
+    suspend fun postOfferBooking(
+        @Body postOfferBooking: PostOfferBooking
+    ): Response<StockPurchsasePostingResponse>
+
+
+    @GET("ShowRoomOffers/GetOfferBookings?")
+    suspend fun getOffersData(
+        @Query("lCustomerID") lCustomerID: String,
+    ): Response<BookingsResponse>
 }

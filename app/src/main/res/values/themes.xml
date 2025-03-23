@@ -109,11 +109,11 @@
     </style>
 
     <style name="outer_MarginLeft_For_Home_Card">
-        <item name="layout_constraintGuide_begin">20dp</item>
+        <item name="layout_constraintGuide_begin">15dp</item>
     </style>
 
     <style name="outer_MarginRight_For_Home_Card">
-        <item name="layout_constraintGuide_end">20dp</item>
+        <item name="layout_constraintGuide_end">15dp</item>
     </style>
 
     <style name="Ag_body_large">

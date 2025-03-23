@@ -9,6 +9,7 @@ import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
@@ -37,25 +38,39 @@ class DashBoardRepositry @Inject constructor(
     }
 
     suspend fun getDashBoardOffersList(
-        lShowroomId: String, lLocationId: String, lServiceId: String,lCustomerId: String, lMaximumTransactionId: String
+        lShowroomId: String,
+        lLocationId: String,
+        lServiceId: String,
+        iCategoryId: String,
+        iCityId: String,
+        lCustomerId: String,
+        lMaximumTransactionId: String
     ): Flow<NetworkResult<DashBoardDataResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.getDashBoardOffersList(
                     lShowroomId,
                     lLocationId,
-                    lServiceId,lCustomerId,lMaximumTransactionId
+                    lServiceId,
+                    iCategoryId,
+                    iCityId, lCustomerId, lMaximumTransactionId
                 )
             })
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getDashBoardOffersListPagenation(lShowroomId: String, lLocationId: String, lServiceId: String,lCustomerId: String,defaultindex : String): Flow<PagingData<DashboardData>> =
+    fun getDashBoardOffersListPagenation(
+        lShowroomId: String, lLocationId: String, lServiceId: String,
+        iCategoryId: String,
+        iCityId: String, lCustomerId: String, defaultindex: String
+    ): Flow<PagingData<DashboardData>> =
         Pager(
             PagingConfig(1),
             pagingSourceFactory = {
                 DashBoardPagenation(
-                    lShowroomId, lLocationId, lServiceId,lCustomerId,defaultindex,dashBoardHelperImpl
+                    lShowroomId, lLocationId, lServiceId,
+                    iCategoryId,
+                    iCityId, lCustomerId, defaultindex, dashBoardHelperImpl
                 )
             }
         ).flow.flowOn(Dispatchers.IO)
@@ -66,11 +81,12 @@ class DashBoardRepositry @Inject constructor(
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.getShowRooms(
-                    lShowroomId , lLocationId, lServiceId,
+                    lShowroomId, lLocationId, lServiceId,
                 )
             })
         }.flowOn(Dispatchers.IO)
     }
+
     suspend fun getIndividualOfferDetails(
         lRecordId: String
     ): Flow<NetworkResult<OfferDeatilsResponse>> {
@@ -85,12 +101,12 @@ class DashBoardRepositry @Inject constructor(
 
 
     suspend fun getofferTimeSlots(
-        lShowroomId: String,lLocationId: String,lServiceId: String,date:String
+        lShowroomId: String, lLocationId: String, lServiceId: String, date: String
     ): Flow<NetworkResult<SlotsDataResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.getofferTimeSlots(
-                    lShowroomId,lLocationId,lServiceId,date
+                    lShowroomId, lLocationId, lServiceId, date
                 )
             })
         }.flowOn(Dispatchers.IO)
@@ -107,6 +123,17 @@ class DashBoardRepositry @Inject constructor(
             })
         }.flowOn(Dispatchers.IO)
     }
+ suspend fun getOffersData(
+        lCustomerID: String
+    ): Flow<NetworkResult<BookingsResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.getOffersData(
+                    lCustomerID
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
 
     suspend fun postSlotBooking(
         postSlotBooking: PostSlotBooking
@@ -114,23 +141,35 @@ class DashBoardRepositry @Inject constructor(
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.postSlotBooking(
-                   postSlotBooking
+                    postSlotBooking
                 )
             })
         }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getWishList(
-        lCustomerID: String,iCategoryType:String
+        lCustomerID: String, iCategoryType: String
     ): Flow<NetworkResult<WishListResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.getWishList(
-                    lCustomerID,iCategoryType
+                    lCustomerID, iCategoryType
                 )
             })
         }.flowOn(Dispatchers.IO)
     }
 
+
+    suspend fun postOfferBooking(
+        postOfferBooking: PostOfferBooking
+    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.postOfferBooking(
+                    postOfferBooking
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
 
 }

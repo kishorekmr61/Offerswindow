@@ -58,6 +58,8 @@ import com.customer.offerswindow.utils.setUpPagingMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -72,6 +74,7 @@ class HomeFragment : Fragment(), MenuProvider {
     private val vm: DashBoardViewModel by activityViewModels()
     var categoryList = ArrayList<CategoriesData>()
     var locationList = arrayListOf<SpinnerRowModel>()
+    var cityList = arrayListOf<SpinnerRowModel>()
     var showroomList = arrayListOf<SpinnerRowModel>()
     var mlocationList = arrayListOf<String>()
     var offertypeList = arrayListOf<FilterData>()
@@ -79,7 +82,9 @@ class HomeFragment : Fragment(), MenuProvider {
     var locationId = "0"
     var showroomid = "0"
     var service = "0"
-    var customerid = 0
+    var iCityId = "0"
+    var categoryid = "0"
+    var customerid = "0"
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -104,7 +109,7 @@ class HomeFragment : Fragment(), MenuProvider {
         setRecyclervewData()
         vm.hidetoolbar.value = false
         homeViewModel.isloading.set(true)
-        homeViewModel.getMstData()
+
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
@@ -115,6 +120,13 @@ class HomeFragment : Fragment(), MenuProvider {
             AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", "welcome"
         )
 //        }
+        homeViewModel.getMstData()
+        homeViewModel.getUserInfo(
+            AppPreference.read(
+                Constants.MOBILENO,
+                ""
+            ) ?: ""
+        )
         binding.goldratesLyout.updatelblTxt.setOnClickListener {
             homeViewModel.isloading.set(true)
             homeViewModel.getGoldRatesData()
@@ -139,7 +151,40 @@ class HomeFragment : Fragment(), MenuProvider {
                                 homeViewModel.getDashboardData(
                                     titleData.mstCode,
                                     locationId,
-                                    service,
+                                    service, categoryid, iCityId,
+                                    AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+                                )
+                            }
+                        }
+
+                        override fun onItemmultipleSelectedListner(
+                            titleData: ArrayList<SpinnerRowModel>?,
+                            value: ArrayList<SpinnerRowModel>
+                        ) {
+
+                        }
+                    })
+                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+            }
+        }
+        binding.cityTxt.setOnClickListener {
+            activity?.let { it1 ->
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+                    binding.cityTxt.text.toString(), cityList, false, object :
+                        OnItemSelectedListner {
+                        override fun onItemSelectedListner(
+                            titleData: SpinnerRowModel?,
+                            datevalue: String
+                        ) {
+                            if (titleData != null) {
+                                binding.cityTxt.setText(titleData.title)
+                                homeViewModel.isloading.set(true)
+                                iCityId = titleData.mstCode
+                                homeViewModel.nodata.set(false)
+                                homeViewModel.getDashboardData(
+                                    titleData.mstCode,
+                                    locationId,
+                                    service, categoryid, iCityId,
                                     AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
                                 )
                             }
@@ -169,10 +214,15 @@ class HomeFragment : Fragment(), MenuProvider {
                                 showroomid = titleData.mstCode
                                 homeViewModel.isloading.set(true)
                                 homeViewModel.nodata.set(false)
+                                if (binding.locationTxt.text.toString().isNullOrEmpty()) {
+                                    binding.clearImg.visibility = View.GONE
+                                } else {
+                                    binding.clearImg.visibility = View.VISIBLE
+                                }
                                 homeViewModel.getDashboardData(
                                     titleData.mstCode,
                                     locationId,
-                                    service,
+                                    service, categoryid, iCityId,
                                     AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
                                 )
                             }
@@ -187,6 +237,19 @@ class HomeFragment : Fragment(), MenuProvider {
                     })
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
+        }
+        binding.clearImg.setOnClickListener {
+            binding.searchedit.text = ""
+            showroomid = "0"
+            homeViewModel.isloading.set(true)
+            binding.clearImg.visibility = View.GONE
+            homeViewModel.nodata.set(false)
+            homeViewModel.getDashboardData(
+                showroomid,
+                locationId,
+                service, categoryid, iCityId,
+                AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+            )
         }
     }
 
@@ -224,7 +287,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,
-                            service,
+                            service, categoryid, iCityId,
                             AppPreference.read(Constants.USERUID, "0") ?: "0",
                             "0"
                         )
@@ -275,7 +338,10 @@ class HomeFragment : Fragment(), MenuProvider {
                     categoryList.clear()
                     offertypeList.clear()
                     locationList.clear()
+                    categoryList.clear()
+                    cityList.clear()
                     locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
+                    cityList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
                     response.data?.let { resposnes ->
                         categoryList.add(
                             CategoriesData(
@@ -307,8 +373,20 @@ class HomeFragment : Fragment(), MenuProvider {
                             if (it.MstType == "Offer_Type") {
                                 offertypeList.add(FilterData(it.MstDesc))
                             }
+                            if (it.MstType == "City") {
+                                cityList.add(
+                                    SpinnerRowModel(
+                                        it.MstDesc,
+                                        false,
+                                        false,
+                                        mstCode = it.MstCode
+                                    )
+                                )
+                            }
                         }
                     }
+                    binding.cityTxt.text = cityList.firstOrNull()?.title
+                    binding.locationTxt.text = cityList.firstOrNull()?.title
                 }
 
                 is NetworkResult.Error -> {
@@ -413,11 +491,24 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.rvOfferslist.setUpPagingMultiViewRecyclerAdapter { item: WidgetViewModel, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 var datavalues = item as DashboardData
-                binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
+                var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
+                var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
+
+                viewpager.setUpViewPagerAdapter(
                     getImageList(datavalues.ImagesList) ?: arrayListOf()
                 ) { item: Images, binder: ViewDataBinding, position: Int ->
                     binder.setVariable(BR.item, item)
+                    binder.setVariable(BR.onItemClick, View.OnClickListener {
+                        when (it.id) {
+                            R.id.img -> {
+                                navigateOfferDeatils(datavalues)
+                            }
+                        }
+                        binder.executePendingBindings()
+                    })
                 }
+                TabLayoutMediator(tabview, viewpager) { tab, position ->
+                }.attach()
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
                     when (it.id) {
                         R.id.favourite -> {
@@ -435,28 +526,28 @@ class HomeFragment : Fragment(), MenuProvider {
                                 homeViewModel.postWishListItem(postdata)
                                 binding.rvOfferslist.notifyDataChange()
                             } else {
-                                var bundle = Bundle()
-                                bundle.putBoolean("isFrom", true)
-                                findNavController().navigate(R.id.nav_sign_in, bundle)
+                                findNavController().navigate(R.id.nav_sign_in)
                             }
                         }
 
                         R.id.title_txt -> {
-                            var bundle = Bundle()
-                            bundle.putString("OfferID", datavalues.id)
-                            bundle.putString(
-                                "Imagepath",
-                                datavalues.ImagesList?.firstOrNull()?.imagepath
-                            )
-                            findNavController().navigate(R.id.nav_offer_details, bundle)
+                            navigateOfferDeatils(datavalues)
                         }
 
                         R.id.share_img -> {
-                            activity?.openNativeSharingDialog(datavalues.Website_link)
+                            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                activity?.openNativeSharingDialog(datavalues.Website_link)
+                            } else {
+                                findNavController().navigate(R.id.nav_sign_in)
+                            }
                         }
 
                         R.id.call_img -> {
-                            activity?.openDialPad(datavalues.contact)
+                            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                activity?.openDialPad(datavalues.contact)
+                            } else {
+                                findNavController().navigate(R.id.nav_sign_in)
+                            }
                         }
 
                         R.id.directions_img -> {
@@ -464,11 +555,19 @@ class HomeFragment : Fragment(), MenuProvider {
                         }
 
                         R.id.website_img -> {
-                            openURL(Uri.parse(datavalues?.Website_link ?: ""))
+                            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                openURL(Uri.parse(datavalues?.Website_link ?: ""))
+                            } else {
+                                findNavController().navigate(R.id.nav_sign_in)
+                            }
                         }
 
                         R.id.whatsapp_img -> {
-                            activity?.openWhatsAppConversation(datavalues.contact, "")
+                            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                activity?.openWhatsAppConversation(datavalues.contact, "")
+                            } else {
+                                findNavController().navigate(R.id.nav_sign_in)
+                            }
                         }
                     }
                     binder.executePendingBindings()
@@ -512,7 +611,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,
-                            service,
+                            service, categoryid, iCityId,
                             AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
                         )
                         binding.rvCategories.notifyDataChange()
@@ -538,7 +637,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,
-                            service,
+                            service, categoryid, iCityId,
                             AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
                         )
                         binding.rvFilter.notifyDataChange()
@@ -546,6 +645,21 @@ class HomeFragment : Fragment(), MenuProvider {
                 }
                 binder.executePendingBindings()
             })
+        }
+    }
+
+    private fun navigateOfferDeatils(datavalues: DashboardData) {
+        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+            var bundle = Bundle()
+            bundle.putString("OfferID", datavalues.id)
+            bundle.putString(
+                "Imagepath",
+                datavalues.ImagesList?.firstOrNull()?.imagepath
+            )
+            findNavController().navigate(R.id.nav_offer_details, bundle)
+        } else {
+
+            findNavController().navigate(R.id.nav_sign_in)
         }
     }
 

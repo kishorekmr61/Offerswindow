@@ -12,8 +12,12 @@ data class CustomerData(
     var Cust_Name: String? = "",
     var Cust_Last_Name: String? = "",
     var Location_Code: String = "",
+    var Country_Code: String = "",
+    var Country_Desc: String = "",
     var Location_Desc: String = "",
     var Email_ID: String = "",
     var Cust_Image_URL: String = "",
+    var DOB: String = "",
+    var Pin_No: String = "",
 
     )

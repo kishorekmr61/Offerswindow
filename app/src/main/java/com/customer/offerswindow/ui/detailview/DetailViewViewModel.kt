@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.customersdata.PostOfferBooking
+import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.offerdetails.OfferDeatils
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
@@ -28,6 +31,7 @@ class DetailViewViewModel @Inject constructor(
     var isloading = ObservableField(false)
     var imagepath = ObservableField<String>()
     var deatiledresponse = MutableLiveData<NetworkResult<OfferDeatilsResponse>>()
+    var offerPostingResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var OfferDeatils = ObservableField<OfferDeatils>()
 
     fun getDetailData(lRecordId: String) {
@@ -35,6 +39,20 @@ class DetailViewViewModel @Inject constructor(
             if (networkHelper.isNetworkConnected()) {
                 dashBoardRepositry.getIndividualOfferDetails(lRecordId).collect { values ->
                         deatiledresponse.postValue(values)
+                    }
+
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun postOfferBooking(postOfferBooking: PostOfferBooking) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                dashBoardRepositry.postOfferBooking(postOfferBooking)
+                    .collect { values ->
+                        offerPostingResponse.postValue(values)
                     }
 
             } else {

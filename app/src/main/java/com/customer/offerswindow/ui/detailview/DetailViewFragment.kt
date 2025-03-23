@@ -17,6 +17,7 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentDetailViewBinding
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.Images
@@ -24,7 +25,6 @@ import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.utils.navigateToGoogleMap
-import com.customer.offerswindow.utils.openBrowser
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openNativeSharingDialog
 import com.customer.offerswindow.utils.openURL
@@ -159,6 +159,25 @@ class DetailViewFragment : Fragment() {
                 else -> {}
             }
         }
+        viewModel.offerPostingResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    viewModel.isloading.set(false)
+                    response.data?.let { resposnes ->
+                        showLongToast(resposnes.Message)
+                        var bundle =Bundle()
+                        bundle.putString("ISFROM","OFFERBOOKING")
+                        findNavController().navigate(R.id.nav_success,bundle)
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    viewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun setListeners() {
@@ -185,7 +204,7 @@ class DetailViewFragment : Fragment() {
                     }
                 }
 
-                R.id.slotbooking_txt, R.id.bookoffer_txt -> {
+                R.id.slotbooking_txt -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
 
                         val bundle = Bundle()
@@ -204,6 +223,17 @@ class DetailViewFragment : Fragment() {
                         bundle.putBoolean("isFrom", true)
                         findNavController().navigate(R.id.nav_sign_in, bundle)
                     }
+                }
+
+                R.id.bookoffer_txt -> {
+                    viewModel.isloading.set(true)
+                    var postofferbookings = PostOfferBooking(
+                        dataobj?.showroomid ?: "",
+                        dataobj?.locationid ?: "",
+                        dataobj?.serviceid ?: "",
+                        dataobj?.id ?: ""
+                    )
+                    viewModel.postOfferBooking(postofferbookings)
                 }
 
                 R.id.share_text -> {

@@ -8,7 +8,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.BR
+import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.RewarPointHistoryFragmentBinding
@@ -52,7 +54,12 @@ class RewarPointHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
-        viewModel.getRewardsBalanceData(AppPreference.read(Constants.USERUID, "0") ?: "0")
+        viewModel.getRewardsHistoryData(AppPreference.read(Constants.USERUID, "0") ?: "0", 0)
+        binding.redeemTxt.setOnClickListener {
+            var bundle = Bundle()
+            bundle.putString("WALLETBALANCE", viewModel.walletbalance.get())
+            findNavController().navigate(R.id.nav_redeemption, bundle)
+        }
     }
 
     private fun setObserver() {
@@ -62,6 +69,7 @@ class RewarPointHistoryFragment : Fragment() {
                     response.data.let { resposnes ->
                         if (resposnes?.Status == 200) {
                             viewModel.isloading.set(false)
+                            viewModel.walletbalance.set(resposnes.Data.Table.firstOrNull()?.Rewards_Balance)
                             bindRewardsHistory(resposnes.Data.Table1)
                         } else {
                             showToast(response.data?.Message ?: "")

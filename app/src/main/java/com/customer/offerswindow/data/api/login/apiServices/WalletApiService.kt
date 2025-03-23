@@ -1,8 +1,12 @@
 package com.customer.offerswindow.data.api.login.apiServices
 
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
-import com.customer.offerswindow.model.wallet.*
+import com.customer.offerswindow.model.wallet.PostRedemptionApproval
+import com.customer.offerswindow.model.wallet.RedemptionRequestBody
+import com.customer.offerswindow.model.wallet.RewardBalanceResponse
 import com.customer.offerswindow.model.wallet.RewardPointsHistoryResponse
+import com.customer.offerswindow.model.wallet.WalletBalanceResponse
+import com.customer.offerswindow.model.wallet.WalletHistoryResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -10,9 +14,9 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface WalletApiService {
-    @GET("Transactions/RewardsHistory?")
+    @GET("ShowRoomOffers/GetRewards??")
     suspend fun getRewardsPointHistoryBalance(
-        @Query("lUserUID") lUserUID: String,
+        @Query("lCustomerID") lUserUID: String,
         @Query("lMaximumTransactionID") lMaximumTransactionID: Int
     ): Response<RewardPointsHistoryResponse>
 
@@ -59,7 +63,7 @@ interface WalletApiService {
         @Body postRedemptionApproval: PostRedemptionApproval
     ): Response<StockPurchsasePostingResponse>
 
-    @POST("CustomerTransactions/RewardRedemptionRequest")
+    @POST("ShowRoomOffers/PostRewardRedemption")
     suspend fun postRedemptionRequestData(
         @Body redemptionRequestBody: RedemptionRequestBody
     ): Response<StockPurchsasePostingResponse>

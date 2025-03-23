@@ -1,28 +1,20 @@
 package com.customer.offerswindow.ui.success
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
-import com.customer.offerswindow.data.constant.Constants
-import com.customer.offerswindow.data.helpers.AppPreference
-import com.customer.offerswindow.databinding.FragmentSelectSlotBinding
 import com.customer.offerswindow.databinding.FragmentSuccessBinding
-import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.ui.slotbooking.SelectSlotViewModel
 import com.customer.offerswindow.utils.setWhiteToolBar
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @AndroidEntryPoint
 class SuccessFragment : Fragment() {
@@ -66,7 +58,9 @@ class SuccessFragment : Fragment() {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
             when (it.id) {
                 R.id.bookdetails_btn -> {
-                    findNavController().navigate(R.id.nav_mybookings)
+                    var bundle = Bundle()
+                    bundle.putString("ISFROM", arguments?.getString("ISFROM"))
+                    findNavController().navigate(R.id.nav_mybookings, bundle)
                 }
             }
         })

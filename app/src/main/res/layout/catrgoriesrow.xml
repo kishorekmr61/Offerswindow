@@ -22,34 +22,33 @@
         android:id="@+id/category_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
         android:onClick="@{onItemClick}">
 
 
-        <androidx.cardview.widget.CardView
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/img_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_3sdp"
-            app:cardCornerRadius="@dimen/_5sdp"
+            android:background="@{item.isselected ? @drawable/bottomstroke_bg : @drawable/categories_style}"
+            android:padding="@dimen/_1sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:padding="@dimen/_8sdp"
+            tools:background="@drawable/categories_style"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img"
-                imgUrl="@{item.category_img}"
-                android:layout_width="@dimen/_55sdp"
-                android:layout_height="@dimen/_50sdp"
+                image="@{item.category_img}"
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="@dimen/_42sdp"
                 android:padding="@dimen/_3sdp"
-                tools:background="@drawable/bottomstroke_bg"
-                android:background="@{item.isselected ? @drawable/bottomstroke_bg : @drawable/et_style}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/catregories_icon" />
 
-        </androidx.cardview.widget.CardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/catregory_desc"
