@@ -1,5 +1,8 @@
 package com.customer.offerswindow.model
 
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
+
 data class CustomerDataResponse(
     var Status: Int,
     val Message: String,
@@ -7,7 +10,7 @@ data class CustomerDataResponse(
 )
 
 data class CustomerData(
-    var Cust_UID: String = "",
+    var Cust_UID: String = AppPreference.read(Constants.USERUID, "") ?: "0",
     var Mobile_No: String = "",
     var Cust_Name: String? = "",
     var Cust_Last_Name: String? = "",

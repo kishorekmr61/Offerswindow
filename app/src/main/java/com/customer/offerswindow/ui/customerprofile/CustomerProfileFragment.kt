@@ -193,7 +193,7 @@ class CustomerProfileFragment : Fragment() {
         if (!isPhotoAvailable) {
             viewModel.isloading.set(true)
             var postcustomerdata = ProfileUpdateRequest(
-                mcustomerData.Cust_UID,
+                AppPreference.read(Constants.USERUID, "") ?: "0",
                 mcustomerData?.Cust_Name ?: "",
                 mcustomerData.Cust_Last_Name ?: "",
                 mcustomerData.Email_ID,
@@ -212,7 +212,7 @@ class CustomerProfileFragment : Fragment() {
                 val formDataJson = JsonObject()
                 formDataJson.addProperty(
                     "CustomerId",
-                    AppPreference.read(Constants.USERUID, "") ?: ""
+                    AppPreference.read(Constants.USERUID, "") ?: "0"
                 )
                 formDataJson.addProperty(
                     "PhoneNo",

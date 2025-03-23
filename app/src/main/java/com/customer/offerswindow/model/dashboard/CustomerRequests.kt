@@ -1,10 +1,12 @@
 package com.customer.offerswindow.model.dashboard
 
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.utils.getDateTime
 
 
 data class ProfileUpdateRequest(
-    var CustomerId: String = "",
+    var CustomerId: String = AppPreference.read(Constants.USERUID, "") ?: "0",
     var CustomerName: String = "",
     var LastName: String = "",
     var EmailID: String = "",
