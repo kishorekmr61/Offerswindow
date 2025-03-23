@@ -14,7 +14,7 @@ class DashBoardPagenation(
     private val lServiceId: String,
     private val iCategoryId: String,
     private val iCityId: String,
-    private val lCustomerId: String,
+    private var lCustomerId: String,
     private val defaultindex: String,
     private val dashBoardHelperImpl: DashBoardHelperImpl
 ) : PagingSource<Int, DashboardData>() {
@@ -26,6 +26,9 @@ class DashBoardPagenation(
             var data: ArrayList<DashboardData>
             if (defaultindex == " 0") {
                 defaultPageIndex = "0"
+            }
+            if (lCustomerId.isNullOrEmpty()){
+                lCustomerId = "0"
             }
             val response = dashBoardHelperImpl.getDashBoardOffersList(
                 lShowroomId, lLocationId, lServiceId,
