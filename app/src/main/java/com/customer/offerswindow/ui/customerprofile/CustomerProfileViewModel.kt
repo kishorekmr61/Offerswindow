@@ -17,6 +17,7 @@ import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.CustomerListRepository
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
+import com.customer.offerswindow.utils.convertDate
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,6 +42,7 @@ class CustomerProfileViewModel @Inject constructor(
     var deleteResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var isloading = ObservableField(false)
     var customerdata = MutableLiveData<NetworkResult<CustomerDataResponse>>()
+    var profilePic = ObservableField<String>()
 
 
     fun deleteUserAccount() {
@@ -120,15 +122,20 @@ class CustomerProfileViewModel @Inject constructor(
     }
 
     fun bindCustomerData(customerData: CustomerData) {
-        registrationData.value?.CustomerId = customerData.Cust_UID
+//        registrationData.value?.CustomerId = customerData.Cust_UID
         registrationData.value?.CustomerName = customerData.Cust_Name ?: ""
         registrationData.value?.LastName = customerData
             .Cust_Last_Name ?: ""
         registrationData.value?.PhoneNo = customerData.Mobile_No
-//        registrationData.value?.DoB =
-//            convertDate(customerData.dob, Constants.YYYYMMDDTHH, Constants.DDMMMYYYY)
+        registrationData.value?.DoB =
+            convertDate(customerData.DOB, Constants.YYYYMMDDTHH, Constants.DDMMMYYYY)
         registrationData.value?.EmailID = customerData.Email_ID
-        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL
+        registrationData.value?.Location_Desc = customerData.Location_Desc
+        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL ?:""
+        registrationData.value?.PinCode = customerData.Pin_No
+        registrationData.value?.Country = customerData.Country
+        registrationData.value?.Country_Desc = customerData.Country_Desc
+//        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL
 
 
     }

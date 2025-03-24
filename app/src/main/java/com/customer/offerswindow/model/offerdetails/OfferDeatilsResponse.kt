@@ -31,14 +31,20 @@ data class OfferDeatils(
     @Expose @SerializedName("Offer_Type_Code") val offertypecode: String,
     @Expose @SerializedName("Display_Date") val displaydate: String,
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
+    @Expose @SerializedName("Slot_Applicable") val Slot_Applicable: String? = "",
+    @Expose @SerializedName("Booking_Applicable") val Booking_Applicable: String? = "",
     @Expose @SerializedName("End_Date") val endate: String,
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
     @Expose @SerializedName("Website_link") val Website_link: String,
-    @Expose @SerializedName("Image_Details") val ImagesList: ArrayList<Images>? = arrayListOf(),
+    @Expose @SerializedName("Offer_Type_Desc") val Offer_Type_Desc: String,
+    @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<OfferImages>? = arrayListOf(),
     var isfavourite: Boolean = false,
     val Terms_Conditions: ArrayList<Termsandconditions>? = arrayListOf(),
-    val Other_Offer_Details: ArrayList<DashboardData>? = arrayListOf(),
-) {
+    val Other_Offer_Details: ArrayList<OfferDeatils>? = arrayListOf(),
+) : WidgetViewModel {
+    override fun layoutId(): Int {
+        return R.layout.detailhomelist_item
+    }
     fun convertEndDate(): String {
         return convertDate(
             effectivedate,
@@ -55,5 +61,14 @@ data class Termsandconditions(
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.row_tandc
+    }
+}
+
+data class OfferImages(
+    @Expose @SerializedName("Rec_ID") val imageid: String,
+    @Expose @SerializedName("Image_Path") val imagepath: String,
+) : WidgetViewModel {
+    override fun layoutId(): Int {
+        return R.layout.detailsroww_img
     }
 }

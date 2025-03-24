@@ -20,7 +20,6 @@ import com.customer.offerswindow.databinding.FragmentCustomerProfileBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.ShowFullToast
@@ -73,6 +72,7 @@ class CustomerProfileFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         vm.isvisble.value = false
         activity?.setWhiteToolBar("My Profile", true)
+
         setUpListeners()
         return binding.root
     }
@@ -91,19 +91,17 @@ class CustomerProfileFragment : Fragment() {
         // Set input filters for name and height fields
         binding.etFirstname.filters = arrayOf(NameInputFilter())
         binding.editprofileImg.setOnClickListener {
-            mcustomerData.Country_Code = countryid
-            mcustomerData.Location_Code = locationid
+            mcustomerData.Country = countryid
             mcustomerData.Cust_Name = binding.etFirstname.text.toString()
             mcustomerData.Country_Desc = binding.etCountry.text.toString()
-            mcustomerData.Country_Desc = binding.etCountry.text.toString()
+            mcustomerData.Location_Desc = binding.etCity.text.toString()
             mcustomerData.Email_ID = binding.etEmail.text.toString()
             mcustomerData.DOB = convertDate(
                 binding.etDob.text.toString(),
                 Constants.DDMMYYYY,
                 Constants.YYY_HIFUN_MM_DD
             )
-            mcustomerData.Location_Desc = binding.etCity.text.toString()
-            mcustomerData.Mobile_No = AppPreference.read(Constants.MOBILENO, "") ?: ""
+            mcustomerData.Location_Code = locationid
             mcustomerData.Pin_No = binding.etPincode.text.toString()
             triggerCameraOrGallerySelection(binding.profilepic)
         }
@@ -190,69 +188,49 @@ class CustomerProfileFragment : Fragment() {
     }
 
     private fun postData(isPhotoAvailable: Boolean, photoPart: MultipartBody.Part) {
-        if (!isPhotoAvailable) {
-            viewModel.isloading.set(true)
-            var postcustomerdata = ProfileUpdateRequest(
-                AppPreference.read(Constants.USERUID, "") ?: "0",
-                mcustomerData?.Cust_Name ?: "",
-                mcustomerData.Cust_Last_Name ?: "",
-                mcustomerData.Email_ID,
-                mcustomerData.Mobile_No,
-                mcustomerData.DOB,
-                mcustomerData.Location_Code,
-                mcustomerData.Country_Code,
-                mcustomerData.Pin_No,
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCB6HqWvcVC3HlKduT7nP44d_RYuJOIFTwcA4LQQo0zA8GRbW_N9wEwaF1kBiMPoKcnN4&usqp=CAU",
+        viewModel.registrationData.value?.apply {
+            val formDataJson = JsonObject()
+            formDataJson.addProperty(
+                "customerId",
+                AppPreference.read(Constants.USERUID, "") ?: "0"
             )
+            formDataJson.addProperty(
+                "phoneNo",
+                AppPreference.read(Constants.MOBILENO, "") ?: ""
+            )
+            formDataJson.addProperty("customerName", binding.etFirstname.text.toString())
+            formDataJson.addProperty("lastName", mcustomerData.Cust_Last_Name)
+            formDataJson.addProperty("emailID", binding.etEmail.text.toString())
+            formDataJson.addProperty(
+                "doB",
+                convertDate(
+                    binding.etDob.text.toString(),
+                    Constants.DDMMYYYY,
+                    Constants.YYY_HIFUN_MM_DD
+                )
+            )
+
+            formDataJson.addProperty("locationId", mcustomerData.Location_Code)
+            formDataJson.addProperty("countryId", mcustomerData.Country)
+            formDataJson.addProperty("pinCode", binding.etPincode.text.toString())
+            formDataJson.addProperty(
+                "CustomerPhotoFilePath",
+                if (!isPhotoAvailable) CustomerImageUrl else ""
+            )
+            formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")
+            formDataJson.addProperty("createdDateTime", CreatedDateTime)
+            formDataJson.addProperty("updatedBy", AppPreference.read(Constants.USERUID, "") ?: "0")
+            formDataJson.addProperty("updatedDateTime", UpdatedDateTime)
+            val formDataBody: RequestBody =
+                RequestBody.create(
+                    "application/json".toMediaTypeOrNull(),
+                    formDataJson.toString()
+                )
             viewModel.updateProfileData(
-                postcustomerdata
+                photoPart,
+                formDataBody
             )
-        } else {
-            viewModel.registrationData.value?.apply {
-                val formDataJson = JsonObject()
-                formDataJson.addProperty(
-                    "CustomerId",
-                    AppPreference.read(Constants.USERUID, "") ?: "0"
-                )
-                formDataJson.addProperty(
-                    "PhoneNo",
-                    AppPreference.read(Constants.MOBILENO, "") ?: ""
-                )
-                formDataJson.addProperty("CustomerName", binding.etFirstname.text.toString())
-                formDataJson.addProperty("LastName", mcustomerData.Cust_Last_Name)
-                formDataJson.addProperty("EmailID", binding.etEmail.text.toString())
-                formDataJson.addProperty(
-                    "DoB",
-                    convertDate(
-                        binding.etDob.text.toString(),
-                        Constants.DDMMYYYY,
-                        Constants.YYY_HIFUN_MM_DD
-                    )
-                )
-
-                formDataJson.addProperty("LocationId", mcustomerData.Location_Code)
-                formDataJson.addProperty("CountryId", mcustomerData.Country_Code)
-                formDataJson.addProperty("PinCode", binding.etPincode.text.toString())
-                formDataJson.addProperty(
-                    "CustomerPhotoFilePath",
-                    if (!isPhotoAvailable) CustomerImageUrl else ""
-                )
-                formDataJson.addProperty("CreatedBy", CreatedBy)
-                formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
-                formDataJson.addProperty("UpdatedBy", UpdatedBy)
-                formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
-                val formDataBody: RequestBody =
-                    RequestBody.create(
-                        "application/json".toMediaTypeOrNull(),
-                        formDataJson.toString()
-                    )
-                viewModel.updateProfileData(
-                    photoPart,
-                    formDataBody
-                )
-            }
         }
-
     }
 
 
@@ -322,7 +300,7 @@ class CustomerProfileFragment : Fragment() {
                                 )
                             }
 
-                            if (it.MstType == "City") {
+                            if (it.MstType == "Location") {
                                 cityList.add(
                                     SpinnerRowModel(
                                         it.MstDesc,
@@ -344,7 +322,7 @@ class CustomerProfileFragment : Fragment() {
                 else -> {}
             }
         }
-        viewModel.customersdatapost.observe(viewLifecycleOwner) { response ->
+        viewModel.customersdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
@@ -380,7 +358,7 @@ class CustomerProfileFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etCountry.setText(titleData.title)
                                 countryid = titleData.mstCode
-                                mcustomerData.Country_Code = countryid
+                                mcustomerData.Country = countryid
                             }
                         }
 
@@ -455,8 +433,9 @@ class CustomerProfileFragment : Fragment() {
                             response.data?.Data?.firstOrNull()
                                 ?.let {
                                     mcustomerData = it
-                                    binding.etFirstname.setText(mcustomerData.Cust_Name)
-                                    binding.etEmail.setText(mcustomerData.Email_ID)
+                                    binding.item = it
+//                                    binding.etFirstname.setText(mcustomerData.Cust_Name)
+//                                    binding.etEmail.setText(mcustomerData.Email_ID)
                                     binding.etDob.setText(
                                         convertDate(
                                             mcustomerData.DOB,
@@ -464,9 +443,13 @@ class CustomerProfileFragment : Fragment() {
                                             Constants.DDMMYYYY
                                         )
                                     )
-                                    binding.etCountry.setText(mcustomerData.Country_Desc)
-                                    binding.etCity.setText(mcustomerData.Location_Desc)
-                                    binding.etPincode.setText(mcustomerData.Pin_No)
+                                    locationid = mcustomerData.Location_Code
+                                    countryid = mcustomerData.Country
+
+//                                    binding.etCountry.setText(mcustomerData.Country_Desc)
+//                                    binding.etCity.setText(mcustomerData.Location_Desc)
+//                                    binding.etPincode.setText(mcustomerData.Pin_No)
+
                                 }
                         }
                     }

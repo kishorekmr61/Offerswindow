@@ -12,6 +12,7 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
+import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.masters.CommonDataResponse
@@ -40,6 +41,7 @@ class HomeViewModel @Inject constructor(
     var showRoomdata = MutableLiveData<NetworkResult<ShowRoomsResponse>>()
     var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var postwishlistdata = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var userIntrestResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
@@ -152,4 +154,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
+    fun getUserInterest(postUserIntrest: PostUserIntrest){
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.postUserIntrest(postUserIntrest).collect { values ->
+                    userIntrestResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
 }

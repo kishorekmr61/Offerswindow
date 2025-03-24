@@ -7,6 +7,7 @@ import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUpdateProfile
+import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -101,6 +102,11 @@ interface MasterApiService {
     @POST("UserManagement/PostProfileUpdate")
     suspend fun submitProfileUpdateData(
         @Body profileUpdateRequest: ProfileUpdateRequest
+    ): Response<StockPurchsasePostingResponse>
+
+    @POST("UserManagement/PostUserTransactions")
+    suspend fun submitUserIntrest(
+        @Body postUserIntrest: PostUserIntrest
     ): Response<StockPurchsasePostingResponse>
 
     @Multipart

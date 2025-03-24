@@ -13,6 +13,8 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.FragmentRedemptionBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
+import com.customer.offerswindow.model.dashboard.CategoriesData
+import com.customer.offerswindow.model.dashboard.FilterData
 import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
@@ -31,6 +33,7 @@ class RedemptionFragment : Fragment() {
     private var _binding: FragmentRedemptionBinding? = null
     private val binding get() = _binding!!
     var transactiontype = arrayListOf<SpinnerRowModel>()
+    var transactionid = ""
 
     companion object {
         fun newInstance() = RedemptionFragment()
@@ -57,14 +60,14 @@ class RedemptionFragment : Fragment() {
         setObserver()
         viewModel.walletbalance.set(arguments?.getString("WALLETBALANCE"))
         transactiontype.clear()
-        transactiontype.add(SpinnerRowModel("Amazon Voucher", false, false, mstCode = "0"))
-        transactiontype.add(SpinnerRowModel("Transfer to account", false, false, mstCode = "0"))
+        viewModel.isloading.set(true)
+        viewModel.getMstData()
         binding.redeemBtn.setOnClickListener {
             if (isValid()) {
                 viewModel.isloading.set(true)
                 val redemptionRequestBody = RedemptionRequestBody(
                     RewardPoints = binding.etNoofpoints.text.toString(),
-                    TransactionType = binding.etTransactiontype.text.toString(),
+                    TransactionType = transactionid,
                     RedemptionValue = binding.etValueofpoints.text.toString(),
                     AccountNo = binding.etWalletnumber.text.toString()
                 )
@@ -84,6 +87,7 @@ class RedemptionFragment : Fragment() {
                         ) {
                             if (titleData != null) {
                                 binding.etTransactiontype.setText(titleData.title)
+                                transactionid = titleData.mstCode
                             }
                         }
 
@@ -124,6 +128,35 @@ class RedemptionFragment : Fragment() {
     }
 
     private fun setObserver() {
+
+        viewModel.masterdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    transactiontype.clear()
+                    response.data?.let { resposnes ->
+                        response?.data?.data?.forEach {
+                            if (it.MstType == "Service") {
+                                transactiontype.add(
+                                    SpinnerRowModel(
+                                        it.MstDesc,
+                                        false,
+                                        false,
+                                        mstCode = it.MstCode
+                                    )
+                                )
+                            }
+
+                        }
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    viewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
         viewModel.rewardsPostingResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {

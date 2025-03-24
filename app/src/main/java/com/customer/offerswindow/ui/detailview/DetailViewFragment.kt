@@ -19,8 +19,8 @@ import com.customer.offerswindow.databinding.FragmentDetailViewBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostWishlist
-import com.customer.offerswindow.model.dashboard.DashboardData
-import com.customer.offerswindow.model.dashboard.Images
+import com.customer.offerswindow.model.offerdetails.OfferDeatils
+import com.customer.offerswindow.model.offerdetails.OfferImages
 import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
@@ -33,6 +33,8 @@ import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showLongToast
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,7 +46,7 @@ class DetailViewFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     var termslist = ArrayList<Termsandconditions>()
-    var dashboaroffersList = arrayListOf<DashboardData>()
+    var dashboaroffersList = arrayListOf<OfferDeatils>()
 
 
     override fun onCreateView(
@@ -69,22 +71,28 @@ class DetailViewFragment : Fragment() {
         arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
     }
 
-    private fun setRecyclervewData(dashboaroffersList: ArrayList<DashboardData>) {
+    private fun setRecyclervewData(dashboaroffersList: ArrayList<OfferDeatils>) {
         binding.rvMoreoffers.setUpMultiViewRecyclerAdapter(
             dashboaroffersList
-        ) { item: DashboardData, binder: ViewDataBinding, position: Int ->
+        ) { item: OfferDeatils, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            if (item.ImagesList.isNullOrEmpty()) {
-                item.ImagesList = arrayListOf()
-            }
-            binder.root.findViewById<ViewPager2>(R.id.viewPager).setUpViewPagerAdapter(
-                getImageList(item.ImagesList) ?: arrayListOf()
-            ) { item: Images, binder: ViewDataBinding, position: Int ->
-                binder.setVariable(BR.item, item)
+            var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
+            var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
+            viewpager.setUpViewPagerAdapter(
+                getOtherImageList(item?.ImagesList) ?: arrayListOf()
+            ) { imageitem: OfferImages, binder: ViewDataBinding, position: Int ->
+                binder.setVariable(BR.item, imageitem)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
-
+                    when (it.id) {
+                        R.id.img -> {
+                            viewModel.isloading.set(true)
+                            viewModel.getDetailData(item.id)
+                        }
+                }
                 })
             }
+            TabLayoutMediator(tabview, viewpager) { tab, position ->
+            }.attach()
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.favourite -> {
@@ -119,21 +127,29 @@ class DetailViewFragment : Fragment() {
                 is NetworkResult.Success -> {
                     termslist.clear()
                     response.data?.let { resposnes ->
-                        viewModel.isloading.set(false)
-                        viewModel.OfferDeatils.set(response.data?.Data)
-                        dashboaroffersList.addAll(
-                            response.data?.Data?.Other_Offer_Details ?: arrayListOf()
-                        )
-                        if (!resposnes.Data.ImagesList.isNullOrEmpty()) {
-                            binding.tandcTxt.visibility = View.VISIBLE
-                            viewModel.imagepath.set(
-                                resposnes.Data.ImagesList?.firstOrNull()?.imagepath ?: ""
+                        if (response.data?.Data != null) {
+                            viewModel.isloading.set(false)
+                            viewModel.OfferDeatils.set(response.data?.Data)
+                            dashboaroffersList.addAll(
+                                response.data?.Data?.Other_Offer_Details ?: arrayListOf()
                             )
+                            if (!resposnes.Data.ImagesList.isNullOrEmpty()) {
+                                binding.tandcTxt.visibility = View.VISIBLE
+                                viewModel.imagepath.set(
+                                    resposnes.Data.ImagesList?.firstOrNull()?.imagepath ?: ""
+                                )
+                            }
+                            if (!response.data?.Data?.Terms_Conditions.isNullOrEmpty()) {
+                                termslist.addAll(
+                                    response.data?.Data?.Terms_Conditions ?: arrayListOf()
+                                )
+                            }
+                            updateImages(response.data?.Data)
+                            setRecyclervewData(dashboaroffersList)
+                        } else {
+                            showLongToast("No data ")
+                            findNavController().popBackStack()
                         }
-                        if (!response.data?.Data?.Terms_Conditions.isNullOrEmpty()) {
-                            termslist.addAll(response.data?.Data?.Terms_Conditions ?: arrayListOf())
-                        }
-                        setRecyclervewData(dashboaroffersList)
                     }
                 }
 
@@ -165,9 +181,9 @@ class DetailViewFragment : Fragment() {
                     viewModel.isloading.set(false)
                     response.data?.let { resposnes ->
                         showLongToast(resposnes.Message)
-                        var bundle =Bundle()
-                        bundle.putString("ISFROM","OFFERBOOKING")
-                        findNavController().navigate(R.id.nav_success,bundle)
+                        var bundle = Bundle()
+                        bundle.putString("ISFROM", "OFFERBOOKING")
+                        findNavController().navigate(R.id.nav_success, bundle)
                     }
                 }
 
@@ -178,6 +194,16 @@ class DetailViewFragment : Fragment() {
                 else -> {}
             }
         }
+    }
+
+    private fun updateImages(data: OfferDeatils?) {
+        binding.viewPager.setUpViewPagerAdapter(
+            getOtherImageList(data?.ImagesList) ?: arrayListOf()
+        ) { item: OfferImages, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, item)
+        }
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+        }.attach()
     }
 
     private fun setListeners() {
@@ -260,9 +286,15 @@ class DetailViewFragment : Fragment() {
         })
     }
 
-    private fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
+    //    private fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
+//        if (imagesList.isNullOrEmpty()) {
+//            imagesList?.add(Images("0", ""))
+//        }
+//        return imagesList
+//    }
+    private fun getOtherImageList(imagesList: ArrayList<OfferImages>?): ArrayList<OfferImages>? {
         if (imagesList.isNullOrEmpty()) {
-            imagesList?.add(Images("0", ""))
+            imagesList?.add(OfferImages("0", ""))
         }
         return imagesList
     }

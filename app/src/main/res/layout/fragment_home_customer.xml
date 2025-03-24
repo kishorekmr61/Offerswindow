@@ -74,7 +74,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imageView14"
-                    profileImgUrlRound="@{customerdata.cust_Image_URL}"
+                    profileImgUrlRound="@{viewModel.profilepic}"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_margin="@dimen/_8sdp"

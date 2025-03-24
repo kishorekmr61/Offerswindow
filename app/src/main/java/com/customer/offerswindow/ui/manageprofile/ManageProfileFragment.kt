@@ -185,31 +185,37 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
     private fun postData(isPhotoAvailable: Boolean, photoPart: MultipartBody.Part) {
         viewModel.registrationData.value?.apply {
             val formDataJson = JsonObject()
-            formDataJson.addProperty("CustomerId", AppPreference.read(Constants.USERUID, "") ?: "")
-            formDataJson.addProperty("PhoneNo", AppPreference.read(Constants.MOBILENO, "") ?: "")
-            formDataJson.addProperty("CustomerName", customerData?.Cust_Name)
-            formDataJson.addProperty("LastName", customerData?.Cust_Last_Name)
-            formDataJson.addProperty("EmailID", customerData?.Email_ID)
             formDataJson.addProperty(
-                "DoB",
+                "customerId",
+                AppPreference.read(Constants.USERUID, "") ?: "0"
+            )
+            formDataJson.addProperty(
+                "phoneNo",
+                AppPreference.read(Constants.MOBILENO, "") ?: ""
+            )
+            formDataJson.addProperty("customerName", customerData?.Cust_Name)
+            formDataJson.addProperty("lastName", customerData?.Cust_Last_Name)
+            formDataJson.addProperty("emailID", customerData?.Email_ID)
+            formDataJson.addProperty(
+                "doB",
                 convertDate(
-                    customerData?.DOB ?: "",
+                    customerData?.DOB?:"",
                     Constants.DDMMYYYY,
                     Constants.YYY_HIFUN_MM_DD
                 )
             )
 
-            formDataJson.addProperty("LocationId", customerData?.Location_Code)
-            formDataJson.addProperty("CountryId", customerData?.Country_Code)
-            formDataJson.addProperty("PinCode", customerData?.Pin_No)
+            formDataJson.addProperty("locationId", customerData?.Location_Code)
+            formDataJson.addProperty("countryId", customerData?.Country)
+            formDataJson.addProperty("pinCode",customerData?.Pin_No)
             formDataJson.addProperty(
                 "CustomerPhotoFilePath",
                 if (!isPhotoAvailable) CustomerImageUrl else ""
             )
-            formDataJson.addProperty("CreatedBy", CreatedBy)
-            formDataJson.addProperty("CreatedDateTime", CreatedDateTime)
-            formDataJson.addProperty("UpdatedBy", UpdatedBy)
-            formDataJson.addProperty("UpdatedDateTime", UpdatedDateTime)
+            formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")
+            formDataJson.addProperty("createdDateTime", CreatedDateTime)
+            formDataJson.addProperty("updatedBy", AppPreference.read(Constants.USERUID, "") ?: "0")
+            formDataJson.addProperty("updatedDateTime", UpdatedDateTime)
             val formDataBody: RequestBody =
                 RequestBody.create("application/json".toMediaTypeOrNull(), formDataJson.toString())
             viewModel.updateProfileData(

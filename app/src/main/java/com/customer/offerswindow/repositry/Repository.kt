@@ -8,6 +8,7 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -127,6 +128,14 @@ class Repository @Inject constructor(
     ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.submitProfileUpdateData(profileUpdateRequest) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun postUserIntrest(
+        profileUpdateRequest: PostUserIntrest
+    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.postUserIntrest(profileUpdateRequest) })
         }.flowOn(Dispatchers.IO)
     }
 }

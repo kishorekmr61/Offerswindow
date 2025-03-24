@@ -10,16 +10,16 @@ data class CustomerDataResponse(
 )
 
 data class CustomerData(
-    var Cust_UID: String = AppPreference.read(Constants.USERUID, "") ?: "0",
+    var Cust_UID: String ? ="",
     var Mobile_No: String = "",
     var Cust_Name: String? = "",
     var Cust_Last_Name: String? = "",
     var Location_Code: String = "",
-    var Country_Code: String = "",
+    var Country: String = "",
     var Country_Desc: String = "",
     var Location_Desc: String = "",
     var Email_ID: String = "",
-    var Cust_Image_URL: String = "",
+    var Cust_Image_URL: String ? = "",
     var DOB: String = "",
     var Pin_No: String = "",
 

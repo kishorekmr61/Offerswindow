@@ -3,6 +3,7 @@
 
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">"https://offerswindow.com/"</domain>
+        <domain includeSubdomains="true">"http://offerswindow.com/"</domain>
         <trust-anchors>
             <certificates src="system" />
             <certificates src="user" />

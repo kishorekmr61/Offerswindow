@@ -32,6 +32,7 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentHomeCustomerBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
+import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.model.dashboard.DashboardData
@@ -121,12 +122,6 @@ class HomeFragment : Fragment(), MenuProvider {
         )
 //        }
         homeViewModel.getMstData()
-        homeViewModel.getUserInfo(
-            AppPreference.read(
-                Constants.MOBILENO,
-                ""
-            ) ?: ""
-        )
         binding.goldratesLyout.updatelblTxt.setOnClickListener {
             homeViewModel.isloading.set(true)
             homeViewModel.getGoldRatesData()
@@ -282,15 +277,16 @@ class HomeFragment : Fragment(), MenuProvider {
                                 }
                         } else {
                             binding.loginusername.text = getString(R.string.signin)
+                            homeViewModel.getDashboardData(
+                                showroomid,
+                                locationId,
+                                service, categoryid, iCityId,
+                                AppPreference.read(Constants.USERUID, "0") ?: "0",
+                                "0"
+                            )
                         }
                         homeViewModel.nodata.set(false)
-                        homeViewModel.getDashboardData(
-                            showroomid,
-                            locationId,
-                            service, categoryid, iCityId,
-                            AppPreference.read(Constants.USERUID, "0") ?: "0",
-                            "0"
-                        )
+
                     }
                 }
 
@@ -306,22 +302,33 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         homeViewModel.isloading.set(false)
+                        binding.customerdata = resposnes.Data?.firstOrNull()
                         AppPreference.write(
                             Constants.NAME, resposnes?.Data?.firstOrNull()?.Cust_Name ?: ""
                         )
                         AppPreference.write(
-                            Constants.USERUID, resposnes?.Data?.firstOrNull()?.Cust_UID ?: ""
+                            Constants.USERUID, resposnes?.Data?.firstOrNull()?.Cust_UID ?: "0"
                         )
                         AppPreference.write(
                             Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No ?: ""
                         )
-                        if (resposnes.Data?.firstOrNull()?.Cust_Image_URL.isNullOrEmpty()) {
-                            homeViewModel.profilepic.set("")
-                        } else {
-                            homeViewModel.profilepic.set(
-                                resposnes.Data?.firstOrNull()?.Cust_Image_URL ?: ""
-                            )
-                        }
+                        AppPreference.write(
+                            Constants.PROFILEPIC,
+                            resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
+                        )
+                        homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
+                        homeViewModel.getDashboardData(
+                            showroomid,
+                            locationId,
+                            service, categoryid, iCityId,
+                            AppPreference.read(Constants.USERUID, "0") ?: "0",
+                            "0"
+                        )
+//                        homeViewModel.profilepic.set(
+//                            resposnes.Data?.firstOrNull()?.Cust_Image_URL ?: ""
+//                        )
+
+//                        homeViewModel.profilepic.set("https://offerswindow.com/Offers_Window_API/Uploads/Customers/Photo/24_23_03_2025_16_51_01.jpg")
                     }
                 }
 
@@ -351,7 +358,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 true
                             )
                         )
-                        offertypeList.add(FilterData("All", true))
+                        offertypeList.add(FilterData("All", "0", true))
                         response?.data?.data?.forEach {
                             if (it.MstType == "Service") {
                                 categoryList.add(
@@ -371,7 +378,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 )
                             }
                             if (it.MstType == "Offer_Type") {
-                                offertypeList.add(FilterData(it.MstDesc))
+                                offertypeList.add(FilterData(it.MstDesc, it.MstCode))
                             }
                             if (it.MstType == "City") {
                                 cityList.add(
@@ -536,6 +543,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.share_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                getUserIntrestOnclick("Share")
                                 activity?.openNativeSharingDialog(datavalues.Website_link)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -544,6 +552,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.call_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                getUserIntrestOnclick("Call")
                                 activity?.openDialPad(datavalues.contact)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -551,11 +560,17 @@ class HomeFragment : Fragment(), MenuProvider {
                         }
 
                         R.id.directions_img -> {
+                            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                            getUserIntrestOnclick("Direction")
                             activity?.navigateToGoogleMap(datavalues.GoogleLocation)
+                            } else {
+                                findNavController().navigate(R.id.nav_sign_in)
+                            }
                         }
 
                         R.id.website_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                getUserIntrestOnclick("Website")
                                 openURL(Uri.parse(datavalues?.Website_link ?: ""))
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -564,6 +579,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.whatsapp_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                getUserIntrestOnclick("Whatsapp")
                                 activity?.openWhatsAppConversation(datavalues.contact, "")
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -632,6 +648,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         offertypeList[previousfilter].filetrselection = false
                         previousfilter = position
                         offertypeList[previousfilter].filetrselection = true
+                        categoryid = item.filtercode
                         homeViewModel.isloading.set(true)
                         homeViewModel.nodata.set(false)
                         homeViewModel.getDashboardData(
@@ -760,4 +777,14 @@ class HomeFragment : Fragment(), MenuProvider {
         })
     }
 
+    fun getUserIntrestOnclick(flag: String) {
+        var posuserintrest = PostUserIntrest(
+            showroomid,
+            locationId,
+            "",
+            flag,
+            AppPreference.read(Constants.USERUID, "") ?: ""
+        )
+        homeViewModel.getUserInterest(posuserintrest)
+    }
 }

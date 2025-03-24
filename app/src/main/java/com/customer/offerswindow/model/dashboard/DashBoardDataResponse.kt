@@ -31,6 +31,8 @@ data class DashboardData(
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
     @Expose @SerializedName("End_Date") val endate: String,
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
+    @Expose @SerializedName("Slot_Applicable") val Slot_Applicable: String,
+    @Expose @SerializedName("Booking_Applicable") val Booking_Applicable: String,
     @Expose @SerializedName("Website_link") val Website_link: String,
     var isfavourite: Boolean = false,
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<Images>? = arrayListOf(),

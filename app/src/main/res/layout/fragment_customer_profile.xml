@@ -38,7 +38,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/profilepic"
-                profileImgUrlRound="@{item.cust_Image_URL}"
+                profileImgUrlRound="@{viewModel.profilePic}"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +173,7 @@
                         android:drawableEnd="@drawable/arrow_drop_down"
                         android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.location_Desc}"
+                        android:text="@={item.Country_Desc}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 
@@ -204,7 +204,7 @@
                         android:drawableEnd="@drawable/arrow_drop_down"
                         android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.location_Desc}"
+                        android:text="@={item.Location_Desc}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 
@@ -236,6 +236,7 @@
                         android:maxLines="1"
                         android:inputType="number"
                         android:maxLength="6"
+                        android:text="@={item.pin_No}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 

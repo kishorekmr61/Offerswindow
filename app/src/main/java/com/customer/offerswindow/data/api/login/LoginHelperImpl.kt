@@ -2,6 +2,7 @@ package com.customer.offerswindow.data.api.login
 
 import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import okhttp3.MultipartBody
@@ -49,4 +50,8 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
     suspend fun submitProfileUpdateData(
        profileUpdateRequest: ProfileUpdateRequest
     ) = masterApiService.submitProfileUpdateData(profileUpdateRequest)
+
+    suspend fun postUserIntrest(
+       postUserIntrest: PostUserIntrest
+    ) = masterApiService.submitUserIntrest(postUserIntrest)
 }

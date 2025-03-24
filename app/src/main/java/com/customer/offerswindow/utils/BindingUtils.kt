@@ -156,11 +156,14 @@ fun setThumbnail(img: AppCompatImageView, videourl: String?) {
     }
 }
 
-@BindingAdapter("profileImgUrlRound", "modifiedDate", requireAll = false)
+@BindingAdapter("profileImgUrlRound", requireAll = false)
 fun setProfileImageUrl(img: AppCompatImageView, url: String?, modifiedDate: String?) {
+    var url1 =  url?.replace("http://", "https://")
     if (!url.isNullOrEmpty()) {
-        Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: ""))
-            .apply(RequestOptions.circleCropTransform()).into(img)
+//        Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: "")).error(R.drawable.ic_profile)
+//            .apply(RequestOptions.circleCropTransform()).into(img)
+
+        Glide.with(context).load(url1).placeholder(R.drawable.ic_profile).dontAnimate().into(img);
     } else {
         img.setImageResource(R.drawable.ic_profile)
     }
@@ -168,8 +171,12 @@ fun setProfileImageUrl(img: AppCompatImageView, url: String?, modifiedDate: Stri
 
 @BindingAdapter("image", "modifiedDate", requireAll = false)
 fun setImageUrl(img: AppCompatImageView, url: String?, modifiedDate: String?) {
+    var url =  url?.replace("http://", "https://");
+
     if (!url.isNullOrEmpty()) {
-        Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: "")).into(img)
+        Glide.with(context).load(url).placeholder(R.drawable.ic_profile).dontAnimate().into(img);
+
+//        Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: "")).into(img)
     } else {
         img.setImageResource(R.drawable.default_img)
     }
