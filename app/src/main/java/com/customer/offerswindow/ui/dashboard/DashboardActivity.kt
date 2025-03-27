@@ -130,7 +130,7 @@ class DashboardActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_wishlist -> {
+                R.id.menu_Redeem -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                         navController.navigate(R.id.nav_rewardshistory)
                     } else {

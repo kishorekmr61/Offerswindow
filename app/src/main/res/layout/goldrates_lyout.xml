@@ -154,6 +154,7 @@
                 android:drawablePadding="@dimen/_4sdp"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/view_history"
+                android:visibility="gone"
                 android:textColor="@color/color_0044FF"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintBottom_toBottomOf="parent"

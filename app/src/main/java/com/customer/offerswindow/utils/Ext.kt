@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -45,6 +46,8 @@ import com.customer.offerswindow.application.OfferWindowApplication.Companion.co
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.model.ErrorData
+import com.customer.offerswindow.model.dashboard.Images
+import com.customer.offerswindow.model.offerdetails.OfferImages
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -710,4 +713,10 @@ fun Activity.openBrowser(surl: String) {
     } catch (ex: Exception) {
         showToast("Unable to open the link")
     }
+}
+  fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
+    if (imagesList.isNullOrEmpty()) {
+        imagesList?.add(Images("0", ""))
+    }
+    return imagesList
 }

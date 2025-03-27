@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/_55sdp"
-        android:background="@color/color_EFF1F4"
+        android:background="@drawable/bgimage"
         tools:context=".ui.home.HomeFragment">
 
         <androidx.constraintlayout.widget.Guideline

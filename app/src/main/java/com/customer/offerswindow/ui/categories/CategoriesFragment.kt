@@ -8,13 +8,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.BR
+import com.customer.offerswindow.R
 import com.customer.offerswindow.databinding.FragmentCategoriesBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -84,6 +87,14 @@ class CategoriesFragment : Fragment() {
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
+                when(it.id){
+                    R.id.category_item->{
+                        var bundle = Bundle()
+                        bundle.putString("Category",Gson().toJson(item))
+                        bundle.putString("ISFROM","CATEGORY")
+                        findNavController().navigate(R.id.nav_home,bundle)
+                    }
+                }
                 binder.executePendingBindings()
             })
         }

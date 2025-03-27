@@ -29,6 +29,8 @@ data class CommonDataResponse(
     var Image_path: String = "",
     @SerializedName("Rec_ID")
     var Rec_ID: String = "",
+    var Redemption_Points: String = "",
+    var Redemption_Value: String = "",
     @SerializedName("Price_Date")
     var Price_Date: String = "",
     @SerializedName("Gold_24c")

@@ -13,8 +13,8 @@
         android:icon="@drawable/bookings"
         android:title="" />
     <item
-        android:id="@+id/menu_wishlist"
-        android:icon="@drawable/wishlist"
+        android:id="@+id/menu_Redeem"
+        android:icon="@drawable/ic_bag"
         android:title="" />
     <item
         android:id="@+id/menu_offers"

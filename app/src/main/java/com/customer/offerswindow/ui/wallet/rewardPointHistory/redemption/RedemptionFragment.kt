@@ -13,8 +13,6 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.FragmentRedemptionBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.model.dashboard.CategoriesData
-import com.customer.offerswindow.model.dashboard.FilterData
 import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
@@ -24,6 +22,7 @@ import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.times
 
 @AndroidEntryPoint
 class RedemptionFragment : Fragment() {
@@ -88,6 +87,7 @@ class RedemptionFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etTransactiontype.setText(titleData.title)
                                 transactionid = titleData.mstCode
+                                binding.etValueofpoints.setText(convertPointsValue(titleData).toString())
                             }
                         }
 
@@ -103,15 +103,22 @@ class RedemptionFragment : Fragment() {
         }
     }
 
+    private fun convertPointsValue(titleData: SpinnerRowModel): Double {
+        val valueofpoints = titleData.Redemption_Points
+        return (binding.etNoofpoints.text.toString()
+            .toDouble() / valueofpoints.toDouble()) * titleData.Redemption_Value.toDouble()
+    }
+
     private fun isValid(): Boolean {
         if (binding.etNoofpoints.text.isNullOrEmpty()) {
             showToast("Enter No of Points")
             return false
         }
-        if (binding.etValueofpoints.text.isNullOrEmpty()) {
-            showToast("Enter No of Points")
+        if (binding.walletamountLbl.text.toString().toDouble() > binding.etNoofpoints.text.toString().toDouble()){
+            showToast("No of Points entered should be less than wallet points")
             return false
         }
+
         if (binding.etTransactiontype.text.isNullOrEmpty()) {
             showToast("Select Transaction Type")
             return false
@@ -132,16 +139,19 @@ class RedemptionFragment : Fragment() {
         viewModel.masterdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    viewModel.isloading.set(false)
                     transactiontype.clear()
                     response.data?.let { resposnes ->
                         response?.data?.data?.forEach {
-                            if (it.MstType == "Service") {
+                            if (it.MstType == "Redemption_Type") {
                                 transactiontype.add(
                                     SpinnerRowModel(
                                         it.MstDesc,
                                         false,
                                         false,
-                                        mstCode = it.MstCode
+                                        mstCode = it.MstCode,
+                                        Redemption_Value = it.Redemption_Value,
+                                        Redemption_Points = it.Redemption_Points
                                     )
                                 )
                             }

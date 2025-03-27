@@ -41,6 +41,7 @@ import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.ui.wishlist.WishListViewModel
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerAdapter
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerFooterAdapter
 import com.customer.offerswindow.utils.PermissionsUtil
@@ -61,6 +62,7 @@ import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -70,6 +72,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), MenuProvider {
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val wishlistViewModel: WishListViewModel by viewModels()
     private var _binding: FragmentHomeCustomerBinding? = null
     private val binding get() = _binding!!
     private val vm: DashBoardViewModel by activityViewModels()
@@ -110,7 +113,6 @@ class HomeFragment : Fragment(), MenuProvider {
         setRecyclervewData()
         vm.hidetoolbar.value = false
         homeViewModel.isloading.set(true)
-
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
@@ -248,6 +250,21 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
+    private fun getDataIntent(item: CategoriesData, position: Int) {
+        if (arguments?.getString("ISFROM") == "CATEGORY") {
+            var categoryselected = Gson().fromJson(
+                arguments?.getString("Category"),
+                CategoriesData::class.java
+            )
+            if (categoryselected.category_id == item.category_id) {
+                service = item.category_id
+                item.isselected = true
+                binding.rvCategories.scrollToPosition(position)
+                return
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
@@ -277,6 +294,13 @@ class HomeFragment : Fragment(), MenuProvider {
                                 }
                         } else {
                             binding.loginusername.text = getString(R.string.signin)
+                            if (arguments?.getString("ISFROM") == "CATEGORY") {
+                                var categoryselected = Gson().fromJson(
+                                    arguments?.getString("Category"),
+                                    CategoriesData::class.java
+                                )
+                                service = categoryselected.category_id
+                            }
                             homeViewModel.getDashboardData(
                                 showroomid,
                                 locationId,
@@ -355,7 +379,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 "https://cdn.pixabay.com/photo/2021/10/11/23/49/app-6702045_1280.png",
                                 "All",
                                 "0",
-                                true
+                                if (arguments?.getString("ISFROM") == "CATEGORY") false else true
                             )
                         )
                         offertypeList.add(FilterData("All", "0", true))
@@ -394,6 +418,9 @@ class HomeFragment : Fragment(), MenuProvider {
                     }
                     binding.cityTxt.text = cityList.firstOrNull()?.title
                     binding.locationTxt.text = cityList.firstOrNull()?.title
+                    wishlistViewModel.getWishListData(
+                        AppPreference.read(Constants.USERUID, "") ?: "", "0"
+                    )
                 }
 
                 is NetworkResult.Error -> {
@@ -500,7 +527,8 @@ class HomeFragment : Fragment(), MenuProvider {
                 var datavalues = item as DashboardData
                 var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
                 var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-
+//                var datam= wishlistViewModel.wishlistResponse.value?.data?.Data?.indexOf(item.offertypecode)
+//                item.isfavourite = datam
                 viewpager.setUpViewPagerAdapter(
                     getImageList(datavalues.ImagesList) ?: arrayListOf()
                 ) { item: Images, binder: ViewDataBinding, position: Int ->
@@ -520,12 +548,12 @@ class HomeFragment : Fragment(), MenuProvider {
                     when (it.id) {
                         R.id.favourite -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                if (datavalues?.isfavourite == true) {
+                                if (datavalues.isfavourite) {
                                     datavalues.isfavourite = false
                                 } else {
-                                    datavalues?.isfavourite = true
+                                    datavalues.isfavourite = true
                                 }
-                                var postdata = PostWishlist(
+                                val postdata = PostWishlist(
                                     datavalues.offertypecode,
                                     AppPreference.read(Constants.USERUID, "") ?: ""
                                 )
@@ -561,8 +589,8 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.directions_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                            getUserIntrestOnclick("Direction")
-                            activity?.navigateToGoogleMap(datavalues.GoogleLocation)
+                                getUserIntrestOnclick("Direction")
+                                activity?.navigateToGoogleMap(datavalues.GoogleLocation)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
                             }
@@ -615,6 +643,7 @@ class HomeFragment : Fragment(), MenuProvider {
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
+            getDataIntent(item, position)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.category_item -> {
@@ -624,6 +653,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.isloading.set(true)
                         service = item.category_id
                         homeViewModel.nodata.set(false)
+                        arguments?.putString("ISFROM", "")
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,

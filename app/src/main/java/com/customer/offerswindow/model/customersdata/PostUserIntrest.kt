@@ -6,7 +6,7 @@ import com.customer.offerswindow.utils.getDateTime
 
 data class PostUserIntrest(
     val ShowRoomId : String,
-    val BranchId : String,
+    val LocationId : String,
     val OfferId : String,
     val OptionSelected : String,
     val CustomerId : String,

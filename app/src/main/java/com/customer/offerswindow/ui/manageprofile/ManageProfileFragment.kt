@@ -254,7 +254,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
 
                 is NetworkResult.Error -> {
                     binding.llLoader.visibility = View.GONE
-                    response.message?.let { ShowFullToast(response.data?.Message ?: "") }
+                    response.message?.let { ShowFullToast(response?.message ?: "") }
                 }
 
                 is NetworkResult.Loading -> {

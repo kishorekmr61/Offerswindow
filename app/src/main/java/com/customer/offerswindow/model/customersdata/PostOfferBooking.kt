@@ -7,7 +7,7 @@ import com.customer.offerswindow.utils.getDateTime
 data class PostOfferBooking(
     var BookingDate: String = "",
     var ShowRoomId: String = "",
-    var BranchId: String = "",
+    var LocationId: String = "",
     var ServiceId: String = "",
     var OfferId: String = "",
     var CustomerId: String = AppPreference.read(Constants.USERUID,"") ?:"",

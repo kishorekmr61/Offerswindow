@@ -103,23 +103,23 @@ class CustomerProfileViewModel @Inject constructor(
 
     }
 
-    fun updateProfileData(profileUpdateRequest: ProfileUpdateRequest) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.submitProfileUpdateData(profileUpdateRequest).collect { values ->
-                    customersdatapost.postValue(values)
-                    values.data?.Data?.ID?.let {
-                        app.showToast("success")
-                    } ?: kotlin.run {
-//                        app.showToast("failure")
-                    }
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-
-    }
+//    fun updateProfileData(profileUpdateRequest: ProfileUpdateRequest) {
+//        viewModelScope.launch {
+//            if (networkHelper.isNetworkConnected()) {
+//                repository.submitProfileUpdateData(profileUpdateRequest).collect { values ->
+//                    customersdatapost.postValue(values)
+//                    values.data?.Data?.ID?.let {
+//                        app.showToast("success")
+//                    } ?: kotlin.run {
+////                        app.showToast("failure")
+//                    }
+//                }
+//            } else {
+//                app.showToast("No Internet")
+//            }
+//        }
+//
+//    }
 
     fun bindCustomerData(customerData: CustomerData) {
 //        registrationData.value?.CustomerId = customerData.Cust_UID

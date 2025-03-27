@@ -246,7 +246,7 @@
                 <!--android:onClick="@{() -> viewModel.registerUser()}"-->
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/update_btn"
+                    android:id="@+id/save_btn"
                     style="@style/AG_regular"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"

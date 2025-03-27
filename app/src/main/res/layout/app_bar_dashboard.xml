@@ -58,6 +58,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start|center"
                             android:layout_weight="1"
+                            android:textSize="@dimen/_12ssp"
                             android:includeFontPadding="false"
                             android:maxWidth="@dimen/_180sdp"
                             android:singleLine="true"

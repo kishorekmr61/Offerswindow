@@ -19,8 +19,8 @@ data class BookingData(
     val Rec_ID: String,
     val Showroom_UID: String,
     val Showroom_Name: String,
-    val Branch_UID: String,
-    val Branch_Address: String,
+    val Location_UID: String,
+    val Location_Desc: String,
     val Service_UID: String,
     val Service_Desc: String,
     val Offer_UID: String,
@@ -38,6 +38,13 @@ data class BookingData(
     val Effective_Date: String,
     val End_Date: String,
     val Offer_Status: String,
+    val Google_Location: String,
+    val Contact_No_1: String,
+    val Contact_No_2: String,
+    val Open_Time: String,
+    val End_Time: String,
+    var isfavourite: Boolean = false,
+    val Offer_Image_Details: ArrayList<Images>? = arrayListOf(),
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.row_mybookings

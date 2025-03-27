@@ -34,18 +34,28 @@ data class DashboardData(
     @Expose @SerializedName("Slot_Applicable") val Slot_Applicable: String,
     @Expose @SerializedName("Booking_Applicable") val Booking_Applicable: String,
     @Expose @SerializedName("Website_link") val Website_link: String,
+    var Wishlist_Status: String = "",
     var isfavourite: Boolean = false,
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<Images>? = arrayListOf(),
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.homelist_item
     }
+
+    fun getWishlistData(): Boolean {
+        if (Wishlist_Status == "Yes") {
+            isfavourite= true
+            return isfavourite
+        } else {
+            return isfavourite
+        }
+    }
 }
 
 data class Images(
     @Expose @SerializedName("Rec_ID") val imageid: String,
     @Expose @SerializedName("Image_Path") val imagepath: String,
-): WidgetViewModel {
+) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.homeroww_img
     }

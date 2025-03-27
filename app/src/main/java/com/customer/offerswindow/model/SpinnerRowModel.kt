@@ -9,7 +9,9 @@ data class SpinnerRowModel(
     var showColoursView: Boolean,
     var tintColorCode: String ? = "0",
     var mstCode: String = "",
-    var custImagePath :String =""
+    var custImagePath :String ="",
+    var Redemption_Points: String = "",
+    var Redemption_Value: String = "",
 ) : WidgetViewModel {
     override fun layoutId(): Int {
 //        if (showColoursView)

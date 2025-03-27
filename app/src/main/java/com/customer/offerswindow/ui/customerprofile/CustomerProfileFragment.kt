@@ -147,7 +147,7 @@ class CustomerProfileFragment : Fragment() {
         binding.etDob.setOnClickListener {
             openCalendar(binding.etDob)
         }
-        binding.updateBtn.setOnClickListener {
+        binding.saveBtn.setOnClickListener {
             if (isEmailValid(binding.etEmail.text.toString() ?: "")) {
                 var photoFile: File? = null
                 binding.profilepic.tag?.let {
@@ -339,7 +339,7 @@ class CustomerProfileFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    showLongToast(response.data?.Message ?: "")
+                    showLongToast(response?.message ?: "")
                     viewModel.isloading.set(false)
                 }
 
