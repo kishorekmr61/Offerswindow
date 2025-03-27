@@ -160,7 +160,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         ) {
 
                         }
-                    })
+                    }, headerlbl = "Location")
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -193,7 +193,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         ) {
 
                         }
-                    })
+                    },headerlbl = "City")
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -231,7 +231,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         ) {
 
                         }
-                    })
+                    },headerlbl = "Showrooms")
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -375,7 +375,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     cityList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
                     response.data?.let { resposnes ->
                         categoryList.add(
-                            CategoriesData(
+                            CategoriesData(false,
                                 "https://cdn.pixabay.com/photo/2021/10/11/23/49/app-6702045_1280.png",
                                 "All",
                                 "0",
@@ -386,7 +386,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         response?.data?.data?.forEach {
                             if (it.MstType == "Service") {
                                 categoryList.add(
-                                    CategoriesData(
+                                    CategoriesData(false,
                                         it.Image_path, it.MstDesc, it.MstCode
                                     )
                                 )

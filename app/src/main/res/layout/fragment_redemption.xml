@@ -94,30 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/walletcard"
                 app:passwordToggleEnabled="true" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_valueofpoints"
-                style="@style/AG_regular"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginStart="@dimen/_25sdp"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:layout_marginEnd="@dimen/_25sdp"
-                android:background="@drawable/et_style"
-                android:hint="@string/value_of_redemption"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLines="1"
-                android:clickable="false"
-                android:focusable="false"
-                android:paddingStart="@dimen/_8sdp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/color_272727"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_noofpoints"
-                app:passwordToggleEnabled="true" />
+
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_transactiontype"
@@ -142,7 +119,33 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_valueofpoints"
+                app:layout_constraintTop_toBottomOf="@+id/et_noofpoints"
+                app:passwordToggleEnabled="true" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_valueofpoints"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:background="@drawable/et_style"
+                android:hint="@string/value_of_redemption"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLines="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_transactiontype"
                 app:passwordToggleEnabled="true" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -165,7 +168,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_transactiontype"
+                app:layout_constraintTop_toBottomOf="@+id/et_valueofpoints"
                 app:passwordToggleEnabled="true" />
 
             <com.google.android.material.textfield.TextInputEditText

@@ -14,6 +14,7 @@ import com.customer.offerswindow.databinding.FragmentRedemptionBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.model.wallet.RedemptionRequestBody
+import com.customer.offerswindow.utils.VISIBLE
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.setWhiteToolBar
@@ -88,6 +89,7 @@ class RedemptionFragment : Fragment() {
                                 binding.etTransactiontype.setText(titleData.title)
                                 transactionid = titleData.mstCode
                                 binding.etValueofpoints.setText(convertPointsValue(titleData).toString())
+                                binding.etValueofpoints.VISIBLE()
                             }
                         }
 

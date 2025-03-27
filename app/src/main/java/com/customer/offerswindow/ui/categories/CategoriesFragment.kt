@@ -58,7 +58,7 @@ class CategoriesFragment : Fragment() {
                         response?.data?.data?.forEach {
                             if (it.MstType == "Service") {
                                 categoryList.add(
-                                    CategoriesData(
+                                    CategoriesData( true,
                                         it.Image_path,
                                         it.MstDesc,
                                         it.MstCode

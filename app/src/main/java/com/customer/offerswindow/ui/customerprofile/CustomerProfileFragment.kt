@@ -368,7 +368,7 @@ class CustomerProfileFragment : Fragment() {
                         ) {
 
                         }
-                    })
+                    }, headerlbl = "Country")
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -394,7 +394,7 @@ class CustomerProfileFragment : Fragment() {
                         ) {
 
                         }
-                    })
+                    }, headerlbl = "City")
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }

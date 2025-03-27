@@ -14,14 +14,12 @@ import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.SpinnerresultsLyoutBinding
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.utils.convertDate
 import com.customer.offerswindow.utils.notifyDataChange
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.viewTouchable
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -40,6 +38,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
         var selectedvalue: String = ""
         var spinnerdataFlag = ""
         var outPutFormat = ""
+        var mheaderlbl = ""
         var showcalender = false
         var searchspinnervalues: ArrayList<SpinnerRowModel> = arrayListOf()
         var colorList: ArrayList<Pair<String, String>> = arrayListOf()
@@ -52,13 +51,14 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
             iscalendar: Boolean = false,
             listner: OnItemSelectedListner,
             bundle: Bundle = Bundle(),
-            outPutFormat: String = ""
+            outPutFormat: String = "", headerlbl: String = ""
         ): SpinnerBottomSheet {
             spinnerdataFlag = flag
             selectedvalue = mselectedvalue
             searchspinnervalues = spinerlistdata
             inItemSelectedListner = listner
             showcalender = iscalendar
+            mheaderlbl = headerlbl
             mBundle = bundle
             Companion.outPutFormat = outPutFormat
             return SpinnerBottomSheet()
@@ -69,6 +69,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
             mselectedvalue: String,
             spinerlistdata: ArrayList<SpinnerRowModel>,
             iscalendar: Boolean = false,
+            headerlbl: String = "",
             colorData: ArrayList<Pair<String, String>>,
             listner: OnItemSelectedListner,
         ): SpinnerBottomSheet {
@@ -77,6 +78,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
             searchspinnervalues = spinerlistdata
             inItemSelectedListner = listner
             showcalender = iscalendar
+            mheaderlbl = headerlbl
             colorList = colorData
             return SpinnerBottomSheet()
         }
@@ -103,7 +105,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
     override fun onStart() {
         super.onStart()
         mBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
+        binding.header.text = mheaderlbl
         binding.recyclerView.visibility = View.VISIBLE
         binding.calenderlyout.calendarView.visibility = View.GONE
         getSpinnerItems(spinnerdataFlag, selectedvalue, searchspinnervalues)

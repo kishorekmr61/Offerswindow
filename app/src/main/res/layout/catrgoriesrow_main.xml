@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="item"
+            type="com.customer.offerswindow.model.dashboard.CategoriesData" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/category_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:onClick="@{onItemClick}">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/img_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{item.isselected ? @drawable/bottomstroke_bg : @drawable/categories_style}"
+            android:padding="@dimen/_1sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/categories_style">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img"
+                image="@{item.category_img}"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_3sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/catregories_icon" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/catregory_desc"
+            style="@style/Ag_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:maxLines="2"
+            android:padding="@dimen/_4sdp"
+            android:text="@{item.category_desc}"
+            android:textColor="@{item.isselected ? @color/primary : @color/black}"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_card"
+            tools:text="@string/categoriename" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

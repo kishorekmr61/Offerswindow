@@ -8,8 +8,6 @@
         <import type="android.view.View" />
 
 
-
-
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -22,6 +20,14 @@
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_14ssp"
+            style="@style/Ag_h3"
+            tools:text="@string/app_name" />
 
         <View
             android:id="@+id/viewPullbar"
@@ -59,7 +65,7 @@
             android:layout_width="@dimen/_1sdp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_8sdp"
-            android:background="@color/color_A7AEB1"  />
+            android:background="@color/color_A7AEB1" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -70,9 +76,9 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:gravity="end"
             android:text="Done"
-            android:visibility="gone"
             android:textColor="@color/primary"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone" />
 
 
         <androidx.recyclerview.widget.RecyclerView
