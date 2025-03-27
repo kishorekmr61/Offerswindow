@@ -41,8 +41,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img"
                 image="@{item.category_img}"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="@dimen/_65sdp"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:padding="@dimen/_3sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
