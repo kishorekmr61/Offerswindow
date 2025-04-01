@@ -211,6 +211,7 @@ class CustomerProfileFragment : Fragment() {
             )
 
             formDataJson.addProperty("locationId", mcustomerData.Location_Code)
+            formDataJson.addProperty("Cust_Image_URL", mcustomerData.Cust_Image_URL)
             formDataJson.addProperty("countryId", mcustomerData.Country)
             formDataJson.addProperty("pinCode", binding.etPincode.text.toString())
             formDataJson.addProperty(
