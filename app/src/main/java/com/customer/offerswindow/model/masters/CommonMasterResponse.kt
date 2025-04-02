@@ -1,6 +1,8 @@
 package com.customer.offerswindow.model.masters
 
+import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -39,6 +41,8 @@ data class CommonDataResponse(
     var Gold_22c: String = "0",
     @SerializedName("Gold_18c")
     var Gold_18c: String = "0",
+    @SerializedName("City_Code")
+    var City_Code: String = "",
     @SerializedName("Silver")
     var Silver: String = "0",
     @SerializedName("Diamonds")
@@ -47,7 +51,10 @@ data class CommonDataResponse(
     var CreatedBy: String = "",
     @SerializedName("Created_Date")
     var CreatedDate: String = "",
-) {
+) : WidgetViewModel {
+    override fun layoutId(): Int {
+        return R.layout.otherservices_row
+    }
 
     fun convertDate(): String {
         return com.customer.offerswindow.utils.convertDate(

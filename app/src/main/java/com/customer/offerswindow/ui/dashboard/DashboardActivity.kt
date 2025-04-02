@@ -122,7 +122,7 @@ class DashboardActivity : AppCompatActivity() {
 
                 R.id.menu_mybookings -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        navController.navigate(R.id.nav_mybookings)
+                        navController.navigate(R.id.nav_bookings)
                     } else {
                         var bundle = Bundle()
                         navController.navigate(R.id.nav_sign_in, bundle)
@@ -140,11 +140,9 @@ class DashboardActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_offers -> {
+                R.id.menu_info -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        var bundle = Bundle()
-                        bundle.putString("ISFROM", "OFFERBOOKING")
-                        navController.navigate(R.id.nav_mybookings, bundle)
+                        navController.navigate(R.id.nav_webview)
                     } else {
                         var bundle = Bundle()
                         navController.navigate(R.id.nav_sign_in, bundle)

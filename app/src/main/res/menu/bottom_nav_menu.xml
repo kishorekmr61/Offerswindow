@@ -17,8 +17,8 @@
         android:icon="@drawable/ic_bag"
         android:title="" />
     <item
-        android:id="@+id/menu_offers"
-        android:icon="@drawable/offers"
+        android:id="@+id/menu_info"
+        android:icon="@drawable/ic_info"
         android:title="" />
 
 

@@ -54,4 +54,7 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
     suspend fun postUserIntrest(
        postUserIntrest: PostUserIntrest
     ) = masterApiService.submitUserIntrest(postUserIntrest)
+
+    suspend fun getFilterData() =
+        masterApiService.getFilterData()
 }

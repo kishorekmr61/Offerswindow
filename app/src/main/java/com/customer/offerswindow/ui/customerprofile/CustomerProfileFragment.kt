@@ -102,7 +102,7 @@ class CustomerProfileFragment : Fragment() {
                 Constants.YYY_HIFUN_MM_DD
             )
             mcustomerData.Location_Code = locationid
-            mcustomerData.Pin_No = binding.etPincode.text.toString()
+            mcustomerData.Pin_Code = binding.etPincode.text.toString()
             triggerCameraOrGallerySelection(binding.profilepic)
         }
     }
@@ -214,10 +214,7 @@ class CustomerProfileFragment : Fragment() {
             formDataJson.addProperty("Cust_Image_URL", mcustomerData.Cust_Image_URL)
             formDataJson.addProperty("countryId", mcustomerData.Country)
             formDataJson.addProperty("pinCode", binding.etPincode.text.toString())
-            formDataJson.addProperty(
-                "CustomerPhotoFilePath",
-                if (!isPhotoAvailable) CustomerImageUrl else ""
-            )
+
             formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")
             formDataJson.addProperty("createdDateTime", CreatedDateTime)
             formDataJson.addProperty("updatedBy", AppPreference.read(Constants.USERUID, "") ?: "0")
@@ -301,7 +298,7 @@ class CustomerProfileFragment : Fragment() {
                                 )
                             }
 
-                            if (it.MstType == "Location") {
+                            if (it.MstType == "City") {
                                 cityList.add(
                                     SpinnerRowModel(
                                         it.MstDesc,

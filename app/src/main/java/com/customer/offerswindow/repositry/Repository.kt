@@ -138,4 +138,10 @@ class Repository @Inject constructor(
             emit(safeApiCall { loginHelperImpl.postUserIntrest(profileUpdateRequest) })
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun getFilterData(): Flow<NetworkResult<CommonMasterResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.getFilterData() })
+        }.flowOn(Dispatchers.IO)
+    }
 }

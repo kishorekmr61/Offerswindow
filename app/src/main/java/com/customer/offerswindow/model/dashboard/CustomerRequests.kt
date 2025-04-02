@@ -18,6 +18,7 @@ data class ProfileUpdateRequest(
     var PinCode: String = "",
     var Country: String = "",
     var Country_Desc: String = "",
+    var Pin_No: String = "",
     var CustomerPhotoFilePath: String = "",
     @Transient
     var CustomerImageUrl: String = "",

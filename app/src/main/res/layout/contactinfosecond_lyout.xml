@@ -21,94 +21,207 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/contactinfo_bg"
+            android:orientation="horizontal"
+            android:padding="@dimen/_4sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/share_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/et_style"
-                android:drawableStart="@drawable/share"
-                android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="Share"
-                android:textColor="@color/black"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/share_lyout"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
                 android:onClick="@{onItemClick}"
-                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toStartOf="@id/call_lyout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/call_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/et_style"
-                android:drawableStart="@drawable/call"
-                android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="Call"
-                android:onClick="@{onItemClick}"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toEndOf="@id/share_text"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/share_text"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
+                    android:scaleType="center"
+                    android:src="@drawable/share"
+                    android:tint="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/directions_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/et_style"
-                android:drawableStart="@drawable/ic_location"
-                android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_6sdp"
-                android:text="Location"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:onClick="@{onItemClick}"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@+id/call_txt"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/website_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/et_style"
-                android:drawableStart="@drawable/website"
-                android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="Website"
-                android:onClick="@{onItemClick}"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toEndOf="@id/directions_txt"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:text="Share"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintEnd_toEndOf="@+id/share_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/share_text" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/whatsapp_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/et_style"
-                android:drawableStart="@drawable/whatsapp"
-                android:drawablePadding="@dimen/_5sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="what's App"
-                android:textColor="@color/black"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/call_lyout"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
                 android:onClick="@{onItemClick}"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/website_txt"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toStartOf="@id/website_lyout"
+                app:layout_constraintStart_toStartOf="@id/share_lyout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/call_img"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
+                    android:scaleType="center"
+                    android:src="@drawable/call"
+                    android:tint="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:text="Call"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/call_img" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/direction_lyout"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:onClick="@{onItemClick}"
+                app:layout_constraintEnd_toStartOf="@id/website_lyout"
+                app:layout_constraintStart_toEndOf="@id/call_lyout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/directions_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_location"
+                    android:tint="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:text="Directions"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/directions_img" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/website_lyout"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:onClick="@{onItemClick}"
+                app:layout_constraintEnd_toStartOf="@id/whatsapp_lyout"
+                app:layout_constraintStart_toEndOf="@id/direction_lyout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/website_img"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
+                    android:scaleType="center"
+                    android:src="@drawable/website"
+                    android:tint="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:text="Website"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/website_img" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/whatsapp_lyout"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:onClick="@{onItemClick}"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/website_lyout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/whatsapp_img"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
+                    android:scaleType="center"
+                    android:src="@drawable/whatsapp"
+                    android:tint="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AG_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="what's App"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/whatsapp_img" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

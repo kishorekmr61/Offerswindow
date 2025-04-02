@@ -236,7 +236,7 @@
                         android:maxLines="1"
                         android:inputType="number"
                         android:maxLength="6"
-                        android:text="@={item.pin_No}"
+                        android:text="@={item.Pin_Code}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 

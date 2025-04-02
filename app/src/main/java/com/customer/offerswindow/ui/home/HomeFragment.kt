@@ -66,6 +66,8 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Timer
+import java.util.TimerTask
 
 
 @AndroidEntryPoint
@@ -82,7 +84,9 @@ class HomeFragment : Fragment(), MenuProvider {
     var showroomList = arrayListOf<SpinnerRowModel>()
     var mlocationList = arrayListOf<String>()
     var offertypeList = arrayListOf<FilterData>()
+    var otherServicesList = arrayListOf<CommonDataResponse>()
     var dashboaroffersList = arrayListOf<DashboardData>()
+    private lateinit var imageViewPagerAdapter: SliderAdapter
     var locationId = "0"
     var showroomid = "0"
     var service = "0"
@@ -124,6 +128,7 @@ class HomeFragment : Fragment(), MenuProvider {
         )
 //        }
         homeViewModel.getMstData()
+        homeViewModel.getFilterData()
         binding.goldratesLyout.updatelblTxt.setOnClickListener {
             homeViewModel.isloading.set(true)
             homeViewModel.getGoldRatesData()
@@ -132,8 +137,10 @@ class HomeFragment : Fragment(), MenuProvider {
             findNavController().navigate(R.id.nav_categories)
         }
         binding.locationTxt.setOnClickListener {
+            locationList = homeViewModel.getLocationWIthFromCities(iCityId)
             activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.STATUS,
                     binding.locationTxt.text.toString(), locationList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -160,13 +167,15 @@ class HomeFragment : Fragment(), MenuProvider {
                         ) {
 
                         }
-                    }, headerlbl = "Location")
+                    }, headerlbl = "Location"
+                )
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
         binding.cityTxt.setOnClickListener {
             activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.STATUS,
                     binding.cityTxt.text.toString(), cityList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -193,13 +202,15 @@ class HomeFragment : Fragment(), MenuProvider {
                         ) {
 
                         }
-                    },headerlbl = "City")
+                    }, headerlbl = "City"
+                )
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
         binding.searchedit.setOnClickListener {
             activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.STATUS,
                     binding.searchedit.text.toString(), showroomList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -231,7 +242,8 @@ class HomeFragment : Fragment(), MenuProvider {
                         ) {
 
                         }
-                    },headerlbl = "Showrooms")
+                    }, headerlbl = "Showrooms"
+                )
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -367,42 +379,27 @@ class HomeFragment : Fragment(), MenuProvider {
             when (response) {
                 is NetworkResult.Success -> {
                     categoryList.clear()
-                    offertypeList.clear()
-                    locationList.clear()
                     categoryList.clear()
                     cityList.clear()
-                    locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
                     cityList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
                     response.data?.let { resposnes ->
                         categoryList.add(
-                            CategoriesData(false,
+                            CategoriesData(
+                                false,
                                 "https://cdn.pixabay.com/photo/2021/10/11/23/49/app-6702045_1280.png",
                                 "All",
                                 "0",
                                 if (arguments?.getString("ISFROM") == "CATEGORY") false else true
                             )
                         )
-                        offertypeList.add(FilterData("All", "0", true))
                         response?.data?.data?.forEach {
                             if (it.MstType == "Service") {
                                 categoryList.add(
-                                    CategoriesData(false,
+                                    CategoriesData(
+                                        false,
                                         it.Image_path, it.MstDesc, it.MstCode
                                     )
                                 )
-                            }
-                            if (it.MstType == "Location") {
-                                locationList.add(
-                                    SpinnerRowModel(
-                                        it.MstDesc,
-                                        false,
-                                        false,
-                                        mstCode = it.MstCode
-                                    )
-                                )
-                            }
-                            if (it.MstType == "Offer_Type") {
-                                offertypeList.add(FilterData(it.MstDesc, it.MstCode))
                             }
                             if (it.MstType == "City") {
                                 cityList.add(
@@ -414,6 +411,15 @@ class HomeFragment : Fragment(), MenuProvider {
                                     )
                                 )
                             }
+                            if (it.MstType == "Web_Link_Offers") {
+                                otherServicesList.add(
+                                    CommonDataResponse(
+                                        MstCode = it.MstCode,
+                                        MstDesc = it.MstDesc,
+                                        Image_path = it.Image_path
+                                    )
+                                )
+                            }
                         }
                     }
                     binding.cityTxt.text = cityList.firstOrNull()?.title
@@ -421,6 +427,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     wishlistViewModel.getWishListData(
                         AppPreference.read(Constants.USERUID, "") ?: "", "0"
                     )
+//                    OtherServices()
                 }
 
                 is NetworkResult.Error -> {
@@ -429,6 +436,24 @@ class HomeFragment : Fragment(), MenuProvider {
 
                 else -> {}
             }
+        }
+        homeViewModel.filterResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    offertypeList.clear()
+                    offertypeList.add(FilterData("All", "0", true))
+                    response.data?.data?.forEach {
+                        offertypeList.add(FilterData(it.MstDesc, it.MstCode))
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+
         }
         homeViewModel.goldratesdata.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -455,6 +480,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         binding.goldratesTxt.text =
                             gold24.plus(gold22).plus(gold18).plus(silver).plus(diamond)
                         binding.goldratesTxt.isSelected = true
+                        binding.goldratesTxt.visibility = View.VISIBLE
                     }
                 }
 
@@ -554,7 +580,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                     datavalues.isfavourite = true
                                 }
                                 val postdata = PostWishlist(
-                                    datavalues.offertypecode,
+                                    datavalues.id,
                                     AppPreference.read(Constants.USERUID, "") ?: ""
                                 )
                                 homeViewModel.isloading.set(true)
@@ -571,7 +597,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.share_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Share")
+                                getUserIntrestOnclick("Share", datavalues)
                                 activity?.openNativeSharingDialog(datavalues.Website_link)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -580,7 +606,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.call_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Call")
+                                getUserIntrestOnclick("Call",datavalues)
                                 activity?.openDialPad(datavalues.contact)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -589,7 +615,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.directions_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Direction")
+                                getUserIntrestOnclick("Direction", datavalues)
                                 activity?.navigateToGoogleMap(datavalues.GoogleLocation)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -598,7 +624,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.website_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Website")
+                                getUserIntrestOnclick("Website", datavalues)
                                 openURL(Uri.parse(datavalues?.Website_link ?: ""))
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -607,7 +633,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.whatsapp_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Whatsapp")
+                                getUserIntrestOnclick("Whatsapp", datavalues)
                                 activity?.openWhatsAppConversation(datavalues.contact, "")
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -635,8 +661,8 @@ class HomeFragment : Fragment(), MenuProvider {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = concatAdapter
         }
-
-
+        binding.categoriesTxt.visibility = View.VISIBLE
+        binding.viewallTxt.visibility = View.VISIBLE
         var previouscat = 0
         categoryList.firstOrNull()?.isselected = true
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
@@ -693,6 +719,35 @@ class HomeFragment : Fragment(), MenuProvider {
                 binder.executePendingBindings()
             })
         }
+    }
+
+    private fun OtherServices() {
+        binding.viewpager.setUpViewPagerAdapter(
+            otherServicesList
+        ) { item: CommonDataResponse, binder: ViewDataBinding, position: Int ->
+            binder.setVariable(BR.item, item)
+            binder.setVariable(BR.onItemClick, View.OnClickListener {
+
+            })
+        }
+        binding.viewpager.setAdapter(binding.viewpager.adapter);
+        TabLayoutMediator(
+            binding.tablyout,
+            binding.viewpager
+        ) { tab, position ->
+        }.attach()
+
+
+        imageViewPagerAdapter = SliderAdapter(arrayListOf())
+        binding.viewpager.adapter = imageViewPagerAdapter
+        binding.viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        val currentPageIndex = 1
+        binding.viewpager.currentItem = currentPageIndex
+        if (!otherServicesList.isNullOrEmpty() && otherServicesList.size > 1) {
+            runTimer(binding.viewpager, arrayListOf())
+        }
+        TabLayoutMediator(binding.tablyout, binding.viewpager) { tab, position ->
+        }.attach()
     }
 
     private fun navigateOfferDeatils(datavalues: DashboardData) {
@@ -807,14 +862,26 @@ class HomeFragment : Fragment(), MenuProvider {
         })
     }
 
-    fun getUserIntrestOnclick(flag: String) {
+    fun getUserIntrestOnclick(flag: String, datavalues: DashboardData) {
         var posuserintrest = PostUserIntrest(
-            showroomid,
-            locationId,
-            "",
+            datavalues.showroomid,
+            datavalues.locationid,
+            datavalues.id,
             flag,
             AppPreference.read(Constants.USERUID, "") ?: ""
         )
         homeViewModel.getUserInterest(posuserintrest)
+    }
+
+    private fun runTimer(viewPager2: ViewPager2, images: java.util.ArrayList<String>) {
+        val timerTask: TimerTask = object : TimerTask() {
+            override fun run() {
+                viewPager2.post {
+                    viewPager2.currentItem = (viewPager2.currentItem + 1) % images.size
+                }
+            }
+        }
+        var timer = Timer()
+        timer?.schedule(timerTask, 30000, 3000)
     }
 }

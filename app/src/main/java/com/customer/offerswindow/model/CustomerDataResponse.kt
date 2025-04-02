@@ -22,5 +22,6 @@ data class CustomerData(
     var Cust_Image_URL: String ? = "",
     var DOB: String = "",
     var Pin_No: String = "",
+    var Pin_Code: String = "",
 
     )

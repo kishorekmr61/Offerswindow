@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -14,7 +13,7 @@
 
         <variable
             name="item"
-            type="com.customer.offerswindow.model.dashboard.DashboardData" />
+            type="com.customer.offerswindow.model.masters.CommonDataResponse" />
 
 
     </data>
@@ -56,18 +55,6 @@
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/favourite"
-                android:layout_width="@dimen/_25ssp"
-                android:layout_height="@dimen/_25ssp"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:onClick="@{onItemClick}"
-                android:src="@{item.getWishlistData() ? @drawable/select :  @drawable/unselect}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/select" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/showroomname_txt"
@@ -78,7 +65,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:maxLines="3"
                 android:onClick="@{onItemClick}"
-                android:text="@{item.showroomname}"
+                android:text="@{item.mstDesc}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -86,31 +73,6 @@
                 tools:text="@string/categoriename" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title_txt"
-            style="@style/Ag_h4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:maxLines="3"
-            android:onClick="@{onItemClick}"
-            android:text="@{item.Offer_Type_Desc}"
-            android:textColor="@color/color_272727"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_card"
-            tools:text="@string/categoriename" />
-
-
-        <include
-            android:id="@+id/contactinfo"
-            layout="@layout/contactinfo_lyout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_card"
-            bind:onItemClick="@{onItemClick}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

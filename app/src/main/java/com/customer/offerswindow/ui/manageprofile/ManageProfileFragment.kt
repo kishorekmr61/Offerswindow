@@ -207,11 +207,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
 
             formDataJson.addProperty("locationId", customerData?.Location_Code)
             formDataJson.addProperty("countryId", customerData?.Country)
-            formDataJson.addProperty("pinCode",customerData?.Pin_No)
-            formDataJson.addProperty(
-                "CustomerPhotoFilePath",
-                if (!isPhotoAvailable) CustomerImageUrl else ""
-            )
+            formDataJson.addProperty("pinCode",customerData?.Pin_Code)
             formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")
             formDataJson.addProperty("createdDateTime", CreatedDateTime)
             formDataJson.addProperty("updatedBy", AppPreference.read(Constants.USERUID, "") ?: "0")

@@ -115,4 +115,9 @@ interface MasterApiService {
         @Part part: MultipartBody.Part?,
         @Part("FormData") formDataBody: RequestBody
     ): Response<ProfileUpdateResponse>
+
+
+    @GET("ShowRoomOffers/GetOfferTypeDetails")
+    suspend fun getFilterData(
+    ): Response<CommonMasterResponse>
 }

@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:maxLines="3"
-                android:text="@{`Offer Validaity :`+ ViewModel.offerDeatils.convertEndDate()}"
+                android:text="@{`Offer Validaity : `+ ViewModel.offerDeatils.convertEndDate()}"
                 android:textColor="@color/color_272727"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -10,6 +10,7 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
+import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
@@ -47,6 +48,7 @@ class HomeViewModel @Inject constructor(
     var username = ObservableField<String>()
     var nodata = ObservableField(false)
     var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
+    var filterResponse = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
     fun getDashboardData(
         lShowroomId: String,
@@ -62,7 +64,7 @@ class HomeViewModel @Inject constructor(
                 dashBoardRepositry.getDashBoardOffersListPagenation(
                     lShowroomId,
                     lLocationId,
-                    lServiceId,iCategoryId,iCityId,lCustomerId,
+                    lServiceId, iCategoryId, iCityId, lCustomerId,
                     defaultindex
                 )
                     .collect { values ->
@@ -125,6 +127,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
     fun postWishListItem(postWishlist: PostWishlist) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
@@ -154,8 +157,20 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getFilterData() {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getFilterData().collect { values ->
+                    filterResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
 
-    fun getUserInterest(postUserIntrest: PostUserIntrest){
+
+    fun getUserInterest(postUserIntrest: PostUserIntrest) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 repository.postUserIntrest(postUserIntrest).collect { values ->
@@ -165,5 +180,23 @@ class HomeViewModel @Inject constructor(
                 app.showToast("No Internet")
             }
         }
+    }
+
+    fun getLocationWIthFromCities(citycode: String): ArrayList<SpinnerRowModel> {
+        var locationList = arrayListOf<SpinnerRowModel>()
+        locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
+        masterdata.value?.data?.data?.forEach {
+            if (it.MstType == "Location" && it.City_Code == citycode) {
+                locationList.add(
+                    SpinnerRowModel(
+                        it.MstDesc,
+                        false,
+                        false,
+                        mstCode = it.MstCode
+                    )
+                )
+            }
+        }
+        return locationList
     }
 }

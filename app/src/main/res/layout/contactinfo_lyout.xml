@@ -17,7 +17,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_4sdp">
 
@@ -30,8 +30,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/share_img"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/drawable_bg"
                 android:padding="@dimen/_4sdp"
@@ -43,8 +43,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/call_img"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/drawable_bg"
                 android:padding="@dimen/_4sdp"
@@ -56,8 +56,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/directions_img"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_4sdp"
                 android:background="@drawable/drawable_bg"
                 android:padding="@dimen/_5sdp"
@@ -69,8 +69,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/website_img"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:onClick="@{onItemClick}"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/drawable_bg"
@@ -82,8 +82,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/whatsapp_img"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:onClick="@{onItemClick}"
                 android:background="@drawable/drawable_bg"

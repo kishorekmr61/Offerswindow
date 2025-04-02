@@ -18,6 +18,7 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentDetailViewBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
+import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.offerdetails.OfferDeatils
 import com.customer.offerswindow.model.offerdetails.OfferImages
@@ -88,7 +89,7 @@ class DetailViewFragment : Fragment() {
                             viewModel.isloading.set(true)
                             viewModel.getDetailData(item.id)
                         }
-                }
+                    }
                 })
             }
             TabLayoutMediator(tabview, viewpager) { tab, position ->
@@ -218,7 +219,7 @@ class DetailViewFragment : Fragment() {
                             dataobj?.isfavourite = true
                         }
                         var postdata = PostWishlist(
-                            dataobj?.offertypecode ?: "",
+                            dataobj?.id ?: "",
                             AppPreference.read(Constants.USERUID, "") ?: ""
                         )
                         viewModel.isloading.set(true)
@@ -262,23 +263,28 @@ class DetailViewFragment : Fragment() {
                     viewModel.postOfferBooking(postofferbookings)
                 }
 
-                R.id.share_text -> {
+                R.id.share_lyout -> {
+                    getUserIntrestOnclick("Share", dataobj)
                     activity?.openNativeSharingDialog(dataobj?.Website_link ?: "")
                 }
 
-                R.id.call_txt -> {
+                R.id.call_lyout -> {
+                    getUserIntrestOnclick("Call", dataobj)
                     activity?.openDialPad(dataobj?.contact ?: "")
                 }
 
-                R.id.directions_txt -> {
+                R.id.direction_lyout -> {
+                    getUserIntrestOnclick("Direction", dataobj)
                     activity?.navigateToGoogleMap(dataobj?.GoogleLocation ?: "")
                 }
 
-                R.id.website_txt -> {
+                R.id.website_lyout -> {
+                    getUserIntrestOnclick("Website", dataobj)
                     openURL(Uri.parse(dataobj?.Website_link ?: ""))
                 }
 
-                R.id.whatsapp_txt -> {
+                R.id.whatsapp_lyout -> {
+                    getUserIntrestOnclick("Whatsapp", dataobj)
                     activity?.openWhatsAppConversation(dataobj?.contact ?: "", "")
                 }
             }
@@ -297,5 +303,16 @@ class DetailViewFragment : Fragment() {
             imagesList?.add(OfferImages("0", ""))
         }
         return imagesList
+    }
+
+    fun getUserIntrestOnclick(flag: String, datavalues: OfferDeatils?) {
+        var posuserintrest = PostUserIntrest(
+            datavalues?.showroomid ?: "",
+            datavalues?.locationid ?: "",
+            datavalues?.id ?: "",
+            flag,
+            AppPreference.read(Constants.USERUID, "") ?: ""
+        )
+        homeViewModel.getUserInterest(posuserintrest)
     }
 }

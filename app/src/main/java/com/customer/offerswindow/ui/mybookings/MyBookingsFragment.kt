@@ -36,7 +36,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyBookingsFragment : Fragment() {
+class MyBookingsFragment(flag: String) : Fragment() {
 
     private var _binding: FragmentMyBookingsBinding? = null
     private val binding get() = _binding!!
@@ -44,6 +44,7 @@ class MyBookingsFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     var bookingData = ArrayList<BookingData>()
+    var mflag =flag
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +65,7 @@ class MyBookingsFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = false
         viewModel.isloading.set(true)
-        if (arguments?.getString("ISFROM", "") == "OFFERBOOKING") {
+        if (arguments?.getString("ISFROM", "") == "OFFERBOOKING" || mflag == "Offers") {
             activity?.setWhiteToolBar("My Offer Bookings", true)
             viewModel.getOffersData(AppPreference.read(Constants.USERUID, "") ?: "")
         } else {

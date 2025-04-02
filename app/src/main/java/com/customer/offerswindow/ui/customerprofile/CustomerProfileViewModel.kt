@@ -132,9 +132,10 @@ class CustomerProfileViewModel @Inject constructor(
         registrationData.value?.EmailID = customerData.Email_ID
         registrationData.value?.Location_Desc = customerData.Location_Desc
         registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL ?:""
-        registrationData.value?.PinCode = customerData.Pin_No
+        registrationData.value?.PinCode = customerData.Pin_Code
         registrationData.value?.Country = customerData.Country
         registrationData.value?.Country_Desc = customerData.Country_Desc
+        registrationData.value?.Pin_No = customerData.Pin_No
 //        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL
 
 

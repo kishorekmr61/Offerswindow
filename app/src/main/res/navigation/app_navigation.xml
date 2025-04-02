@@ -60,6 +60,12 @@
         android:label=""
         tools:layout="@layout/fragment_my_bookings" />
 
+    <fragment
+        android:id="@+id/nav_bookings"
+        android:name="com.customer.offerswindow.ui.mybookings.bookings.BookingsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_bookings" />
+
 
     <fragment
         android:id="@+id/nav_customerProfileFragment"
@@ -100,4 +106,8 @@
         android:id="@+id/nav_redeemption"
         android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.redemption.RedemptionFragment"
         android:label="Redemption" />
+    <fragment
+        android:id="@+id/nav_webview"
+        android:name="com.customer.offerswindow.ui.webpages.WebFragment"
+        android:label="Webview" />
 </navigation>
