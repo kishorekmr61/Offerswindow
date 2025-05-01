@@ -231,14 +231,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/round_primary_bg"
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
-                    android:singleLine="true"
                     android:padding="@dimen/_4sdp"
-                    android:visibility="gone"
-                    android:background="@drawable/round_primary_bg"
+                    android:singleLine="true"
                     android:textColor="@color/car_yellow_500"
                     android:textSize="@dimen/_12ssp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/searchlayout"
@@ -333,20 +333,29 @@
                     app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_offerslist"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/otherservice_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_45sdp"
+                    android:background="@drawable/ic_curve"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_offerslist" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/othersvc_txt"
-                    style="@style/Ag_h3"
-                    android:layout_width="match_parent"
+                    style="@style/Ag_body"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/round_primary_bg"
                     android:gravity="center"
-                    android:text="Other Services for you"
-                    android:textColor="@color/black"
-                    android:visibility="gone"
-                    android:textSize="@dimen/_14ssp"
+                    android:padding="@dimen/_4sdp"
+                    android:text="@string/other_services_for_you"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rv_offerslist" />
@@ -355,34 +364,45 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/otherservice_lyout"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_150sdp"
+                    android:layout_height="@dimen/_160sdp"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/othersvc_txt">
 
+
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/_145sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/offer_text"
+                        style="@style/AG_bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:padding="@dimen/_3sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewpager"
+                        app:layout_constraintStart_toStartOf="parent" />
+
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tablyout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:backgroundTint="@color/transparent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:background="@drawable/gradient_bg"
+                        app:layout_constraintBottom_toBottomOf="@id/offer_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:tabBackground="@drawable/tab_selector"
                         app:tabGravity="center"
                         app:tabIndicatorHeight="0dp" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -395,7 +415,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@id/nodataavaliable"
+                    app:layout_constraintTop_toBottomOf="@id/otherservice_lyout"
                     bind:item="@{pricerates}" />
 
 

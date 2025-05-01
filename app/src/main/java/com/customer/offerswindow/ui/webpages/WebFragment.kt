@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentWebBinding
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.ui.webpages.WebViewModel
@@ -35,12 +36,12 @@ class WebFragment : Fragment() {
         binding = FragmentWebBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = cmsWebViewModel
-        if (arguments?.getString(Constants.ISFROM) == Constants.PROGRAM) {
-            cmsWebViewModel.url.set("meet.google.com/ytn-asyp-met"/*arguments?.getString(Constants.WEB_URL)?: "www.google.com"*/)
+        if (arguments?.getString(Constants.ISFROM) == Constants.Web_Link_Offers) {
+            cmsWebViewModel.url.set(arguments?.getString(Constants.WEB_URL)?: "www.google.com")
             init()
         } else {
             setUpObserver()
-            cmsWebViewModel.url.set("https://offerswindow.com/about.html")
+            cmsWebViewModel.url.set(AppPreference.read(Constants.ABOUTUS,""))
             init()
 //            cmsWebViewModel.setLoadingState(true)
 //            cmsWebViewModel.getMstData()

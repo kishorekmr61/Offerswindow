@@ -33,6 +33,7 @@ data class CommonDataResponse(
     var Rec_ID: String = "",
     var Redemption_Points: String = "",
     var Redemption_Value: String = "",
+    var URL: String = "",
     @SerializedName("Price_Date")
     var Price_Date: String = "",
     @SerializedName("Gold_24c")

@@ -46,6 +46,7 @@ class CategoriesFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = true
         viewModel.isloading.set(true)
+        categoryList.clear()
         viewModel.getMstData()
     }
 
@@ -65,7 +66,6 @@ class CategoriesFragment : Fragment() {
                                     )
                                 )
                             }
-
                         }
                         setRecyclervewData()
                     }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.BuildConfig
@@ -19,6 +20,7 @@ import com.customer.offerswindow.databinding.FragmentSignInBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
+import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.dashboard.DashboardActivity
 import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.ShowFullToast
@@ -32,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
     private val signInViewModel: SignInViewModel by viewModels()
+    private val vm: DashBoardViewModel by activityViewModels()
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
     var emailUsertype = ""
@@ -48,6 +51,7 @@ class SignInFragment : Fragment() {
         binding.vm = signInViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         setDoneListener()
+        vm.isvisble.value = false
         activity?.hideOnBoardingToolbar()
         handleHardWareBackClick {
             handleBackClick()
@@ -62,25 +66,25 @@ class SignInFragment : Fragment() {
         signInViewModel.isloading.set(true)
 
         signInViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", "welcome"
+            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", AppPreference.read(Constants.LOGINPASSWORD,"1234")?:"1234"
         )
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
-        binding.etMobilenumber.doAfterTextChanged {
-            if (it?.length!! >= 9) {
-                binding.verify.visibility = View.VISIBLE
-            } else {
-                binding.verify.visibility = View.INVISIBLE
-            }
-        }
-        binding.verify.setOnClickListener {
-            if (validateUserLogin()) {
-                signInViewModel.isloading.set(true)
-                signInViewModel.getOTP(
-                    binding.etMobilenumber.text.toString()
-                )
-            }
-        }
+//        binding.etMobilenumber.doAfterTextChanged {
+//            if (it?.length!! >= 9) {
+//                binding.verify.visibility = View.VISIBLE
+//            } else {
+//                binding.verify.visibility = View.INVISIBLE
+//            }
+//        }
+//        binding.verify.setOnClickListener {
+//            if (validateUserLogin()) {
+//                signInViewModel.isloading.set(true)
+//                signInViewModel.getOTP(
+//                    binding.etMobilenumber.text.toString()
+//                )
+//            }
+//        }
 
         binding.privacyTxt.setOnClickListener {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl)))
@@ -101,7 +105,7 @@ class SignInFragment : Fragment() {
             } else {
                 signInViewModel.isloading.set(true)
                 signInViewModel.validateOTP(
-                    binding.etMobilenumber.text.toString(), binding.etPswrd.text.toString()
+                    binding.etMobilenumber.text.toString(), "",binding.etPswrd.text.toString()
                 )
             }
         }
@@ -209,6 +213,7 @@ class SignInFragment : Fragment() {
                                 Constants.LOGINUSERNAME,
                                 binding.etMobilenumber.text.toString()
                             )
+                            AppPreference.write(Constants.LOGINPASSWORD, binding.etPswrd.text.toString())?:"1234"
                             AppPreference.write(Constants.ISLOGGEDIN, true)
                             if (arguments?.getBoolean("isFrom") == true) {
                                 findNavController().popBackStack()

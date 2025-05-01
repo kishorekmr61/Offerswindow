@@ -2,6 +2,7 @@ package com.customer.offerswindow.data.constant
 
 object Constants {
 
+
     const val INTERVAL = 10000L
     const val FASTEST_INTERVAL = 500L
     const val NAME = "NAME"
@@ -57,7 +58,7 @@ object Constants {
     const val CONFIRMEDTICKETS = "CONFIRMEDTICKETS"
     const val EVENTINFO = "EVENTINFO"
     const val CHALLENGEINFO = "CHALLENGEINFO"
-    const val PROGRAM = "PROGRAM"
+    const val Web_Link_Offers = "Web_Link_Offers"
     const val PROGRAMID = "PROGRAMID"
     const val PLANCODE = "PLANCODE"
     const val CHATCUSTOMERS = "CHATCUSTOMERS"
@@ -80,6 +81,8 @@ object Constants {
     const val SKIPSIGNIN = "SKIPSIGNIN"
 
     const val EMPTY_HYPEN = "---"
+    const val ABOUTUS = "ABOUTUS"
+    const val PIN = "PIN"
 }
 
 //tml-pv:location/faq/helpandsupport/contact-us/services/recommended-faqs

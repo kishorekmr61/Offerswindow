@@ -55,10 +55,10 @@ class Repository @Inject constructor(
     }
 
     suspend fun validateOTP(
-        mobilenumber: String, otp: String
+        mobilenumber: String, otp: String,sPinNo:String
     ): Flow<NetworkResult<OTPResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.validateOTP(mobilenumber, otp) })
+            emit(safeApiCall { loginHelperImpl.validateOTP(mobilenumber, otp,sPinNo) })
         }.flowOn(Dispatchers.IO)
     }
 
