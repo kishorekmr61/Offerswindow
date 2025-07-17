@@ -19,8 +19,8 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
     suspend fun getOtp(mobilenumber: String) =
         masterApiService.verifyPhone(mobilenumber)
 
-    suspend fun validateOTP(mobilenumber: String, otp: String) =
-        masterApiService.validateOTP(mobilenumber, otp)
+    suspend fun validateOTP(mobilenumber: String, otp: String,sPinNo : String) =
+        masterApiService.validateOTP(mobilenumber, otp,sPinNo)
 
     suspend fun postSignUp(postSignUp: PostSignUp) =
         masterApiService.signupUser(postSignUp)

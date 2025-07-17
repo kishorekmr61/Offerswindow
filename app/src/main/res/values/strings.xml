@@ -17,9 +17,10 @@
     <string name="something_went_wrong">Oops! Something went wrong.</string>
     <string name="okay">Okay</string>
     <string name="resend">We have sent Otp to your number ? <b> Resend</b></string>
+    <string name="forgetpassword">Forgot password</string>
     <string name="create_account">Don\'t have an Account ?<b>  Create One</b></string>
     <string name="email_address_or_phone_number">Phone Number</string>
-    <string name="enter_otp">Enter OTP</string>
+    <string name="enter_otp">Enter 4 digit Pin</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="verify">Verify</string>
@@ -73,5 +74,6 @@
     <string name="delivery_address">Delivery Address</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="delete_account">Delete Account</string>
+    <string name="other_services_for_you">Other Services for you</string>
     <string name="onesignappid">7b903495-1dc6-49f9-a3bf-19309adf3281</string>
 </resources>

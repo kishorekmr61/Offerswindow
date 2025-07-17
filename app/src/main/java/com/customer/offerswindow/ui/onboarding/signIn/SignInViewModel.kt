@@ -67,10 +67,10 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun validateOTP(mobileno: String, OTP: String) {
+    fun validateOTP(mobileno: String, OTP: String,sPinNo :String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.validateOTP(mobileno, OTP).collect { values ->
+                repository.validateOTP(mobileno, OTP,sPinNo).collect { values ->
                     OtpResponse.postValue(values)
 //                    response.value?.data = values.data
                 }

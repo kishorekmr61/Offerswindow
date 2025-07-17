@@ -24,6 +24,7 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.BuildConfig
 import com.customer.offerswindow.R
@@ -124,7 +125,8 @@ class HomeFragment : Fragment(), MenuProvider {
         vm.isvisble.value = true
 //        if (isAccessTokenExpired()) {
         homeViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", "welcome"
+            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383",
+            AppPreference.read(Constants.LOGINPASSWORD, "1234") ?: "1234"
         )
 //        }
         homeViewModel.getMstData()
@@ -188,7 +190,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 iCityId = titleData.mstCode
                                 homeViewModel.nodata.set(false)
                                 homeViewModel.getDashboardData(
-                                    titleData.mstCode,
+                                    showroomid,
                                     locationId,
                                     service, categoryid, iCityId,
                                     AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
@@ -349,6 +351,9 @@ class HomeFragment : Fragment(), MenuProvider {
                             Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No ?: ""
                         )
                         AppPreference.write(
+                            Constants.PIN, resposnes?.Data?.firstOrNull()?.Pin_No ?: ""
+                        )
+                        AppPreference.write(
                             Constants.PROFILEPIC,
                             resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
                         )
@@ -380,7 +385,9 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     categoryList.clear()
                     categoryList.clear()
+                    otherServicesList.clear()
                     cityList.clear()
+                    var imagelist = ArrayList<String>()
                     cityList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
                     response.data?.let { resposnes ->
                         categoryList.add(
@@ -416,18 +423,30 @@ class HomeFragment : Fragment(), MenuProvider {
                                     CommonDataResponse(
                                         MstCode = it.MstCode,
                                         MstDesc = it.MstDesc,
-                                        Image_path = it.Image_path
+                                        Image_path = it.Image_path, URL = it.URL
                                     )
                                 )
+                            }
+                            if (it.MstType == "About_us_url") {
+                                AppPreference.write(Constants.ABOUTUS, it.MstDesc)
                             }
                         }
                     }
                     binding.cityTxt.text = cityList.firstOrNull()?.title
                     binding.locationTxt.text = cityList.firstOrNull()?.title
+
+
                     wishlistViewModel.getWishListData(
                         AppPreference.read(Constants.USERUID, "") ?: "", "0"
                     )
-//                    OtherServices()
+                    if (!otherServicesList.isNullOrEmpty()) {
+                        binding.otherserviceLyout.visibility = View.VISIBLE
+                        binding.othersvcTxt.visibility = View.VISIBLE
+                        loadViewPager(otherServicesList)
+                    } else {
+                        binding.otherserviceLyout.visibility = View.GONE
+                        binding.othersvcTxt.visibility = View.GONE
+                    }
                 }
 
                 is NetworkResult.Error -> {
@@ -606,7 +625,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.call_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Call",datavalues)
+                                getUserIntrestOnclick("Call", datavalues)
                                 activity?.openDialPad(datavalues.contact)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
@@ -721,33 +740,47 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun OtherServices() {
-        binding.viewpager.setUpViewPagerAdapter(
-            otherServicesList
-        ) { item: CommonDataResponse, binder: ViewDataBinding, position: Int ->
-            binder.setVariable(BR.item, item)
-            binder.setVariable(BR.onItemClick, View.OnClickListener {
 
-            })
+    private fun loadViewPager(commonDataResponse: ArrayList<CommonDataResponse>) {
+        var images = ArrayList<String>()
+        commonDataResponse.forEach {
+            images.add(it.Image_path)
         }
-        binding.viewpager.setAdapter(binding.viewpager.adapter);
-        TabLayoutMediator(
-            binding.tablyout,
-            binding.viewpager
-        ) { tab, position ->
-        }.attach()
-
-
-        imageViewPagerAdapter = SliderAdapter(arrayListOf())
-        binding.viewpager.adapter = imageViewPagerAdapter
-        binding.viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        val currentPageIndex = 1
-        binding.viewpager.currentItem = currentPageIndex
-        if (!otherServicesList.isNullOrEmpty() && otherServicesList.size > 1) {
-            runTimer(binding.viewpager, arrayListOf())
+        if (!images.isNullOrEmpty()) {
+            imageViewPagerAdapter = SliderAdapter(images)
+            binding.viewpager.adapter = imageViewPagerAdapter
+            val currentPageIndex = 1
+            binding.viewpager.currentItem = currentPageIndex
+            if (!images.isNullOrEmpty() && images.size > 1) {
+                runTimer(binding.viewpager, images)
+            }
+            TabLayoutMediator(binding.tablyout, binding.viewpager) { tab, position ->
+            }.attach()
+            binding.viewpager.setOnClickListener {
+                var bundle = Bundle()
+                bundle.putString(
+                    Constants.WEB_URL,
+                    otherServicesList[binding.viewpager.currentItem].URL
+                )
+                findNavController().navigate(R.id.nav_webview, bundle)
+            }
+            binding.offerText.text = otherServicesList.firstOrNull()?.MstDesc
+            binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.offerText.text = otherServicesList[position].MstDesc
+                }
+            });
+            binding.offerText.setOnClickListener {
+                var bundle = Bundle()
+                bundle.putString(
+                    Constants.WEB_URL,
+                    otherServicesList[binding.viewpager.currentItem].URL
+                )
+                findNavController().navigate(R.id.nav_webview, bundle)
+            }
         }
-        TabLayoutMediator(binding.tablyout, binding.viewpager) { tab, position ->
-        }.attach()
+
     }
 
     private fun navigateOfferDeatils(datavalues: DashboardData) {
@@ -874,14 +907,19 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     private fun runTimer(viewPager2: ViewPager2, images: java.util.ArrayList<String>) {
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                viewPager2.post {
-                    viewPager2.currentItem = (viewPager2.currentItem + 1) % images.size
+        try {
+            val timerTask: TimerTask = object : TimerTask() {
+                override fun run() {
+                    viewPager2.post {
+                        viewPager2.currentItem %= images.size
+                    }
                 }
             }
+            var timer = Timer()
+            timer?.schedule(timerTask, 30000, 3000)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
-        var timer = Timer()
-        timer?.schedule(timerTask, 30000, 3000)
     }
+
 }

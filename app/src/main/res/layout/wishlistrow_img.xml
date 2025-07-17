@@ -9,6 +9,10 @@
             name="item"
             type="com.customer.offerswindow.model.dashboard.SelectedOffers" />
 
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
 
     </data>
 
@@ -21,6 +25,7 @@
             imgNormalUrl="@{item.imagepath}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="@{onItemClick}"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

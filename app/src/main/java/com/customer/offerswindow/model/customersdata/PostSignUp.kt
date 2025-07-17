@@ -5,5 +5,6 @@ data class PostSignUp(
     var emailID: String,
     var customerName: String,
     var lastName: String,
-    var otpValue: String
+    var otpValue: String,
+    var PinNo: String,
 )

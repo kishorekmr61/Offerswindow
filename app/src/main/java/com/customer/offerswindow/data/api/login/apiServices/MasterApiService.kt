@@ -65,6 +65,7 @@ interface MasterApiService {
     suspend fun validateOTP(
         @Query("sCustomerMobileNo") mobileno: String,
         @Query("sOTP") sOTP: String,
+        @Query("sPinNo") sPinNo: String,
     ): Response<OTPResponse>
 
     @POST("UserManagement/PostSignUp")

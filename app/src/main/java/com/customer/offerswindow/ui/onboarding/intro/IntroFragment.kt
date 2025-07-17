@@ -112,7 +112,7 @@ class IntroFragment : Fragment() {
             }
         })
         AppPreference.write(Constants.LOGINUSERNAME, "8374810383")
-        AppPreference.write(Constants.LOGINPASSWORD, "Welcome")
+        AppPreference.write(Constants.LOGINPASSWORD, "1234")
         _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
         _binding?.slideVP?.let { binding.dotsIndicator.attachTo(it) }
         binding.finishTxt.setOnClickListener {

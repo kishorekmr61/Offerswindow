@@ -21,6 +21,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bg_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_curve"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,6 +174,7 @@
                                 android:text="@string/verify"
                                 android:textColor="@color/color_0044FF"
                                 android:textSize="@dimen/_12ssp"
+                                android:visibility="gone"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -181,6 +191,7 @@
                             android:text="@string/_email_number_resend"
                             android:textColor="@color/color_272727"
                             android:textSize="@dimen/_8ssp"
+                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/mobileno_lyout" />
 
@@ -203,6 +214,43 @@
                             app:layout_constraintTop_toBottomOf="@+id/resendotp_lbl" />
 
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_pin"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_34sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Set 4 digit Pin"
+                            android:imeOptions="actionDone"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:singleLine="true"
+                            android:textColorHint="@color/color_272727"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/resendotp_lbl" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/confirmet_pin"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_34sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Confirm  4 digit Pin"
+                            android:imeOptions="actionDone"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:singleLine="true"
+                            android:textColorHint="@color/color_272727"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_pin" />
+
+
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/signup_btn"
                             style="@style/Ag_h3"
@@ -215,7 +263,7 @@
                             app:cornerRadius="@dimen/_8sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_Otp" />
+                            app:layout_constraintTop_toBottomOf="@+id/confirmet_pin" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -248,5 +296,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bttmimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_curve"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:rotation="180"
+            app:layout_constraintStart_toStartOf="parent"  />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

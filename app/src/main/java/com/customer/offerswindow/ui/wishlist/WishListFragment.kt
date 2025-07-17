@@ -100,7 +100,7 @@ class WishListFragment : Fragment() {
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
                     when (it.id) {
-                        R.id.title_txt -> {
+                        R.id.img -> {
                             var bundle = Bundle()
                             bundle.putString("OfferID", witem.Offer_ID)
                             findNavController().navigate(R.id.nav_offer_details, bundle)

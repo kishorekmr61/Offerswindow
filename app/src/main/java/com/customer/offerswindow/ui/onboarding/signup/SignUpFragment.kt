@@ -43,24 +43,24 @@ class SignUpFragment : Fragment() {
         binding.signinLbl.setOnClickListener {
             findNavController().navigate(R.id.nav_sign_in)
         }
-        binding.etMobilenumber.doAfterTextChanged {
-            if (it?.length!! >= 9) {
-                binding.verify.visibility = View.VISIBLE
-            } else {
-                binding.verify.visibility = View.INVISIBLE
-            }
-        }
+//        binding.etMobilenumber.doAfterTextChanged {
+//            if (it?.length!! >= 9) {
+//                binding.verify.visibility = View.VISIBLE
+//            } else {
+//                binding.verify.visibility = View.INVISIBLE
+//            }
+//        }
 
-        binding.verify.setOnClickListener {
-            if (binding.etMobilenumber.text.isNullOrEmpty()) {
-                binding.etMobilenumber.error = "Please enter valid mobile number"
-            } else {
-                signInViewModel.isloading.set(true)
-                signInViewModel.getOTP(
-                    binding.etMobilenumber.text.toString()
-                )
-            }
-        }
+//        binding.verify.setOnClickListener {
+//            if (binding.etMobilenumber.text.isNullOrEmpty()) {
+//                binding.etMobilenumber.error = "Please enter valid mobile number"
+//            } else {
+//                signInViewModel.isloading.set(true)
+//                signInViewModel.getOTP(
+//                    binding.etMobilenumber.text.toString()
+//                )
+//            }
+//        }
         binding.resendotpLbl.setOnClickListener {
             if (binding.etMobilenumber.text.toString().isEmpty()) {
                 showToast("Please enter Mobile number")
@@ -102,10 +102,27 @@ class SignUpFragment : Fragment() {
             showToast("Please enter valid Email")
             return false
         }
-        if (!isValidMail(binding.etOtp.text.toString())) {
-            showToast("Please enter OTP")
+        if (binding.etPin.text.toString().isEmpty()) {
+            showToast("Please set 4 digit pin")
             return false
         }
+        if (binding.etPin.text.toString().length >= 4) {
+            showToast("Please set valid PIN")
+            return false
+        }
+        if (binding.confirmetPin.text.toString().isEmpty()) {
+            showToast("confirm 4 digit pin")
+            return false
+        }
+        if (binding.confirmetPin.text.toString().length >= 4) {
+            showToast("confirm 4 digit pin")
+            return false
+        }
+        if (binding.confirmetPin.text.toString() == binding.etPin.text.toString()) {
+            showToast("set pin and Confirm is not matching  please check and try")
+            return false
+        }
+
         return true
     }
 
@@ -153,7 +170,8 @@ class SignUpFragment : Fragment() {
             binding.etEmail.text.toString(),
             binding.etName.text.toString(),
             binding.etLastname.text.toString(),
-            binding.etOtp.text.toString()
+            binding.etOtp.text.toString(),
+            binding.etPin.text.toString()
         )
         signUpViewModel.postSignUp(
             postSignup
