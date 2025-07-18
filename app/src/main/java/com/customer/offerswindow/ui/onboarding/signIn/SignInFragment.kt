@@ -1,13 +1,11 @@
 package com.customer.offerswindow.ui.onboarding.signIn
 
-import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -29,6 +27,7 @@ import com.customer.offerswindow.utils.hideOnBoardingToolbar
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
+import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -67,7 +66,8 @@ class SignInFragment : Fragment() {
         signInViewModel.isloading.set(true)
 
         signInViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383", AppPreference.read(Constants.LOGINPASSWORD,"1234")?:"1234"
+            AppPreference.read(Constants.LOGINUSERNAME, "8374810383") ?: "8374810383",
+            AppPreference.read(Constants.LOGINPASSWORD, "1234") ?: "1234"
         )
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
@@ -106,7 +106,7 @@ class SignInFragment : Fragment() {
             } else {
                 signInViewModel.isloading.set(true)
                 signInViewModel.validateOTP(
-                    binding.etMobilenumber.text.toString(), "",binding.etPswrd.text.toString()
+                    binding.etMobilenumber.text.toString(), "", binding.etPswrd.text.toString()
                 )
             }
         }
@@ -168,6 +168,7 @@ class SignInFragment : Fragment() {
                                 showToast("OTP sent Successfully")
                                 binding.etPswrd.requestFocus()
                                 binding.etPswrd.isSelected = true
+
                             } else {
                                 ShowFullToast(response.data?.Message ?: "")
                             }
@@ -217,7 +218,10 @@ class SignInFragment : Fragment() {
                                 Constants.LOGINUSERNAME,
                                 binding.etMobilenumber.text.toString()
                             )
-                            AppPreference.write(Constants.LOGINPASSWORD, binding.etPswrd.text.toString())?:"1234"
+                            AppPreference.write(
+                                Constants.LOGINPASSWORD,
+                                binding.etPswrd.text.toString()
+                            ) ?: "1234"
                             AppPreference.write(Constants.ISLOGGEDIN, true)
                             if (arguments?.getBoolean("isFrom") == true) {
                                 findNavController().popBackStack()

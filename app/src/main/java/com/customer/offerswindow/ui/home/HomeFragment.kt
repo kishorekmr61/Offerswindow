@@ -64,6 +64,7 @@ import com.customer.offerswindow.utils.showToast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
+import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -346,6 +347,13 @@ class HomeFragment : Fragment(), MenuProvider {
                         )
                         AppPreference.write(
                             Constants.USERUID, resposnes?.Data?.firstOrNull()?.Cust_UID ?: "0"
+                        )
+                        OneSignal.setEmail(
+                            resposnes.Data?.firstOrNull()?.Email_ID ?: ""
+                        );
+                        OneSignal.sendTag(
+                            "CustomerUID",
+                            resposnes.Data?.firstOrNull()?.Cust_UID ?: ""
                         )
                         AppPreference.write(
                             Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No ?: ""

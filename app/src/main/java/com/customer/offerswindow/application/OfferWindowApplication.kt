@@ -2,16 +2,10 @@ package com.customer.offerswindow.application
 
 import android.app.Application
 import androidx.multidex.MultiDex
-import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
-import com.google.firebase.Firebase
-import com.google.firebase.crashlytics.crashlytics
+import com.customer.offerswindow.pushNotification.OneSignalNotificationOpenHandler
 import com.onesignal.OneSignal
-import com.onesignal.debug.LogLevel
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @HiltAndroidApp
 class OfferWindowApplication : Application() {
@@ -24,17 +18,18 @@ class OfferWindowApplication : Application() {
         // Required initialization logic here!
         AppPreference.init(applicationContext)
         context = this
-        OneSignal.Debug.logLevel = LogLevel.VERBOSE
-        OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
-
-//        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
         // OneSignal Initialization
-        CoroutineScope(Dispatchers.IO).launch {
-            OneSignal.Notifications.requestPermission(false)
-        }
+        OneSignal.initWithContext(this)
+        OneSignal.setNotificationOpenedHandler(OneSignalNotificationOpenHandler(this))
+        // OneSignal Initialization
+        OneSignal.initWithContext(this)
+        OneSignal.setAppId(ONESIGNAL_APP_ID)
+        MultiDex.install(this)
+        OneSignal.promptForPushNotifications();
 //        OneSignal.setNotificationOpenedHandler(OneSignalNotificationOpenHandler(this))
         // OneSignal Initialization
-         MultiDex.install(this)
+        MultiDex.install(this)
 //        OneSignal.promptForPushNotifications();
 //        val crashlytics = Firebase.crashlytics
 //        crashlytics.setCustomKeys {
