@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class OfferWindowApplication : Application() {
     // Called when the application is starting, before any other application objects have been created.
     // Overriding this method is totally optional!
-    val ONESIGNAL_APP_ID = "214d0495-ab1c-4296-bed1-16fd7c5e42c9"
+    val ONESIGNAL_APP_ID = "7b903495-1dc6-49f9-a3bf-19309adf3281"
 
     override fun onCreate() {
         super.onCreate()

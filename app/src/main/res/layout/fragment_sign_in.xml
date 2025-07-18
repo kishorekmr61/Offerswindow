@@ -215,14 +215,14 @@
                         style="@style/AG_altbold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_16sdp"
                         android:checked="true"
                         android:text="@string/privacy_policy"
                         android:textColor="@color/color_2B83ED"
                         android:textSize="@dimen/_12ssp"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/forgotpswrd" />
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@id/siginup_txt"
+                        app:layout_constraintEnd_toEndOf="@id/siginup_txt" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -98,8 +98,8 @@
 
 
         <meta-data
-            android:name="com.onesignal.NotificationServiceExtension"
-            android:value="com.health.bms.pushNotification.NotificationServiceExtension" />
+            android:name="com.customer.offerswindow.pushNotification.NotificationServiceExtension"
+            android:value="No" />
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />

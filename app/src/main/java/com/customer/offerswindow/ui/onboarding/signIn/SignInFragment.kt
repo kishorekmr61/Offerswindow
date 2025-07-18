@@ -26,6 +26,7 @@ import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
+import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -118,6 +119,9 @@ class SignInFragment : Fragment() {
                     binding.etMobilenumber.text.toString()
                 )
             }
+        }
+        binding.privacyTxt.setOnClickListener {
+            openURL(Uri.parse("https://sites.google.com/vedyahvasttechnologies.com/offerswindow/home"))
         }
         PermissionsUtil.askPermissions(requireActivity())
         return root
