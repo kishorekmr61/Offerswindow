@@ -29,8 +29,12 @@ object NetworkModule {
                           authAuthenticator: AuthAuthenticator
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-            else HttpLoggingInterceptor.Level.NONE
+
+
+                setLevel(HttpLoggingInterceptor.Level.BODY);
+
+//                level = /*if (BuildConfig.DEBUG) */HttpLoggingInterceptor.Level.BODY
+//            else HttpLoggingInterceptor.Level.NONE
         }
         return OkHttpClient.Builder()
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)

@@ -21,8 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 #Glide proguard
-
--ignorewarnings
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep class * extends com.bumptech.glide.module.AppGlideModule {
  <init>(...);
@@ -43,6 +41,7 @@
 }
 
 # Ktor
+-keep class io.ktor.** { *; }
 -keep class kotlinx.coroutines.** { *; }
 -dontwarn kotlinx.atomicfu.**
 -dontwarn io.netty.**
@@ -50,7 +49,7 @@
 -dontwarn org.slf4j.**
 
 # ALL Ktor request body class should be under model directory if it is outside of model package then it will not work for outside  model package we need to annotation with @Serilizable
--keep class com.customer.bms.model.** { *; }
+-keep class com.customer.offerswindow.model.** { *; }
 
 # Keep class names of Hilt injected ViewModels since their name are used as a multibinding map key.
 -keepnames @dagger.hilt.android.lifecycle.HiltViewModel class * extends androidx.lifecycle.ViewModel
@@ -60,24 +59,12 @@
 -keep class com.airbnb.lottie.** {*;}
 
 
-# Proguard rules specific to the Cast demo app.
-
-# Accessed via menu.xml EXOPLAYER
--keep class androidx.mediarouter.app.MediaRouteActionProvider {
-  *;
-}
 
 
 #ROOM Database
 -dontwarn android.arch.util.paging.CountedDataSource
 -dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource
 
-# MP Android Chart
--keep class com.github.mikephil.charting.** { *; }
--dontwarn io.realm.**
-
-#PDF Viewer
--keep class com.shockwave.**
 
 #NAvigation
 -keep class * extends androidx.fragment.app.Fragment{}
@@ -108,30 +95,76 @@
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
--keep class packagename.*
+-dontwarn javax.servlet.ServletContainerInitializer
 
--dontwarn retrofit2.**
--dontwarn org.codehaus.mojo.**
--keep class retrofit2.** { *; }
--keepattributes Signature
--keepattributes Exceptions
+# Retrofit
+ -keepattributes Signature
 -keepattributes *Annotation*
--keepattributes RuntimeVisibleAnnotations
--keepattributes RuntimeInvisibleAnnotations
--keepattributes RuntimeVisibleParameterAnnotations
--keepattributes RuntimeInvisibleParameterAnnotations
--keepclasseswithmembers class * {
-    @retrofit2.http.* <methods>;
-}
--keepclassmembers,allowobfuscation class * {
-  @com.google.gson.annotations.SerializedName <fields>;
-}
--keepattributes EnclosingMethod
+-dontwarn okhttp3.**
+-dontwarn retrofit2.**
+-dontwarn okio.**
 
--keepclasseswithmembers class * {
-    @retrofit2.* <methods>;
-}
+# Keep generic signature of Call, Response (R8 full mode strips signatures from non-kept items).
+ -keep,allowobfuscation,allowshrinking interface retrofit2.Call
+ -keep,allowobfuscation,allowshrinking class retrofit2.Response
 
--keepclasseswithmembers interface * {
-    @retrofit2.* <methods>;
-}
+ # With R8 full mode generic signatures are stripped for classes that are not
+ # kept. Suspend functions are wrapped in continuations where the type argument
+ # is used.
+ -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+ -keepclassmembers class * {
+     *;
+ }
+
+ -keep class com.customer.offerswindow.model.model.** { *; }
+
+
+ -dontwarn sun.misc.**
+ -keep class com.google.gson.** { *; }
+ -keep class * implements com.google.gson.TypeAdapterFactory
+ -keep class * implements com.google.gson.JsonSerializer
+ -keep class * implements com.google.gson.JsonDeserializer
+-keep class com.customer.offerswindow.*
+
+
+-dontwarn groovy.lang.Binding
+-dontwarn groovy.lang.Closure
+-dontwarn groovy.lang.GroovyShell
+-dontwarn groovy.lang.MetaProperty
+-dontwarn groovy.lang.Reference
+-dontwarn groovy.lang.Script
+-dontwarn javax.servlet.ServletContext
+-dontwarn javax.servlet.ServletContextEvent
+-dontwarn javax.servlet.ServletContextListener
+-dontwarn org.codehaus.groovy.control.CompilerConfiguration
+-dontwarn org.codehaus.groovy.control.customizers.ImportCustomizer
+-dontwarn org.codehaus.groovy.runtime.ArrayUtil
+-dontwarn org.codehaus.groovy.runtime.GStringImpl
+-dontwarn org.codehaus.groovy.runtime.GeneratedClosure
+-dontwarn org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation
+-dontwarn org.codehaus.groovy.runtime.typehandling.ShortTypeHandling
+-dontwarn org.codehaus.groovy.runtime.wrappers.Wrapper
+-dontwarn org.codehaus.groovy.transform.ImmutableASTTransformation
+
+
+-dontwarn groovy.lang.GroovyObject
+-dontwarn groovy.lang.MetaClass
+-dontwarn java.lang.management.ManagementFactory
+-dontwarn java.lang.management.RuntimeMXBean
+-dontwarn javax.management.InstanceNotFoundException
+-dontwarn javax.management.MBeanRegistrationException
+-dontwarn javax.management.MBeanServer
+-dontwarn javax.management.MalformedObjectNameException
+-dontwarn javax.management.ObjectInstance
+-dontwarn javax.management.ObjectName
+-dontwarn javax.naming.Context
+-dontwarn javax.naming.InitialContext
+-dontwarn javax.naming.NamingException
+-dontwarn org.codehaus.groovy.reflection.ClassInfo
+-dontwarn org.codehaus.groovy.runtime.BytecodeInterface8
+-dontwarn org.codehaus.groovy.runtime.ScriptBytecodeAdapter
+-dontwarn org.codehaus.groovy.runtime.callsite.CallSite
+-dontwarn org.codehaus.groovy.runtime.callsite.CallSiteArray
+-dontwarn org.codehaus.janino.ClassBodyEvaluator
+-dontwarn org.codehaus.janino.ScriptEvaluator
+-dontwarn sun.reflect.Reflection

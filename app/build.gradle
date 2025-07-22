@@ -42,6 +42,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            debuggable false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             firebaseCrashlytics {
