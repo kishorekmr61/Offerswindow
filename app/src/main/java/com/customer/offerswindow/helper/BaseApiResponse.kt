@@ -42,7 +42,7 @@ abstract class BaseApiResponse {
                             val datamesage = mError.Message
                             error(datamesage)
                         } catch (e: IOException) {
-                            error("Oops! Something went wrong.")
+                            error(e.message?: "testing response")
                         }
                     }
 
@@ -51,9 +51,9 @@ abstract class BaseApiResponse {
                     }
                 }
             }
-            return error("Oops! Something went wrong.")
+            return error(response.message())
         } catch (e: Exception) {
-            return error("Oops! Something went wrong.")
+            return error(e.message.toString())
         }
     }
 
