@@ -713,19 +713,25 @@ class HomeFragment : Fragment(), MenuProvider {
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.category_item -> {
-                        categoryList[previouscat].isselected = false
-                        previouscat = position
-                        categoryList[previouscat].isselected = true
-                        homeViewModel.isloading.set(true)
-                        service = item.category_id
-                        homeViewModel.nodata.set(false)
-                        arguments?.putString("ISFROM", "")
-                        homeViewModel.getDashboardData(
-                            showroomid,
-                            locationId,
-                            service, categoryid, iCityId,
-                            AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                        )
+                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                            categoryList[previouscat].isselected = false
+                            previouscat = position
+                            categoryList[previouscat].isselected = true
+                            homeViewModel.isloading.set(true)
+                            service = item.category_id
+                            homeViewModel.nodata.set(false)
+                            arguments?.putString("ISFROM", "")
+                            homeViewModel.getDashboardData(
+                                showroomid,
+                                locationId,
+                                service, categoryid, iCityId,
+                                AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+                            )
+                        } else {
+
+                            findNavController().navigate(R.id.nav_sign_in)
+                        }
+
                         binding.rvCategories.notifyDataChange()
                     }
                 }
@@ -741,18 +747,24 @@ class HomeFragment : Fragment(), MenuProvider {
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.img_card -> {
-                        offertypeList[previousfilter].filetrselection = false
-                        previousfilter = position
-                        offertypeList[previousfilter].filetrselection = true
-                        categoryid = item.filtercode
-                        homeViewModel.isloading.set(true)
-                        homeViewModel.nodata.set(false)
-                        homeViewModel.getDashboardData(
-                            showroomid,
-                            locationId,
-                            service, categoryid, iCityId,
-                            AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                        )
+                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                            offertypeList[previousfilter].filetrselection = false
+                            previousfilter = position
+                            offertypeList[previousfilter].filetrselection = true
+                            categoryid = item.filtercode
+                            homeViewModel.isloading.set(true)
+                            homeViewModel.nodata.set(false)
+                            homeViewModel.getDashboardData(
+                                showroomid,
+                                locationId,
+                                service, categoryid, iCityId,
+                                AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+                            )
+                        } else {
+
+                            findNavController().navigate(R.id.nav_sign_in)
+                        }
+
                         binding.rvFilter.notifyDataChange()
                     }
                 }
