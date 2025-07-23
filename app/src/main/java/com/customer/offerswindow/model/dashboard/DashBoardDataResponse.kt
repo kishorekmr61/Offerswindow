@@ -36,6 +36,7 @@ data class DashboardData(
     @Expose @SerializedName("Website_link") val Website_link: String,
     var Wishlist_Status: String = "",
     var isfavourite: Boolean = false,
+    var Video_Link: String = "",
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<Images>? = arrayListOf(),
 ) : WidgetViewModel {
     override fun layoutId(): Int {

@@ -3,6 +3,7 @@ package com.customer.offerswindow.ui.mybookings
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -23,6 +24,7 @@ import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.utils.getImageList
+import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openNativeSharingDialog
@@ -35,6 +37,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MyBookingsFragment(flag: String) : Fragment() {
 
@@ -44,7 +47,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     var bookingData = ArrayList<BookingData>()
-    var mflag =flag
+    var mflag = flag
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +59,10 @@ class MyBookingsFragment(flag: String) : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         vm.isvisble.value = false
-
+        setMenuVisibility(true)
+        handleHardWareBackClick {
+            backPressed()
+        }
         return root
     }
 
@@ -199,5 +205,9 @@ class MyBookingsFragment(flag: String) : Fragment() {
             AppPreference.read(Constants.USERUID, "") ?: ""
         )
         homeViewModel.getUserInterest(posuserintrest)
+    }
+
+    private fun backPressed() {
+        findNavController().navigate(R.id.nav_home)
     }
 }

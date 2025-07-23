@@ -54,6 +54,7 @@ import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openNativeSharingDialog
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
+import com.customer.offerswindow.utils.openYoutube
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.customer.offerswindow.utils.setToolbarVisibility
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
@@ -93,6 +94,7 @@ class HomeFragment : Fragment(), MenuProvider {
     var showroomid = "0"
     var service = "0"
     var iCityId = "0"
+    var cityname = "All"
     var categoryid = "0"
     var customerid = "0"
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
@@ -366,6 +368,8 @@ class HomeFragment : Fragment(), MenuProvider {
                             resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
                         )
                         homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
+                        iCityId = resposnes.Data?.firstOrNull()?.Location_Code ?: iCityId
+                        cityname = resposnes.Data?.firstOrNull()?.Location_Desc ?: cityname
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,
@@ -440,7 +444,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             }
                         }
                     }
-                    binding.cityTxt.text = cityList.firstOrNull()?.title
+                    binding.cityTxt.text = cityname
                     binding.locationTxt.text = cityList.firstOrNull()?.title
 
 
@@ -666,6 +670,15 @@ class HomeFragment : Fragment(), MenuProvider {
                                 findNavController().navigate(R.id.nav_sign_in)
                             }
                         }
+
+                        R.id.video_img -> {
+                            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                                getUserIntrestOnclick("Whatsapp", datavalues)
+                                activity?.openYoutube(datavalues.Video_Link)
+                            } else {
+                                findNavController().navigate(R.id.nav_sign_in)
+                            }
+                        }
                     }
                     binder.executePendingBindings()
                 })
@@ -780,12 +793,10 @@ class HomeFragment : Fragment(), MenuProvider {
                 }
             });
             binding.offerText.setOnClickListener {
-                var bundle = Bundle()
-                bundle.putString(
-                    Constants.WEB_URL,
-                    otherServicesList[binding.viewpager.currentItem].URL
-                )
-                findNavController().navigate(R.id.nav_webview, bundle)
+                navigatepagerClick()
+            }
+            binding.viewoverlyout.setOnClickListener {
+                navigatepagerClick()
             }
         }
 
@@ -930,4 +941,13 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
+
+    fun navigatepagerClick() {
+        var bundle = Bundle()
+        bundle.putString(
+            Constants.WEB_URL,
+            otherServicesList[binding.viewpager.currentItem].URL
+        )
+        findNavController().navigate(R.id.nav_webview, bundle)
+    }
 }

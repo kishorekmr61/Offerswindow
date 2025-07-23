@@ -186,7 +186,16 @@ class HomeViewModel @Inject constructor(
         var locationList = arrayListOf<SpinnerRowModel>()
         locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
         masterdata.value?.data?.data?.forEach {
-            if (it.MstType == "Location" && it.City_Code == citycode) {
+            if (it.MstType == "Location" && citycode == "0") {
+                locationList.add(
+                    SpinnerRowModel(
+                        it.MstDesc,
+                        false,
+                        false,
+                        mstCode = it.MstCode
+                    )
+                )
+            } else if (it.MstType == "Location" && it.City_Code == citycode) {
                 locationList.add(
                     SpinnerRowModel(
                         it.MstDesc,
@@ -197,6 +206,7 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
+
         return locationList
     }
 }

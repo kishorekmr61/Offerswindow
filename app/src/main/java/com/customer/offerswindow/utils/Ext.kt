@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -47,7 +46,6 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.model.ErrorData
 import com.customer.offerswindow.model.dashboard.Images
-import com.customer.offerswindow.model.offerdetails.OfferImages
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -680,6 +678,32 @@ fun Activity.openNativeSharingDialog(data: String) {
     startActivity(shareIntent)
 }
 
+fun Activity.openYoutube(data: String) {
+    try {
+        val yid = extractYoutubeId(data)
+        val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$yid"))
+        val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$yid"))
+        try {
+            this.startActivity(intentApp)
+        } catch (ex: ActivityNotFoundException) {
+            this.startActivity(intentBrowser)
+        }
+
+    } catch (ex: Exception) {
+        showToast("No app not installed on your device,to open Video")
+        ex.printStackTrace()
+    }
+}
+
+
+fun extractYoutubeId(url: String): String? {
+    val pattern = "^(?:https?://)?(?:www\\.|m\\.)?(?:youtube\\.com/watch\\?v=|youtu\\.be/)([\\w-]{11}).*"
+    val regex = Regex(pattern)
+    val matchResult = regex.find(url)
+    return matchResult?.groups?.get(1)?.value
+}
+
+
 fun Activity.navigateToGoogleMap(sourceLocation: String) {
     val intent = Intent(
         Intent.ACTION_VIEW,
@@ -697,6 +721,7 @@ fun Activity.openDialPad(number: String) {
         startActivity(intent)
     }
 }
+
 fun Activity.openBrowser(surl: String) {
     try {
         try {
@@ -714,7 +739,8 @@ fun Activity.openBrowser(surl: String) {
         showToast("Unable to open the link")
     }
 }
-  fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
+
+fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
     if (imagesList.isNullOrEmpty()) {
         imagesList?.add(Images("0", ""))
     }

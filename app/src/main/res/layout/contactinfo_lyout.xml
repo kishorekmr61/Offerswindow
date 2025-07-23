@@ -91,6 +91,18 @@
                 app:layout_constraintStart_toEndOf="@id/website_img"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/whatsapp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/video_img"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:onClick="@{onItemClick}"
+                android:background="@drawable/drawable_bg"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintStart_toEndOf="@id/whatsapp_img"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/video" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
