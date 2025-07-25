@@ -76,4 +76,6 @@
     <string name="delete_account">Delete Account</string>
     <string name="other_services_for_you">Other Services for you</string>
     <string name="onesignappid">7b903495-1dc6-49f9-a3bf-19309adf3281</string>
+    <string name="enable_location_permission_setting_info">This app needs location permission to continue. Please go to settings and allow location permission.</string>
+
 </resources>

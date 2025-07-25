@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_25sdp"
-            android:text="No Data Avaliable"
+            android:text="No Data Avaliable for selected search"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"

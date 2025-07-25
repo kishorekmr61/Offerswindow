@@ -320,20 +320,19 @@
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_filter"
                     tools:itemCount="5"
-                    tools:listitem="@layout/homelist_item"
-                    tools:visibility="visible" />
+                     tools:listitem="@layout/homelist_item"
+                    tools:visibility="gone" />
 
                 <include
                     android:id="@+id/nodataavaliable"
                     layout="@layout/no_data"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.nodata ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
+                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_offerslist"
-                    tools:visibility="gone" />
+                    tools:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/otherservice_top"
@@ -343,7 +342,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_offerslist" />
+                    app:layout_constraintTop_toBottomOf="@id/nodataavaliable" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/othersvc_txt"
@@ -359,7 +358,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_offerslist" />
+                    app:layout_constraintTop_toBottomOf="@id/nodataavaliable" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout

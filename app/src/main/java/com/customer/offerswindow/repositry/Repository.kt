@@ -10,8 +10,10 @@ import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
+import com.customer.offerswindow.model.dashboard.ServicesResponse
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.notification.NotificationResponse
@@ -98,6 +100,18 @@ class Repository @Inject constructor(
     suspend fun getCommonMaster(mastertype: String): Flow<NetworkResult<CommonMasterResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype, "0") })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getOfferTypeDetails(lServiceId: String): Flow<NetworkResult<OfferTypeResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.getOfferTypeDetails(lServiceId) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getOfferServiceDetails(iOfferTypeId: String): Flow<NetworkResult<ServicesResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.getOfferServiceDetails(iOfferTypeId) })
         }.flowOn(Dispatchers.IO)
     }
 

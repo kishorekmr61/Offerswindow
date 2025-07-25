@@ -16,6 +16,8 @@ import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.dashboard.DashboardData
+import com.customer.offerswindow.model.dashboard.OfferTypeResponse
+import com.customer.offerswindow.model.dashboard.ServicesResponse
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.ShowRoomsResponse
@@ -43,6 +45,8 @@ class HomeViewModel @Inject constructor(
     var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var postwishlistdata = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var userIntrestResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var offertypeResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
+    var serviceResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
@@ -208,5 +212,30 @@ class HomeViewModel @Inject constructor(
         }
 
         return locationList
+    }
+
+
+    fun getOfferTypeResponse(lServiceId: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getOfferTypeDetails(lServiceId).collect { values ->
+                    offertypeResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun getOfferServiceDetails(iOfferTypeId: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getOfferServiceDetails(iOfferTypeId).collect { values ->
+                    serviceResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
     }
 }

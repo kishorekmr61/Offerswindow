@@ -9,8 +9,10 @@ import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUpdateProfile
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
+import com.customer.offerswindow.model.dashboard.ServicesResponse
 import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
@@ -121,4 +123,16 @@ interface MasterApiService {
     @GET("ShowRoomOffers/GetOfferTypeDetails")
     suspend fun getFilterData(
     ): Response<CommonMasterResponse>
+
+
+    @GET("ShowRoomOffers/GetOfferTypeDetails?")
+    suspend fun GetOfferTypeDetails(
+        @Query("lServiceId") mastertype: String
+    ): Response<OfferTypeResponse>
+
+
+    @GET("ShowRoomOffers/GetOfferServiceDetails?")
+    suspend fun GetOfferServiceDetails(
+        @Query("iOfferTypeId") iOfferTypeId: String
+    ): Response<ServicesResponse>
 }

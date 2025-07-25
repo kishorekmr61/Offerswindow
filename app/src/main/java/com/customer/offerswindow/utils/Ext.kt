@@ -786,4 +786,22 @@ fun Activity.shareImageFromUrl(context: Context, message: String,imageUrl: Strin
             e.printStackTrace()
         }
     }
+
+    fun Fragment.locationPermissionSettingPopup(
+        positiveCallback: () -> Unit
+    ) {
+        val dialog = Dialog(this.requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.dialog_location_permission_setting_popup)
+        val tvPositive: AppCompatTextView = dialog.findViewById(R.id.tvPositive)
+        tvPositive.setOnClickListener {
+            dialog.dismiss()
+            positiveCallback.invoke()
+
+        }
+
+        dialog.show()
+    }
 }

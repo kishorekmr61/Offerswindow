@@ -20,8 +20,8 @@
         android:id="@+id/goldc_lyout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerc_lyout"
@@ -37,6 +37,9 @@
                 style="@style/AG_regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/graph"
+                android:drawablePadding="@dimen/_8sdp"
+                android:gravity="center|start"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/gold_price_today"
                 android:textColor="@color/white"
@@ -154,9 +157,9 @@
                 android:drawablePadding="@dimen/_4sdp"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/view_history"
-                android:visibility="gone"
                 android:textColor="@color/color_0044FF"
                 android:textSize="@dimen/_11ssp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/diamond"
