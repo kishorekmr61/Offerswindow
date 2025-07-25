@@ -3,6 +3,7 @@ package com.customer.offerswindow.ui.mybookings
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -63,6 +64,13 @@ class MyBookingsFragment(flag: String) : Fragment() {
             backPressed()
         }
         return root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleHardWareBackClick {
+            findNavController().navigate(R.id.nav_home)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -212,5 +220,16 @@ class MyBookingsFragment(flag: String) : Fragment() {
 
     private fun backPressed() {
         findNavController().navigate(R.id.nav_home)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigate(R.id.nav_home)
+                return true
+            }
+
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }
