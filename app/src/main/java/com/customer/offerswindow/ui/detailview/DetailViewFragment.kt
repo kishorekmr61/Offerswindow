@@ -266,7 +266,7 @@ class DetailViewFragment : Fragment() {
 
                 R.id.share_lyout -> {
                     getUserIntrestOnclick("Share", dataobj)
-                    activity?.shareImageFromUrl(requireActivity(),dataobj?.Website_link?:"",dataobj?.ImagesList?.firstOrNull()?.imagepath?:"")
+                    activity?.shareImageFromUrl(requireActivity(),dataobj?.id?:"",dataobj?.ImagesList?.firstOrNull()?.imagepath?:"")
 
                 }
 

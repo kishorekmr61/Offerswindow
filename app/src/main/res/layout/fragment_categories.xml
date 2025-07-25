@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            app:spanCount="3"
+            app:spanCount="4"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
             app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"

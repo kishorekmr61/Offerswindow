@@ -134,7 +134,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
                             getUserIntrestOnclick(item, "Share")
                             activity?.shareImageFromUrl(
                                 requireActivity(),
-                                item.Website_link,
+                                item.Offer_UID,
                                 item.Offer_Image_Details?.firstOrNull()?.imagepath ?: ""
                             )
                         } else {

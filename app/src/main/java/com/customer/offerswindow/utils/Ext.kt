@@ -755,7 +755,8 @@ fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
     return imagesList
 }
 
-fun Activity.shareImageFromUrl(context: Context, imageUrl: String,message: String) {
+fun Activity.shareImageFromUrl(context: Context, message: String,imageUrl: String) {
+    var offerurl = "https://offerswindow.com/Offer_Details_Window?lOfferId="
     CoroutineScope(Dispatchers.IO).launch {
         try {
             // 1. Download the image
@@ -770,17 +771,13 @@ fun Activity.shareImageFromUrl(context: Context, imageUrl: String,message: Strin
             outputStream.close()
             inputStream.close()
             // 3. Get Uri using FileProvider
-            val imageUri = FileProvider.getUriForFile(
-                context,
-                "${context.packageName}.fileprovider",
-                file
-            )
+            val imageUri =  FileProvider.getUriForFile(context, getString(R.string.authorities),file)
             // 4. Create and launch share intent on main thread
             withContext(Dispatchers.Main) {
                 val shareIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "image/*"
                     putExtra(Intent.EXTRA_STREAM, imageUri)
-                    putExtra(Intent.EXTRA_TEXT, message)
+                    putExtra(Intent.EXTRA_TEXT, offerurl.plus(message))
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.app_name)))

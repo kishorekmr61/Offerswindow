@@ -630,7 +630,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         R.id.share_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Share", datavalues)
-                                activity?.shareImageFromUrl(requireActivity(),datavalues.Website_link,datavalues.ImagesList?.firstOrNull()?.imagepath?:"")
+                                activity?.shareImageFromUrl(requireActivity(),datavalues.id,datavalues.ImagesList?.firstOrNull()?.imagepath?:"")
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
                             }

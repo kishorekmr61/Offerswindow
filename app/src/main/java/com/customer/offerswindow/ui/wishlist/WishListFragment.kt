@@ -123,7 +123,7 @@ class WishListFragment : Fragment() {
                             getUserIntrestOnclick(witem, "Share")
                             activity?.shareImageFromUrl(
                                 requireActivity(),
-                                witem.Wishlist.firstOrNull()?.Website_Url ?: "",
+                                witem.Wishlist.firstOrNull()?.Offer_ID ?: "",
                                 witem.Wishlist.firstOrNull()?.Selected_Offers?.firstOrNull()?.imagepath
                                     ?: ""
                             )

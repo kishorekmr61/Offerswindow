@@ -17,4 +17,10 @@
     <files-path
         name="@strings/temp_images"
         path="." />
+
+
+    <cache-path
+        name="shared_image"
+        path="." />
+
 </paths>

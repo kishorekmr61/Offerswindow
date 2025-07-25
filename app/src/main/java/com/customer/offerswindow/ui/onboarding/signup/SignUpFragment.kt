@@ -106,7 +106,7 @@ class SignUpFragment : Fragment() {
             showToast("Please set 4 digit pin")
             return false
         }
-        if (binding.etPin.text.toString().length >= 4) {
+        if (binding.etPin.text.toString().length > 4) {
             showToast("Please set valid PIN")
             return false
         }
@@ -114,11 +114,11 @@ class SignUpFragment : Fragment() {
             showToast("confirm 4 digit pin")
             return false
         }
-        if (binding.confirmetPin.text.toString().length >= 4) {
+        if (binding.confirmetPin.text.toString().length > 4) {
             showToast("confirm 4 digit pin")
             return false
         }
-        if (binding.confirmetPin.text.toString() == binding.etPin.text.toString()) {
+        if (binding.confirmetPin.text.toString() != binding.etPin.text.toString()) {
             showToast("set pin and Confirm is not matching  please check and try")
             return false
         }
