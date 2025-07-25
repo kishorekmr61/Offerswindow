@@ -157,13 +157,13 @@ fun setThumbnail(img: AppCompatImageView, videourl: String?) {
 }
 
 @BindingAdapter("profileImgUrlRound", requireAll = false)
-fun setProfileImageUrl(img: AppCompatImageView, url: String?, modifiedDate: String?) {
-    var url1 =  url?.replace("http://", "https://")
+fun setProfileImageUrl(img: AppCompatImageView, url: String?) {
+    val url1 =  url?.replace("http://", "https://")
     if (!url.isNullOrEmpty()) {
-//        Glide.with(context).load(url).signature(ObjectKey(modifiedDate ?: "")).error(R.drawable.ic_profile)
-//            .apply(RequestOptions.circleCropTransform()).into(img)
+        Glide.with(context).load(url).error(R.drawable.ic_profile)
+            .apply(RequestOptions.circleCropTransform()).into(img)
 
-        Glide.with(context).load(url1).placeholder(R.drawable.ic_profile).dontAnimate().into(img);
+//        Glide.with(context).load(url1).placeholder(R.drawable.ic_profile).dontAnimate().into(img);
     } else {
         img.setImageResource(R.drawable.ic_profile)
     }

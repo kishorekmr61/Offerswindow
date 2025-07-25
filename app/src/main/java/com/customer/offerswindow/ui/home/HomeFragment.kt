@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -710,7 +711,7 @@ class HomeFragment : Fragment(), MenuProvider {
             }
 
         adapter.addLoadStateListener {
-            if (it.append.endOfPaginationReached) {
+            if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
                 if (adapter.itemCount == 0 ) {
                     binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
                     binding.rvOfferslist.visibility = View.GONE

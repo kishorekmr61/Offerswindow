@@ -38,7 +38,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/profilepic"
-                profileImgUrlRound="@{viewModel.profilePic}"
+                profileImgUrlRound="@{item.cust_Image_URL}"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -136,6 +136,7 @@ class CustomerProfileViewModel @Inject constructor(
         registrationData.value?.Country = customerData.Country
         registrationData.value?.Country_Desc = customerData.Country_Desc
         registrationData.value?.Pin_No = customerData.Pin_No
+        profilePic.set(customerData.Cust_Image_URL)
 //        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL
 
 
