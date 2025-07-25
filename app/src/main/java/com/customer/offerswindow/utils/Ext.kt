@@ -30,6 +30,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -51,7 +52,13 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 import java.net.MalformedURLException
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -674,6 +681,7 @@ fun Activity.openNativeSharingDialog(data: String) {
         putExtra(Intent.EXTRA_TEXT, data)
         type = "text/plain"
     }
+
     val shareIntent = Intent.createChooser(sendIntent, null)
     startActivity(shareIntent)
 }
@@ -745,4 +753,40 @@ fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
         imagesList?.add(Images("0", ""))
     }
     return imagesList
+}
+
+fun Activity.shareImageFromUrl(context: Context, imageUrl: String,message: String) {
+    CoroutineScope(Dispatchers.IO).launch {
+        try {
+            // 1. Download the image
+            val url = URL(imageUrl)
+            val connection = url.openConnection()
+            connection.connect()
+            val inputStream = connection.getInputStream()
+            // 2. Save to temporary file
+            val file = File(context.cacheDir, "shared_image.jpg")
+            val outputStream = FileOutputStream(file)
+            inputStream.copyTo(outputStream)
+            outputStream.close()
+            inputStream.close()
+            // 3. Get Uri using FileProvider
+            val imageUri = FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.fileprovider",
+                file
+            )
+            // 4. Create and launch share intent on main thread
+            withContext(Dispatchers.Main) {
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "image/*"
+                    putExtra(Intent.EXTRA_STREAM, imageUri)
+                    putExtra(Intent.EXTRA_TEXT, message)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.app_name)))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

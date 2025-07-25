@@ -24,12 +24,12 @@ import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
-import com.customer.offerswindow.utils.openNativeSharingDialog
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.customer.offerswindow.utils.shareImageFromUrl
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -121,8 +121,11 @@ class WishListFragment : Fragment() {
                     R.id.share_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Share")
-                            activity?.openNativeSharingDialog(
-                                witem.Wishlist.firstOrNull()?.Website_Url ?: ""
+                            activity?.shareImageFromUrl(
+                                requireActivity(),
+                                witem.Wishlist.firstOrNull()?.Website_Url ?: "",
+                                witem.Wishlist.firstOrNull()?.Selected_Offers?.firstOrNull()?.imagepath
+                                    ?: ""
                             )
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)

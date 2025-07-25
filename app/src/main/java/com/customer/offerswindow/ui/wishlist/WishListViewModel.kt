@@ -26,7 +26,7 @@ class WishListViewModel @Inject constructor(
     fun getWishListData(lCustomerID: String, iCategoryType: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getWishList("2"/*lCustomerID*/, iCategoryType).collect { values ->
+                repository.getWishList(lCustomerID, iCategoryType).collect { values ->
                     wishlistResponse.postValue(values)
                 }
             } else {

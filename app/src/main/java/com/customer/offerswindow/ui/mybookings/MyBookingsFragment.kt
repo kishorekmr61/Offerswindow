@@ -3,7 +3,6 @@ package com.customer.offerswindow.ui.mybookings
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -27,12 +26,12 @@ import com.customer.offerswindow.utils.getImageList
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
-import com.customer.offerswindow.utils.openNativeSharingDialog
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.customer.offerswindow.utils.shareImageFromUrl
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -133,7 +132,11 @@ class MyBookingsFragment(flag: String) : Fragment() {
                     R.id.share_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(item, "Share")
-                            activity?.openNativeSharingDialog(item.Website_link)
+                            activity?.shareImageFromUrl(
+                                requireActivity(),
+                                item.Website_link,
+                                item.Offer_Image_Details?.firstOrNull()?.imagepath ?: ""
+                            )
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)
                         }

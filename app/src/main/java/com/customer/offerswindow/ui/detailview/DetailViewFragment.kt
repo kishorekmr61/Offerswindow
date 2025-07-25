@@ -33,6 +33,7 @@ import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -265,7 +266,8 @@ class DetailViewFragment : Fragment() {
 
                 R.id.share_lyout -> {
                     getUserIntrestOnclick("Share", dataobj)
-                    activity?.openNativeSharingDialog(dataobj?.Website_link ?: "")
+                    activity?.shareImageFromUrl(requireActivity(),dataobj?.Website_link?:"",dataobj?.ImagesList?.firstOrNull()?.imagepath?:"")
+
                 }
 
                 R.id.call_lyout -> {

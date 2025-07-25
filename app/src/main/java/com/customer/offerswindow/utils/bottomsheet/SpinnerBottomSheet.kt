@@ -291,8 +291,6 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
         }
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
-
-
 }
 
 

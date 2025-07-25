@@ -60,6 +60,7 @@ import com.customer.offerswindow.utils.setToolbarVisibility
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpPagingMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
+import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
 import com.google.android.material.tabs.TabLayout
@@ -145,7 +146,7 @@ class HomeFragment : Fragment(), MenuProvider {
             locationList = homeViewModel.getLocationWIthFromCities(iCityId)
             activity?.let { it1 ->
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.STATUS,
+                    Constants.FILTER,
                     binding.locationTxt.text.toString(), locationList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -180,7 +181,7 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.cityTxt.setOnClickListener {
             activity?.let { it1 ->
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.STATUS,
+                    Constants.FILTER,
                     binding.cityTxt.text.toString(), cityList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -215,7 +216,7 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.searchedit.setOnClickListener {
             activity?.let { it1 ->
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.STATUS,
+                    Constants.FILTER,
                     binding.searchedit.text.toString(), showroomList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -629,7 +630,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         R.id.share_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Share", datavalues)
-                                activity?.openNativeSharingDialog(datavalues.Website_link)
+                                activity?.shareImageFromUrl(requireActivity(),datavalues.Website_link,datavalues.ImagesList?.firstOrNull()?.imagepath?:"")
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
                             }
