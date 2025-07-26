@@ -46,6 +46,7 @@ class CategoriesFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = true
         viewModel.isloading.set(true)
+        vm.btabselectedpostion.value = 1
         categoryList.clear()
         viewModel.getMstData()
     }

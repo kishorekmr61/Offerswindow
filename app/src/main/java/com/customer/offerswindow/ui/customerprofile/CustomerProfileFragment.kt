@@ -188,6 +188,7 @@ class CustomerProfileFragment : Fragment() {
     }
 
     private fun postData(isPhotoAvailable: Boolean, photoPart: MultipartBody.Part) {
+
         viewModel.registrationData.value?.apply {
             val formDataJson = JsonObject()
             formDataJson.addProperty(
@@ -356,7 +357,9 @@ class CustomerProfileFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etCountry.setText(titleData.title)
                                 countryid = titleData.mstCode
-                                mcustomerData.Country = countryid
+                                if (::mcustomerData.isInitialized) {
+                                    mcustomerData.Country = countryid
+                                }
                             }
                         }
 
@@ -366,7 +369,8 @@ class CustomerProfileFragment : Fragment() {
                         ) {
 
                         }
-                    }, headerlbl = "Country")
+                    }, headerlbl = "Country"
+                )
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -382,7 +386,9 @@ class CustomerProfileFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etCity.setText(titleData.title)
                                 locationid = titleData.mstCode
-                                mcustomerData.Location_Code = locationid
+                                if (::mcustomerData.isInitialized) {
+                                    mcustomerData.Location_Code = locationid
+                                }
                             }
                         }
 
@@ -392,7 +398,8 @@ class CustomerProfileFragment : Fragment() {
                         ) {
 
                         }
-                    }, headerlbl = "City")
+                    }, headerlbl = "City"
+                )
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
         }
@@ -436,13 +443,13 @@ class CustomerProfileFragment : Fragment() {
 //                                    binding.etEmail.setText(mcustomerData.Email_ID)
                                     binding.etDob.setText(
                                         convertDate(
-                                            mcustomerData.DOB,
+                                            mcustomerData.DOB ?: "",
                                             Constants.YYYYMMDDTHH,
                                             Constants.DDMMYYYY
                                         )
                                     )
-                                    locationid = mcustomerData.Location_Code
-                                    countryid = mcustomerData.Country
+                                    locationid = mcustomerData.Location_Code ?: ""
+                                    countryid = mcustomerData.Country ?: ""
 
 //                                    binding.etCountry.setText(mcustomerData.Country_Desc)
 //                                    binding.etCity.setText(mcustomerData.Location_Desc)
@@ -455,6 +462,7 @@ class CustomerProfileFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     viewModel.isloading.set(false)
+                    mcustomerData = CustomerData()
                     response.message?.let { ShowFullToast(response.message) }
                 }
 

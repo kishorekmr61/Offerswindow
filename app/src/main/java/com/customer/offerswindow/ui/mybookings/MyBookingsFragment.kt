@@ -59,6 +59,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         vm.isvisble.value = false
+        vm.btabselectedpostion.value = 2
         setMenuVisibility(true)
         handleHardWareBackClick {
             backPressed()

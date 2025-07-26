@@ -128,129 +128,137 @@ class HomeFragment : Fragment(), MenuProvider {
         vm.isvisble.value = true
 //        if (isAccessTokenExpired()) {
         homeViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, "9533586878") ?: "9533586878",
-            AppPreference.read(Constants.LOGINPASSWORD, "9898") ?: "9898"
+            AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)
+                ?: Constants.DEFAULTUSERMOBILE,
+            AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY)
+                ?: Constants.DEFAULTUSERKEY
         )
 //        }
-        homeViewModel.getMstData()
-        homeViewModel.getOfferTypeResponse("0")
-        homeViewModel.getOfferServiceDetails("0")
-        binding.goldratesLyout.updatelblTxt.setOnClickListener {
-            homeViewModel.isloading.set(true)
-            homeViewModel.getGoldRatesData()
-        }
+
         binding.viewallTxt.setOnClickListener {
             findNavController().navigate(R.id.nav_categories)
         }
         binding.locationTxt.setOnClickListener {
             locationList = homeViewModel.getLocationWIthFromCities(iCityId)
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.FILTER,
-                    binding.locationTxt.text.toString(), locationList, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?,
-                            datevalue: String
-                        ) {
-                            if (titleData != null) {
-                                binding.locationTxt.setText(titleData.title)
-                                homeViewModel.isloading.set(true)
-                                locationId = titleData.mstCode
-                                homeViewModel.nodata.set(false)
-                                homeViewModel.getDashboardData(
-                                    titleData.mstCode,
-                                    locationId,
-                                    service, categoryid, iCityId,
-                                    AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                                )
+            if (locationList.isEmpty()) {
+                showToast("No data")
+            } else {
+                activity?.let { it1 ->
+                    val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                        Constants.FILTER,
+                        binding.locationTxt.text.toString(), locationList, false, object :
+                            OnItemSelectedListner {
+                            override fun onItemSelectedListner(
+                                titleData: SpinnerRowModel?,
+                                datevalue: String
+                            ) {
+                                if (titleData != null) {
+                                    binding.locationTxt.setText(titleData.title)
+                                    homeViewModel.isloading.set(true)
+                                    locationId = titleData.mstCode
+                                    homeViewModel.nodata.set(false)
+                                    homeViewModel.getDashboardData(
+                                        titleData.mstCode,
+                                        locationId,
+                                        service, categoryid, iCityId,
+                                        AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+                                    )
+                                }
                             }
-                        }
 
-                        override fun onItemmultipleSelectedListner(
-                            titleData: ArrayList<SpinnerRowModel>?,
-                            value: ArrayList<SpinnerRowModel>
-                        ) {
+                            override fun onItemmultipleSelectedListner(
+                                titleData: ArrayList<SpinnerRowModel>?,
+                                value: ArrayList<SpinnerRowModel>
+                            ) {
 
-                        }
-                    }, headerlbl = "Location"
-                )
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+                            }
+                        }, headerlbl = "Location"
+                    )
+                    modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+                }
             }
         }
         binding.cityTxt.setOnClickListener {
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.FILTER,
-                    binding.cityTxt.text.toString(), cityList, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?,
-                            datevalue: String
-                        ) {
-                            if (titleData != null) {
-                                binding.cityTxt.setText(titleData.title)
-                                homeViewModel.isloading.set(true)
-                                iCityId = titleData.mstCode
-                                homeViewModel.nodata.set(false)
-                                homeViewModel.getDashboardData(
-                                    showroomid,
-                                    locationId,
-                                    service, categoryid, iCityId,
-                                    AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                                )
+            if (cityList.isNullOrEmpty()) {
+                showToast("No data")
+            } else {
+                activity?.let { it1 ->
+                    val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                        Constants.FILTER,
+                        binding.cityTxt.text.toString(), cityList, false, object :
+                            OnItemSelectedListner {
+                            override fun onItemSelectedListner(
+                                titleData: SpinnerRowModel?,
+                                datevalue: String
+                            ) {
+                                if (titleData != null) {
+                                    binding.cityTxt.setText(titleData.title)
+                                    homeViewModel.isloading.set(true)
+                                    iCityId = titleData.mstCode
+                                    homeViewModel.nodata.set(false)
+                                    homeViewModel.getDashboardData(
+                                        showroomid,
+                                        locationId,
+                                        service, categoryid, iCityId,
+                                        AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+                                    )
+                                }
                             }
-                        }
 
-                        override fun onItemmultipleSelectedListner(
-                            titleData: ArrayList<SpinnerRowModel>?,
-                            value: ArrayList<SpinnerRowModel>
-                        ) {
+                            override fun onItemmultipleSelectedListner(
+                                titleData: ArrayList<SpinnerRowModel>?,
+                                value: ArrayList<SpinnerRowModel>
+                            ) {
 
-                        }
-                    }, headerlbl = "City"
-                )
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+                            }
+                        }, headerlbl = "City"
+                    )
+                    modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+                }
             }
         }
         binding.searchedit.setOnClickListener {
-            activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.FILTER,
-                    binding.searchedit.text.toString(), showroomList, false, object :
-                        OnItemSelectedListner {
-                        override fun onItemSelectedListner(
-                            titleData: SpinnerRowModel?,
-                            datevalue: String
-                        ) {
-                            if (titleData != null) {
-                                binding.searchedit.setText(titleData.title)
-                                showroomid = titleData.mstCode
-                                homeViewModel.isloading.set(true)
-                                homeViewModel.nodata.set(false)
-                                if (binding.locationTxt.text.toString().isNullOrEmpty()) {
-                                    binding.clearImg.visibility = View.GONE
-                                } else {
-                                    binding.clearImg.visibility = View.VISIBLE
+            if (showroomList.isEmpty()) {
+                showToast("No data to search")
+            } else {
+                activity?.let { it1 ->
+                    val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                        Constants.FILTER,
+                        binding.searchedit.text.toString(), showroomList, false, object :
+                            OnItemSelectedListner {
+                            override fun onItemSelectedListner(
+                                titleData: SpinnerRowModel?,
+                                datevalue: String
+                            ) {
+                                if (titleData != null) {
+                                    binding.searchedit.setText(titleData.title)
+                                    showroomid = titleData.mstCode
+                                    homeViewModel.isloading.set(true)
+                                    homeViewModel.nodata.set(false)
+                                    if (binding.locationTxt.text.toString().isNullOrEmpty()) {
+                                        binding.clearImg.visibility = View.GONE
+                                    } else {
+                                        binding.clearImg.visibility = View.VISIBLE
+                                    }
+                                    homeViewModel.getDashboardData(
+                                        titleData.mstCode,
+                                        locationId,
+                                        service, categoryid, iCityId,
+                                        AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
+                                    )
                                 }
-                                homeViewModel.getDashboardData(
-                                    titleData.mstCode,
-                                    locationId,
-                                    service, categoryid, iCityId,
-                                    AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                                )
                             }
-                        }
 
-                        override fun onItemmultipleSelectedListner(
-                            titleData: ArrayList<SpinnerRowModel>?,
-                            value: ArrayList<SpinnerRowModel>
-                        ) {
+                            override fun onItemmultipleSelectedListner(
+                                titleData: ArrayList<SpinnerRowModel>?,
+                                value: ArrayList<SpinnerRowModel>
+                            ) {
 
-                        }
-                    }, headerlbl = "Showrooms"
-                )
-                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+                            }
+                        }, headerlbl = "Showrooms"
+                    )
+                    modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+                }
             }
         }
         binding.clearImg.setOnClickListener {
@@ -259,12 +267,7 @@ class HomeFragment : Fragment(), MenuProvider {
             homeViewModel.isloading.set(true)
             binding.clearImg.visibility = View.GONE
             homeViewModel.nodata.set(false)
-            homeViewModel.getDashboardData(
-                showroomid,
-                locationId,
-                service, categoryid, iCityId,
-                AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-            )
+            loadDashboardData()
         }
         binding.goldratesLyout.goldcLyout.setOnClickListener {
             showToast("Gold rates statistics are in progress")
@@ -278,7 +281,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 CategoriesData::class.java
             )
             if (categoryselected.category_id == item.category_id) {
-                service = item.category_id
+                service = item.category_id ?: categoryid
                 item.isselected = true
                 binding.rvCategories.scrollToPosition(position)
                 return
@@ -300,36 +303,11 @@ class HomeFragment : Fragment(), MenuProvider {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
-                        homeViewModel.getMstData()
-                        homeViewModel.getGoldRatesData()
-                        homeViewModel.getShowRoomsData("0", "0", "0")
-                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                            AppPreference.read(Constants.MOBILENO, "")
-                                ?.let {
-                                    homeViewModel.getUserInfo(
-                                        AppPreference.read(
-                                            Constants.MOBILENO,
-                                            ""
-                                        ) ?: ""
-                                    )
-                                }
-                        } else {
-                            binding.loginusername.text = getString(R.string.signin)
-                            if (arguments?.getString("ISFROM") == "CATEGORY") {
-                                var categoryselected = Gson().fromJson(
-                                    arguments?.getString("Category"),
-                                    CategoriesData::class.java
-                                )
-                                service = categoryselected.category_id
-                            }
-                            homeViewModel.getDashboardData(
-                                showroomid,
-                                locationId,
-                                service, categoryid, iCityId,
-                                AppPreference.read(Constants.USERUID, "0") ?: "0",
-                                "0"
-                            )
+                        binding.goldratesLyout.updatelblTxt.setOnClickListener {
+                            homeViewModel.isloading.set(true)
+                            homeViewModel.getGoldRatesData()
                         }
+                        homeViewModel.getMstData()
                         homeViewModel.nodata.set(false)
 
                     }
@@ -374,13 +352,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
 //                        iCityId = resposnes.Data?.firstOrNull()?.Location_Code ?: iCityId
 //                        cityname = resposnes.Data?.firstOrNull()?.Location_Desc ?: cityname
-                        homeViewModel.getDashboardData(
-                            showroomid,
-                            locationId,
-                            service, categoryid, iCityId,
-                            AppPreference.read(Constants.USERUID, "0") ?: "0",
-                            "0"
-                        )
+                        loadDashboardData()
 //                        homeViewModel.profilepic.set(
 //                            resposnes.Data?.firstOrNull()?.Cust_Image_URL ?: ""
 //                        )
@@ -432,10 +404,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     binding.cityTxt.text = cityname
                     binding.locationTxt.text = cityList.firstOrNull()?.title
 
-
-                    wishlistViewModel.getWishListData(
-                        AppPreference.read(Constants.USERUID, "") ?: "", "0"
-                    )
+                    homeViewModel.getGoldRatesData()
                     if (!otherServicesList.isNullOrEmpty()) {
                         binding.otherserviceLyout.visibility = View.VISIBLE
                         binding.othersvcTxt.visibility = View.VISIBLE
@@ -448,6 +417,8 @@ class HomeFragment : Fragment(), MenuProvider {
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getOfferServiceDetails("0")
                 }
 
                 else -> {}
@@ -481,10 +452,14 @@ class HomeFragment : Fragment(), MenuProvider {
                         binding.goldratesTxt.isSelected = true
                         binding.goldratesTxt.visibility = View.VISIBLE
                     }
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getOfferServiceDetails("0")
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getOfferServiceDetails("0")
                 }
 
                 else -> {}
@@ -519,10 +494,14 @@ class HomeFragment : Fragment(), MenuProvider {
                             )
                         )
                     }
+                    homeViewModel.isloading.set(true)
+                    loadDashboardData()
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
+                    homeViewModel.isloading.set(true)
+                    loadDashboardData()
                 }
 
                 else -> {}
@@ -547,16 +526,21 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.offertypeResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    homeViewModel.isloading.set(false)
                     offertypeList.clear()
                     offertypeList.add(FilterData("All", "0", true))
                     response.data?.Data?.forEach {
                         offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
                     }
                     loadFilters()
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getShowRoomsData("0", "0", "0")
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getShowRoomsData("0", "0", "0")
                 }
 
                 else -> {}
@@ -586,16 +570,53 @@ class HomeFragment : Fragment(), MenuProvider {
                         )
                     }
                     loadServices()
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getOfferTypeResponse("0")
+
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
+                    homeViewModel.isloading.set(true)
+                    homeViewModel.getOfferTypeResponse("0")
                 }
 
                 else -> {}
             }
         }
 
+    }
+
+    private fun loadDashboardData() {
+        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+            if (!homeViewModel.customerinfo.value?.data?.Data.isNullOrEmpty()) {
+                AppPreference.read(Constants.MOBILENO, "")
+                    ?.let {
+                        homeViewModel.getUserInfo(
+                            AppPreference.read(
+                                Constants.MOBILENO,
+                                ""
+                            ) ?: ""
+                        )
+                    }
+            }else{
+                binding.loginusername.text =  homeViewModel.customerinfo.value?.data?.Data?.firstOrNull()?.Cust_Name
+                dashboardOffersList()
+            }
+        } else {
+            binding.loginusername.text = getString(R.string.signin)
+            dashboardOffersList()
+        }
+    }
+
+    fun dashboardOffersList(){
+        homeViewModel.getDashboardData(
+            showroomid,
+            locationId,
+            service, categoryid, iCityId,
+            AppPreference.read(Constants.USERUID, "0") ?: "0",
+            "0"
+        )
     }
 
     private fun setRecyclervewData() {
@@ -712,12 +733,12 @@ class HomeFragment : Fragment(), MenuProvider {
 
         adapter.addLoadStateListener {
             if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
-                if (adapter.itemCount == 0 ) {
+                if (adapter.itemCount == 0) {
                     binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
-                    binding.rvOfferslist.visibility = View.GONE
+//                    binding.rvOfferslist.visibility = View.GONE
                 } else {
-                    binding.nodataavaliable.nodataLayout.visibility = View.GONE
-                    binding.rvOfferslist.visibility = View.VISIBLE
+//                    binding.nodataavaliable.nodataLayout.visibility = View.GONE
+//                    binding.rvOfferslist.visibility = View.VISIBLE
                 }
             }
         }
@@ -729,8 +750,7 @@ class HomeFragment : Fragment(), MenuProvider {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = concatAdapter
         }
-        binding.categoriesTxt.visibility = View.VISIBLE
-        binding.viewallTxt.visibility = View.VISIBLE
+
     }
 
     fun loadFilters() {
@@ -747,7 +767,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             offertypeList[previousfilter].filetrselection = false
                             previousfilter = position
                             offertypeList[previousfilter].filetrselection = true
-                            categoryid = item.filtercode
+                            categoryid = item.filtercode ?: categoryid
                             homeViewModel.isloading.set(true)
                             homeViewModel.nodata.set(false)
                             homeViewModel.getDashboardData(
@@ -772,6 +792,10 @@ class HomeFragment : Fragment(), MenuProvider {
     fun loadServices() {
         var previouscat = 0
         categoryList.firstOrNull()?.isselected = true
+        if (!categoryList.isNullOrEmpty()) {
+            binding.categoriesTxt.visibility = View.VISIBLE
+            binding.viewallTxt.visibility = View.VISIBLE
+        }
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
@@ -785,11 +809,11 @@ class HomeFragment : Fragment(), MenuProvider {
                             previouscat = position
                             categoryList[previouscat].isselected = true
                             homeViewModel.isloading.set(true)
-                            service = item.category_id
+                            service = item.category_id ?: categoryid
                             homeViewModel.nodata.set(false)
                             arguments?.putString("ISFROM", "")
                             homeViewModel.isloading.set(true)
-                            homeViewModel.getOfferTypeResponse(item.category_id)
+                            homeViewModel.getOfferTypeResponse(item.category_id ?: categoryid)
                             homeViewModel.getDashboardData(
                                 showroomid,
                                 locationId,

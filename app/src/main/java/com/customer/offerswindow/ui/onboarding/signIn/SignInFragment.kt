@@ -66,8 +66,8 @@ class SignInFragment : Fragment() {
         signInViewModel.isloading.set(true)
 
         signInViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, "9533586878") ?: "9533586878",
-            AppPreference.read(Constants.LOGINPASSWORD, "9898") ?: "9898"
+            AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE) ?: Constants.DEFAULTUSERMOBILE,
+            AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY) ?: Constants.DEFAULTUSERKEY
         )
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")

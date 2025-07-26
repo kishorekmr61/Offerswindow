@@ -128,14 +128,14 @@ class CustomerProfileViewModel @Inject constructor(
             .Cust_Last_Name ?: ""
         registrationData.value?.PhoneNo = customerData.Mobile_No
         registrationData.value?.DoB =
-            convertDate(customerData.DOB, Constants.YYYYMMDDTHH, Constants.DDMMMYYYY)
+            convertDate(customerData.DOB ?: "", Constants.YYYYMMDDTHH, Constants.DDMMMYYYY)
         registrationData.value?.EmailID = customerData.Email_ID
-        registrationData.value?.Location_Desc = customerData.Location_Desc
-        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL ?:""
-        registrationData.value?.PinCode = customerData.Pin_Code
-        registrationData.value?.Country = customerData.Country
-        registrationData.value?.Country_Desc = customerData.Country_Desc
-        registrationData.value?.Pin_No = customerData.Pin_No
+        registrationData.value?.Location_Desc = customerData.Location_Desc ?: ""
+        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL ?: ""
+        registrationData.value?.PinCode = customerData.Pin_Code ?: ""
+        registrationData.value?.Country = customerData.Country ?: ""
+        registrationData.value?.Country_Desc = customerData.Country_Desc ?: ""
+        registrationData.value?.Pin_No = customerData.Pin_No ?: ""
         profilePic.set(customerData.Cust_Image_URL)
 //        registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL
 

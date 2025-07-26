@@ -111,8 +111,8 @@ class IntroFragment : Fragment() {
                 super.onPageScrollStateChanged(state)
             }
         })
-        AppPreference.write(Constants.LOGINUSERNAME, "9533586878")
-        AppPreference.write(Constants.LOGINPASSWORD, "9898")
+        AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE) ?: Constants.DEFAULTUSERMOBILE
+        AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY) ?: Constants.DEFAULTUSERKEY
             _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
         _binding?.slideVP?.let { binding.dotsIndicator.attachTo(it) }
         binding.finishTxt.setOnClickListener {

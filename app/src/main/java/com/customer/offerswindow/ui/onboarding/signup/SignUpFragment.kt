@@ -15,6 +15,7 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.ShowFullToast
+import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,12 @@ class SignUpFragment : Fragment() {
     private var _binding: SignUpFragmentBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleHardWareBackClick {
+            handleBackClick()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -178,4 +185,8 @@ class SignUpFragment : Fragment() {
         )
     }
 
+
+    private fun handleBackClick() {
+        findNavController().popBackStack()
+    }
 }

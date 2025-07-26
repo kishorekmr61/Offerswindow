@@ -15,8 +15,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nodata_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_margin="@dimen/_10sdp">
 
 
@@ -40,7 +41,7 @@
             android:layout_marginTop="@dimen/_25sdp"
             android:text="No Data Avaliable for selected search"
             android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image" />

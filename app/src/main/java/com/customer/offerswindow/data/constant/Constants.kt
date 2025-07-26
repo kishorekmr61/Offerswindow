@@ -19,6 +19,8 @@ object Constants {
     const val LEADDATA = "LEADDATA"
     const val Customertype = "Customertype"
     const val IMAGE = "image"
+    const val DEFAULTUSERMOBILE = "789456123"
+    const val DEFAULTUSERKEY = "2546"
     const val VIDEO = "video"
     const val DATE = "DATE"
     const val PRODUCTS = "PRODUCTS"

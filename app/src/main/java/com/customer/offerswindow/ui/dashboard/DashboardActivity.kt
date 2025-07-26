@@ -160,6 +160,31 @@ class DashboardActivity : AppCompatActivity() {
                 binding.appBarDashboard.bottomNavigationView.visibility = View.GONE
             }
         }
+        vm.btabselectedpostion.observe(this) {
+            when (it) {
+                0 -> {
+                    navController.navigate(R.id.nav_home)
+                }
+
+                1 -> {
+                    navController.navigate(R.id.nav_categories)
+                }
+
+                2 -> {
+                    navController.navigate(R.id.nav_bookings)
+                }
+
+                3 -> {
+                    navController.navigate(R.id.nav_rewardshistory)
+                }
+                4 -> {
+                    var bundle = Bundle()
+                    navController.navigate(R.id.nav_sign_in, bundle)
+                }
+            }
+            binding.appBarDashboard.bottomNavigationView.selectedItemId = it
+        }
+
     }
 
 

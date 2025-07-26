@@ -54,8 +54,8 @@ class AuthAuthenticator @Inject constructor() : Authenticator {
         return AppPreference.read(Constants.LOGINUSERNAME, "")
             ?.let { it1 ->
                 service.getToken(
-                    AppPreference.read(Constants.LOGINUSERNAME, "9533586878") ?: "9533586878",
-                    AppPreference.read(Constants.LOGINPASSWORD,"9898")?:"9898"
+                    AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE) ?: Constants.DEFAULTUSERMOBILE,
+                    AppPreference.read(Constants.LOGINPASSWORD,Constants.DEFAULTUSERKEY)?:Constants.DEFAULTUSERKEY
                 )
             }
     }

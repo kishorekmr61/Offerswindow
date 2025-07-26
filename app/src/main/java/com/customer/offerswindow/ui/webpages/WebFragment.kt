@@ -18,6 +18,7 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentWebBinding
 import com.customer.offerswindow.model.masters.CommonDataResponse
+import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.webpages.WebViewModel
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.setWhiteToolBar
@@ -25,6 +26,7 @@ import com.customer.offerswindow.utils.setWhiteToolBar
 
 class WebFragment : Fragment() {
     private val cmsWebViewModel: WebViewModel by activityViewModels()
+    private val vm: DashBoardViewModel by activityViewModels()
     private lateinit var binding: FragmentWebBinding
 
     override fun onCreateView(
@@ -69,6 +71,7 @@ class WebFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.setWhiteToolBar("About Us")
+        vm.btabselectedpostion.value = 4
     }
 
 

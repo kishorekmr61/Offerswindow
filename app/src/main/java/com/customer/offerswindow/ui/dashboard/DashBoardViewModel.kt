@@ -20,5 +20,6 @@ class DashBoardViewModel @Inject constructor(
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
     var isvisble = MutableLiveData<Boolean>()
+    var btabselectedpostion = MutableLiveData<Int>()
 
 }

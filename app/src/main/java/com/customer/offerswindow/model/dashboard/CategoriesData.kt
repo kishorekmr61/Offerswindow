@@ -5,9 +5,9 @@ import com.customer.offerswindow.utils.resource.WidgetViewModel
 
 data class CategoriesData(
     var iscatefory: Boolean = false,
-    var category_img: String,
-    var category_desc: String,
-    var category_id: String,
+    var category_img: String ?="",
+    var category_desc: String?="",
+    var category_id: String?="0",
     var isselected: Boolean = false,
 ) : WidgetViewModel {
     override fun layoutId(): Int {
