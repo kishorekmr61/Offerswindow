@@ -17,56 +17,6 @@ class CustomerListRepository @Inject constructor(
 ) : BaseApiResponse() {
 
 
-//    suspend fun submitProfileUpdateData(
-//        part: MultipartBody.Part,
-//        CustomerUID: RequestBody,
-//        CustomerCategory: RequestBody,
-//        CustomerName: RequestBody,
-//        SurName: RequestBody,
-//        MobileNo: RequestBody,
-//        DoB: RequestBody,
-//        EmailID: RequestBody,
-//        MarriageAnniversaryDate: RequestBody,
-//        FitnessGoal: RequestBody,
-//        CustomerHeight: RequestBody,
-//        CustomerWeight: RequestBody,
-//        CustomerPhotoFilePath: RequestBody,
-//        CreatedBy: RequestBody,
-//        CreatedDateTime: RequestBody,
-//        UpdatedBy: RequestBody,
-//        UpdatedDateTime: RequestBody
-//    ): Flow<NetworkResult<ProfileUpdateResponse>> {
-//        return flow {
-//            emit(safeApiCall {
-//                customerHelperImpl.submitProfileUpdateData(
-//                    part,
-//                    CustomerUID, CustomerCategory,
-//                    CustomerName,
-//                    SurName, MobileNo,
-//                    DoB,
-//                    EmailID,
-//                    MarriageAnniversaryDate,
-//                    FitnessGoal,
-//                    CustomerHeight,
-//                    CustomerWeight,
-//                    CustomerPhotoFilePath,
-//                    CreatedBy,
-//                    CreatedDateTime,
-//                    UpdatedBy,
-//                    UpdatedDateTime
-//                )
-//            })
-//        }.flowOn(Dispatchers.IO)
-//    }
-
-    //    suspend fun submitProfileUpdateData(
-//        part: MultipartBody.Part?,
-//        formDataBody: RequestBody
-//    ): Flow<NetworkResult<ProfileUpdateResponse>> {
-//        return flow {
-//            emit(safeApiCall { customerHelperImpl.submitProfileUpdateData(part, formDataBody) })
-//        }.flowOn(Dispatchers.IO)
-//    }
     suspend fun postSignUp(postSignUp: PostSignUp): Flow<NetworkResult<StockPurchsasePostingResponse>> {
         return flow {
             emit(safeApiCall { customerHelperImpl.postSignUp(postSignUp) })

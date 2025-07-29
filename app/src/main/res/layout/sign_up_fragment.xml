@@ -190,7 +190,7 @@
                             android:text="@string/_email_number_resend"
                             android:textColor="@color/color_272727"
                             android:textSize="@dimen/_8ssp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/mobileno_lyout" />
 
@@ -210,7 +210,7 @@
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/resendotp_lbl" />
+                            app:layout_constraintTop_toBottomOf="@+id/mobileno_lyout" />
 
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -229,7 +229,7 @@
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/resendotp_lbl" />
+                            app:layout_constraintTop_toBottomOf="@+id/et_Otp" />
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/confirmet_pin"

@@ -46,31 +46,28 @@ class CategoriesFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = true
         viewModel.isloading.set(true)
-//        vm.btabselectedpostion.value = 1
         categoryList.clear()
-        viewModel.getMstData()
+        viewModel.getOfferServiceDetails("0")
     }
 
     private fun setObserver() {
-        viewModel.masterdata.observe(viewLifecycleOwner) { response ->
+
+
+        viewModel.serviceResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    response.data?.let { resposnes ->
-                        viewModel.isloading.set(false)
-                        categoryList.clear()
-                        response?.data?.data?.forEach {
-                            if (it.MstType == "Service") {
-                                categoryList.add(
-                                    CategoriesData( true,
-                                        it.Image_path,
-                                        it.MstDesc,
-                                        it.MstCode
-                                    )
-                                )
-                            }
-                        }
-                        setRecyclervewData()
+                    categoryList.clear()
+                    viewModel.isloading.set(false)
+                    response.data?.Data?.forEach {
+                        categoryList.add(
+                            CategoriesData(
+                                false,
+                                it.Image_path,
+                                it.Mst_Desc,
+                                it.Mst_Code,
+                            ))
                     }
+                    setRecyclervewData()
                 }
 
                 is NetworkResult.Error -> {
@@ -89,12 +86,12 @@ class CategoriesFragment : Fragment() {
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
-                when(it.id){
-                    R.id.category_item->{
+                when (it.id) {
+                    R.id.category_item -> {
                         var bundle = Bundle()
-                        bundle.putString("Category",Gson().toJson(item))
-                        bundle.putString("ISFROM","CATEGORY")
-                        findNavController().navigate(R.id.nav_home,bundle)
+                        bundle.putString("Category", Gson().toJson(item))
+                        bundle.putString("ISFROM", "CATEGORY")
+                        findNavController().navigate(R.id.nav_home, bundle)
                     }
                 }
                 binder.executePendingBindings()

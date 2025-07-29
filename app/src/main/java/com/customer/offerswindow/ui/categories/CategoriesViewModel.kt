@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.dashboard.ServicesResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
@@ -23,12 +24,14 @@ class CategoriesViewModel @Inject constructor(
 ) :  ViewModel() {
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var isloading = ObservableField(false)
+    var serviceResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
 
-    fun getMstData() {
+
+    fun getOfferServiceDetails(iOfferTypeId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Common").collect { values ->
-                    masterdata.postValue(values)
+                repository.getOfferServiceDetails(iOfferTypeId).collect { values ->
+                    serviceResponse.postValue(values)
                 }
             } else {
                 app.showToast("No Internet")

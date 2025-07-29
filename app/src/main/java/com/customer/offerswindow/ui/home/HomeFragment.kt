@@ -19,7 +19,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -97,6 +96,7 @@ class HomeFragment : Fragment(), MenuProvider {
     var cityname = "Hyderabad"
     var categoryid = "0"
     var customerid = "0"
+    var previouscat = 0
     var previouscityid = "0"
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
@@ -127,7 +127,6 @@ class HomeFragment : Fragment(), MenuProvider {
         handleNotificationClick()
         setListeners()
         vm.isvisble.value = true
-//        if (isAccessTokenExpired()) {
         if (AppPreference.read(Constants.TOKEN, "").isNullOrEmpty()) {
             homeViewModel.getToken(
                 AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)
@@ -264,17 +263,23 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun getDataIntent(item: CategoriesData, position: Int) {
+    private fun getDataIntent(item: CategoriesData, position: Int,   mpreviouscat: Int) {
         if (arguments?.getString("ISFROM") == "CATEGORY") {
             var categoryselected = Gson().fromJson(
                 arguments?.getString("Category"),
                 CategoriesData::class.java
             )
-            if (categoryselected.category_id == item.category_id) {
-                service = item.category_id ?: categoryid
-                item.isselected = true
-                binding.rvCategories.scrollToPosition(position)
-                return
+            previouscat = mpreviouscat
+            categoryList.forEach { _ ->
+                if (categoryselected.category_id == item.category_id) {
+                    service = item.category_id ?: categoryid
+                    categoryList[previouscat].isselected = false
+                    previouscat = position
+                    categoryList[previouscat].isselected = true
+                    item.isselected = true
+                    binding.rvCategories.scrollToPosition(position)
+                    return
+                }
             }
         }
     }
@@ -718,7 +723,7 @@ class HomeFragment : Fragment(), MenuProvider {
             }
 
         adapter.addLoadStateListener {
-            if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
+//            if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
                 if (adapter.snapshot().items.isEmpty()) {
                     binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
                     binding.rvOfferslist.visibility = View.GONE
@@ -726,7 +731,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     binding.nodataavaliable.nodataLayout.visibility = View.GONE
                     binding.rvOfferslist.visibility = View.VISIBLE
                 }
-            }
+//            }
         }
 
         val concatAdapter = adapter.withLoadStateFooter(
@@ -770,7 +775,7 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     fun loadServices() {
-        var previouscat = 0
+
         categoryList.firstOrNull()?.isselected = true
         if (!categoryList.isNullOrEmpty()) {
             binding.categoriesTxt.visibility = View.VISIBLE
@@ -780,7 +785,10 @@ class HomeFragment : Fragment(), MenuProvider {
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            getDataIntent(item, position)
+            getDataIntent(item, position,previouscat)
+            if (arguments?.getString("ISFROM") == "CATEGORY") {
+                dashboardOffersList()
+            }
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.category_item -> {

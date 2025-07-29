@@ -50,24 +50,24 @@ class SignUpFragment : Fragment() {
         binding.signinLbl.setOnClickListener {
             findNavController().navigate(R.id.nav_sign_in)
         }
-//        binding.etMobilenumber.doAfterTextChanged {
-//            if (it?.length!! >= 9) {
-//                binding.verify.visibility = View.VISIBLE
-//            } else {
-//                binding.verify.visibility = View.INVISIBLE
-//            }
-//        }
+        binding.etMobilenumber.doAfterTextChanged {
+            if (it?.length!! >= 9) {
+                binding.verify.visibility = View.VISIBLE
+            } else {
+                binding.verify.visibility = View.INVISIBLE
+            }
+        }
 
-//        binding.verify.setOnClickListener {
-//            if (binding.etMobilenumber.text.isNullOrEmpty()) {
-//                binding.etMobilenumber.error = "Please enter valid mobile number"
-//            } else {
-//                signInViewModel.isloading.set(true)
-//                signInViewModel.getOTP(
-//                    binding.etMobilenumber.text.toString()
-//                )
-//            }
-//        }
+        binding.verify.setOnClickListener {
+            if (binding.etMobilenumber.text.isNullOrEmpty()) {
+                binding.etMobilenumber.error = "Please enter valid mobile number"
+            } else {
+                signInViewModel.isloading.set(true)
+                signInViewModel.getOTP(
+                    binding.etMobilenumber.text.toString()
+                )
+            }
+        }
         binding.resendotpLbl.setOnClickListener {
             if (binding.etMobilenumber.text.toString().isEmpty()) {
                 showToast("Please enter Mobile number")
