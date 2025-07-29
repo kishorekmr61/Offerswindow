@@ -441,10 +441,11 @@ class CustomerProfileFragment : Fragment() {
                                     binding.item = it
 //                                    binding.etFirstname.setText(mcustomerData.Cust_Name)
 //                                    binding.etEmail.setText(mcustomerData.Email_ID)
+                                    AppPreference.write(Constants.NAME,it.Cust_Name?:"")
                                     binding.etDob.setText(
                                         convertDate(
                                             mcustomerData.DOB ?: "",
-                                            Constants.YYYYMMDDTHH,
+                                           "yyyy-mm-DD",
                                             Constants.DDMMYYYY
                                         )
                                     )

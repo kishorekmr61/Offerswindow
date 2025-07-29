@@ -57,7 +57,7 @@ class RewarPointHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
-        vm.btabselectedpostion.value = 3
+//        vm.btabselectedpostion.value = 3
         viewModel.getRewardsHistoryData(AppPreference.read(Constants.USERUID, "0") ?: "0", 0)
         binding.redeemTxt.setOnClickListener {
             var bundle = Bundle()

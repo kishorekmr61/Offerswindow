@@ -8,11 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
+import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
@@ -23,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val repository: Repository,
+    private val repository: Repository, private val dashBoardRepositry: DashBoardRepositry,
     private var networkHelper: NetworkHelper,
     var app: Application,
 ) : ViewModel() {
@@ -31,6 +33,7 @@ class SignInViewModel @Inject constructor(
     var userResponse = MutableLiveData<NetworkResult<UserResponse>>()
     var OtpResponse = MutableLiveData<NetworkResult<OTPResponse>>()
     var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
+    var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
     var forgotpasswordResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var isloading = ObservableField(false)
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
@@ -98,6 +101,19 @@ class SignInViewModel @Inject constructor(
                 repository.getCommonMaster("Common").collect { values ->
                     masterdata.postValue(values)
                 }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun getUserInfo(mobileno: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                dashBoardRepositry.getCustomerData(mobileno).collect { values ->
+                    customerinfo.postValue(values)
+                }
+
             } else {
                 app.showToast("No Internet")
             }

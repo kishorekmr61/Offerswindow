@@ -20,6 +20,7 @@ import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.dashboard.DashboardActivity
+import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
@@ -34,6 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
     private val signInViewModel: SignInViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
@@ -50,7 +52,6 @@ class SignInFragment : Fragment() {
         val root: View = binding.root
         binding.vm = signInViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        setDoneListener()
         vm.isvisble.value = false
         activity?.hideOnBoardingToolbar()
         handleHardWareBackClick {
@@ -63,29 +64,8 @@ class SignInFragment : Fragment() {
             ShowFullToast(arguments?.getString("Message") ?: "")
         }
         setObserver()
-        signInViewModel.isloading.set(true)
-
-        signInViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE) ?: Constants.DEFAULTUSERMOBILE,
-            AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY) ?: Constants.DEFAULTUSERKEY
-        )
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
-//        binding.etMobilenumber.doAfterTextChanged {
-//            if (it?.length!! >= 9) {
-//                binding.verify.visibility = View.VISIBLE
-//            } else {
-//                binding.verify.visibility = View.INVISIBLE
-//            }
-//        }
-//        binding.verify.setOnClickListener {
-//            if (validateUserLogin()) {
-//                signInViewModel.isloading.set(true)
-//                signInViewModel.getOTP(
-//                    binding.etMobilenumber.text.toString()
-//                )
-//            }
-//        }
 
         binding.privacyTxt.setOnClickListener {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl)))
@@ -137,25 +117,6 @@ class SignInFragment : Fragment() {
     }
 
     private fun setObserver() {
-        signInViewModel.tokenResponse.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    response.data.let { resposnes ->
-                        signInViewModel.isloading.set(false)
-                        AppPreference.write(Constants.TOKENTIMER, resposnes?.expires_in ?: "0")
-                    }
-                }
-
-                is NetworkResult.Error -> {
-                    signInViewModel.isloading.set(false)
-                    response.message?.let { ShowFullToast(response.message) }
-                }
-
-                is NetworkResult.Loading -> {
-                    signInViewModel.isloading.set(true)
-                }
-            }
-        }
         signInViewModel.userResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -210,26 +171,10 @@ class SignInFragment : Fragment() {
                                 resposnes?.Message ?: getString(R.string.something_went_wrong)
                             )
                         } else {
-                            AppPreference.write(
-                                Constants.MOBILENO,
+                            signInViewModel.isloading.set(true)
+                            signInViewModel.getUserInfo(
                                 binding.etMobilenumber.text.toString()
                             )
-                            AppPreference.write(
-                                Constants.LOGINUSERNAME,
-                                binding.etMobilenumber.text.toString()
-                            )
-                            AppPreference.write(
-                                Constants.LOGINPASSWORD,
-                                binding.etPswrd.text.toString()
-                            ) ?: "1234"
-                            AppPreference.write(Constants.ISLOGGEDIN, true)
-                            if (arguments?.getBoolean("isFrom") == true) {
-                                findNavController().popBackStack()
-                            } else {
-                                val intent =
-                                    Intent(requireActivity(), DashboardActivity::class.java)
-                                startActivity(intent)
-                            }
                         }
                     }
                 }
@@ -299,60 +244,54 @@ class SignInFragment : Fragment() {
                 }
             }
         }
+
+        signInViewModel.customerinfo.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { resposnes ->
+                        homeViewModel.isloading.set(false)
+                        AppPreference.write(
+                            Constants.NAME,
+                            resposnes?.Data?.firstOrNull()?.Cust_Name ?: ""
+                        )
+                        AppPreference.write(Constants.ISLOGGEDIN, true)
+                        AppPreference.write(
+                            Constants.USERUID,
+                            resposnes?.Data?.firstOrNull()?.Cust_UID ?: "0"
+                        )
+                        OneSignal.setEmail(resposnes.Data?.firstOrNull()?.Email_ID ?: "");
+                        OneSignal.sendTag(
+                            "CustomerUID",
+                            resposnes.Data?.firstOrNull()?.Cust_UID ?: ""
+                        )
+                        AppPreference.write(
+                            Constants.MOBILENO,
+                            resposnes?.Data?.firstOrNull()?.Mobile_No ?: ""
+                        )
+                        AppPreference.write(
+                            Constants.PIN,
+                            resposnes?.Data?.firstOrNull()?.Pin_No ?: ""
+                        )
+                        AppPreference.write(
+                            Constants.PROFILEPIC,
+                            resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
+                        )
+                        homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
+                    }
+                    val intent =
+                        Intent(requireActivity(), DashboardActivity::class.java)
+                    startActivity(intent)
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
     }
 
-//    private fun navigateUser(resposnes: UserResponse, response: NetworkResult<UserResponse>) {
-//        signInViewModel.isloading.set(false)
-//        AppPreference.write(Constants.ISLOGGEDIN, true)
-//        AppPreference.write(
-//            Constants.DEFAULT_NAME,
-//            resposnes.Data.firstOrNull()?.Cust_Name ?: ""
-//        )
-//        AppPreference.write(
-//            Constants.DEFAULT_EMAIL,
-//            resposnes.Data.firstOrNull()?.Email_ID ?: ""
-//        )
-//        AppPreference.write(
-//            Constants.DEFAULT_PHOTO,
-//            resposnes.Data.firstOrNull()?.Cust_Image_Path ?: ""
-//        )
-////        OneSignal.setEmail(resposnes.Data.firstOrNull()?.Email_ID ?: "");
-//        AppPreference.write(
-//            Constants.NAME,
-//            resposnes.Data.firstOrNull()?.Cust_Name ?: ""
-//        )
-//        AppPreference.write(
-//            Constants.EMAIL,
-//            resposnes.Data.firstOrNull()?.Email_ID ?: ""
-//        )
-//        AppPreference.write(
-//            Constants.PROFILEPIC,
-//            resposnes.Data.firstOrNull()?.Cust_Image_Path ?: ""
-//        )
-//        AppPreference.write(
-//            Constants.PLANCODE,
-//            resposnes.Data.firstOrNull()?.Plan_Code ?: ""
-//        )
-//        AppPreference.write(
-//            Constants.MOBILENO,
-//            resposnes.Data.firstOrNull()?.User_ID ?: ""
-//        )
-////        OneSignal.sendTag(
-////            "CustomerUID",
-////            resposnes.Data.firstOrNull()?.User_UID ?: ""
-////        )
-//        // Pass in phone number provided by customer
-//        //OneSignal.setSMSNumber(resposnes.data.firstOrNull()?.Email_ID);
-//        response.data?.Data?.get(0)?.User_UID?.let {
-//            AppPreference.write(
-//                Constants.USERUID,
-//                it
-//            )
-//        }
-//        signInViewModel.isloading.set(false)
-//        val intent = Intent(requireActivity(), DashboardActivity::class.java)
-//        startActivity(intent)
-//    }
 
     private fun getData(
         data: NetworkResult<CommonMasterResponse>,
@@ -365,43 +304,6 @@ class SignInFragment : Fragment() {
 
     private fun handleBackClick() {
         findNavController().popBackStack()
-    }
-
-    private fun setDoneListener() {
-//        binding.mobile.setOnEditorActionListener() { v, actionId, event ->
-//            when (actionId) {
-//                EditorInfo.IME_ACTION_DONE -> {
-//                    v.hideKeyboard()
-//                    if (signInViewModel.isNextEnable.get() == true) {
-////                        signInViewModel.isError.set(false)
-//                        validate()
-//                    }
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//        binding.email.setOnEditorActionListener() { v, actionId, event ->
-//            when (actionId) {
-//                EditorInfo.IME_ACTION_DONE -> {
-//                    v.hideKeyboard()
-//                    if ((Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString())
-//                            .matches())
-//                    ) {
-//                        if (signInViewModel.isNextEnable.get() == true) {
-//                            validate()
-//                        }
-//                    } else {
-//                        signInViewModel.isError.set(true)
-//                        signInViewModel.isMobile.set(false)
-//                        binding.mobileError.text =
-//                            getString(R.string.please_enter_valid_email_address)
-//                    }
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
     }
 
 

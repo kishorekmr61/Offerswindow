@@ -46,7 +46,7 @@ class CategoriesFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = true
         viewModel.isloading.set(true)
-        vm.btabselectedpostion.value = 1
+//        vm.btabselectedpostion.value = 1
         categoryList.clear()
         viewModel.getMstData()
     }
@@ -57,6 +57,7 @@ class CategoriesFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         viewModel.isloading.set(false)
+                        categoryList.clear()
                         response?.data?.data?.forEach {
                             if (it.MstType == "Service") {
                                 categoryList.add(

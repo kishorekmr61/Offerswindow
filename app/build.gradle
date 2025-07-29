@@ -95,7 +95,6 @@ dependencies {
             strictly '1.4.0'
         }
     }
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.multidex:multidex:2.0.1"
 
@@ -106,7 +105,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision-common:19.1.3'
     implementation 'androidx.fragment:fragment-ktx:1.8.5'
 
-
     // For instrumentation tests
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
@@ -115,7 +113,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
     //testImplementation 'junit:junit:4.+'  // should get rid of this old JUnit.
     testImplementation 'org.junit.vintage:junit-vintage-engine'
-
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     // For local unit tests
@@ -128,22 +125,17 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-
 //    Navigation Fragment
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    //    Ktor
-    implementation "io.ktor:ktor-client-core:$ktor_version"
-    implementation "io.ktor:ktor-client-auth:$ktor_version"
-    implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
+
     //implementation "io.ktor:ktor-client-android:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation "io.ktor:ktor-serialization-gson:$ktor_version"
     implementation "io.ktor:ktor-client-logging:$ktor_version"
     implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
     implementation "ch.qos.logback:logback-classic:1.2.6"
-
     implementation "androidx.recyclerview:recyclerview:1.4.0"
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'androidx.activity:activity-ktx:1.10.0'
@@ -152,27 +144,20 @@ dependencies {
     // DAGGER HILT
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-
     // For Robolectric tests.
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
     testAnnotationProcessor "com.google.dagger:hilt-android-compiler:$hilt_version"
     testImplementation "org.robolectric:robolectric:4.7.3"
-
-
     def fragment_version = "1.4.1"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
     androidTestAnnotationProcessor "com.google.dagger:hilt-android-compiler:$hilt_version"
-//    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     // sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
-
-    // .aar file is added here, TML ConnectNext Module
     implementation fileTree(include: ['*.aar'], dir: 'libs')
     // dp rxJava 2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -187,50 +172,29 @@ dependencies {
     implementation 'com.squareup:otto:1.3.8'
     //graph
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
-
-//    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
-
-
     implementation 'com.google.firebase:firebase-messaging:24.1.0'
-
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
-
 //  Circular Image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
-
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
-
-//    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
-//    implementation 'com.onesignal:OneSignal:[5.0.0, 5.1.99]'
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
-
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'io.coil-kt:coil:0.9.1'
     implementation 'id.zelory:compressor:3.0.1'
     implementation 'com.google.android.gms:play-services-vision:20.1.3'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-
     implementation 'com.google.firebase:firebase-crashlytics:19.0.3'
     // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
     implementation 'com.google.android.play:app-update:2.1.0'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
-
     implementation "androidx.viewpager2:viewpager2:1.1.0"
     implementation "com.tbuonomo:dotsindicator:4.3"
     implementation 'com.github.gastricspark:scrolldatepicker:0.0.1'
-//
-//    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-//    implementation("com.google.firebase:firebase-analytics")
-//Onesignal Appid :9f59fbca-9f27-41bc-ab7d-aa9ac245690f
     implementation("com.vanniktech:android-image-cropper:4.6.0")
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.AppIntro:AppIntro:6.3.1'
-
-
-
 }

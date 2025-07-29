@@ -29,10 +29,7 @@ object NetworkModule {
                           authAuthenticator: AuthAuthenticator
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-
-
-                setLevel(HttpLoggingInterceptor.Level.BODY);
-
+                setLevel(HttpLoggingInterceptor.Level.BODY)
 //                level = /*if (BuildConfig.DEBUG) */HttpLoggingInterceptor.Level.BODY
 //            else HttpLoggingInterceptor.Level.NONE
         }

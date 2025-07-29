@@ -19,7 +19,6 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentWebBinding
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.ui.webpages.WebViewModel
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.setWhiteToolBar
 
@@ -39,11 +38,11 @@ class WebFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = cmsWebViewModel
         if (arguments?.getString(Constants.ISFROM) == Constants.Web_Link_Offers) {
-            cmsWebViewModel.url.set(arguments?.getString(Constants.WEB_URL)?: "www.google.com")
+            cmsWebViewModel.url.set(arguments?.getString(Constants.WEB_URL) ?: "www.google.com")
             init()
         } else {
             setUpObserver()
-            cmsWebViewModel.url.set(AppPreference.read(Constants.ABOUTUS,""))
+            cmsWebViewModel.url.set(AppPreference.read(Constants.ABOUTUS, ""))
             init()
 //            cmsWebViewModel.setLoadingState(true)
 //            cmsWebViewModel.getMstData()
@@ -71,7 +70,7 @@ class WebFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.setWhiteToolBar("About Us")
-        vm.btabselectedpostion.value = 4
+//        vm.btabselectedpostion.value = 4
     }
 
 

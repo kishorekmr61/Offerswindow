@@ -85,7 +85,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 dashBoardRepositry.getCustomerData(mobileno).collect { values ->
-                    username.set(values.data?.Data?.firstOrNull()?.Cust_Name)
                     customerinfo.postValue(values)
                 }
 

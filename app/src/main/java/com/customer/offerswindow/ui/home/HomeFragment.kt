@@ -97,6 +97,7 @@ class HomeFragment : Fragment(), MenuProvider {
     var cityname = "Hyderabad"
     var categoryid = "0"
     var customerid = "0"
+    var previouscityid = "0"
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -127,12 +128,17 @@ class HomeFragment : Fragment(), MenuProvider {
         setListeners()
         vm.isvisble.value = true
 //        if (isAccessTokenExpired()) {
-        homeViewModel.getToken(
-            AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)
-                ?: Constants.DEFAULTUSERMOBILE,
-            AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY)
-                ?: Constants.DEFAULTUSERKEY
-        )
+        if (AppPreference.read(Constants.TOKEN, "").isNullOrEmpty()) {
+            homeViewModel.getToken(
+                AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)
+                    ?: Constants.DEFAULTUSERMOBILE,
+                AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY)
+                    ?: Constants.DEFAULTUSERKEY
+            )
+        } else {
+            homeViewModel.isloading.set(true)
+            homeViewModel.getMstData()
+        }
 //        }
 
         binding.viewallTxt.setOnClickListener {
@@ -154,15 +160,8 @@ class HomeFragment : Fragment(), MenuProvider {
                             ) {
                                 if (titleData != null) {
                                     binding.locationTxt.setText(titleData.title)
-                                    homeViewModel.isloading.set(true)
                                     locationId = titleData.mstCode
-                                    homeViewModel.nodata.set(false)
-                                    homeViewModel.getDashboardData(
-                                        titleData.mstCode,
-                                        locationId,
-                                        service, categoryid, iCityId,
-                                        AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                                    )
+                                    dashboardOffersList()
                                 }
                             }
 
@@ -194,14 +193,14 @@ class HomeFragment : Fragment(), MenuProvider {
                                 if (titleData != null) {
                                     binding.cityTxt.setText(titleData.title)
                                     homeViewModel.isloading.set(true)
+
+                                    locationList = homeViewModel.getLocationWIthFromCities(iCityId)
+                                    locationId = "0"
+                                    if (locationList.isNotEmpty())
+                                        binding.locationTxt.text = locationList[0].title
+
                                     iCityId = titleData.mstCode
-                                    homeViewModel.nodata.set(false)
-                                    homeViewModel.getDashboardData(
-                                        showroomid,
-                                        locationId,
-                                        service, categoryid, iCityId,
-                                        AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                                    )
+                                    dashboardOffersList()
                                 }
                             }
 
@@ -233,19 +232,12 @@ class HomeFragment : Fragment(), MenuProvider {
                                 if (titleData != null) {
                                     binding.searchedit.setText(titleData.title)
                                     showroomid = titleData.mstCode
-                                    homeViewModel.isloading.set(true)
-                                    homeViewModel.nodata.set(false)
                                     if (binding.locationTxt.text.toString().isNullOrEmpty()) {
                                         binding.clearImg.visibility = View.GONE
                                     } else {
                                         binding.clearImg.visibility = View.VISIBLE
                                     }
-                                    homeViewModel.getDashboardData(
-                                        titleData.mstCode,
-                                        locationId,
-                                        service, categoryid, iCityId,
-                                        AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                                    )
+                                    dashboardOffersList()
                                 }
                             }
 
@@ -264,9 +256,7 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.clearImg.setOnClickListener {
             binding.searchedit.text = ""
             showroomid = "0"
-            homeViewModel.isloading.set(true)
             binding.clearImg.visibility = View.GONE
-            homeViewModel.nodata.set(false)
             loadDashboardData()
         }
         binding.goldratesLyout.goldcLyout.setOnClickListener {
@@ -307,8 +297,8 @@ class HomeFragment : Fragment(), MenuProvider {
                             homeViewModel.isloading.set(true)
                             homeViewModel.getGoldRatesData()
                         }
+                        homeViewModel.isloading.set(true)
                         homeViewModel.getMstData()
-                        homeViewModel.nodata.set(false)
 
                     }
                 }
@@ -350,14 +340,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
                         )
                         homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
-//                        iCityId = resposnes.Data?.firstOrNull()?.Location_Code ?: iCityId
-//                        cityname = resposnes.Data?.firstOrNull()?.Location_Desc ?: cityname
                         loadDashboardData()
-//                        homeViewModel.profilepic.set(
-//                            resposnes.Data?.firstOrNull()?.Cust_Image_URL ?: ""
-//                        )
-
-//                        homeViewModel.profilepic.set("https://offerswindow.com/Offers_Window_API/Uploads/Customers/Photo/24_23_03_2025_16_51_01.jpg")
                     }
                 }
 
@@ -387,6 +370,8 @@ class HomeFragment : Fragment(), MenuProvider {
                                     )
                                 )
                             }
+
+                            locationList = homeViewModel.getLocationWIthFromCities(iCityId)
                             if (it.MstType == "Web_Link_Offers") {
                                 otherServicesList.add(
                                     CommonDataResponse(
@@ -472,7 +457,6 @@ class HomeFragment : Fragment(), MenuProvider {
                 lifecycleScope.launch {
                     try {
                         adapter.run { submitData(response as PagingData<WidgetViewModel>) }
-//                        homeViewModel.nodata.set(adapter.itemCount == 0)
                     } catch (ex: Exception) {
                         ex.printStackTrace()
                     }
@@ -599,8 +583,8 @@ class HomeFragment : Fragment(), MenuProvider {
                             ) ?: ""
                         )
                     }
-            }else{
-                binding.loginusername.text =  homeViewModel.customerinfo.value?.data?.Data?.firstOrNull()?.Cust_Name
+            } else {
+                binding.loginusername.text = AppPreference.read(Constants.NAME, "")
                 dashboardOffersList()
             }
         } else {
@@ -609,7 +593,9 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
-    fun dashboardOffersList(){
+    fun dashboardOffersList() {
+        homeViewModel.nodata.set(false)
+        homeViewModel.isloading.set(true)
         homeViewModel.getDashboardData(
             showroomid,
             locationId,
@@ -733,12 +719,12 @@ class HomeFragment : Fragment(), MenuProvider {
 
         adapter.addLoadStateListener {
             if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
-                if (adapter.itemCount == 0) {
+                if (adapter.snapshot().items.isEmpty()) {
                     binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
-//                    binding.rvOfferslist.visibility = View.GONE
+                    binding.rvOfferslist.visibility = View.GONE
                 } else {
-//                    binding.nodataavaliable.nodataLayout.visibility = View.GONE
-//                    binding.rvOfferslist.visibility = View.VISIBLE
+                    binding.nodataavaliable.nodataLayout.visibility = View.GONE
+                    binding.rvOfferslist.visibility = View.VISIBLE
                 }
             }
         }
@@ -768,14 +754,8 @@ class HomeFragment : Fragment(), MenuProvider {
                             previousfilter = position
                             offertypeList[previousfilter].filetrselection = true
                             categoryid = item.filtercode ?: categoryid
-                            homeViewModel.isloading.set(true)
-                            homeViewModel.nodata.set(false)
-                            homeViewModel.getDashboardData(
-                                showroomid,
-                                locationId,
-                                service, categoryid, iCityId,
-                                AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                            )
+
+                            dashboardOffersList()
                         } else {
 
                             findNavController().navigate(R.id.nav_sign_in)
@@ -810,16 +790,9 @@ class HomeFragment : Fragment(), MenuProvider {
                             categoryList[previouscat].isselected = true
                             homeViewModel.isloading.set(true)
                             service = item.category_id ?: categoryid
-                            homeViewModel.nodata.set(false)
                             arguments?.putString("ISFROM", "")
-                            homeViewModel.isloading.set(true)
                             homeViewModel.getOfferTypeResponse(item.category_id ?: categoryid)
-                            homeViewModel.getDashboardData(
-                                showroomid,
-                                locationId,
-                                service, categoryid, iCityId,
-                                AppPreference.read(Constants.USERUID, "0") ?: "0", "0"
-                            )
+                            dashboardOffersList()
                         } else {
 
                             findNavController().navigate(R.id.nav_sign_in)

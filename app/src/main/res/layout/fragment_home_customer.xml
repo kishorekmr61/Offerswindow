@@ -170,7 +170,7 @@
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:background="@drawable/etsearch_bg"
                     app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
