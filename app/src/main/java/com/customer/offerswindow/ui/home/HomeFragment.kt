@@ -259,11 +259,15 @@ class HomeFragment : Fragment(), MenuProvider {
             loadDashboardData()
         }
         binding.goldratesLyout.goldcLyout.setOnClickListener {
-            showToast("Gold rates statistics are in progress")
+            if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                openURL(Uri.parse(AppPreference.read(Constants.GOLDTRENDREPORT, "") ?: ""))
+            } else {
+                findNavController().navigate(R.id.nav_sign_in)
+            }
         }
     }
 
-    private fun getDataIntent(item: CategoriesData, position: Int,   mpreviouscat: Int) {
+    private fun getDataIntent(item: CategoriesData, position: Int, mpreviouscat: Int) {
         if (arguments?.getString("ISFROM") == "CATEGORY") {
             var categoryselected = Gson().fromJson(
                 arguments?.getString("Category"),
@@ -390,7 +394,10 @@ class HomeFragment : Fragment(), MenuProvider {
                                 AppPreference.write(Constants.ABOUTUS, it.MstDesc)
                             }
                             if (it.MstType == "Privacy_Policy") {
-                                AppPreference.write(Constants.PRIVACYPOLICY, it.MstDesc)
+                                AppPreference.write(Constants.PRIVACYPOLICY, it.Image_path)
+                            }
+                            if (it.MstType == "Gold_Trend_Report") {
+                                AppPreference.write(Constants.GOLDTRENDREPORT, it.Image_path)
                             }
                         }
                     }
@@ -444,6 +451,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             gold24.plus(gold22).plus(gold18).plus(silver).plus(diamond)
                         binding.goldratesTxt.isSelected = true
                         binding.goldratesTxt.visibility = View.VISIBLE
+
                     }
                     homeViewModel.isloading.set(true)
                     homeViewModel.getOfferServiceDetails("0")
@@ -727,13 +735,13 @@ class HomeFragment : Fragment(), MenuProvider {
 
         adapter.addLoadStateListener {
 //            if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
-                if (adapter.snapshot().items.isEmpty()) {
-                    binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
-                    binding.rvOfferslist.visibility = View.GONE
-                } else {
-                    binding.nodataavaliable.nodataLayout.visibility = View.GONE
-                    binding.rvOfferslist.visibility = View.VISIBLE
-                }
+            if (adapter.snapshot().items.isEmpty()) {
+                binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
+                binding.rvOfferslist.visibility = View.GONE
+            } else {
+                binding.nodataavaliable.nodataLayout.visibility = View.GONE
+                binding.rvOfferslist.visibility = View.VISIBLE
+            }
 //            }
         }
 
@@ -788,7 +796,7 @@ class HomeFragment : Fragment(), MenuProvider {
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            getDataIntent(item, position,previouscat)
+            getDataIntent(item, position, previouscat)
             if (arguments?.getString("ISFROM") == "CATEGORY") {
                 dashboardOffersList()
             }
