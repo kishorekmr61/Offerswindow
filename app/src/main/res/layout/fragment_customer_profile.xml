@@ -204,7 +204,7 @@
                         android:drawableEnd="@drawable/arrow_drop_down"
                         android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.city_Desc}"
+                        android:text="@={item.location_Desc}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 

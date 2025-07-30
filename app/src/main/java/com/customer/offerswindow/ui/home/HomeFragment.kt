@@ -389,6 +389,9 @@ class HomeFragment : Fragment(), MenuProvider {
                             if (it.MstType == "About_us_url") {
                                 AppPreference.write(Constants.ABOUTUS, it.MstDesc)
                             }
+                            if (it.MstType == "Privacy_Policy") {
+                                AppPreference.write(Constants.PRIVACYPOLICY, it.MstDesc)
+                            }
                         }
                     }
                     binding.cityTxt.text = cityname

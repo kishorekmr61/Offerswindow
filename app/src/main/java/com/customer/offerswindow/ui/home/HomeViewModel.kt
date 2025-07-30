@@ -15,6 +15,7 @@ import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.customersdata.PostuserSearch
 import com.customer.offerswindow.model.dashboard.DashboardData
 import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ServicesResponse
@@ -45,6 +46,7 @@ class HomeViewModel @Inject constructor(
     var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var postwishlistdata = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var userIntrestResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var postuserSerchResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
     var offertypeResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
     var serviceResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
@@ -65,6 +67,16 @@ class HomeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
+                if (!AppPreference.read(Constants.USERUID,"").isNullOrEmpty()) {
+                    val postuserSearch = PostuserSearch(
+                        AppPreference.read(Constants.USERUID, "") ?: "",
+                        lShowroomId,
+                        lLocationId,
+                        lServiceId,
+                        iCategoryId
+                    )
+                    postUserSearch(postuserSearch)
+                }
                 dashBoardRepositry.getDashBoardOffersListPagenation(
                     lShowroomId,
                     lLocationId,
@@ -231,6 +243,18 @@ class HomeViewModel @Inject constructor(
             if (networkHelper.isNetworkConnected()) {
                 repository.getOfferServiceDetails(iOfferTypeId).collect { values ->
                     serviceResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun postUserSearch(postuserSearch: PostuserSearch) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.postSearch(postuserSearch).collect { values ->
+                    postuserSerchResponse.postValue(values)
                 }
             } else {
                 app.showToast("No Internet")

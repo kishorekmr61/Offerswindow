@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerc_lyout"
@@ -37,7 +37,6 @@
                 style="@style/AG_regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/graph"
                 android:drawablePadding="@dimen/_8sdp"
                 android:gravity="center|start"
                 android:padding="@dimen/_4sdp"
@@ -156,10 +155,12 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_4sdp"
                 android:padding="@dimen/_4sdp"
+                android:drawableStart="@drawable/graph"
+                android:drawableTint="@color/primary"
                 android:text="@string/view_history"
                 android:textColor="@color/color_0044FF"
                 android:textSize="@dimen/_11ssp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/diamond"

@@ -9,6 +9,7 @@ import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUpdateProfile
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.customersdata.PostuserSearch
 import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -100,6 +101,11 @@ interface MasterApiService {
     @POST("ShowRoomOffers/PostWishlist")
     suspend fun postWishList(
         @Body postWishlist: PostWishlist,
+    ): Response<StockPurchsasePostingResponse>
+
+    @POST("ShowRoomOffers/PostSearchHistory")
+    suspend fun postSearh(
+        @Body postuserSearch: PostuserSearch
     ): Response<StockPurchsasePostingResponse>
 
     @POST("UserManagement/PostProfileUpdate")

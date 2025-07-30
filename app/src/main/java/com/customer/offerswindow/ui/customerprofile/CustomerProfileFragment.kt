@@ -98,7 +98,7 @@ class CustomerProfileFragment : Fragment() {
             mcustomerData.Country = countryid
             mcustomerData.Cust_Name = binding.etFirstname.text.toString()
             mcustomerData.Country_Desc = binding.etCountry.text.toString()
-            mcustomerData.City_Desc = binding.etCity.text.toString()
+            mcustomerData.Location_Desc = binding.etCity.text.toString()
             mcustomerData.Sub_Location_Desc = binding.etLocation.text.toString()
             mcustomerData.Email_ID = binding.etEmail.text.toString()
             mcustomerData.DOB = convertDate(
@@ -107,7 +107,7 @@ class CustomerProfileFragment : Fragment() {
                 Constants.YYY_HIFUN_MM_DD
             )
             mcustomerData.Sub_Location_Code = locationid
-            mcustomerData.City_Code = cityid
+            mcustomerData.Location_Code = cityid
             mcustomerData.Pin_Code = binding.etPincode.text.toString()
             triggerCameraOrGallerySelection(binding.profilepic)
         }
@@ -396,7 +396,7 @@ class CustomerProfileFragment : Fragment() {
                                 binding.etCity.setText(titleData.title)
                                 cityid = titleData.mstCode
                                 if (::mcustomerData.isInitialized) {
-                                    mcustomerData.City_Code = cityid
+                                    mcustomerData.Location_Code = cityid
                                 }
                             }
                         }
@@ -485,7 +485,7 @@ class CustomerProfileFragment : Fragment() {
 //                                    binding.etFirstname.setText(mcustomerData.Cust_Name)
 //                                    binding.etEmail.setText(mcustomerData.Email_ID)
                                     locationid = it.Sub_Location_Desc ?: "0"
-                                    cityid = it.City_Code ?: "0"
+                                    cityid = it.Location_Code ?: "0"
                                     countryid = it.Country?:""
                                     AppPreference.write(Constants.NAME, it.Cust_Name ?: "")
                                     binding.etDob.setText(

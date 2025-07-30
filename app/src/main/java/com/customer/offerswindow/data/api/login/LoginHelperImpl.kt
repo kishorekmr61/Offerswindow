@@ -4,6 +4,7 @@ import com.customer.offerswindow.data.api.login.apiServices.MasterApiService
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.customersdata.PostuserSearch
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -39,6 +40,8 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
     suspend fun getNotifications(lCustomerID: String) = masterApiService.getNotifications(lCustomerID)
 
     suspend fun postWishList(postWishlist: PostWishlist) = masterApiService.postWishList(postWishlist)
+
+    suspend fun postSearch(postuserSearch: PostuserSearch) = masterApiService.postSearh(postuserSearch)
 
 
     suspend fun submitProfileUpdateData(

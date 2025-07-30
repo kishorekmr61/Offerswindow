@@ -84,6 +84,7 @@ object Constants {
 
     const val EMPTY_HYPEN = "---"
     const val ABOUTUS = "ABOUTUS"
+    const val PRIVACYPOLICY = "PRIVACYPOLICY"
     const val PIN = "PIN"
 }
 

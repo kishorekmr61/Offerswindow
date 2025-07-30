@@ -10,6 +10,7 @@ import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
+import com.customer.offerswindow.model.customersdata.PostuserSearch
 import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -124,6 +125,12 @@ class Repository @Inject constructor(
     suspend fun postWishlistItem(postWishlist: PostWishlist): Flow<NetworkResult<StockPurchsasePostingResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postWishList(postWishlist = postWishlist) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun postSearch(postuserSearch: PostuserSearch): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.postSearch(postuserSearch) })
         }.flowOn(Dispatchers.IO)
     }
 

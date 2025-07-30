@@ -101,7 +101,7 @@ class SignInFragment : Fragment() {
             }
         }
         binding.privacyTxt.setOnClickListener {
-            openURL(Uri.parse("https://sites.google.com/vedyahvasttechnologies.com/offerswindow/home"))
+            openURL(Uri.parse(AppPreference.read(Constants.PRIVACYPOLICY, "www.google.com")))
         }
         PermissionsUtil.askPermissions(requireActivity())
         return root
