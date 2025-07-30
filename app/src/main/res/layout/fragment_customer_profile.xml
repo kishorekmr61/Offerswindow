@@ -204,7 +204,37 @@
                         android:drawableEnd="@drawable/arrow_drop_down"
                         android:drawablePadding="@dimen/_5sdp"
                         android:focusable="false"
-                        android:text="@={item.Location_Desc}"
+                        android:text="@={item.city_Desc}"
+                        android:textColorHint="@color/color_7C7C7C"
+                        android:textSize="@dimen/_12ssp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etlocation_til"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_weight="0.5"
+                    android:focusableInTouchMode="true"
+                    android:hint="Location"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary"
+                    app:counterTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etcity_til">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_location"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:drawableEnd="@drawable/arrow_drop_down"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:focusable="false"
+                        android:text="@={item.sub_Location_Desc}"
                         android:textColorHint="@color/color_7C7C7C"
                         android:textSize="@dimen/_12ssp" />
 
@@ -224,7 +254,7 @@
                     app:counterTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etcity_til">
+                    app:layout_constraintTop_toBottomOf="@+id/etlocation_til">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_pincode"

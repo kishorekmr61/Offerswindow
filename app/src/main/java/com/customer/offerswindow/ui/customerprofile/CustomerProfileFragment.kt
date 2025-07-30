@@ -21,6 +21,7 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
 import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
@@ -55,12 +56,15 @@ class CustomerProfileFragment : Fragment() {
     var masterdata = arrayListOf<SpinnerRowModel>()
     private var selectedType: String = ""
     private val viewModel: CustomerProfileViewModel by viewModels()
+    private val homeviewModel: HomeViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     var tempFile: File? = null
     lateinit var mcustomerData: CustomerData
     var cityList = arrayListOf<SpinnerRowModel>()
+    var locationList = arrayListOf<SpinnerRowModel>()
     var countryList = arrayListOf<SpinnerRowModel>()
     var locationid: String = ""
+    var cityid: String = ""
     var countryid: String = ""
 
     override fun onCreateView(
@@ -94,14 +98,16 @@ class CustomerProfileFragment : Fragment() {
             mcustomerData.Country = countryid
             mcustomerData.Cust_Name = binding.etFirstname.text.toString()
             mcustomerData.Country_Desc = binding.etCountry.text.toString()
-            mcustomerData.Location_Desc = binding.etCity.text.toString()
+            mcustomerData.City_Desc = binding.etCity.text.toString()
+            mcustomerData.Sub_Location_Desc = binding.etLocation.text.toString()
             mcustomerData.Email_ID = binding.etEmail.text.toString()
             mcustomerData.DOB = convertDate(
                 binding.etDob.text.toString(),
                 Constants.DDMMYYYY,
                 Constants.YYY_HIFUN_MM_DD
             )
-            mcustomerData.Location_Code = locationid
+            mcustomerData.Sub_Location_Code = locationid
+            mcustomerData.City_Code = cityid
             mcustomerData.Pin_Code = binding.etPincode.text.toString()
             triggerCameraOrGallerySelection(binding.profilepic)
         }
@@ -211,9 +217,10 @@ class CustomerProfileFragment : Fragment() {
                 )
             )
 
-            formDataJson.addProperty("locationId", mcustomerData.Location_Code)
+            formDataJson.addProperty("CityId", cityid)
+            formDataJson.addProperty("locationId", locationid)
             formDataJson.addProperty("Cust_Image_URL", mcustomerData.Cust_Image_URL)
-            formDataJson.addProperty("countryId", mcustomerData.Country)
+            formDataJson.addProperty("countryId", countryid)
             formDataJson.addProperty("pinCode", binding.etPincode.text.toString())
 
             formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")
@@ -347,7 +354,8 @@ class CustomerProfileFragment : Fragment() {
         }
         binding.etCountry.setOnClickListener {
             activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.STATUS,
                     binding.etCountry.text.toString(), countryList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -376,7 +384,8 @@ class CustomerProfileFragment : Fragment() {
         }
         binding.etCity.setOnClickListener {
             activity?.let { it1 ->
-                val modalBottomSheet = SpinnerBottomSheet.newInstance(Constants.STATUS,
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.STATUS,
                     binding.etCity.text.toString(), cityList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -385,9 +394,9 @@ class CustomerProfileFragment : Fragment() {
                         ) {
                             if (titleData != null) {
                                 binding.etCity.setText(titleData.title)
-                                locationid = titleData.mstCode
+                                cityid = titleData.mstCode
                                 if (::mcustomerData.isInitialized) {
-                                    mcustomerData.Location_Code = locationid
+                                    mcustomerData.City_Code = cityid
                                 }
                             }
                         }
@@ -399,6 +408,40 @@ class CustomerProfileFragment : Fragment() {
 
                         }
                     }, headerlbl = "City"
+                )
+                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+            }
+        }
+        binding.etLocation.setOnClickListener {
+            activity?.let { it1 ->
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.STATUS,
+                    binding.etLocation.text.toString(),
+                    viewModel.getLocationWIthFromCities(cityid),
+                    false,
+                    object :
+                        OnItemSelectedListner {
+                        override fun onItemSelectedListner(
+                            titleData: SpinnerRowModel?,
+                            datevalue: String
+                        ) {
+                            if (titleData != null) {
+                                binding.etLocation.setText(titleData.title)
+                                locationid = titleData.mstCode
+                                if (::mcustomerData.isInitialized) {
+                                    mcustomerData.Sub_Location_Code = locationid
+                                }
+                            }
+                        }
+
+                        override fun onItemmultipleSelectedListner(
+                            titleData: ArrayList<SpinnerRowModel>?,
+                            value: ArrayList<SpinnerRowModel>
+                        ) {
+
+                        }
+                    },
+                    headerlbl = "Location"
                 )
                 modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
             }
@@ -441,15 +484,18 @@ class CustomerProfileFragment : Fragment() {
                                     binding.item = it
 //                                    binding.etFirstname.setText(mcustomerData.Cust_Name)
 //                                    binding.etEmail.setText(mcustomerData.Email_ID)
-                                    AppPreference.write(Constants.NAME,it.Cust_Name?:"")
+                                    locationid = it.Sub_Location_Desc ?: "0"
+                                    cityid = it.City_Code ?: "0"
+                                    countryid = it.Country?:""
+                                    AppPreference.write(Constants.NAME, it.Cust_Name ?: "")
                                     binding.etDob.setText(
                                         convertDate(
                                             mcustomerData.DOB ?: "",
-                                           "yyyy-mm-DD",
+                                            "yyyy-mm-DD",
                                             Constants.DDMMYYYY
                                         )
                                     )
-                                    locationid = mcustomerData.Location_Code ?: ""
+                                    locationid = mcustomerData.Sub_Location_Code ?: ""
                                     countryid = mcustomerData.Country ?: ""
 
 //                                    binding.etCountry.setText(mcustomerData.Country_Desc)

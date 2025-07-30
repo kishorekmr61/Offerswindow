@@ -204,8 +204,8 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
                     Constants.YYY_HIFUN_MM_DD
                 )
             )
-
-            formDataJson.addProperty("locationId", customerData?.Location_Code)
+            formDataJson.addProperty("CityId", customerData?.City_Code)
+            formDataJson.addProperty("locationId", customerData?.Sub_Location_Code)
             formDataJson.addProperty("countryId", customerData?.Country)
             formDataJson.addProperty("pinCode",customerData?.Pin_Code)
             formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")

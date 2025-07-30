@@ -71,9 +71,29 @@ class WishListFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         viewModel.isloading.set(false)
+                        wishlistData.clear()
                         wishlistData.addAll(resposnes.Data ?: arrayListOf())
                         viewModel.nodata.set(wishlistData.isEmpty())
                         setRecyclervewData()
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    viewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
+        viewModel.removewishlistResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { resposnes ->
+                        viewModel.isloading.set(true)
+                        viewModel.getWishListData(
+                            AppPreference.read(Constants.USERUID, "") ?: "",
+                            "0"
+                        )
                     }
                 }
 
@@ -100,6 +120,7 @@ class WishListFragment : Fragment() {
                 binder.setVariable(BR.item, item)
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
                     when (it.id) {
+
                         R.id.img -> {
                             var bundle = Bundle()
                             bundle.putString("OfferID", witem.Offer_ID)
@@ -170,6 +191,14 @@ class WishListFragment : Fragment() {
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)
                         }
+                    }
+
+                    R.id.favourite -> {
+                        viewModel.isloading.set(true)
+                        viewModel.removeWishListitem(
+                            witem.Offer_ID,
+                            AppPreference.read(Constants.USERUID, "") ?: "0"
+                        )
                     }
                 }
                 binder.executePendingBindings()

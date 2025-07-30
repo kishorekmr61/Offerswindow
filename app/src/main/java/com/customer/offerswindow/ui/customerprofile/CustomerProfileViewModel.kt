@@ -10,6 +10,7 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
 import com.customer.offerswindow.model.CustomerDataResponse
+import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.model.StockPurchsasePostingResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -130,7 +131,7 @@ class CustomerProfileViewModel @Inject constructor(
         registrationData.value?.DoB =
             convertDate(customerData.DOB ?: "", Constants.YYYYMMDDTHH, Constants.DDMMMYYYY)
         registrationData.value?.EmailID = customerData.Email_ID
-        registrationData.value?.Location_Desc = customerData.Location_Desc ?: ""
+        registrationData.value?.Location_Desc = customerData.Sub_Location_Desc ?: ""
         registrationData.value?.CustomerImageUrl = customerData.Cust_Image_URL ?: ""
         registrationData.value?.PinCode = customerData.Pin_Code ?: ""
         registrationData.value?.Country = customerData.Country ?: ""
@@ -141,4 +142,33 @@ class CustomerProfileViewModel @Inject constructor(
 
 
     }
+
+    fun getLocationWIthFromCities(citycode: String): ArrayList<SpinnerRowModel> {
+        var locationList = arrayListOf<SpinnerRowModel>()
+        locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
+        masterdata.value?.data?.data?.forEach {
+            if (it.MstType == "Location" && citycode == "0") {
+                locationList.add(
+                    SpinnerRowModel(
+                        it.MstDesc,
+                        false,
+                        false,
+                        mstCode = it.MstCode
+                    )
+                )
+            } else if (it.MstType == "Location" && it.City_Code == citycode) {
+                locationList.add(
+                    SpinnerRowModel(
+                        it.MstDesc,
+                        false,
+                        false,
+                        mstCode = it.MstCode
+                    )
+                )
+            }
+        }
+
+        return locationList
+    }
+
 }

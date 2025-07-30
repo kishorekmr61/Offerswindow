@@ -710,7 +710,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.video_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Whatsapp", datavalues)
+                                getUserIntrestOnclick("Video", datavalues)
                                 activity?.openYoutube(datavalues.Video_Link)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)

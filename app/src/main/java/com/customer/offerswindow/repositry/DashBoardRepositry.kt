@@ -172,4 +172,15 @@ class DashBoardRepositry @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun removeWishlist(lOfferId: String,lCustomerId:String
+    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.removeWishListIteam(
+                    lOfferId,lCustomerId
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
+
 }

@@ -57,14 +57,13 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/favourite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_25ssp"
+                android:layout_height="@dimen/_25ssp"
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:onClick="@{onItemClick}"
-                android:visibility="gone"
-                android:src="@{item.isfavourite ? @drawable/favouriteselected :  @drawable/favourite_unselected}"
+                android:src="@drawable/favouriteselected"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/favourite_unselected" />
@@ -78,9 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:maxLines="3"
+            android:onClick="@{onItemClick}"
             android:text="@{item.showroom_Name}"
             android:textColor="@color/color_272727"
-            android:onClick="@{onItemClick}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/share_img"

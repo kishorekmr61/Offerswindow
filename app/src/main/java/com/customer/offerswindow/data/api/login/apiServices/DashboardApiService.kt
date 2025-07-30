@@ -83,4 +83,10 @@ interface DashboardApiService {
     suspend fun getOffersData(
         @Query("lCustomerID") lCustomerID: String,
     ): Response<BookingsResponse>
+
+    @POST("ShowRoomOffers/PostDeleteWishlist?")
+    suspend fun removeWishListIteam(
+        @Query("lOfferId") lOfferId: String,
+        @Query("lCustomerId") lCustomerId: String,
+    ): Response<StockPurchsasePostingResponse>
 }

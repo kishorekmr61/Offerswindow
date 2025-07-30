@@ -59,4 +59,7 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
     suspend fun getOffersData(lCustomerID: String) =
         dashboardApiService.getOffersData(lCustomerID)
 
+    suspend fun removeWishListIteam(lOfferId: String,lCustomerId:String) =
+        dashboardApiService.removeWishListIteam(lOfferId,lCustomerId)
+
 }
