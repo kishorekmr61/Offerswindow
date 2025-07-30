@@ -2,9 +2,12 @@ package com.customer.offerswindow.ui.detailview
 
 import android.net.Uri
 import android.os.Bundle
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -116,6 +119,8 @@ class DetailViewFragment : Fragment() {
             termslist
         ) { item: Termsandconditions, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
+            val texviedesc = binder.root.findViewById<TextView>(R.id.desc_txt)
+            Linkify.addLinks(texviedesc, Linkify.ALL );
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 binder.executePendingBindings()
             })
