@@ -16,7 +16,7 @@ class SliderAdapter(private val imageUrlList: List<String>) :
 
         fun setData(imageUrl: String) {
             binding.imageSlide.load(imageUrl) {
-                placeholder(R.drawable.default_img).error(R.drawable.default_img)
+                placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher)
             }
         }
 

@@ -99,7 +99,7 @@
                 android:text="@{`Gold 22K\n ₹ ` +  item.gold_22c}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
-                app:layout_constraintEnd_toStartOf="@id/goldratethree_txt"
+                app:layout_constraintEnd_toStartOf="@id/viewhistory"
                 app:layout_constraintStart_toEndOf="@+id/goldrateone_txt"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,6 +113,7 @@
                 android:text="@{`Gold 18K\n ₹ ` + item.gold_18c}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/goldratetwo_txt"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -128,6 +129,7 @@
                 android:text="@{`Silver\n ₹ ` + item.silver}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/goldratetwo_txt"
                 app:layout_constraintStart_toStartOf="parent"
@@ -143,6 +145,7 @@
                 android:text="@{`Diamond\n ₹ ` + item.diamonds}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/viewhistory"
                 app:layout_constraintStart_toEndOf="@+id/silver_txt"
@@ -163,7 +166,7 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/diamond"
+                app:layout_constraintStart_toEndOf="@id/goldratetwo_txt"
                 app:layout_constraintTop_toBottomOf="@id/goldratethree_txt" />
 
 

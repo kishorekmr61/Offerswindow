@@ -9,12 +9,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.Window
@@ -50,6 +52,7 @@ import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -690,7 +693,8 @@ fun Activity.openYoutube(data: String) {
     try {
         val yid = extractYoutubeId(data)
         val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$yid"))
-        val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$yid"))
+        val intentBrowser =
+            Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$yid"))
         try {
             this.startActivity(intentApp)
         } catch (ex: ActivityNotFoundException) {
@@ -705,7 +709,8 @@ fun Activity.openYoutube(data: String) {
 
 
 fun extractYoutubeId(url: String): String? {
-    val pattern = "^(?:https?://)?(?:www\\.|m\\.)?(?:youtube\\.com/watch\\?v=|youtu\\.be/)([\\w-]{11}).*"
+    val pattern =
+        "^(?:https?://)?(?:www\\.|m\\.)?(?:youtube\\.com/watch\\?v=|youtu\\.be/)([\\w-]{11}).*"
     val regex = Regex(pattern)
     val matchResult = regex.find(url)
     return matchResult?.groups?.get(1)?.value
@@ -755,7 +760,7 @@ fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
     return imagesList
 }
 
-fun Activity.shareImageFromUrl(context: Context, message: String,imageUrl: String) {
+fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: String) {
     var offerurl = "https://offerswindow.com/Offer_Details_Window?lOfferId="
     CoroutineScope(Dispatchers.IO).launch {
         try {
@@ -771,7 +776,8 @@ fun Activity.shareImageFromUrl(context: Context, message: String,imageUrl: Strin
             outputStream.close()
             inputStream.close()
             // 3. Get Uri using FileProvider
-            val imageUri =  FileProvider.getUriForFile(context, getString(R.string.authorities),file)
+            val imageUri =
+                FileProvider.getUriForFile(context, getString(R.string.authorities), file)
             // 4. Create and launch share intent on main thread
             withContext(Dispatchers.Main) {
                 val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -780,28 +786,50 @@ fun Activity.shareImageFromUrl(context: Context, message: String,imageUrl: Strin
                     putExtra(Intent.EXTRA_TEXT, offerurl.plus(message))
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
-                context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.app_name)))
+                context.startActivity(
+                    Intent.createChooser(
+                        shareIntent,
+                        context.getString(R.string.app_name)
+                    )
+                )
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
-    fun Fragment.locationPermissionSettingPopup(
-        positiveCallback: () -> Unit
-    ) {
-        val dialog = Dialog(this.requireActivity())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setContentView(R.layout.dialog_location_permission_setting_popup)
-        val tvPositive: AppCompatTextView = dialog.findViewById(R.id.tvPositive)
-        tvPositive.setOnClickListener {
-            dialog.dismiss()
-            positiveCallback.invoke()
-
-        }
-
-        dialog.show()
-    }
 }
+
+fun Fragment.locationPermissionSettingPopup(
+    positiveCallback: () -> Unit
+) {
+    val dialog = Dialog(this.requireActivity())
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCancelable(false)
+    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    dialog.setContentView(R.layout.dialog_location_permission_setting_popup)
+    val tvPositive: AppCompatTextView = dialog.findViewById(R.id.tvPositive)
+    tvPositive.setOnClickListener {
+        dialog.dismiss()
+        positiveCallback.invoke()
+
+    }
+
+    dialog.show()
+}
+
+
+fun View.getStrokeColorInt(resId: Int): Int {
+    val typedValue = TypedValue()
+    context.theme.resolveAttribute(resId, typedValue, true)
+    return typedValue.resourceId
+}
+
+fun Chip.setDefaultState(activity: Activity) {
+    this.backgroundDrawable = activity.getDrawable(R.drawable.text_color_chip_state_list)
+}
+
+fun Chip.setSelectedState(activity: Activity) {
+    this.setTextColor(Color.WHITE)
+    this.chipStrokeColor = ColorStateList.valueOf(activity.getColor(R.color.primary))
+}
+

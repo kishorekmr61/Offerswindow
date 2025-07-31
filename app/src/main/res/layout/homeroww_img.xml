@@ -8,6 +8,7 @@
         <variable
             name="item"
             type="com.customer.offerswindow.model.dashboard.Images" />
+
         <variable
             name="onItemClick"
             type="android.view.View.OnClickListener" />
@@ -23,8 +24,9 @@
             imgNormalUrl="@{item.imagepath}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:onClick="@{onItemClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/bg_dummyimg" />

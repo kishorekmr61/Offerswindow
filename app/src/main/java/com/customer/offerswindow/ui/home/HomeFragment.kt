@@ -1,9 +1,11 @@
 package com.customer.offerswindow.ui.home
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
+import androidx.core.view.get
+import androidx.core.view.isEmpty
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -61,6 +65,7 @@ import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
+import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -97,7 +102,7 @@ class HomeFragment : Fragment(), MenuProvider {
     var categoryid = "0"
     var customerid = "0"
     var previouscat = 0
-    var previouscityid = "0"
+    var ischipclicked = false
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -407,11 +412,9 @@ class HomeFragment : Fragment(), MenuProvider {
                     homeViewModel.getGoldRatesData()
                     if (!otherServicesList.isNullOrEmpty()) {
                         binding.otherserviceLyout.visibility = View.VISIBLE
-                        binding.othersvcTxt.visibility = View.VISIBLE
                         loadViewPager(otherServicesList)
                     } else {
                         binding.otherserviceLyout.visibility = View.GONE
-                        binding.othersvcTxt.visibility = View.GONE
                     }
                 }
 
@@ -495,12 +498,20 @@ class HomeFragment : Fragment(), MenuProvider {
                         )
                     }
                     homeViewModel.isloading.set(true)
+                    if (!binding.offertypeChips.isEmpty()) {
+                        val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
+                        firstChip?.isChecked = true
+                    }
                     loadDashboardData()
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
                     homeViewModel.isloading.set(true)
+                    if (!binding.offertypeChips.isEmpty()) {
+                        val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
+                        firstChip?.isChecked = true
+                    }
                     loadDashboardData()
                 }
 
@@ -533,6 +544,9 @@ class HomeFragment : Fragment(), MenuProvider {
                         offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
                     }
                     loadFilters()
+
+
+
                     homeViewModel.isloading.set(true)
                     homeViewModel.getShowRoomsData("0", "0", "0")
                 }
@@ -756,32 +770,40 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     fun loadFilters() {
-        var previousfilter = 0
+
         offertypeList.firstOrNull()?.filetrselection = true
-        binding.rvFilter.setUpMultiViewRecyclerAdapter(
-            offertypeList
-        ) { item: FilterData, binder: ViewDataBinding, position: Int ->
-            binder.setVariable(BR.item, item)
-            binder.setVariable(BR.onItemClick, View.OnClickListener {
-                when (it.id) {
-                    R.id.img_card -> {
-                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                            offertypeList[previousfilter].filetrselection = false
-                            previousfilter = position
-                            offertypeList[previousfilter].filetrselection = true
-                            categoryid = item.filtercode ?: categoryid
-
-                            dashboardOffersList()
-                        } else {
-
-                            findNavController().navigate(R.id.nav_sign_in)
-                        }
-
-                        binding.rvFilter.notifyDataChange()
-                    }
+        binding.offertypeChips.isSingleLine = true
+        binding.offertypeChips.isSingleSelection = true
+        binding.offertypeChips.setOnCheckedStateChangeListener { group, checkedIds ->
+            var selectedchip = ""
+            for (i in 0 until group.childCount) {
+                val chip = group.getChildAt(i) as Chip
+                chip.isChecked = checkedIds.contains(chip.id)
+                if (chip.isChecked) {
+                    selectedchip = chip.id.toString()
+                    chip.chipStrokeColor =
+                        activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.primary)) }
+                    chip.chipBackgroundColor =
+                        activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.primary)) }
+                    activity?.getColor(R.color.white)?.let { it1 -> chip.setTextColor(it1) }
+                } else {
+                    chip.chipStrokeColor =
+                        activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.transparent)) }
+                    chip.chipBackgroundColor =
+                        activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.white)) }
+                    activity?.getColor(R.color.black)?.let { it1 -> chip.setTextColor(it1) }
                 }
-                binder.executePendingBindings()
-            })
+            }
+
+            categoryid = selectedchip
+            dashboardOffersList()
+        }
+        binding.offertypeChips.removeAllViews()
+        var i = 0
+        offertypeList.forEach {
+            binding.offertypeChips.addView(createChip(it.filtercategory_desc ?: "", i,))
+            binding.executePendingBindings()
+            i++
         }
     }
 
@@ -1015,4 +1037,19 @@ class HomeFragment : Fragment(), MenuProvider {
         findNavController().navigate(R.id.nav_webview, bundle)
     }
 
+
+    private fun createChip(label: String, indexvalue: Int): Chip {
+        val chip = Chip(activity, null, R.style.My_Widget_MaterialComponents_Chip_Choice)
+        chip.id = indexvalue
+        chip.tag = indexvalue
+        chip.text = label
+        chip.isCloseIconVisible = false
+        chip.isChipIconVisible = false
+        chip.isCheckable = true
+        chip.isClickable = true
+        chip.gravity = Gravity.CENTER
+        chip.isCheckedIconVisible = false
+        chip.isSingleLine = true
+        return chip
+    }
 }

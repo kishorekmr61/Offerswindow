@@ -55,7 +55,7 @@
             style="@style/Ag_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_1sdp"
             android:maxLines="2"
             android:padding="@dimen/_4sdp"
             android:text="@{item.category_desc}"
