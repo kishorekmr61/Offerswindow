@@ -81,7 +81,6 @@ import java.util.TimerTask
 class HomeFragment : Fragment(), MenuProvider {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private val wishlistViewModel: WishListViewModel by viewModels()
     private var _binding: FragmentHomeCustomerBinding? = null
     private val binding get() = _binding!!
     private val vm: DashBoardViewModel by activityViewModels()
@@ -89,10 +88,8 @@ class HomeFragment : Fragment(), MenuProvider {
     var locationList = arrayListOf<SpinnerRowModel>()
     var cityList = arrayListOf<SpinnerRowModel>()
     var showroomList = arrayListOf<SpinnerRowModel>()
-    var mlocationList = arrayListOf<String>()
     var offertypeList = arrayListOf<FilterData>()
     var otherServicesList = arrayListOf<CommonDataResponse>()
-    var dashboaroffersList = arrayListOf<DashboardData>()
     private lateinit var imageViewPagerAdapter: SliderAdapter
     var locationId = "0"
     var showroomid = "0"
@@ -102,7 +99,6 @@ class HomeFragment : Fragment(), MenuProvider {
     var categoryid = "0"
     var customerid = "0"
     var previouscat = 0
-    var ischipclicked = false
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -431,7 +427,6 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.goldratesdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    homeViewModel.isloading.set(false)
                     response.data?.let { resposnes ->
                         val gold24 = "Gold 24K :  ".plus(
                             ("₹ " + resposnes.data.firstOrNull()?.Gold_24c)
@@ -456,13 +451,10 @@ class HomeFragment : Fragment(), MenuProvider {
                         binding.goldratesTxt.visibility = View.VISIBLE
 
                     }
-                    homeViewModel.isloading.set(true)
                     homeViewModel.getOfferServiceDetails("0")
                 }
 
                 is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
-                    homeViewModel.isloading.set(true)
                     homeViewModel.getOfferServiceDetails("0")
                 }
 
@@ -485,7 +477,6 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.showRoomdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    homeViewModel.isloading.set(false)
                     showroomList.clear()
                     response.data?.Data?.forEach {
                         showroomList.add(
@@ -497,7 +488,6 @@ class HomeFragment : Fragment(), MenuProvider {
                             )
                         )
                     }
-                    homeViewModel.isloading.set(true)
                     if (!binding.offertypeChips.isEmpty()) {
                         val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
                         firstChip?.isChecked = true
@@ -506,8 +496,6 @@ class HomeFragment : Fragment(), MenuProvider {
                 }
 
                 is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
-                    homeViewModel.isloading.set(true)
                     if (!binding.offertypeChips.isEmpty()) {
                         val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
                         firstChip?.isChecked = true
@@ -537,23 +525,16 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.offertypeResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    homeViewModel.isloading.set(false)
                     offertypeList.clear()
                     offertypeList.add(FilterData("All", "0", true))
                     response.data?.Data?.forEach {
                         offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
                     }
                     loadFilters()
-
-
-
-                    homeViewModel.isloading.set(true)
                     homeViewModel.getShowRoomsData("0", "0", "0")
                 }
 
                 is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
-                    homeViewModel.isloading.set(true)
                     homeViewModel.getShowRoomsData("0", "0", "0")
                 }
 
@@ -642,8 +623,6 @@ class HomeFragment : Fragment(), MenuProvider {
                 var datavalues = item as DashboardData
                 var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
                 var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-//                var datam= wishlistViewModel.wishlistResponse.value?.data?.Data?.indexOf(item.offertypecode)
-//                item.isfavourite = datam
                 viewpager.setUpViewPagerAdapter(
                     getImageList(datavalues.ImagesList) ?: arrayListOf()
                 ) { item: Images, binder: ViewDataBinding, position: Int ->
@@ -748,7 +727,6 @@ class HomeFragment : Fragment(), MenuProvider {
             }
 
         adapter.addLoadStateListener {
-//            if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached) {
             if (adapter.snapshot().items.isEmpty()) {
                 binding.nodataavaliable.nodataLayout.visibility = View.VISIBLE
                 binding.rvOfferslist.visibility = View.GONE
@@ -756,7 +734,6 @@ class HomeFragment : Fragment(), MenuProvider {
                 binding.nodataavaliable.nodataLayout.visibility = View.GONE
                 binding.rvOfferslist.visibility = View.VISIBLE
             }
-//            }
         }
 
         val concatAdapter = adapter.withLoadStateFooter(
