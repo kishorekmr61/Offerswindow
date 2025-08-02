@@ -1,6 +1,6 @@
 package com.customer.offerswindow.data.api.login.apiServices
 
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.wallet.PostRedemptionApproval
 import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.model.wallet.RewardBalanceResponse
@@ -61,10 +61,10 @@ interface WalletApiService {
     @POST("Transactions/RewardRedemptionApproval?")
     suspend fun postRedemptionApprovalData(
         @Body postRedemptionApproval: PostRedemptionApproval
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @POST("ShowRoomOffers/PostRewardRedemption")
     suspend fun postRedemptionRequestData(
         @Body redemptionRequestBody: RedemptionRequestBody
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 }

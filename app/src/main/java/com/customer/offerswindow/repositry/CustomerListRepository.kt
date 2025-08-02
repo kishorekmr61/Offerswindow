@@ -4,7 +4,7 @@ import com.customer.offerswindow.data.api.login.CustomerHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.PostPhoneNumber
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,13 +17,13 @@ class CustomerListRepository @Inject constructor(
 ) : BaseApiResponse() {
 
 
-    suspend fun postSignUp(postSignUp: PostSignUp): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    suspend fun postSignUp(postSignUp: PostSignUp): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { customerHelperImpl.postSignUp(postSignUp) })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun postOTPData(postPhoneNumber: PostPhoneNumber): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    suspend fun postOTPData(postPhoneNumber: PostPhoneNumber): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { customerHelperImpl.postOTPData(postPhoneNumber) })
         }.flowOn(Dispatchers.IO)

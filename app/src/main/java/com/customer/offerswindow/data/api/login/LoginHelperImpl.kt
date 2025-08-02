@@ -5,6 +5,7 @@ import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.customersdata.PostuserSearch
+import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,6 +20,9 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
 
     suspend fun getOtp(mobilenumber: String) =
         masterApiService.verifyPhone(mobilenumber)
+
+    suspend fun postSignupOtp(usersignup: UserSigUp) =
+        masterApiService.postSignupOTP(usersignup)
 
     suspend fun validateOTP(mobilenumber: String, otp: String,sPinNo : String) =
         masterApiService.validateOTP(mobilenumber, otp,sPinNo)

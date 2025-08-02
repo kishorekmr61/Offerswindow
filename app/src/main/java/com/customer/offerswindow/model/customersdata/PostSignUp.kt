@@ -8,3 +8,10 @@ data class PostSignUp(
     var otpValue: String,
     var PinNo: String,
 )
+
+data class UserSigUp(
+    var FirstName: String="",
+    var LastName: String="",
+    var MobileNo: String="",
+    var EmailId: String="",
+)

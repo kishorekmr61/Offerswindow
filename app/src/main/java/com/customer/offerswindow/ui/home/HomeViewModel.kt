@@ -11,7 +11,7 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
@@ -44,9 +44,9 @@ class HomeViewModel @Inject constructor(
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var showRoomdata = MutableLiveData<NetworkResult<ShowRoomsResponse>>()
     var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
-    var postwishlistdata = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
-    var userIntrestResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
-    var postuserSerchResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var postwishlistdata = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
+    var userIntrestResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
+    var postuserSerchResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var offertypeResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
     var serviceResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()

@@ -4,13 +4,14 @@ import com.customer.offerswindow.data.api.login.LoginHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.OTPResponse
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.customersdata.PostuserSearch
+import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -57,6 +58,14 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun postSignupOtp(
+        usersignup: UserSigUp
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
+        return flow {
+            emit(safeApiCall { loginHelperImpl.postSignupOtp(usersignup) })
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun validateOTP(
         mobilenumber: String, otp: String,sPinNo:String
     ): Flow<NetworkResult<OTPResponse>> {
@@ -67,7 +76,7 @@ class Repository @Inject constructor(
 
     suspend fun postSignUp(
         postSignUp: PostSignUp
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postSignUp(postSignUp) })
         }.flowOn(Dispatchers.IO)
@@ -76,7 +85,7 @@ class Repository @Inject constructor(
 
     suspend fun forgotPassword(
         mobilenumber: String
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.getForgetPassword(mobilenumber) })
         }.flowOn(Dispatchers.IO)
@@ -92,7 +101,7 @@ class Repository @Inject constructor(
 
     suspend fun deleteUserAccount(
         Userid: String
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.deleteUserAccount(Userid) })
         }.flowOn(Dispatchers.IO)
@@ -122,13 +131,13 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun postWishlistItem(postWishlist: PostWishlist): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    suspend fun postWishlistItem(postWishlist: PostWishlist): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postWishList(postWishlist = postWishlist) })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun postSearch(postuserSearch: PostuserSearch): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    suspend fun postSearch(postuserSearch: PostuserSearch): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postSearch(postuserSearch) })
         }.flowOn(Dispatchers.IO)
@@ -146,7 +155,7 @@ class Repository @Inject constructor(
 
     suspend fun submitProfileUpdateData(
         profileUpdateRequest: ProfileUpdateRequest
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.submitProfileUpdateData(profileUpdateRequest) })
         }.flowOn(Dispatchers.IO)
@@ -154,7 +163,7 @@ class Repository @Inject constructor(
 
     suspend fun postUserIntrest(
         profileUpdateRequest: PostUserIntrest
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postUserIntrest(profileUpdateRequest) })
         }.flowOn(Dispatchers.IO)

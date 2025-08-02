@@ -8,7 +8,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.BR
+import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentNotificationsBinding
@@ -73,9 +75,19 @@ class NotificationsFragment : Fragment() {
         ) { item: NotificationsData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             binder.setVariable(BR.onItemClick, View.OnClickListener {
-
-                binder.executePendingBindings()
+                when (it.id) {
+                    R.id.img -> {
+                        navigateOfferDeatils(item)
+                    }
+                }
             })
+            binder.executePendingBindings()
         }
+    }
+
+    private fun navigateOfferDeatils(datavalues: NotificationsData) {
+        val bundle = Bundle()
+        bundle.putString("OfferID", datavalues.Offer_UID)
+        findNavController().navigate(R.id.nav_offer_details, bundle)
     }
 }

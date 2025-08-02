@@ -86,7 +86,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:onClick="@{onItemClick}"
-                    android:src="@{ViewModel.offerDeatils.isfavourite ? @drawable/select :  @drawable/unselect}"
+                    android:src="@{ViewModel.offerDeatils.getWishlistData ? @drawable/select :  @drawable/unselect}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/select" />

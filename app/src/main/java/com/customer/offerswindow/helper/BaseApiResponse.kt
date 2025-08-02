@@ -1,7 +1,7 @@
 package com.customer.offerswindow.helper
 
 import android.util.Log
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
  import com.google.gson.Gson
 import retrofit2.Response
@@ -37,7 +37,7 @@ abstract class BaseApiResponse {
                             val mError =
                                 Gson().fromJson(
                                     response.errorBody()?.string(),
-                                    StockPurchsasePostingResponse::class.java
+                                    OfferWindowCommonResponse::class.java
                                 )
                             val datamesage = mError.Message
                             error(datamesage)

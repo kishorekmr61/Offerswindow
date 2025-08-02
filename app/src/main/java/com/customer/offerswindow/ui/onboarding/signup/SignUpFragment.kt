@@ -13,6 +13,7 @@ import com.customer.offerswindow.R
 import com.customer.offerswindow.databinding.SignUpFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.customersdata.PostSignUp
+import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
@@ -62,21 +63,26 @@ class SignUpFragment : Fragment() {
             if (binding.etMobilenumber.text.isNullOrEmpty()) {
                 binding.etMobilenumber.error = "Please enter valid mobile number"
             } else {
-                signInViewModel.isloading.set(true)
-                signInViewModel.getOTP(
-                    binding.etMobilenumber.text.toString()
+                signUpViewModel.isloading.set(true)
+                signUpViewModel.getSignupOtp(
+                    UserSigUp(
+                        binding.etName.text.toString(),
+                        binding.etLastname.text.toString(),
+                        binding.etMobilenumber.text.toString(),
+                        binding.etEmail.text.toString()
+                    )
                 )
             }
         }
         binding.resendotpLbl.setOnClickListener {
-            if (binding.etMobilenumber.text.toString().isEmpty()) {
-                showToast("Please enter Mobile number")
-            } else {
-                signInViewModel.isloading.set(true)
-                signInViewModel.getOTP(
-                    binding.etMobilenumber.text.toString()
-                )
-            }
+//            if (binding.etMobilenumber.text.toString().isEmpty()) {
+//                showToast("Please enter Mobile number")
+//            } else {
+//                signInViewModel.isloading.set(true)
+//                signInViewModel.getOTP(
+//                    binding.etMobilenumber.text.toString()
+//                )
+//            }
         }
         binding.signinLbl.setOnClickListener {
             findNavController().navigate(R.id.nav_sign_in)
@@ -158,7 +164,33 @@ class SignUpFragment : Fragment() {
                 }
             }
         }
+        signUpViewModel.signupOTPResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data.let { resposnes ->
+                        if (resposnes?.Status == 200) {
+                            binding.verify.isEnabled = false
+                            binding.etMobilenumber.isEnabled = false
+                            binding.etPin.visibility = View.VISIBLE
+                            binding.confirmetPin.visibility = View.VISIBLE
+                            binding.signupBtn.visibility = View.VISIBLE
+                            ShowFullToast(response.data?.Message ?: "")
+                        } else {
+                            ShowFullToast(response.data?.Message ?: "")
+                        }
+                    }
+                }
 
+                is NetworkResult.Error -> {
+                    signInViewModel.isloading.set(false)
+                    response.message?.let { ShowFullToast(response.message) }
+                }
+
+                is NetworkResult.Loading -> {
+                    signInViewModel.isloading.set(true)
+                }
+            }
+        }
     }
 
 

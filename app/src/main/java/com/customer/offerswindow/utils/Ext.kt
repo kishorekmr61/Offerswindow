@@ -664,9 +664,11 @@ fun Activity.openWhatsAppConversation(
             installed = appInstalledOrNot("com.whatsapp.w4b")
         }
         if (installed) {
+            var msgextension = "Check out OffersWindow! \uD83D\uDECD\uFE0F\n" +
+                    "Best deals, local offers & discounts — all in one app! \n \n"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data =
-                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$message")
+                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$msgextension$message")
             startActivity(intent)
         } else {
             showToast(
@@ -761,7 +763,9 @@ fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
 }
 
 fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: String) {
-    var offerurl = "https://offerswindow.com/Offer_Details_Window?lOfferId="
+    var msgextension = "Check out OffersWindow! \uD83D\uDECD\uFE0F\n" +
+            "Best deals, local offers & discounts — all in one app! \n \n"
+    var offerurl = msgextension + "https://offerswindow.com/Offer_Details_Window?lOfferId="
     CoroutineScope(Dispatchers.IO).launch {
         try {
             // 1. Download the image
@@ -779,6 +783,7 @@ fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: Stri
             val imageUri =
                 FileProvider.getUriForFile(context, getString(R.string.authorities), file)
             // 4. Create and launch share intent on main thread
+
             withContext(Dispatchers.Main) {
                 val shareIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "image/*"

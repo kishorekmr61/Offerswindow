@@ -6,9 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
-import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.offerdetails.OfferDeatils
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
@@ -31,7 +30,7 @@ class DetailViewViewModel @Inject constructor(
     var isloading = ObservableField(false)
     var imagepath = ObservableField<String>()
     var deatiledresponse = MutableLiveData<NetworkResult<OfferDeatilsResponse>>()
-    var offerPostingResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var offerPostingResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var OfferDeatils = ObservableField<OfferDeatils>()
 
     fun getDetailData(lRecordId: String) {

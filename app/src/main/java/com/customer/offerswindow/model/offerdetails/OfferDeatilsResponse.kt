@@ -37,7 +37,9 @@ data class OfferDeatils(
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
     @Expose @SerializedName("Website_link") val Website_link: String,
     @Expose @SerializedName("Offer_Type_Desc") val Offer_Type_Desc: String,
+    var Wishlist_Status: String = "",
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<OfferImages>? = arrayListOf(),
+    var Video_Link: String = "",
     var isfavourite: Boolean = false,
     val Terms_Conditions: ArrayList<Termsandconditions>? = arrayListOf(),
     val Other_Offer_Details: ArrayList<OfferDeatils>? = arrayListOf(),
@@ -51,6 +53,15 @@ data class OfferDeatils(
             Constants.YYYYMMDDTHH,
             "dd-MM-yyyy"
         ) + " to " + convertDate(endate, Constants.YYYYMMDDTHH, "dd-MM-yyyy")
+    }
+
+    fun getWishlistData(): Boolean {
+        if (Wishlist_Status == "Yes") {
+            isfavourite= true
+            return isfavourite
+        } else {
+            return isfavourite
+        }
     }
 }
 

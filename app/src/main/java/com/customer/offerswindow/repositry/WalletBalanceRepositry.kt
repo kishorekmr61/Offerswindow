@@ -3,7 +3,7 @@ package com.customer.offerswindow.repositry
 import com.customer.offerswindow.data.api.login.WalletHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.wallet.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +28,7 @@ class WalletBalanceRepositry @Inject constructor(
 
     suspend fun postRedemptionApprovalData(
         postRedemptionApproval: PostRedemptionApproval
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { walletHelperImpl.postRedemptionApprovalData(postRedemptionApproval) })
         }.flowOn(Dispatchers.IO)
@@ -36,7 +36,7 @@ class WalletBalanceRepositry @Inject constructor(
 
     suspend fun postRedemptionRequestData(
         redemptionRequestBody: RedemptionRequestBody
-    ): Flow<NetworkResult<StockPurchsasePostingResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { walletHelperImpl.postRedemptionRequestData(redemptionRequestBody) })
         }.flowOn(Dispatchers.IO)

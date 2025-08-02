@@ -12,7 +12,10 @@ data class NotificationResponse(
 )
 
 data class NotificationsData(
-    var Notification_ID: String, var Notification_Desc: String, var Notification_Sub: String
+    var Notification_ID: String,
+    var Notification_Desc: String,
+    var Notification_Sub: String,
+    var Offer_UID: String
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.row_notifications

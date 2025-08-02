@@ -25,7 +25,7 @@ interface CustomerApiService {
     suspend fun postTask(
         @Part part: MultipartBody.Part?,
         @Part("FormData") formDataBody: RequestBody
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
 
     @Multipart
@@ -33,24 +33,24 @@ interface CustomerApiService {
     suspend fun postissueData(
         @Part part: MultipartBody.Part?,
         @Part("FormData") formDataBody: RequestBody
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @POST("UserManagement/OTPDetails")
     suspend fun postOTPData(
         @Body postPhoneNumber: PostPhoneNumber
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
 
     @POST("UserManagement/PostSignUp")
     suspend fun postSignUp(
         @Body postSignUp: PostSignUp
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @GET("UserManagement/OTPValidation?")
     suspend fun postVerifyOTPData(
         @Query("sCustomerMobileNo") sCustomerMobileNo: String,
         @Query("sOTP") sOTP: String,
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
 
 //    @GET("CustomerTransactions/EventBookingDetails?")

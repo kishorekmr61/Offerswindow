@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
-import androidx.core.view.get
 import androidx.core.view.isEmpty
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -45,7 +44,6 @@ import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.ui.wishlist.WishListViewModel
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerAdapter
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerFooterAdapter
 import com.customer.offerswindow.utils.PermissionsUtil
@@ -350,6 +348,10 @@ class HomeFragment : Fragment(), MenuProvider {
                             resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
                         )
                         homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
+                        locationId = resposnes.Data?.firstOrNull()?.Sub_Location_Code ?: locationId
+                        iCityId = resposnes.Data?.firstOrNull()?.Location_Code ?: iCityId
+                        binding.cityTxt.text = resposnes.Data?.firstOrNull()?.Location_Desc
+                        binding.locationTxt.text = resposnes.Data?.firstOrNull()?.Sub_Location_Desc
                         loadDashboardData()
                     }
                 }
@@ -381,7 +383,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 )
                             }
 
-                            locationList = homeViewModel.getLocationWIthFromCities(iCityId)
+//                            locationList = homeViewModel.getLocationWIthFromCities(iCityId)
                             if (it.MstType == "Web_Link_Offers") {
                                 otherServicesList.add(
                                     CommonDataResponse(
@@ -402,9 +404,6 @@ class HomeFragment : Fragment(), MenuProvider {
                             }
                         }
                     }
-                    binding.cityTxt.text = cityname
-                    binding.locationTxt.text = cityList.firstOrNull()?.title
-
                     homeViewModel.getGoldRatesData()
                     if (!otherServicesList.isNullOrEmpty()) {
                         binding.otherserviceLyout.visibility = View.VISIBLE
@@ -583,24 +582,19 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     private fun loadDashboardData() {
-        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-            if (!homeViewModel.customerinfo.value?.data?.Data.isNullOrEmpty()) {
-                AppPreference.read(Constants.MOBILENO, "")
-                    ?.let {
-                        homeViewModel.getUserInfo(
-                            AppPreference.read(
-                                Constants.MOBILENO,
-                                ""
-                            ) ?: ""
-                        )
-                    }
-            } else {
-                binding.loginusername.text = AppPreference.read(Constants.NAME, "")
-                dashboardOffersList()
+        AppPreference.read(Constants.MOBILENO, "")
+            ?.let {
+                homeViewModel.getUserInfo(
+                    AppPreference.read(
+                        Constants.MOBILENO,
+                        ""
+                    ) ?: ""
+                )
             }
+        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+            binding.loginusername.text = AppPreference.read(Constants.NAME, "")
         } else {
             binding.loginusername.text = getString(R.string.signin)
-            dashboardOffersList()
         }
     }
 
@@ -778,7 +772,7 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.offertypeChips.removeAllViews()
         var i = 0
         offertypeList.forEach {
-            binding.offertypeChips.addView(createChip(it.filtercategory_desc ?: "", i,))
+            binding.offertypeChips.addView(createChip(it.filtercategory_desc ?: "", i))
             binding.executePendingBindings()
             i++
         }

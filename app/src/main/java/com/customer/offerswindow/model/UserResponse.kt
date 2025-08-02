@@ -6,6 +6,8 @@ data class UserResponse(
     var Data: ArrayList<Data>
 )
 
+
+
 data class OTPResponse(
     var Status: Int,
     val Message: String,

@@ -10,9 +10,10 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.OTPResponse
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
+import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
@@ -34,17 +35,21 @@ class SignInViewModel @Inject constructor(
     var OtpResponse = MutableLiveData<NetworkResult<OTPResponse>>()
     var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
     var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
-    var forgotpasswordResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var forgotpasswordResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var isloading = ObservableField(false)
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
 
-    fun getToken(mobilenumber: String,
-                 password: String) {
+    fun getToken(
+        mobilenumber: String,
+        password: String
+    ) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getToken(mobilenumber,
-                    password).collect { values ->
+                repository.getToken(
+                    mobilenumber,
+                    password
+                ).collect { values ->
                     AppPreference.write(Constants.TOKEN, values.data?.access_token ?: "")
                     AppPreference.write(Constants.TOKENTIMER, values.data?.expires_in ?: "")
                     tokenResponse.postValue(values)
@@ -57,23 +62,12 @@ class SignInViewModel @Inject constructor(
     }
 
 
-    fun getOTP(mobileno: String) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getOtp(mobileno).collect { values ->
-                    userResponse.postValue(values)
-//                    response.value?.data = values.data
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-    }
 
-    fun validateOTP(mobileno: String, OTP: String,sPinNo :String) {
+
+    fun validateOTP(mobileno: String, OTP: String, sPinNo: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.validateOTP(mobileno, OTP,sPinNo).collect { values ->
+                repository.validateOTP(mobileno, OTP, sPinNo).collect { values ->
                     OtpResponse.postValue(values)
 //                    response.value?.data = values.data
                 }

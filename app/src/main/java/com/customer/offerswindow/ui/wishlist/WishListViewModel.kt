@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.utils.helper.NetworkHelper
@@ -22,7 +22,7 @@ class WishListViewModel @Inject constructor(
     var app: Application,
 ) : ViewModel() {
     var wishlistResponse = MutableLiveData<NetworkResult<WishListResponse>>()
-    var removewishlistResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var removewishlistResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var isloading = ObservableField(false)
     var nodata = ObservableField<Boolean>()
     fun getWishListData(lCustomerID: String, iCategoryType: String) {

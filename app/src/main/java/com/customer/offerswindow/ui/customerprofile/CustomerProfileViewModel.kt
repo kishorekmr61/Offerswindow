@@ -11,7 +11,7 @@ import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
@@ -36,11 +36,11 @@ class CustomerProfileViewModel @Inject constructor(
     var app: Application,
 ) : ViewModel() {
     var customersdata = MutableLiveData<NetworkResult<ProfileUpdateResponse>>()
-    var customersdatapost = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var customersdatapost = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
     val registrationData = MutableLiveData(ProfileUpdateRequest())
-    var deleteResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var deleteResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var isloading = ObservableField(false)
     var customerdata = MutableLiveData<NetworkResult<CustomerDataResponse>>()
     var profilePic = ObservableField<String>()

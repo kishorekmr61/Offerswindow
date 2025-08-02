@@ -2,7 +2,7 @@ package com.customer.offerswindow.data.api.login.apiServices
 
 import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.PostResetPassword
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
@@ -10,6 +10,7 @@ import com.customer.offerswindow.model.customersdata.PostUpdateProfile
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.customersdata.PostuserSearch
+import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.model.dashboard.OfferTypeResponse
 import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
@@ -63,6 +64,12 @@ interface MasterApiService {
         @Query("sPhoneNumber") mobileno: String,
     ): Response<UserResponse>
 
+    @POST("UserManagement/PostSendOtp?")
+    suspend fun postSignupOTP(
+        @Body userSigUp: UserSigUp,
+    ): Response<OfferWindowCommonResponse>
+
+
 
     @GET("UserManagement/GetValidateOtp?")
     suspend fun validateOTP(
@@ -74,23 +81,23 @@ interface MasterApiService {
     @POST("UserManagement/PostSignUp")
     suspend fun signupUser(
         postSignUp: PostSignUp
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
 
     @GET("Transactions/ForgotPassword?")
     suspend fun forgotPassword(
         @Query("lUserID") mobileno: String,
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @POST("UserManagement/ResetPassword")
     suspend fun resetPassword(
         @Body postResetPassword: PostResetPassword,
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @GET("UserManagement/DeleteCustomerProfile?")
     suspend fun deleteUserAccount(
         @Query("lUserID") mobileno: String,
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
 
     @GET("ShowRoomOffers/GetNotifications?")
@@ -101,22 +108,22 @@ interface MasterApiService {
     @POST("ShowRoomOffers/PostWishlist")
     suspend fun postWishList(
         @Body postWishlist: PostWishlist,
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @POST("ShowRoomOffers/PostSearchHistory")
     suspend fun postSearh(
         @Body postuserSearch: PostuserSearch
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @POST("UserManagement/PostProfileUpdate")
     suspend fun submitProfileUpdateData(
         @Body profileUpdateRequest: ProfileUpdateRequest
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @POST("UserManagement/PostUserTransactions")
     suspend fun submitUserIntrest(
         @Body postUserIntrest: PostUserIntrest
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @Multipart
     @POST("UserManagement/PostProfileUpdate")

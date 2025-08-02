@@ -1,7 +1,7 @@
 package com.customer.offerswindow.data.api.login.apiServices
 
 import com.customer.offerswindow.model.CustomerDataResponse
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
@@ -58,7 +58,7 @@ interface DashboardApiService {
     @POST("ShowRoomOffers/PostSlotBooking")
     suspend fun postSlotBooking(
          @Body postSlotBooking: PostSlotBooking
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
     @GET("ShowRoomOffers/GetSlotBookings?")
     suspend fun getBookings(
@@ -76,7 +76,7 @@ interface DashboardApiService {
     @POST("ShowRoomOffers/PostOfferBooking")
     suspend fun postOfferBooking(
         @Body postOfferBooking: PostOfferBooking
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 
 
     @GET("ShowRoomOffers/GetOfferBookings?")
@@ -88,5 +88,5 @@ interface DashboardApiService {
     suspend fun removeWishListIteam(
         @Query("lOfferId") lOfferId: String,
         @Query("lCustomerId") lCustomerId: String,
-    ): Response<StockPurchsasePostingResponse>
+    ): Response<OfferWindowCommonResponse>
 }

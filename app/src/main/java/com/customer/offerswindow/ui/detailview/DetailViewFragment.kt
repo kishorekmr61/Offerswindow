@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,11 +27,13 @@ import com.customer.offerswindow.model.offerdetails.OfferImages
 import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
+import com.customer.offerswindow.ui.wishlist.WishListViewModel
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
-import com.customer.offerswindow.utils.openNativeSharingDialog
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
+import com.customer.offerswindow.utils.openYoutube
+import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
@@ -49,6 +50,7 @@ class DetailViewFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: DetailViewViewModel by viewModels()
     private val homeViewModel: HomeViewModel by viewModels()
+    private val wishListViewModel: WishListViewModel by viewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     var termslist = ArrayList<Termsandconditions>()
     var dashboaroffersList = arrayListOf<OfferDeatils>()
@@ -120,12 +122,11 @@ class DetailViewFragment : Fragment() {
         ) { item: Termsandconditions, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             val texviedesc = binder.root.findViewById<TextView>(R.id.desc_txt)
-            Linkify.addLinks(texviedesc, Linkify.ALL );
+            Linkify.addLinks(texviedesc, Linkify.ALL);
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 binder.executePendingBindings()
             })
         }
-
     }
 
     private fun setObserver() {
@@ -170,12 +171,14 @@ class DetailViewFragment : Fragment() {
         homeViewModel.postwishlistdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    homeViewModel.isloading.set(false)
+                    viewModel.isloading.set(false)
                     showLongToast(response.message ?: "")
+                    viewModel.isloading.set(true)
+                    arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
                 }
 
                 is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
+                    viewModel.isloading.set(false)
                     showLongToast(response.message ?: "")
                 }
 
@@ -191,6 +194,24 @@ class DetailViewFragment : Fragment() {
                         var bundle = Bundle()
                         bundle.putString("ISFROM", "OFFERBOOKING")
                         findNavController().navigate(R.id.nav_success, bundle)
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    viewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
+        wishListViewModel.removewishlistResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { resposnes ->
+                        viewModel.isloading.set(false)
+                        showLongToast(response.message ?: "")
+                        viewModel.isloading.set(true)
+                        arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
                     }
                 }
 
@@ -219,17 +240,17 @@ class DetailViewFragment : Fragment() {
             when (it.id) {
                 R.id.favourite -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        if (dataobj?.isfavourite == true) {
-                            dataobj.isfavourite = false
+                        if (dataobj?.getWishlistData() == true) {
+                            viewModel.isloading.set(true)
+                            wishListViewModel.removeWishListitem(dataobj.id,AppPreference.read(Constants.USERUID, "") ?: "")
                         } else {
-                            dataobj?.isfavourite = true
+                            var postdata = PostWishlist(
+                                dataobj?.id ?: "",
+                                AppPreference.read(Constants.USERUID, "") ?: ""
+                            )
+                            viewModel.isloading.set(true)
+                            homeViewModel.postWishListItem(postdata)
                         }
-                        var postdata = PostWishlist(
-                            dataobj?.id ?: "",
-                            AppPreference.read(Constants.USERUID, "") ?: ""
-                        )
-                        viewModel.isloading.set(true)
-                        homeViewModel.postWishListItem(postdata)
                     } else {
                         var bundle = Bundle()
                         bundle.putBoolean("isFrom", true)
@@ -271,7 +292,11 @@ class DetailViewFragment : Fragment() {
 
                 R.id.share_lyout -> {
                     getUserIntrestOnclick("Share", dataobj)
-                    activity?.shareImageFromUrl(requireActivity(),dataobj?.id?:"",dataobj?.ImagesList?.firstOrNull()?.imagepath?:"")
+                    activity?.shareImageFromUrl(
+                        requireActivity(),
+                        dataobj?.id ?: "",
+                        dataobj?.ImagesList?.firstOrNull()?.imagepath ?: ""
+                    )
 
                 }
 
@@ -293,6 +318,11 @@ class DetailViewFragment : Fragment() {
                 R.id.whatsapp_lyout -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
                     activity?.openWhatsAppConversation(dataobj?.contact ?: "", "")
+                }
+
+                R.id.video_lyout -> {
+                    getUserIntrestOnclick("Video", dataobj)
+                    activity?.openYoutube(dataobj?.Video_Link?:"")
                 }
             }
 

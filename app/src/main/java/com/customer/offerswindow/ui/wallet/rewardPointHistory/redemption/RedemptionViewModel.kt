@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.StockPurchsasePostingResponse
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.repositry.Repository
@@ -27,7 +27,7 @@ class RedemptionViewModel @Inject constructor(
 ) : ViewModel() {
 
     var isloading = ObservableField(false)
-    var rewardsPostingResponse = MutableLiveData<NetworkResult<StockPurchsasePostingResponse>>()
+    var rewardsPostingResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var walletbalance = ObservableField("0")
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
