@@ -84,9 +84,9 @@ interface MasterApiService {
     ): Response<OfferWindowCommonResponse>
 
 
-    @GET("Transactions/ForgotPassword?")
+    @GET("UserManagement/GetForgotPassword?")
     suspend fun forgotPassword(
-        @Query("lUserID") mobileno: String,
+        @Query("sPhoneNumber") mobileno: String,
     ): Response<OfferWindowCommonResponse>
 
     @POST("UserManagement/ResetPassword")

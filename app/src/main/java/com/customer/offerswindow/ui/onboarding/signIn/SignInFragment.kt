@@ -90,16 +90,16 @@ class SignInFragment : Fragment() {
                 )
             }
         }
-//        binding.resendTxt.setOnClickListener {
-//            if (binding.etMobilenumber.text.toString().isEmpty()) {
-//                showToast("Please enter Mobile number")
-//            } else {
-//                signInViewModel.isloading.set(true)
-//                signInViewModel.getOTP(
-//                    binding.etMobilenumber.text.toString()
-//                )
-//            }
-//        }
+        binding.resendTxt.setOnClickListener {
+            if (binding.etMobilenumber.text.toString().isEmpty()) {
+                showToast("Please enter Mobile number")
+            } else {
+                signInViewModel.isloading.set(true)
+                signInViewModel.forgotPassword(
+                    binding.etMobilenumber.text.toString()
+                )
+            }
+        }
         binding.privacyTxt.setOnClickListener {
             openURL(Uri.parse(AppPreference.read(Constants.PRIVACYPOLICY, "www.google.com")))
         }

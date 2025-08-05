@@ -255,7 +255,7 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.searchedit.text = ""
             showroomid = "0"
             binding.clearImg.visibility = View.GONE
-            loadDashboardData()
+            dashboardOffersList()
         }
         binding.goldratesLyout.goldcLyout.setOnClickListener {
             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
@@ -352,7 +352,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         iCityId = resposnes.Data?.firstOrNull()?.Location_Code ?: iCityId
                         binding.cityTxt.text = resposnes.Data?.firstOrNull()?.Location_Desc
                         binding.locationTxt.text = resposnes.Data?.firstOrNull()?.Sub_Location_Desc
-                        loadDashboardData()
+                        dashboardOffersList()
                     }
                 }
 
@@ -491,7 +491,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
                         firstChip?.isChecked = true
                     }
-                    loadDashboardData()
+                    getLoginuserData()
                 }
 
                 is NetworkResult.Error -> {
@@ -499,7 +499,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
                         firstChip?.isChecked = true
                     }
-                    loadDashboardData()
+                    getLoginuserData()
                 }
 
                 else -> {}
@@ -564,7 +564,6 @@ class HomeFragment : Fragment(), MenuProvider {
                         )
                     }
                     loadServices()
-                    homeViewModel.isloading.set(true)
                     homeViewModel.getOfferTypeResponse("0")
 
                 }
@@ -581,7 +580,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     }
 
-    private fun loadDashboardData() {
+    private fun getLoginuserData() {
         AppPreference.read(Constants.MOBILENO, "")
             ?.let {
                 homeViewModel.getUserInfo(

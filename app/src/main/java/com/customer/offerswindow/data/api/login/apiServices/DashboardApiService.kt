@@ -43,7 +43,7 @@ interface DashboardApiService {
 
     @GET("ShowRoomOffers/GetIndividualOfferDetails?")
     suspend fun getIndividualOfferDetails(
-        @Query("lRecordId") lRecordId: String,
+        @Query("lRecordId") lRecordId: String,  @Query("lCustomerID") lCustomerID: String
     ): Response<OfferDeatilsResponse>
 
 

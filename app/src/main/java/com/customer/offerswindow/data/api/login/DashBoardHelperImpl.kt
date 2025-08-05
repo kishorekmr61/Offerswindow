@@ -1,6 +1,8 @@
 package com.customer.offerswindow.data.api.login
 
 import com.customer.offerswindow.data.api.login.apiServices.DashboardApiService
+import com.customer.offerswindow.data.constant.Constants
+import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import javax.inject.Inject
@@ -31,7 +33,10 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
         )
 
     suspend fun getIndividualOfferDetails(lRecordId: String) =
-        dashboardApiService.getIndividualOfferDetails(lRecordId)
+        dashboardApiService.getIndividualOfferDetails(
+            lRecordId,
+            AppPreference.read(Constants.USERUID, "0") ?: "0"
+        )
 
     suspend fun getofferTimeSlots(
         lShowroomId: String,
@@ -59,7 +64,7 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
     suspend fun getOffersData(lCustomerID: String) =
         dashboardApiService.getOffersData(lCustomerID)
 
-    suspend fun removeWishListIteam(lOfferId: String,lCustomerId:String) =
-        dashboardApiService.removeWishListIteam(lOfferId,lCustomerId)
+    suspend fun removeWishListIteam(lOfferId: String, lCustomerId: String) =
+        dashboardApiService.removeWishListIteam(lOfferId, lCustomerId)
 
 }

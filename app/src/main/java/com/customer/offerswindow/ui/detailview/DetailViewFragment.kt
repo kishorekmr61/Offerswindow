@@ -168,23 +168,6 @@ class DetailViewFragment : Fragment() {
                 else -> {}
             }
         }
-        homeViewModel.postwishlistdata.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    viewModel.isloading.set(false)
-                    showLongToast(response.message ?: "")
-                    viewModel.isloading.set(true)
-                    arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
-                }
-
-                is NetworkResult.Error -> {
-                    viewModel.isloading.set(false)
-                    showLongToast(response.message ?: "")
-                }
-
-                else -> {}
-            }
-        }
         viewModel.offerPostingResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -217,6 +200,9 @@ class DetailViewFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     viewModel.isloading.set(false)
+                    showLongToast(response.message ?: "")
+                    viewModel.isloading.set(true)
+                    arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
                 }
 
                 else -> {}
