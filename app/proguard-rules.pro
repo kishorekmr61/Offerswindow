@@ -168,3 +168,11 @@
 -dontwarn org.codehaus.janino.ClassBodyEvaluator
 -dontwarn org.codehaus.janino.ScriptEvaluator
 -dontwarn sun.reflect.Reflection
+
+
+# For Glide
+-keep class com.bumptech.glide.** { *; }
+-keep interface com.bumptech.glide.** { *; }
+
+# For Coil
+-keep class coil.** { *; }
