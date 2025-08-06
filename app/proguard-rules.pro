@@ -170,9 +170,8 @@
 -dontwarn sun.reflect.Reflection
 
 
-# For Glide
+
 -keep class com.bumptech.glide.** { *; }
 -keep interface com.bumptech.glide.** { *; }
-
-# For Coil
--keep class coil.** { *; }
+-keep class com.bumptech.glide.GeneratedAppGlideModule
+-keep class * extends com.bumptech.glide.module.AppGlideModule
