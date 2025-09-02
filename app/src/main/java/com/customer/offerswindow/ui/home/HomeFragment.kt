@@ -26,7 +26,6 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.BuildConfig
 import com.customer.offerswindow.R
@@ -63,6 +62,9 @@ import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
+import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -71,8 +73,6 @@ import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Timer
-import java.util.TimerTask
 
 
 @AndroidEntryPoint
@@ -594,6 +594,7 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.loginusername.text = AppPreference.read(Constants.NAME, "")
         } else {
             binding.loginusername.text = getString(R.string.signin)
+            binding.locationTxt.text = "All"
         }
     }
 
@@ -699,7 +700,10 @@ class HomeFragment : Fragment(), MenuProvider {
                         R.id.whatsapp_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Whatsapp", datavalues)
-                                activity?.openWhatsAppConversation(datavalues.contact, "")
+                                activity?.openWhatsAppConversation(
+                                    datavalues.contact,
+                                    getString(R.string.whatsappmsg)
+                                )
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in)
                             }
@@ -819,42 +823,22 @@ class HomeFragment : Fragment(), MenuProvider {
 
 
     private fun loadViewPager(commonDataResponse: ArrayList<CommonDataResponse>) {
-        var images = ArrayList<String>()
+        val imageList = ArrayList<SlideModel>()
         commonDataResponse.forEach {
-            images.add(it.Image_path)
+            imageList.add(SlideModel(it.Image_path, it.MstDesc, ScaleTypes.FIT))
         }
-        if (!images.isNullOrEmpty()) {
-            imageViewPagerAdapter = SliderAdapter(images)
-            binding.viewpager.adapter = imageViewPagerAdapter
-            val currentPageIndex = 1
-            binding.viewpager.currentItem = currentPageIndex
-            if (!images.isNullOrEmpty() && images.size > 1) {
-                runTimer(binding.viewpager, images)
-            }
-            TabLayoutMediator(binding.tablyout, binding.viewpager) { tab, position ->
-            }.attach()
-            binding.viewpager.setOnClickListener {
-                var bundle = Bundle()
-                bundle.putString(
-                    Constants.WEB_URL,
-                    otherServicesList[binding.viewpager.currentItem].URL
-                )
-                findNavController().navigate(R.id.nav_webview, bundle)
-            }
-            binding.offerText.text = otherServicesList.firstOrNull()?.MstDesc
-            binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    binding.offerText.text = otherServicesList[position].MstDesc
-                }
-            });
-            binding.offerText.setOnClickListener {
-                navigatepagerClick()
-            }
-            binding.viewoverlyout.setOnClickListener {
-                navigatepagerClick()
-            }
+        if (!imageList.isNullOrEmpty()) {
+            binding.slider.setImageList(imageList)
         }
+        binding.slider.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
+                navigatepagerClick(position)
+            }
+
+            override fun doubleClick(position: Int) {
+
+            }
+        })
 
     }
 
@@ -981,28 +965,12 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.getUserInterest(posuserintrest)
     }
 
-    private fun runTimer(viewPager2: ViewPager2, images: java.util.ArrayList<String>) {
-        try {
-            val timerTask: TimerTask = object : TimerTask() {
-                override fun run() {
-                    viewPager2.post {
-                        viewPager2.currentItem %= images.size
-                    }
-                }
-            }
-            var timer = Timer()
-            timer?.schedule(timerTask, 30000, 3000)
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }
 
-
-    fun navigatepagerClick() {
+    fun navigatepagerClick(position: Int) {
         var bundle = Bundle()
         bundle.putString(
             Constants.WEB_URL,
-            otherServicesList[binding.viewpager.currentItem].URL
+            otherServicesList[position].URL
         )
         findNavController().navigate(R.id.nav_webview, bundle)
     }

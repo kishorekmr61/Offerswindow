@@ -9,6 +9,7 @@ import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
 import com.customer.offerswindow.model.OfferWindowCommonResponse
+import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
@@ -137,7 +138,7 @@ class DashBoardRepositry @Inject constructor(
 
     suspend fun postSlotBooking(
         postSlotBooking: PostSlotBooking
-    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
+    ): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.postSlotBooking(
@@ -162,7 +163,7 @@ class DashBoardRepositry @Inject constructor(
 
     suspend fun postOfferBooking(
         postOfferBooking: PostOfferBooking
-    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
+    ): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.postOfferBooking(
@@ -173,7 +174,7 @@ class DashBoardRepositry @Inject constructor(
     }
 
     suspend fun removeWishlist(lOfferId: String,lCustomerId:String
-    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
+    ): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.removeWishListIteam(

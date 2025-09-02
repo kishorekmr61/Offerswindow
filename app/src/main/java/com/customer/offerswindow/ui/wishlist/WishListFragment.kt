@@ -186,7 +186,7 @@ class WishListFragment : Fragment() {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Whatsapp")
                             activity?.openWhatsAppConversation(
-                                witem.Wishlist.firstOrNull()?.Contact_No_1 ?: "", ""
+                                witem.Wishlist.firstOrNull()?.Contact_No_1 ?: "", getString(R.string.whatsappmsg)
                             )
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)

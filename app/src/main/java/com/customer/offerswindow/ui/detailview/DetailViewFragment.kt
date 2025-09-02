@@ -303,7 +303,7 @@ class DetailViewFragment : Fragment() {
 
                 R.id.whatsapp_lyout -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
-                    activity?.openWhatsAppConversation(dataobj?.contact ?: "", "")
+                    activity?.openWhatsAppConversation(dataobj?.contact ?: "", getString(R.string.whatsappmsg))
                 }
 
                 R.id.video_lyout -> {

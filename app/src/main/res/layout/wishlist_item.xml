@@ -82,13 +82,14 @@
             android:textColor="@color/color_272727"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/share_img"
+            app:layout_constraintEnd_toStartOf="@id/contact_lyout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_card"
-            tools:text="@string/categoriename" />
+            tools:text="@string/app_name" />
 
 
         <include
+            android:id="@+id/contact_lyout"
             layout="@layout/contactinfo_lyout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

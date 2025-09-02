@@ -3,6 +3,7 @@ package com.customer.offerswindow.data.api.login.apiServices
 import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.PostResetPassword
 import com.customer.offerswindow.model.OfferWindowCommonResponse
+import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
@@ -113,7 +114,7 @@ interface MasterApiService {
     @POST("ShowRoomOffers/PostSearchHistory")
     suspend fun postSearh(
         @Body postuserSearch: PostuserSearch
-    ): Response<OfferWindowCommonResponse>
+    ): Response<PostOfferWindowCommonResponse>
 
     @POST("UserManagement/PostProfileUpdate")
     suspend fun submitProfileUpdateData(
@@ -123,7 +124,7 @@ interface MasterApiService {
     @POST("UserManagement/PostUserTransactions")
     suspend fun submitUserIntrest(
         @Body postUserIntrest: PostUserIntrest
-    ): Response<OfferWindowCommonResponse>
+    ): Response<PostOfferWindowCommonResponse>
 
     @Multipart
     @POST("UserManagement/PostProfileUpdate")

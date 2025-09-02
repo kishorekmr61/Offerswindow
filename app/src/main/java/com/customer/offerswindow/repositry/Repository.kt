@@ -5,6 +5,7 @@ import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.OTPResponse
 import com.customer.offerswindow.model.OfferWindowCommonResponse
+import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.TokenResponse
 import com.customer.offerswindow.model.UserResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
@@ -137,7 +138,7 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun postSearch(postuserSearch: PostuserSearch): Flow<NetworkResult<OfferWindowCommonResponse>> {
+    suspend fun postSearch(postuserSearch: PostuserSearch): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postSearch(postuserSearch) })
         }.flowOn(Dispatchers.IO)
@@ -163,7 +164,7 @@ class Repository @Inject constructor(
 
     suspend fun postUserIntrest(
         profileUpdateRequest: PostUserIntrest
-    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
+    ): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.postUserIntrest(profileUpdateRequest) })
         }.flowOn(Dispatchers.IO)

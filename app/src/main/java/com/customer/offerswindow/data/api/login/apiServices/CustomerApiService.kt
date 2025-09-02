@@ -20,20 +20,6 @@ interface CustomerApiService {
     ): Response<CustomerDataResponse>
 
 
-    @Multipart
-    @POST("CustomerTransactions/TaskDetails")
-    suspend fun postTask(
-        @Part part: MultipartBody.Part?,
-        @Part("FormData") formDataBody: RequestBody
-    ): Response<OfferWindowCommonResponse>
-
-
-    @Multipart
-    @POST("CustomerTransactions/ReportAnIssue")
-    suspend fun postissueData(
-        @Part part: MultipartBody.Part?,
-        @Part("FormData") formDataBody: RequestBody
-    ): Response<OfferWindowCommonResponse>
 
     @POST("UserManagement/OTPDetails")
     suspend fun postOTPData(

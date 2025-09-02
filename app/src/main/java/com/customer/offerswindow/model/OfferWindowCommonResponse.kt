@@ -12,4 +12,16 @@ data class postData(
     )
 
 
+data class PostOfferWindowCommonResponse(
+    var Status: Int,
+    val Message: String,
+    var Data: Commondata
+)
+
+data class Commondata(
+    var ID: Long,
+
+    )
+
+
 

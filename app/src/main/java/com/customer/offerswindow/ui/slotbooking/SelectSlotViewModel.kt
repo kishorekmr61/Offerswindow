@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.OfferWindowCommonResponse
+import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
@@ -25,7 +26,7 @@ class SelectSlotViewModel @Inject constructor(
     var location = ObservableField<String>()
     var isloading = ObservableField(false)
     var slotsDataResponse = MutableLiveData<NetworkResult<SlotsDataResponse>>()
-    var slotPostingResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
+    var slotPostingResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
 
     fun getSlotsData(lShowroomId: String, lLocationId: String, lServiceId: String, date: String) {
         viewModelScope.launch {

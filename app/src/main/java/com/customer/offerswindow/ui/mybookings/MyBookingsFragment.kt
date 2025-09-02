@@ -181,7 +181,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
                     R.id.whatsapp_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(item, "Whatsapp")
-                            activity?.openWhatsAppConversation(item.Contact_No_1, "")
+                            activity?.openWhatsAppConversation(item.Contact_No_1, getString(R.string.whatsappmsg))
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)
                         }

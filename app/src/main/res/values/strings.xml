@@ -78,5 +78,6 @@
     <string name="onesignappid">7b903495-1dc6-49f9-a3bf-19309adf3281</string>
     <string name="enable_location_permission_setting_info">This app needs location permission to continue. Please go to settings and allow location permission.</string>
     <string name="enter_verificattion_code">Enter Verificattion Code</string>
+    <string name="whatsappmsg">I found this offer in OffersWindow app. I would like to know more details about this offer  Are you available to discuss now?</string>
 
 </resources>

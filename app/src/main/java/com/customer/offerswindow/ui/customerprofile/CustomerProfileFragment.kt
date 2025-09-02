@@ -219,7 +219,7 @@ class CustomerProfileFragment : Fragment() {
 
             formDataJson.addProperty("CityId", cityid)
             formDataJson.addProperty("locationId", locationid)
-            formDataJson.addProperty("Cust_Image_URL", mcustomerData.Cust_Image_URL)
+            formDataJson.addProperty("CustomerPhotoFilePath", mcustomerData.Cust_Image_URL)
             formDataJson.addProperty("countryId", countryid)
             formDataJson.addProperty("pinCode", binding.etPincode.text.toString())
 
@@ -273,6 +273,11 @@ class CustomerProfileFragment : Fragment() {
                     ) {
                         if (uri != null) {
                             var bundle = Bundle()
+                            mcustomerData.DOB = convertDate(
+                                mcustomerData.DOB ?:"",
+                                "yyyy-mm-DD",
+                                Constants.DDMMYYYY
+                            )
                             bundle.putString(
                                 Constants.PROFILEINFO,
                                 Gson().toJson(mcustomerData)
