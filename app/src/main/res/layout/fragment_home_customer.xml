@@ -163,6 +163,52 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/categories_txt"
+                    style="@style/AG_altbold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="@string/categories"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/viewall_txt"
+                    style="@style/AG_altbold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="@string/view_all"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_End"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_categories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
+                    app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
+                    app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
+                    app:layout_constraintTop_toBottomOf="@+id/categories_txt"
+                    tools:listitem="@layout/catrgoriesrow"
+                    tools:visibility="visible" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/searchlayout"
                     android:layout_width="match_parent"
@@ -174,7 +220,7 @@
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_Start"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14">
+                    app:layout_constraintTop_toBottomOf="@+id/rv_categories">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/location_txt"
@@ -225,6 +271,16 @@
                         tools:visibility="visible" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/offertype_chips"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:chipSpacing="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
+                    app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
+                    app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
+                    app:layout_constraintTop_toBottomOf="@+id/searchlayout" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/goldrates_txt"
@@ -242,67 +298,8 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/searchlayout"
+                    app:layout_constraintTop_toBottomOf="@+id/offertype_chips"
                     tools:text="@string/categories" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/categories_txt"
-                    style="@style/AG_altbold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:text="@string/categories"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/goldrates_txt" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/viewall_txt"
-                    style="@style/AG_altbold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:text="@string/view_all"
-                    android:textColor="@color/primary"
-                    android:textSize="@dimen/_12ssp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_End"
-                    app:layout_constraintTop_toBottomOf="@+id/goldrates_txt" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_categories"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
-                    app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
-                    app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/categories_txt"
-                    tools:listitem="@layout/catrgoriesrow"
-                    tools:visibility="visible" />
-
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/offertype_chips"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    app:chipSpacing="@dimen/_4sdp"
-                    app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
-                    app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
-                    app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_categories" />
-
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/otherservice_lyout"
@@ -312,7 +309,7 @@
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/offertype_chips">
+                    app:layout_constraintTop_toBottomOf="@+id/goldrates_txt">
 
 
                     <com.denzcoskun.imageslider.ImageSlider
@@ -357,7 +354,6 @@
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
                     app:layout_constraintTop_toBottomOf="@+id/goldrates_lyout"
                     tools:visibility="visible" />
-
 
 
                 <include

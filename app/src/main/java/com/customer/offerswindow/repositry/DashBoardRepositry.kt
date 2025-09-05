@@ -19,6 +19,7 @@ import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.model.masters.ShowRoomsResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
+import com.customer.offerswindow.model.offerdetails.SearchCriteriaResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -179,6 +180,17 @@ class DashBoardRepositry @Inject constructor(
             emit(safeApiCall {
                 dashBoardHelperImpl.removeWishListIteam(
                     lOfferId,lCustomerId
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getSearchCriteria(lCustomerId:String
+    ): Flow<NetworkResult<SearchCriteriaResponse>> {
+        return flow {
+            emit(safeApiCall {
+                dashBoardHelperImpl.getSearchCriteria(
+                    lCustomerId
                 )
             })
         }.flowOn(Dispatchers.IO)

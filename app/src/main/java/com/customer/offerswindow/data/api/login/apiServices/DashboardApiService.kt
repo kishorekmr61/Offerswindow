@@ -11,6 +11,7 @@ import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.model.masters.ShowRoomsResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
+import com.customer.offerswindow.model.offerdetails.SearchCriteriaResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -90,4 +91,9 @@ interface DashboardApiService {
         @Query("lOfferId") lOfferId: String,
         @Query("lCustomerId") lCustomerId: String,
     ): Response<PostOfferWindowCommonResponse>
+
+    @GET("ShowRoomOffers/GetLatestSearchCriteria?")
+    suspend fun getSearchCriteria(
+        @Query("lCustomerID") lCustomerID: String
+    ): Response<SearchCriteriaResponse>
 }

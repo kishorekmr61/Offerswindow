@@ -20,6 +20,7 @@ import com.customer.offerswindow.model.masters.CommonLocationMasterResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.HubMaster
 import com.customer.offerswindow.model.notification.NotificationResponse
+import com.customer.offerswindow.model.offerdetails.SearchCriteriaResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -149,4 +150,7 @@ interface MasterApiService {
     suspend fun GetOfferServiceDetails(
         @Query("iOfferTypeId") iOfferTypeId: String
     ): Response<ServicesResponse>
+
+
+
 }

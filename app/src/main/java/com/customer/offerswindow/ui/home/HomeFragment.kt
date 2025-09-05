@@ -624,7 +624,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     binder.setVariable(BR.onItemClick, View.OnClickListener {
                         when (it.id) {
                             R.id.img -> {
-                                navigateOfferDeatils(datavalues)
+                                navigateOfferDeatils(datavalues,"")
                             }
                         }
                         binder.executePendingBindings()
@@ -842,17 +842,24 @@ class HomeFragment : Fragment(), MenuProvider {
 
     }
 
-    private fun navigateOfferDeatils(datavalues: DashboardData) {
+    private fun navigateOfferDeatils(datavalues: DashboardData?, isfrom: String="") {
         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-            var bundle = Bundle()
-            bundle.putString("OfferID", datavalues.id)
-            bundle.putString(
-                "Imagepath",
-                datavalues.ImagesList?.firstOrNull()?.imagepath
-            )
+            val bundle = Bundle()
+            if (isfrom != "Notifications") {
+                bundle.putString("OfferID", datavalues?.id)
+                bundle.putString(
+                    "Imagepath",
+                    datavalues?.ImagesList?.firstOrNull()?.imagepath
+                )
+            } else {
+                bundle.putString(
+                    "OfferID", AppPreference.read(
+                        Constants.Offer_id, ""
+                    )
+                )
+            }
             findNavController().navigate(R.id.nav_offer_details, bundle)
         } else {
-
             findNavController().navigate(R.id.nav_sign_in)
         }
     }
@@ -871,12 +878,13 @@ class HomeFragment : Fragment(), MenuProvider {
             if (AppPreference?.read("ISFROM", "") == "NOTIFICATIONS") {
                 AppPreference.write("ISFROM", "")
 
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2003") {
-                    findNavController().navigate(R.id.nav_notifications)
+                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "1") {
+                    navigateOfferDeatils(null,"Notifications")
                     AppPreference.write(Constants.Screen_Code, "")
+                    AppPreference.write(Constants.Offer_id, "")
                 }
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2004") {
-                    findNavController().navigate(R.id.nav_notifications)
+                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2") {
+                    findNavController().navigate(R.id.nav_rewardshistory)
                     AppPreference.write(Constants.Screen_Code, "")
                 }
 

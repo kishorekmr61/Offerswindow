@@ -7,7 +7,7 @@ import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import javax.inject.Inject
 
-class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: DashboardApiService) {
+class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: DashboardApiService ) {
 
     suspend fun getCustomerData(userid: String) =
         dashboardApiService.getCustomerData(userid)
@@ -66,5 +66,10 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
 
     suspend fun removeWishListIteam(lOfferId: String, lCustomerId: String) =
         dashboardApiService.removeWishListIteam(lOfferId, lCustomerId)
+
+
+    suspend fun getSearchCriteria(lCustomerId: String) =
+        dashboardApiService.getSearchCriteria( lCustomerId)
+
 
 }

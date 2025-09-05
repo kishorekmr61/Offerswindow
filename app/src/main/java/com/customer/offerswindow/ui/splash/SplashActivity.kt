@@ -16,6 +16,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
+import com.customer.offerswindow.ui.dashboard.DashboardActivity
 import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.setStatusBar
 
@@ -58,7 +59,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigatetoNext() {
-        val intent = Intent(this@SplashActivity, OnBoardingActivity::class.java)
+        val intent = Intent(this@SplashActivity, DashboardActivity::class.java)
         Handler(Looper.getMainLooper()).postDelayed({
             var notiintent = getIntent()
             if (notiintent.extras?.getString(Constants.ISFROM) == "NOTIFICATIONS") {
@@ -67,14 +68,10 @@ class SplashActivity : AppCompatActivity() {
                     Constants.Screen_Code,
                     notiintent?.extras?.get(Constants.Screen_Code).toString()
                 )
-                if (notiintent.extras?.get(Constants.Screen_Code) == "2005") {
+                if (notiintent.extras?.get(Constants.Screen_Code) == "1") {
                     AppPreference.write(
-                        Constants.Focused_Group_Code,
-                        notiintent?.extras?.getString(Constants.Focused_Group_Code) ?: ""
-                    )
-                    AppPreference.write(
-                        Constants.Focused_Group_name,
-                        notiintent?.extras?.get(Constants.Focused_Group_name).toString()
+                        Constants.Offer_id,
+                        notiintent?.extras?.getString(Constants.Offer_id) ?: ""
                     )
                 }
             }

@@ -23,6 +23,7 @@ import com.customer.offerswindow.model.dashboard.ServicesResponse
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.model.masters.ShowRoomsResponse
+import com.customer.offerswindow.model.offerdetails.SearchCriteriaResponse
 import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
@@ -50,6 +51,7 @@ class HomeViewModel @Inject constructor(
     var postuserSerchResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
     var offertypeResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
     var serviceResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
+    var searchcriteria = MutableLiveData<NetworkResult<SearchCriteriaResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
@@ -244,6 +246,18 @@ class HomeViewModel @Inject constructor(
             if (networkHelper.isNetworkConnected()) {
                 repository.getOfferServiceDetails(iOfferTypeId).collect { values ->
                     serviceResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+    fun getSearchCriteria(Customerid: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                dashBoardRepositry.getSearchCriteria(Customerid).collect { values ->
+                    searchcriteria.postValue(values)
                 }
             } else {
                 app.showToast("No Internet")
