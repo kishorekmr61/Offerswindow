@@ -271,16 +271,22 @@
                         tools:visibility="visible" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/offertype_chips"
+                <HorizontalScrollView
+                    android:id="@+id/chipofferlyout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    app:chipSpacing="@dimen/_4sdp"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/searchlayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchlayout">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/offertype_chips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:chipSpacing="@dimen/_4sdp" />
+                </HorizontalScrollView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/goldrates_txt"
@@ -298,7 +304,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@+id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/offertype_chips"
+                    app:layout_constraintTop_toBottomOf="@+id/chipofferlyout"
                     tools:text="@string/categories" />
 
                 <androidx.cardview.widget.CardView

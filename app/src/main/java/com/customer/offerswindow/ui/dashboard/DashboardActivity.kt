@@ -177,6 +177,7 @@ class DashboardActivity : AppCompatActivity() {
                 3 -> {
                     navController.navigate(R.id.nav_rewardshistory)
                 }
+
                 4 -> {
                     var bundle = Bundle()
                     navController.navigate(R.id.nav_sign_in, bundle)

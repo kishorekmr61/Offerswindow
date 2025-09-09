@@ -5,7 +5,7 @@ import com.customer.offerswindow.model.dashboard.Servicedata
 data class SearchCriteriaResponse(
     var Status: Int,
     val Message: String,
-    var Data: ArrayList<Servicedata>?
+    var Data: ArrayList<SearchCriteria>?
 )
 data class SearchCriteria(
     var Rec_ID : String="",

@@ -68,10 +68,10 @@ class Repository @Inject constructor(
     }
 
     suspend fun validateOTP(
-        mobilenumber: String, otp: String,sPinNo:String
+        mobilenumber: String, otp: String, sPinNo: String
     ): Flow<NetworkResult<OTPResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.validateOTP(mobilenumber, otp,sPinNo) })
+            emit(safeApiCall { loginHelperImpl.validateOTP(mobilenumber, otp, sPinNo) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -114,15 +114,15 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getOfferTypeDetails(lServiceId: String): Flow<NetworkResult<OfferTypeResponse>> {
+    suspend fun getOfferChips(lServiceId: String): Flow<NetworkResult<OfferTypeResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.getOfferTypeDetails(lServiceId) })
+            emit(safeApiCall { loginHelperImpl.getOfferChips(lServiceId) })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getOfferServiceDetails(iOfferTypeId: String): Flow<NetworkResult<ServicesResponse>> {
+    suspend fun getOfferCategories(iOfferTypeId: String): Flow<NetworkResult<ServicesResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.getOfferServiceDetails(iOfferTypeId) })
+            emit(safeApiCall { loginHelperImpl.GetOfferCategories(iOfferTypeId) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -151,14 +151,6 @@ class Repository @Inject constructor(
     ): Flow<NetworkResult<ProfileUpdateResponse>> {
         return flow {
             emit(safeApiCall { loginHelperImpl.submitProfileUpdateData(part, formDataBody) })
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun submitProfileUpdateData(
-        profileUpdateRequest: ProfileUpdateRequest
-    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
-        return flow {
-            emit(safeApiCall { loginHelperImpl.submitProfileUpdateData(profileUpdateRequest) })
         }.flowOn(Dispatchers.IO)
     }
 

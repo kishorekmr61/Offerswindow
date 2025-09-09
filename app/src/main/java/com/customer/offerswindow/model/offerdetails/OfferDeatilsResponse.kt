@@ -2,8 +2,6 @@ package com.customer.offerswindow.model.offerdetails
 
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
-import com.customer.offerswindow.model.dashboard.DashboardData
-import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.utils.convertDate
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.google.gson.annotations.Expose
@@ -47,6 +45,7 @@ data class OfferDeatils(
     override fun layoutId(): Int {
         return R.layout.detailhomelist_item
     }
+
     fun convertEndDate(): String {
         return convertDate(
             effectivedate,
@@ -57,7 +56,7 @@ data class OfferDeatils(
 
     fun getWishlistData(): Boolean {
         if (Wishlist_Status == "Yes") {
-            isfavourite= true
+            isfavourite = true
             return isfavourite
         } else {
             return isfavourite

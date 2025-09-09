@@ -86,6 +86,7 @@ object Constants {
     const val PRIVACYPOLICY = "PRIVACYPOLICY"
     const val GOLDTRENDREPORT = "GOLDTRENDREPORT"
     const val PIN = "PIN"
+    const val MASTERDATA = "MASTERDATA"
 }
 
 //tml-pv:location/faq/helpandsupport/contact-us/services/recommended-faqs

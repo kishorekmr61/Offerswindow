@@ -30,7 +30,7 @@ class CategoriesViewModel @Inject constructor(
     fun getOfferServiceDetails(iOfferTypeId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getOfferServiceDetails(iOfferTypeId).collect { values ->
+                repository.getOfferCategories(iOfferTypeId).collect { values ->
                     serviceResponse.postValue(values)
                 }
             } else {

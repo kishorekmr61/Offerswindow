@@ -5,8 +5,8 @@ import com.customer.offerswindow.utils.resource.WidgetViewModel
 
 data class SpinnerRowModel(
     var title: String,
-    var ischecked: Boolean,
-    var showColoursView: Boolean,
+    var ischecked: Boolean=false,
+    var showColoursView: Boolean=false,
     var tintColorCode: String ? = "0",
     var mstCode: String = "",
     var custImagePath :String ="",

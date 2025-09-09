@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.core.view.isEmpty
 import androidx.databinding.ViewDataBinding
@@ -69,7 +70,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
-import com.onesignal.OneSignal
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -95,6 +96,7 @@ class HomeFragment : Fragment(), MenuProvider {
     var iCityId = "30"
     var cityname = "Hyderabad"
     var categoryid = "0"
+    var subCateogory = "0"
     var customerid = "0"
     var previouscat = 0
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
@@ -126,19 +128,6 @@ class HomeFragment : Fragment(), MenuProvider {
         handleNotificationClick()
         setListeners()
         vm.isvisble.value = true
-        if (AppPreference.read(Constants.TOKEN, "").isNullOrEmpty()) {
-            homeViewModel.getToken(
-                AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)
-                    ?: Constants.DEFAULTUSERMOBILE,
-                AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY)
-                    ?: Constants.DEFAULTUSERKEY
-            )
-        } else {
-            homeViewModel.isloading.set(true)
-            homeViewModel.getMstData()
-        }
-//        }
-
         binding.viewallTxt.setOnClickListener {
             findNavController().navigate(R.id.nav_categories)
         }
@@ -191,8 +180,8 @@ class HomeFragment : Fragment(), MenuProvider {
                                 if (titleData != null) {
                                     binding.cityTxt.setText(titleData.title)
                                     homeViewModel.isloading.set(true)
-
-                                    locationList = homeViewModel.getLocationWIthFromCities(iCityId)
+                                    locationList =
+                                        homeViewModel.getLocationWIthFromCities(iCityId)
                                     locationId = "0"
                                     if (locationList.isNotEmpty())
                                         binding.locationTxt.text = locationList[0].title
@@ -215,41 +204,8 @@ class HomeFragment : Fragment(), MenuProvider {
             }
         }
         binding.searchedit.setOnClickListener {
-            if (showroomList.isEmpty()) {
-                showToast("No data to search")
-            } else {
-                activity?.let { it1 ->
-                    val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                        Constants.FILTER,
-                        binding.searchedit.text.toString(), showroomList, false, object :
-                            OnItemSelectedListner {
-                            override fun onItemSelectedListner(
-                                titleData: SpinnerRowModel?,
-                                datevalue: String
-                            ) {
-                                if (titleData != null) {
-                                    binding.searchedit.setText(titleData.title)
-                                    showroomid = titleData.mstCode
-                                    if (binding.locationTxt.text.toString().isNullOrEmpty()) {
-                                        binding.clearImg.visibility = View.GONE
-                                    } else {
-                                        binding.clearImg.visibility = View.VISIBLE
-                                    }
-                                    dashboardOffersList()
-                                }
-                            }
-
-                            override fun onItemmultipleSelectedListner(
-                                titleData: ArrayList<SpinnerRowModel>?,
-                                value: ArrayList<SpinnerRowModel>
-                            ) {
-
-                            }
-                        }, headerlbl = "Showrooms"
-                    )
-                    modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
-                }
-            }
+            homeViewModel.isloading.set(true)
+            homeViewModel.getShowRoomSearch(showroomid, locationId, service)
         }
         binding.clearImg.setOnClickListener {
             binding.searchedit.text = ""
@@ -259,11 +215,18 @@ class HomeFragment : Fragment(), MenuProvider {
         }
         binding.goldratesLyout.goldcLyout.setOnClickListener {
             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                openURL(Uri.parse(AppPreference.read(Constants.GOLDTRENDREPORT, "") ?: ""))
+                openURL((AppPreference.read(Constants.GOLDTRENDREPORT, "") ?: "").toUri())
             } else {
-                findNavController().navigate(R.id.nav_sign_in)
+                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
             }
         }
+        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+            homeViewModel.username.set(AppPreference.read(Constants.NAME, ""))
+        } else {
+            homeViewModel.username.set(getString(R.string.signin))
+        }
+        binding.locationTxt.text = "All"
+        homeViewModel.getOfferCategories(service)
     }
 
     private fun getDataIntent(item: CategoriesData, position: Int, mpreviouscat: Int) {
@@ -297,126 +260,94 @@ class HomeFragment : Fragment(), MenuProvider {
 
 
     private fun setObserver() {
-        homeViewModel.tokenResponse.observe(viewLifecycleOwner) { response ->
+        homeViewModel.categoriesResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    response.data?.let { resposnes ->
-                        binding.goldratesLyout.updatelblTxt.setOnClickListener {
-                            homeViewModel.isloading.set(true)
-                            homeViewModel.getGoldRatesData()
-                        }
-                        homeViewModel.isloading.set(true)
-                        homeViewModel.getMstData()
-
+                    categoryList.clear()
+                    categoryList.add(
+                        CategoriesData(
+                            false,
+                            "https://cdn.pixabay.com/photo/2021/10/11/23/49/app-6702045_1280.png",
+                            "All",
+                            "0",
+                        )
+                    )
+                    response.data?.Data?.forEach {
+                        categoryList.add(
+                            CategoriesData(
+                                false,
+                                it.Image_path,
+                                it.Mst_Desc,
+                                it.Mst_Code
+                            )
+                        )
                     }
-                }
-
-                is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
-                }
-
-                else -> {}
-            }
-        }
-        homeViewModel.customerinfo.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    response.data?.let { resposnes ->
-                        homeViewModel.isloading.set(false)
-                        binding.customerdata = resposnes.Data?.firstOrNull()
-                        AppPreference.write(
-                            Constants.NAME, resposnes?.Data?.firstOrNull()?.Cust_Name ?: ""
-                        )
-                        AppPreference.write(
-                            Constants.USERUID, resposnes?.Data?.firstOrNull()?.Cust_UID ?: "0"
-                        )
-                        OneSignal.setEmail(
-                            resposnes.Data?.firstOrNull()?.Email_ID ?: ""
-                        );
-                        OneSignal.sendTag(
-                            "CustomerUID",
-                            resposnes.Data?.firstOrNull()?.Cust_UID ?: ""
-                        )
-                        AppPreference.write(
-                            Constants.MOBILENO, resposnes?.Data?.firstOrNull()?.Mobile_No ?: ""
-                        )
-                        AppPreference.write(
-                            Constants.PIN, resposnes?.Data?.firstOrNull()?.Pin_No ?: ""
-                        )
-                        AppPreference.write(
-                            Constants.PROFILEPIC,
-                            resposnes?.Data?.firstOrNull()?.Cust_Image_URL ?: ""
-                        )
-                        homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
-                        locationId = resposnes.Data?.firstOrNull()?.Sub_Location_Code ?: locationId
-                        iCityId = resposnes.Data?.firstOrNull()?.Location_Code ?: iCityId
-                        binding.cityTxt.text = resposnes.Data?.firstOrNull()?.Location_Desc
-                        binding.locationTxt.text = resposnes.Data?.firstOrNull()?.Sub_Location_Desc
-                        dashboardOffersList()
-                    }
-                }
-
-                is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
-                }
-
-                else -> {}
-            }
-        }
-        homeViewModel.masterdata.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    otherServicesList.clear()
-                    cityList.clear()
-                    var imagelist = ArrayList<String>()
-                    cityList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
-                    response.data?.let { resposnes ->
-                        response?.data?.data?.forEach {
-                            if (it.MstType == "City") {
-                                cityList.add(
-                                    SpinnerRowModel(
-                                        it.MstDesc,
-                                        false,
-                                        false,
-                                        mstCode = it.MstCode
-                                    )
-                                )
-                            }
-
-//                            locationList = homeViewModel.getLocationWIthFromCities(iCityId)
-                            if (it.MstType == "Web_Link_Offers") {
-                                otherServicesList.add(
-                                    CommonDataResponse(
-                                        MstCode = it.MstCode,
-                                        MstDesc = it.MstDesc,
-                                        Image_path = it.Image_path, URL = it.URL
-                                    )
-                                )
-                            }
-                            if (it.MstType == "About_us_url") {
-                                AppPreference.write(Constants.ABOUTUS, it.MstDesc)
-                            }
-                            if (it.MstType == "Privacy_Policy") {
-                                AppPreference.write(Constants.PRIVACYPOLICY, it.Image_path)
-                            }
-                            if (it.MstType == "Gold_Trend_Report") {
-                                AppPreference.write(Constants.GOLDTRENDREPORT, it.Image_path)
-                            }
-                        }
-                    }
-                    homeViewModel.getGoldRatesData()
-                    if (!otherServicesList.isNullOrEmpty()) {
-                        binding.otherserviceLyout.visibility = View.VISIBLE
-                        loadViewPager(otherServicesList)
-                    } else {
-                        binding.otherserviceLyout.visibility = View.GONE
-                    }
+                    loadServices()
+                    homeViewModel.getOfferSubcategoryChips(service)
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
                     homeViewModel.isloading.set(true)
-                    homeViewModel.getOfferServiceDetails("0")
+                    homeViewModel.getOfferSubcategoryChips(service)
+                }
+
+                else -> {}
+            }
+        }
+
+        homeViewModel.subcategoryResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    offertypeList.clear()
+                    offertypeList.add(FilterData("All", "0", true))
+                    response.data?.Data?.forEach {
+                        offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
+                    }
+                    loadFilters()
+                    homeViewModel.getSearchCriteria(AppPreference.read(Constants.USERUID, "") ?: "0")
+                }
+
+                is NetworkResult.Error -> {
+                }
+
+                else -> {}
+            }
+        }
+
+        homeViewModel.searchcriteria.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let { resposnes ->
+                        homeViewModel.isloading.set(false)
+                        service = response?.data?.Data?.firstOrNull()?.Service_UID ?: service
+//                         response?.data?.Data?.firstOrNull()?.Service_Desc ?: ""
+
+                        locationId = response?.data?.Data?.firstOrNull()?.Location_UID ?: locationId
+                        showroomid = response?.data?.Data?.firstOrNull()?.Showroom_UID ?: showroomid
+                        iCityId = response?.data?.Data?.firstOrNull()?.City_UID ?: iCityId
+                        if (iCityId == "0") {
+                            binding.cityTxt.text = "All"
+                        } else {
+                            binding.cityTxt.text = homeViewModel.getName("City", iCityId)
+                        }
+                        if (locationId == "0") {
+                            binding.locationTxt.text = "All"
+                        } else {
+                            binding.locationTxt.text = homeViewModel.getName("Location", locationId)
+                        }
+                        homeViewModel.getGoldRatesData()
+                        homeViewModel.getDashboardData(
+                            showroomid,
+                            locationId,
+                            service, categoryid, iCityId,
+                            AppPreference.read(Constants.USERUID, "0") ?: "0",
+                            "0"
+                        )
+                    }
+                }
+
+                is NetworkResult.Error -> {
                 }
 
                 else -> {}
@@ -448,13 +379,12 @@ class HomeFragment : Fragment(), MenuProvider {
                             gold24.plus(gold22).plus(gold18).plus(silver).plus(diamond)
                         binding.goldratesTxt.isSelected = true
                         binding.goldratesTxt.visibility = View.VISIBLE
-
+                        dashboardOffersList()
                     }
-                    homeViewModel.getOfferServiceDetails("0")
                 }
 
                 is NetworkResult.Error -> {
-                    homeViewModel.getOfferServiceDetails("0")
+                    dashboardOffersList()
                 }
 
                 else -> {}
@@ -473,10 +403,12 @@ class HomeFragment : Fragment(), MenuProvider {
                 }
             }
         }
-        homeViewModel.showRoomdata.observe(viewLifecycleOwner) { response ->
+
+        homeViewModel.searchShowRoomResults.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     showroomList.clear()
+                    homeViewModel.isloading.set(false)
                     response.data?.Data?.forEach {
                         showroomList.add(
                             SpinnerRowModel(
@@ -487,24 +419,22 @@ class HomeFragment : Fragment(), MenuProvider {
                             )
                         )
                     }
-                    if (!binding.offertypeChips.isEmpty()) {
-                        val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
-                        firstChip?.isChecked = true
-                    }
-                    getLoginuserData()
+                    updateShowRoomSearch()
                 }
 
                 is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
                     if (!binding.offertypeChips.isEmpty()) {
                         val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
                         firstChip?.isChecked = true
                     }
-                    getLoginuserData()
+                    dashboardOffersList()
                 }
 
                 else -> {}
             }
         }
+
         homeViewModel.postwishlistdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -521,81 +451,79 @@ class HomeFragment : Fragment(), MenuProvider {
             }
         }
 
-        homeViewModel.offertypeResponse.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    offertypeList.clear()
-                    offertypeList.add(FilterData("All", "0", true))
-                    response.data?.Data?.forEach {
-                        offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
-                    }
-                    loadFilters()
-                    homeViewModel.getShowRoomsData("0", "0", "0")
-                }
-
-                is NetworkResult.Error -> {
-                    homeViewModel.getShowRoomsData("0", "0", "0")
-                }
-
-                else -> {}
-            }
-        }
-        homeViewModel.serviceResponse.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    categoryList.clear()
-                    categoryList.add(
-                        CategoriesData(
-                            false,
-                            "https://cdn.pixabay.com/photo/2021/10/11/23/49/app-6702045_1280.png",
-                            "All",
-                            "0",
-                        )
+        val sType = object : TypeToken<List<CommonDataResponse>>() {}.type
+        val otherList = Gson().fromJson<List<CommonDataResponse>>(
+            AppPreference.read(Constants.MASTERDATA, ""),
+            sType
+        )
+        cityList.clear()
+        otherList.forEach {
+            if (it.MstType == "Web_Link_Offers")
+                otherServicesList.add(
+                    CommonDataResponse(
+                        MstCode = it.MstCode,
+                        MstDesc = it.MstDesc,
+                        Image_path = it.Image_path, URL = it.URL
                     )
-                    response.data?.Data?.forEach {
-                        categoryList.add(
-                            CategoriesData(
-                                false,
-                                it.Image_path,
-                                it.Mst_Desc,
-                                it.Mst_Code,
-
-                                )
-                        )
-                    }
-                    loadServices()
-                    homeViewModel.getOfferTypeResponse("0")
-
-                }
-
-                is NetworkResult.Error -> {
-                    homeViewModel.isloading.set(false)
-                    homeViewModel.isloading.set(true)
-                    homeViewModel.getOfferTypeResponse("0")
-                }
-
-                else -> {}
+                )
+            if (it.MstType == "City") {
+                cityList.add(SpinnerRowModel(it.MstDesc, mstCode = it.MstCode))
             }
         }
+        loadViewPager(otherServicesList)
 
     }
 
-    private fun getLoginuserData() {
-        AppPreference.read(Constants.MOBILENO, "")
-            ?.let {
-                homeViewModel.getUserInfo(
-                    AppPreference.read(
-                        Constants.MOBILENO,
-                        ""
-                    ) ?: ""
-                )
-            }
-        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-            binding.loginusername.text = AppPreference.read(Constants.NAME, "")
+    private fun updateShowRoomSearch() {
+        if (showroomList.isEmpty()) {
+            showToast("No data to search")
         } else {
-            binding.loginusername.text = getString(R.string.signin)
-            binding.locationTxt.text = "All"
+            activity?.let { it1 ->
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.FILTER,
+                    binding.searchedit.text.toString(), showroomList, false, object :
+                        OnItemSelectedListner {
+                        override fun onItemSelectedListner(
+                            titleData: SpinnerRowModel?,
+                            datevalue: String
+                        ) {
+                            if (titleData != null) {
+                                binding.searchedit.setText(titleData.title)
+                                showroomid = titleData.mstCode
+                                if (binding.locationTxt.text.toString().isNullOrEmpty()) {
+                                    binding.clearImg.visibility = View.GONE
+                                } else {
+                                    binding.clearImg.visibility = View.VISIBLE
+                                }
+                                setChipDefaultSelected()
+                            }
+                        }
+
+                        override fun onItemmultipleSelectedListner(
+                            titleData: ArrayList<SpinnerRowModel>?,
+                            value: ArrayList<SpinnerRowModel>
+                        ) {
+
+                        }
+                    }, headerlbl = "Showrooms"
+                )
+                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+            }
         }
+    }
+
+    fun setChipDefaultSelected() {
+        if (!binding.offertypeChips.isEmpty()) {
+            val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
+            firstChip?.isChecked = true
+        }
+        homeViewModel.getGoldRatesData()
+        if (!otherServicesList.isNullOrEmpty()) {
+            binding.otherserviceLyout.visibility = View.VISIBLE
+        } else {
+            binding.otherserviceLyout.visibility = View.GONE
+        }
+        dashboardOffersList()
     }
 
     fun dashboardOffersList() {
@@ -624,7 +552,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     binder.setVariable(BR.onItemClick, View.OnClickListener {
                         when (it.id) {
                             R.id.img -> {
-                                navigateOfferDeatils(datavalues,"")
+                                navigateOfferDeatils(datavalues, "")
                             }
                         }
                         binder.executePendingBindings()
@@ -649,7 +577,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 homeViewModel.postWishListItem(postdata)
                                 binding.rvOfferslist.notifyDataChange()
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
 
@@ -666,7 +594,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                     datavalues.ImagesList?.firstOrNull()?.imagepath ?: ""
                                 )
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
 
@@ -675,7 +603,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 getUserIntrestOnclick("Call", datavalues)
                                 activity?.openDialPad(datavalues.contact)
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
 
@@ -684,7 +612,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 getUserIntrestOnclick("Direction", datavalues)
                                 activity?.navigateToGoogleMap(datavalues.GoogleLocation)
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
 
@@ -693,7 +621,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 getUserIntrestOnclick("Website", datavalues)
                                 openURL(Uri.parse(datavalues?.Website_link ?: ""))
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
 
@@ -705,7 +633,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                     getString(R.string.whatsappmsg)
                                 )
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
 
@@ -714,7 +642,7 @@ class HomeFragment : Fragment(), MenuProvider {
                                 getUserIntrestOnclick("Video", datavalues)
                                 activity?.openYoutube(datavalues.Video_Link)
                             } else {
-                                findNavController().navigate(R.id.nav_sign_in)
+                                findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
                         }
                     }
@@ -744,12 +672,11 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     fun loadFilters() {
-
         offertypeList.firstOrNull()?.filetrselection = true
         binding.offertypeChips.isSingleLine = true
         binding.offertypeChips.isSingleSelection = true
         binding.offertypeChips.setOnCheckedStateChangeListener { group, checkedIds ->
-            var selectedchip = ""
+            var selectedchip = "0"
             for (i in 0 until group.childCount) {
                 val chip = group.getChildAt(i) as Chip
                 chip.isChecked = checkedIds.contains(chip.id)
@@ -768,8 +695,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     activity?.getColor(R.color.black)?.let { it1 -> chip.setTextColor(it1) }
                 }
             }
-
-            categoryid = selectedchip
+            subCateogory = selectedchip
             dashboardOffersList()
         }
         binding.offertypeChips.removeAllViews()
@@ -779,10 +705,13 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.executePendingBindings()
             i++
         }
+        if (!binding.offertypeChips.isEmpty()) {
+            val firstChip = binding.offertypeChips.getChildAt(0) as? Chip
+            firstChip?.isChecked = true
+        }
     }
 
     fun loadServices() {
-
         categoryList.firstOrNull()?.isselected = true
         if (!categoryList.isNullOrEmpty()) {
             binding.categoriesTxt.visibility = View.VISIBLE
@@ -806,11 +735,10 @@ class HomeFragment : Fragment(), MenuProvider {
                             homeViewModel.isloading.set(true)
                             service = item.category_id ?: categoryid
                             arguments?.putString("ISFROM", "")
-                            homeViewModel.getOfferTypeResponse(item.category_id ?: categoryid)
-                            dashboardOffersList()
+                            homeViewModel.getOfferSubcategoryChips(item.category_id ?: categoryid)
                         } else {
 
-                            findNavController().navigate(R.id.nav_sign_in)
+                            findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                         }
 
                         binding.rvCategories.notifyDataChange()
@@ -820,7 +748,6 @@ class HomeFragment : Fragment(), MenuProvider {
             })
         }
     }
-
 
     private fun loadViewPager(commonDataResponse: ArrayList<CommonDataResponse>) {
         val imageList = ArrayList<SlideModel>()
@@ -842,7 +769,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     }
 
-    private fun navigateOfferDeatils(datavalues: DashboardData?, isfrom: String="") {
+    private fun navigateOfferDeatils(datavalues: DashboardData?, isfrom: String = "") {
         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
             val bundle = Bundle()
             if (isfrom != "Notifications") {
@@ -860,7 +787,7 @@ class HomeFragment : Fragment(), MenuProvider {
             }
             findNavController().navigate(R.id.nav_offer_details, bundle)
         } else {
-            findNavController().navigate(R.id.nav_sign_in)
+            findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
         }
     }
 
@@ -871,7 +798,6 @@ class HomeFragment : Fragment(), MenuProvider {
         return imagesList
     }
 
-
     private fun handleNotificationClick() {
 
         try {
@@ -879,7 +805,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 AppPreference.write("ISFROM", "")
 
                 if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "1") {
-                    navigateOfferDeatils(null,"Notifications")
+                    navigateOfferDeatils(null, "Notifications")
                     AppPreference.write(Constants.Screen_Code, "")
                     AppPreference.write(Constants.Offer_id, "")
                 }
@@ -904,7 +830,6 @@ class HomeFragment : Fragment(), MenuProvider {
             e.printStackTrace()
         }
     }
-
 
     private fun getData(data: NetworkResult<CommonMasterResponse>, s: String): CommonDataResponse? {
         return data.data?.data?.find {
@@ -931,9 +856,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                         findNavController().navigate(R.id.nav_customerProfileFragment)
                     } else {
-                        var bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
-                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                        findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                     }
                 }
 
@@ -943,7 +866,7 @@ class HomeFragment : Fragment(), MenuProvider {
                     } else {
                         var bundle = Bundle()
                         bundle.putBoolean("isFrom", true)
-                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                        findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                     }
                 }
 
@@ -954,12 +877,23 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         var bundle = Bundle()
                         bundle.putBoolean("isFrom", true)
-                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                        findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                     }
                 }
             }
 
         })
+    }
+
+    private fun getLoginBundleData(): Bundle {
+        var bundle = Bundle()
+        bundle.putBoolean("isFrom", true)
+        bundle.putString("Locationid", locationId)
+        bundle.putString("lShowroomId", showroomid)
+        bundle.putString("lServiceId", service)
+        bundle.putString("iCategoryId", categoryid)
+        bundle.putString("iCityId", iCityId)
+        return bundle
     }
 
     fun getUserIntrestOnclick(flag: String, datavalues: DashboardData) {
@@ -973,7 +907,6 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.getUserInterest(posuserintrest)
     }
 
-
     fun navigatepagerClick(position: Int) {
         var bundle = Bundle()
         bundle.putString(
@@ -982,7 +915,6 @@ class HomeFragment : Fragment(), MenuProvider {
         )
         findNavController().navigate(R.id.nav_webview, bundle)
     }
-
 
     private fun createChip(label: String, indexvalue: Int): Chip {
         val chip = Chip(activity, null, R.style.My_Widget_MaterialComponents_Chip_Choice)

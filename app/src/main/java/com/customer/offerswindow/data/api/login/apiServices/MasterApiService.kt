@@ -141,13 +141,13 @@ interface MasterApiService {
 
 
     @GET("ShowRoomOffers/GetOfferTypeDetails?")
-    suspend fun GetOfferTypeDetails(
+    suspend fun getOfferChips(
         @Query("lServiceId") mastertype: String
     ): Response<OfferTypeResponse>
 
 
     @GET("ShowRoomOffers/GetOfferServiceDetails?")
-    suspend fun GetOfferServiceDetails(
+    suspend fun GetOfferCategories(
         @Query("iOfferTypeId") iOfferTypeId: String
     ): Response<ServicesResponse>
 

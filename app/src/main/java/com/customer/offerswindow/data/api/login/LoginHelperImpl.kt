@@ -65,10 +65,10 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
     suspend fun getFilterData() =
         masterApiService.getFilterData()
 
-    suspend fun getOfferTypeDetails( lServiceId: String) =
-        masterApiService.GetOfferTypeDetails( lServiceId)
+    suspend fun getOfferChips( lServiceId: String) =
+        masterApiService.getOfferChips( lServiceId)
 
 
-    suspend fun getOfferServiceDetails( iOfferTypeId: String) =
-        masterApiService.GetOfferServiceDetails( iOfferTypeId)
+    suspend fun GetOfferCategories( iOfferTypeId: String) =
+        masterApiService.GetOfferCategories( iOfferTypeId)
 }

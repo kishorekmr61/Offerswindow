@@ -9,11 +9,9 @@ import androidx.paging.PagingData
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.CustomerDataResponse
-import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.PostOfferWindowCommonResponse
-import com.customer.offerswindow.model.TokenResponse
+import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.customersdata.PostWishlist
 import com.customer.offerswindow.model.customersdata.PostuserSearch
@@ -28,6 +26,8 @@ import com.customer.offerswindow.repositry.DashBoardRepositry
 import com.customer.offerswindow.repositry.Repository
 import com.customer.offerswindow.utils.helper.NetworkHelper
 import com.customer.offerswindow.utils.showToast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,22 +41,19 @@ class HomeViewModel @Inject constructor(
     var app: Application,
 ) : ViewModel() {
     var isloading = ObservableField(false)
-    var customerinfo = MutableLiveData<NetworkResult<CustomerDataResponse>>()
     var dashboardresponse = MutableLiveData<PagingData<DashboardData>>()
-    var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
-    var showRoomdata = MutableLiveData<NetworkResult<ShowRoomsResponse>>()
+    var searchShowRoomResults = MutableLiveData<NetworkResult<ShowRoomsResponse>>()
     var goldratesdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
     var postwishlistdata = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var userIntrestResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
     var postuserSerchResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
-    var offertypeResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
-    var serviceResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
+    var subcategoryResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
+    var categoriesResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
     var searchcriteria = MutableLiveData<NetworkResult<SearchCriteriaResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
     var nodata = ObservableField(false)
-    var tokenResponse = MutableLiveData<NetworkResult<TokenResponse>>()
     var filterResponse = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
     fun getDashboardData(
@@ -70,7 +67,7 @@ class HomeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                if (!AppPreference.read(Constants.USERUID,"").isNullOrEmpty()) {
+                if (!AppPreference.read(Constants.USERUID, "").isNullOrEmpty()) {
                     val postuserSearch = PostuserSearch(
                         AppPreference.read(Constants.USERUID, "") ?: "",
                         lShowroomId,
@@ -96,24 +93,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getUserInfo(mobileno: String) {
+
+    fun getOfferCategories(iOfferTypeId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                dashBoardRepositry.getCustomerData(mobileno).collect { values ->
-                    customerinfo.postValue(values)
-                }
-
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-    }
-
-    fun getMstData() {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Common").collect { values ->
-                    masterdata.postValue(values)
+                repository.getOfferCategories(iOfferTypeId).collect { values ->
+                    categoriesResponse.postValue(values)
                 }
             } else {
                 app.showToast("No Internet")
@@ -121,12 +106,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getShowRoomsData(lShowroomId: String, lLocationId: String, lServiceId: String) {
+    fun getOfferSubcategoryChips(lServiceId: String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getOfferChips(lServiceId).collect { values ->
+                    subcategoryResponse.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
+
+
+    fun getShowRoomSearch(lShowroomId: String, lLocationId: String, lServiceId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 dashBoardRepositry.getShowRooms(lShowroomId, lLocationId, lServiceId)
                     .collect { values ->
-                        showRoomdata.postValue(values)
+                        searchShowRoomResults.postValue(values)
                     }
             } else {
                 app.showToast("No Internet")
@@ -158,36 +156,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getToken(
-        mobilenumber: String,
-        password: String
-    ) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getToken(mobilenumber, password).collect { values ->
-                    AppPreference.write(Constants.TOKEN, values.data?.access_token ?: "")
-                    AppPreference.write(Constants.TOKENTIMER, values.data?.expires_in ?: "")
-                    tokenResponse.postValue(values)
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-    }
-
-    fun getFilterData() {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getFilterData().collect { values ->
-                    filterResponse.postValue(values)
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
-    }
-
-
     fun getUserInterest(postUserIntrest: PostUserIntrest) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
@@ -201,9 +169,14 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getLocationWIthFromCities(citycode: String): ArrayList<SpinnerRowModel> {
-        var locationList = arrayListOf<SpinnerRowModel>()
+        val sType = object : TypeToken<List<CommonDataResponse>>() {}.type
+        val otherList = Gson().fromJson<List<CommonDataResponse>>(
+            AppPreference.read(Constants.MASTERDATA, ""),
+            sType
+        )
+        val locationList = arrayListOf<SpinnerRowModel>()
         locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
-        masterdata.value?.data?.data?.forEach {
+        otherList?.forEach {
             if (it.MstType == "Location" && citycode == "0") {
                 locationList.add(
                     SpinnerRowModel(
@@ -224,33 +197,24 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
-
         return locationList
     }
 
-
-    fun getOfferTypeResponse(lServiceId: String) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getOfferTypeDetails(lServiceId).collect { values ->
-                    offertypeResponse.postValue(values)
-                }
-            } else {
-                app.showToast("No Internet")
+    fun getName(msttype: String, mstcode: String): String {
+        val sType = object : TypeToken<List<CommonDataResponse>>() {}.type
+        val otherList = Gson().fromJson<List<CommonDataResponse>>(
+            AppPreference.read(Constants.MASTERDATA, ""),
+            sType
+        )
+        var name = "All"
+        otherList?.forEach {
+            if (it.MstType == msttype) {
+                if (it.MstCode == mstcode)
+                    return it.MstDesc
             }
         }
-    }
+        return name
 
-    fun getOfferServiceDetails(iOfferTypeId: String) {
-        viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                repository.getOfferServiceDetails(iOfferTypeId).collect { values ->
-                    serviceResponse.postValue(values)
-                }
-            } else {
-                app.showToast("No Internet")
-            }
-        }
     }
 
     fun getSearchCriteria(Customerid: String) {
@@ -276,4 +240,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+
 }
