@@ -1,6 +1,7 @@
 package com.customer.offerswindow.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
@@ -44,6 +45,7 @@ import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerAdapter
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerFooterAdapter
 import com.customer.offerswindow.utils.PermissionsUtil
@@ -307,8 +309,8 @@ class HomeFragment : Fragment(), MenuProvider {
                         homeViewModel.getSearchCriteria(
                             AppPreference.read(Constants.USERUID, "") ?: "0"
                         )
-                    } else{
-                        skipCriteriasearch  = true
+                    } else {
+                        skipCriteriasearch = true
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,
@@ -466,27 +468,41 @@ class HomeFragment : Fragment(), MenuProvider {
                 else -> {}
             }
         }
-
-        val sType = object : TypeToken<List<CommonDataResponse>>() {}.type
-        val otherList = Gson().fromJson<List<CommonDataResponse>>(
-            AppPreference.read(Constants.MASTERDATA, ""),
-            sType
-        )
-        cityList.clear()
-        otherList.forEach {
-            if (it.MstType == "Web_Link_Offers")
-                otherServicesList.add(
-                    CommonDataResponse(
-                        MstCode = it.MstCode,
-                        MstDesc = it.MstDesc,
-                        Image_path = it.Image_path, URL = it.URL
+        if (AppPreference.read(Constants.MASTERDATA, "").isNullOrEmpty()) {
+            val intent = Intent(requireActivity(), OnBoardingActivity::class.java)
+            intent.putExtra(
+                Constants.MOBILENO,
+                AppPreference.read(Constants.MOBILENO, "") ?: ""
+            )
+            AppPreference.write(Constants.ISLOGGEDIN, false)
+            AppPreference.clearAll()
+            AppPreference.write(Constants.SKIPSIGNIN, true)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
+        } else {
+            val sType = object : TypeToken<List<CommonDataResponse>>() {}.type
+            val otherList = Gson().fromJson<List<CommonDataResponse>>(
+                AppPreference.read(Constants.MASTERDATA, ""),
+                sType
+            )
+            cityList.clear()
+            otherList.forEach {
+                if (it.MstType == "Web_Link_Offers")
+                    otherServicesList.add(
+                        CommonDataResponse(
+                            MstCode = it.MstCode,
+                            MstDesc = it.MstDesc,
+                            Image_path = it.Image_path, URL = it.URL
+                        )
                     )
-                )
-            if (it.MstType == "City") {
-                cityList.add(SpinnerRowModel(it.MstDesc, mstCode = it.MstCode))
+                if (it.MstType == "City") {
+                    cityList.add(SpinnerRowModel(it.MstDesc, mstCode = it.MstCode))
+                }
             }
+            loadViewPager(otherServicesList)
         }
-        loadViewPager(otherServicesList)
 
     }
 

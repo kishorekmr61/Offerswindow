@@ -28,6 +28,7 @@ import com.customer.offerswindow.utils.hideOnBoardingToolbar
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
+import com.google.gson.Gson
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -228,6 +229,21 @@ class SignInFragment : Fragment() {
                             termsurl = responsetermsvalue?.MstDesc ?: ""
                             if (termsurl.isNullOrEmpty()) {
                                 binding.termsTxt.visibility = View.GONE
+                            }
+                            response?.data?.data?.forEach {
+                                val json = Gson().toJson(
+                                    response.data?.data ?: arrayListOf<CommonDataResponse>()
+                                )
+                                AppPreference.write(Constants.MASTERDATA, json)
+                                if (it.MstType == "About_us_url") {
+                                    AppPreference.write(Constants.ABOUTUS, it.MstDesc)
+                                }
+                                if (it.MstType == "Privacy_Policy") {
+                                    AppPreference.write(Constants.PRIVACYPOLICY, it.Image_path)
+                                }
+                                if (it.MstType == "Gold_Trend_Report") {
+                                    AppPreference.write(Constants.GOLDTRENDREPORT, it.Image_path)
+                                }
                             }
                         } else {
 //                            ShowFullToast(response.data?.Message ?: "")
