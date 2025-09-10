@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -95,17 +96,22 @@ class DashboardActivity : AppCompatActivity() {
         checkUpdate()
         appUpdateManager.registerListener(appUpdateListener)
         setSupportActionBar(binding.appBarDashboard.toolbar)
-        navController = findNavController(R.id.nav_host_fragment_content_dashboard)
+        PermissionsUtil.askPermissions(this)
+        PermissionsUtil.checkPermissions(this, *permissions)
+        checkPermissions()
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHostFragment.navController
+        val navGraph = navController.navInflater.inflate(R.navigation.app_navigation)
+        navGraph.setStartDestination(R.id.nav_home)
+        navController.setGraph(navGraph, null)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        PermissionsUtil.askPermissions(this)
-        PermissionsUtil.checkPermissions(this, *permissions)
-        checkPermissions()
-
         vm.username.set(AppPreference.read(Constants.NAME, "") ?: "")
         vm.profilepic.set(AppPreference.read(Constants.PROFILEPIC, "") ?: "")
         binding.appBarDashboard.bottomNavigationView.setOnItemSelectedListener { item ->
@@ -190,7 +196,7 @@ class DashboardActivity : AppCompatActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_dashboard)
+        val navController = findNavController(R.id.nav_host)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
