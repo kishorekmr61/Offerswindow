@@ -16,7 +16,6 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentSignInBinding
 import com.customer.offerswindow.helper.NetworkResult
-import com.customer.offerswindow.model.customersdata.PostuserSearch
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
@@ -279,14 +278,9 @@ class SignInFragment : Fragment() {
                         )
                         homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
                     }
-                    val postuserSearch = PostuserSearch(
-                        AppPreference.read(Constants.USERUID, "") ?: "",
-                        arguments?.getString("lShowroomId") ?: "",
-                        arguments?.getString("iCityId") ?: "",
-                        arguments?.getString("lServiceId") ?: "",
-                        arguments?.getString("0") ?: ""
-                    )
-                    signInViewModel.postUserSearch(postuserSearch)
+                    homeViewModel.isloading.set(false)
+                    val intent = Intent(requireActivity(), DashboardActivity::class.java)
+                    startActivity(intent)
                 }
 
                 is NetworkResult.Error -> {
@@ -295,12 +289,6 @@ class SignInFragment : Fragment() {
 
                 else -> {}
             }
-        }
-        signInViewModel.postuserSerchResponse.observe(viewLifecycleOwner) { response ->
-            homeViewModel.isloading.set(false)
-            val intent =
-                Intent(requireActivity(), DashboardActivity::class.java)
-            startActivity(intent)
         }
     }
 

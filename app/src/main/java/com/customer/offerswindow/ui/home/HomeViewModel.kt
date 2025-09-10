@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
     var nodata = ObservableField(false)
-    var filterResponse = MutableLiveData<NetworkResult<CommonMasterResponse>>()
+//    var filterResponse = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
     fun getDashboardData(
         lShowroomId: String,
@@ -67,16 +67,6 @@ class HomeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                if (!AppPreference.read(Constants.USERUID, "").isNullOrEmpty()) {
-                    val postuserSearch = PostuserSearch(
-                        AppPreference.read(Constants.USERUID, "") ?: "",
-                        lShowroomId,
-                        lLocationId,
-                        lServiceId,
-                        iCategoryId
-                    )
-                    postUserSearch(postuserSearch)
-                }
                 dashBoardRepositry.getDashBoardOffersListPagenation(
                     lShowroomId,
                     lLocationId,
@@ -106,7 +96,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getOfferSubcategoryChips(lServiceId: String) {
+    fun getOfferSubcategoryChips(lServiceId: String,) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 repository.getOfferChips(lServiceId).collect { values ->

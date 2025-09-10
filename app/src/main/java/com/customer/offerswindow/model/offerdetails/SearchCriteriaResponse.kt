@@ -12,8 +12,8 @@ data class SearchCriteria(
     var Cust_UID : String="",
     var Showroom_UID : String="",
     var Location_UID : String="",
-    var Service_UID : String="",
-    var Offer_Type : String="",
+    var Service_UID : String="",//category
+    var Offer_Type : String="",//subcategories
     var City_UID : String="",
     var Showroom_Name : String="",
     var Location_Name : String="",

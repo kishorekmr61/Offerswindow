@@ -89,16 +89,14 @@ class HomeFragment : Fragment(), MenuProvider {
     var showroomList = arrayListOf<SpinnerRowModel>()
     var offertypeList = arrayListOf<FilterData>()
     var otherServicesList = arrayListOf<CommonDataResponse>()
-    private lateinit var imageViewPagerAdapter: SliderAdapter
     var locationId = "0"
     var showroomid = "0"
-    var service = "0"
     var iCityId = "30"
-    var cityname = "Hyderabad"
     var categoryid = "0"
     var subCateogory = "0"
     var customerid = "0"
     var previouscat = 0
+    var skipCriteriasearch = true
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -205,7 +203,7 @@ class HomeFragment : Fragment(), MenuProvider {
         }
         binding.searchedit.setOnClickListener {
             homeViewModel.isloading.set(true)
-            homeViewModel.getShowRoomSearch(showroomid, locationId, service)
+            homeViewModel.getShowRoomSearch(showroomid, locationId, categoryid)
         }
         binding.clearImg.setOnClickListener {
             binding.searchedit.text = ""
@@ -226,7 +224,7 @@ class HomeFragment : Fragment(), MenuProvider {
             homeViewModel.username.set(getString(R.string.signin))
         }
         binding.locationTxt.text = "All"
-        homeViewModel.getOfferCategories(service)
+        homeViewModel.getOfferCategories(categoryid)
     }
 
     private fun getDataIntent(item: CategoriesData, position: Int, mpreviouscat: Int) {
@@ -238,7 +236,7 @@ class HomeFragment : Fragment(), MenuProvider {
             previouscat = mpreviouscat
             categoryList.forEach { _ ->
                 if (categoryselected.category_id == item.category_id) {
-                    service = item.category_id ?: categoryid
+                    categoryid = item.category_id ?: categoryid
                     categoryList[previouscat].isselected = false
                     previouscat = position
                     categoryList[previouscat].isselected = true
@@ -283,13 +281,13 @@ class HomeFragment : Fragment(), MenuProvider {
                         )
                     }
                     loadServices()
-                    homeViewModel.getOfferSubcategoryChips(service)
+                    homeViewModel.getOfferSubcategoryChips(categoryid)
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
                     homeViewModel.isloading.set(true)
-                    homeViewModel.getOfferSubcategoryChips(service)
+                    homeViewModel.getOfferSubcategoryChips(categoryid)
                 }
 
                 else -> {}
@@ -305,7 +303,20 @@ class HomeFragment : Fragment(), MenuProvider {
                         offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
                     }
                     loadFilters()
-                    homeViewModel.getSearchCriteria(AppPreference.read(Constants.USERUID, "") ?: "0")
+                    if (skipCriteriasearch) {
+                        homeViewModel.getSearchCriteria(
+                            AppPreference.read(Constants.USERUID, "") ?: "0"
+                        )
+                    } else{
+                        skipCriteriasearch  = true
+                        homeViewModel.getDashboardData(
+                            showroomid,
+                            locationId,
+                            categoryid, subCateogory, iCityId,
+                            AppPreference.read(Constants.USERUID, "0") ?: "0",
+                            "0"
+                        )
+                    }
                 }
 
                 is NetworkResult.Error -> {
@@ -320,11 +331,11 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         homeViewModel.isloading.set(false)
-                        service = response?.data?.Data?.firstOrNull()?.Service_UID ?: service
+                        categoryid = response?.data?.Data?.firstOrNull()?.Service_UID ?: categoryid
 //                         response?.data?.Data?.firstOrNull()?.Service_Desc ?: ""
 
                         locationId = response?.data?.Data?.firstOrNull()?.Location_UID ?: locationId
-                        showroomid = response?.data?.Data?.firstOrNull()?.Showroom_UID ?: showroomid
+//                        showroomid = response?.data?.Data?.firstOrNull()?.Showroom_UID ?: showroomid
                         iCityId = response?.data?.Data?.firstOrNull()?.City_UID ?: iCityId
                         if (iCityId == "0") {
                             binding.cityTxt.text = "All"
@@ -336,11 +347,16 @@ class HomeFragment : Fragment(), MenuProvider {
                         } else {
                             binding.locationTxt.text = homeViewModel.getName("Location", locationId)
                         }
+
+                        categoryid = response?.data?.Data?.firstOrNull()?.Service_UID ?: categoryid
+                        subCateogory =
+                            response?.data?.Data?.firstOrNull()?.Offer_Type ?: subCateogory
+
                         homeViewModel.getGoldRatesData()
                         homeViewModel.getDashboardData(
                             showroomid,
                             locationId,
-                            service, categoryid, iCityId,
+                            categoryid, subCateogory, iCityId,
                             AppPreference.read(Constants.USERUID, "0") ?: "0",
                             "0"
                         )
@@ -532,7 +548,7 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.getDashboardData(
             showroomid,
             locationId,
-            service, categoryid, iCityId,
+            categoryid, subCateogory, iCityId,
             AppPreference.read(Constants.USERUID, "0") ?: "0",
             "0"
         )
@@ -733,8 +749,9 @@ class HomeFragment : Fragment(), MenuProvider {
                             previouscat = position
                             categoryList[previouscat].isselected = true
                             homeViewModel.isloading.set(true)
-                            service = item.category_id ?: categoryid
+                            categoryid = item.category_id ?: categoryid
                             arguments?.putString("ISFROM", "")
+                            skipCriteriasearch = false
                             homeViewModel.getOfferSubcategoryChips(item.category_id ?: categoryid)
                         } else {
 
@@ -888,11 +905,11 @@ class HomeFragment : Fragment(), MenuProvider {
     private fun getLoginBundleData(): Bundle {
         var bundle = Bundle()
         bundle.putBoolean("isFrom", true)
-        bundle.putString("Locationid", locationId)
-        bundle.putString("lShowroomId", showroomid)
-        bundle.putString("lServiceId", service)
-        bundle.putString("iCategoryId", categoryid)
-        bundle.putString("iCityId", iCityId)
+//        bundle.putString("Locationid", locationId)
+//        bundle.putString("lShowroomId", showroomid)
+//        bundle.putString("lServiceId", service)
+//        bundle.putString("iCategoryId", categoryid)
+//        bundle.putString("iCityId", iCityId)
         return bundle
     }
 
