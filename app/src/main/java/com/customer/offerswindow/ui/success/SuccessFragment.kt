@@ -58,9 +58,7 @@ class SuccessFragment : Fragment() {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
             when (it.id) {
                 R.id.bookdetails_btn -> {
-                    var bundle = Bundle()
-                    bundle.putString("ISFROM", arguments?.getString("ISFROM"))
-                    findNavController().navigate(R.id.nav_mybookings, bundle)
+                    findNavController().navigate(R.id.nav_mybookings)
                 }
             }
         })

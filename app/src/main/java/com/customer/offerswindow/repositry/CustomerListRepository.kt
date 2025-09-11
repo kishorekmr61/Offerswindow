@@ -5,6 +5,7 @@ import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.PostPhoneNumber
 import com.customer.offerswindow.model.OfferWindowCommonResponse
+import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ class CustomerListRepository @Inject constructor(
 ) : BaseApiResponse() {
 
 
-    suspend fun postSignUp(postSignUp: PostSignUp): Flow<NetworkResult<OfferWindowCommonResponse>> {
+    suspend fun postSignUp(postSignUp: PostSignUp): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { customerHelperImpl.postSignUp(postSignUp) })
         }.flowOn(Dispatchers.IO)

@@ -256,6 +256,7 @@ class DetailViewFragment : Fragment() {
                         bundle.putString("SERVICEID", dataobj?.serviceid)
                         bundle.putString("LOCATIONID", dataobj?.locationid)
                         bundle.putString("SHOWROOMID", dataobj?.showroomid)
+                        bundle.putString("ISFROM","SlotBooking")
                         bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
                         findNavController().navigate(R.id.nav_slots, bundle)
                     } else {
@@ -267,11 +268,11 @@ class DetailViewFragment : Fragment() {
 
                 R.id.bookoffer_txt -> {
                     viewModel.isloading.set(true)
-                    var postofferbookings = PostOfferBooking(
+                    val postofferbookings = PostOfferBooking(
                         dataobj?.showroomid ?: "",
                         dataobj?.locationid ?: "",
                         dataobj?.serviceid ?: "",
-                        dataobj?.id ?: ""
+                        dataobj?.id ?: "",dataobj?.id?:""
                     )
                     viewModel.postOfferBooking(postofferbookings)
                 }

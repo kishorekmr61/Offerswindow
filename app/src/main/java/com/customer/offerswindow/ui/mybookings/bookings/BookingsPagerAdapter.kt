@@ -18,15 +18,15 @@ class BookingsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle) :
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                MyBookingsFragment(" ")
+                MyBookingsFragment()
             }
 
             1 -> {
-                MyBookingsFragment("Offers")
+                MyBookingsFragment()
             }
 
             else ->
-                MyBookingsFragment("")
+                MyBookingsFragment()
         }
     }
 }

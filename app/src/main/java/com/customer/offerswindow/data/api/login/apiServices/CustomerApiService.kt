@@ -30,7 +30,7 @@ interface CustomerApiService {
     @POST("UserManagement/PostSignUp")
     suspend fun postSignUp(
         @Body postSignUp: PostSignUp
-    ): Response<OfferWindowCommonResponse>
+    ): Response<PostOfferWindowCommonResponse>
 
     @GET("UserManagement/OTPValidation?")
     suspend fun postVerifyOTPData(

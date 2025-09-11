@@ -9,6 +9,7 @@ data class PostSlotBooking(
     var ShowRoomId: String,
     var LocationId: String,
     var serviceId: String,
+    var OfferId: String,
     var slotId: String,
     var customerId: String = AppPreference.read(Constants.USERUID,"") ?:"",
     var createdBy: String =AppPreference.read(Constants.USERUID,"") ?:"",

@@ -25,23 +25,28 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/timeslot_txt"
-            style="@style/AG_bold"
+            style="@style/AG_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
             android:background="@{item.isselected ?  @drawable/timeslotselected_bg : @drawable/timeslot_bg}"
             android:gravity="center"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_6sdp"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingTop="@dimen/_4sdp"
             android:onClick="@{onItemClick}"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:singleLine="true"
+            android:maxLines="1"
             android:text="@{item.slot_Desc}"
             android:textColor="@{item.getColor(item.slot_Colour)}"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_8ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@drawable/timeslotselected_bg"
-            tools:text="10:30 AM" />
+            tools:text="10:30 AM-11:30 Pm" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
@@ -32,6 +34,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+
 @AndroidEntryPoint
 class SelectSlotFragment : Fragment() {
 
@@ -47,6 +50,7 @@ class SelectSlotFragment : Fragment() {
     private lateinit var adapter: CalendarAdapter
     private val calendarList2 = ArrayList<CalendarDateModel>()
     var slotList = ArrayList<SlotsData>()
+    var offerid = ""
     var servicwe = ""
     var location = ""
     var showroom = ""
@@ -75,6 +79,7 @@ class SelectSlotFragment : Fragment() {
         setObserver()
         vm.hidetoolbar.value = false
         viewModel.isloading.set(true)
+        offerid = arguments?.getString("OfferID") ?: ""
         servicwe = arguments?.getString("SERVICEID") ?: ""
         location = arguments?.getString("LOCATIONID") ?: ""
         showroom = arguments?.getString("SHOWROOMID") ?: ""
@@ -83,6 +88,7 @@ class SelectSlotFragment : Fragment() {
         viewModel.getSlotsData(showroom, location, servicwe, selectedDate)
         binding.contactnameTxt.text = AppPreference.read(Constants.NAME, "")
         binding.contactcallTxt.text = AppPreference.read(Constants.MOBILENO, "")
+
         setUpAdapter()
         setListeners()
         setUpClickListener()
@@ -207,11 +213,21 @@ class SelectSlotFragment : Fragment() {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
             when (it.id) {
                 R.id.booknow_btn -> {
-                    viewModel.isloading.set(true)
-                    selectedDate = getCalenderSeleteddate(calendarList2)
-                    var postbooking =
-                        PostSlotBooking(selectedDate, showroom, location, servicwe, selectedslotid)
-                    viewModel.postSlotBooking(postbooking)
+                    if (!selectedslotid.isNullOrEmpty()) {
+                        viewModel.isloading.set(true)
+                        selectedDate = getCalenderSeleteddate(calendarList2)
+                        var postbooking =
+                            PostSlotBooking(
+                                selectedDate,
+                                showroom,
+                                location,
+                                servicwe,offerid,
+                                selectedslotid
+                            )
+                        viewModel.postSlotBooking(postbooking)
+                    } else {
+                        showLongToast("please select slot")
+                    }
                 }
             }
 

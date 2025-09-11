@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.OfferWindowCommonResponse
+import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostSignUp
 import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.repositry.CustomerListRepository
@@ -25,7 +26,7 @@ class SignUpViewModel @Inject constructor(
     var app: Application,
 ) : ViewModel() {
     var isloading = ObservableField(false)
-    var signUpResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
+    var signUpResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
     var signupOTPResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
 
     fun postSignUp(postSignUp: PostSignUp) {

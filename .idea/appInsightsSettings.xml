@@ -29,16 +29,6 @@
                   <option name="projectNumber" value="544253157009" />
                 </ConnectionSetting>
               </option>
-              <option name="devices">
-                <list>
-                  <DeviceSetting>
-                    <option name="deviceType" value="Phone" />
-                    <option name="displayName" value="samsung (SM-S938B)" />
-                    <option name="manufacturer" value="samsung" />
-                    <option name="model" value="SM-S938B" />
-                  </DeviceSetting>
-                </list>
-              </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
               <option name="timeIntervalDays" value="THIRTY_DAYS" />
               <option name="visibilityType" value="ALL" />

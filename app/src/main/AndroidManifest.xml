@@ -83,7 +83,7 @@
             android:hardwareAccelerated="true"
             android:screenOrientation="locked"
             android:theme="@style/Theme.OfferWindow.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
 

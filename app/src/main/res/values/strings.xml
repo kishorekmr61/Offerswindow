@@ -18,7 +18,7 @@
     <string name="okay">Okay</string>
     <string name="resend">We have sent Otp to your number ? <b> Resend</b></string>
     <string name="forgetpassword">Forgot password</string>
-    <string name="create_account">Don\'t have an Account ?<b>  Create One</b></string>
+    <string name="create_account">Don\'t have an Account ? <font fgcolor="#2B83ED"><b>Create One</b></font></string>
     <string name="email_address_or_phone_number">Phone Number</string>
     <string name="enter_otp">Enter 4 digit Pin</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
