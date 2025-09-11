@@ -2,6 +2,7 @@ package com.customer.offerswindow.ui.success
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -31,7 +32,9 @@ class SuccessFragment : Fragment() {
                 findNavController().navigate(R.id.nav_home)
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, onBackPressedCallback
+        )
     }
 
     override fun onCreateView(
@@ -63,4 +66,5 @@ class SuccessFragment : Fragment() {
             }
         })
     }
+
 }
