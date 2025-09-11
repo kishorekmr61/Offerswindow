@@ -112,8 +112,10 @@ class DashboardActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        vm.username.set(AppPreference.read(Constants.NAME, "") ?: "")
-        vm.profilepic.set(AppPreference.read(Constants.PROFILEPIC, "") ?: "")
+        if (AppPreference.read(Constants.ISLOGGEDIN,false)) {
+            vm.username.set(AppPreference.read(Constants.NAME, "") ?: "")
+            vm.profilepic.set(AppPreference.read(Constants.PROFILEPIC, "") ?: "")
+        }
         binding.appBarDashboard.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {

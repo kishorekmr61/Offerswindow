@@ -125,12 +125,16 @@ class CustomerProfileFragment : Fragment() {
                         AppPreference.read(Constants.MOBILENO, "") ?: ""
                     )
                     AppPreference.write(Constants.ISLOGGEDIN, false)
+                    intent.putExtra(
+                        Constants.MASTERDATA,
+                        AppPreference.read(Constants.MASTERDATA, "")
+                    )
                     AppPreference.clearAll()
-                    AppPreference.write(Constants.SKIPSIGNIN, true)
+                    AppPreference.write(Constants.MASTERDATA, intent.getStringExtra(Constants.MASTERDATA) ?: "")
+                    intent.putExtra(Constants.ISFROM, "LOGOUT")
                     intent.flags =
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    requireActivity().finish()
                 }
 
                 R.id.deleteaccount_lbl -> {
@@ -274,7 +278,7 @@ class CustomerProfileFragment : Fragment() {
                         if (uri != null) {
                             var bundle = Bundle()
                             mcustomerData.DOB = convertDate(
-                                mcustomerData.DOB ?:"",
+                                mcustomerData.DOB ?: "",
                                 "yyyy-mm-DD",
                                 Constants.DDMMYYYY
                             )
@@ -491,7 +495,7 @@ class CustomerProfileFragment : Fragment() {
 //                                    binding.etEmail.setText(mcustomerData.Email_ID)
                                     locationid = it.Sub_Location_Desc ?: "0"
                                     cityid = it.Location_Code ?: "0"
-                                    countryid = it.Country?:""
+                                    countryid = it.Country ?: ""
                                     AppPreference.write(Constants.NAME, it.Cust_Name ?: "")
                                     binding.etDob.setText(
                                         convertDate(

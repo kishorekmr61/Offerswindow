@@ -32,7 +32,7 @@ class OnBoardingActivity : AppCompatActivity() {
                 Constants.ISLOGGEDIN, false
             )
         ) {
-            var bundle = Bundle()
+            val bundle = Bundle()
             if (intent.getStringExtra(Constants.ISFROM) == "LOGOUT") {
                 bundle.putString(Constants.MOBILENO, intent.getStringExtra(Constants.MOBILENO))
                 bundle.putString("Message", intent.getStringExtra("Message"))
