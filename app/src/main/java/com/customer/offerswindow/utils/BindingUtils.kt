@@ -11,8 +11,9 @@ import androidx.databinding.BindingAdapter
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
 import com.customer.offerswindow.R
 import com.customer.offerswindow.application.OfferWindowApplication.Companion.context
 import com.customer.offerswindow.data.constant.Constants
@@ -41,11 +42,10 @@ fun setImageUrl(img: AppCompatImageView, url: String?) {
 @BindingAdapter("imgNormalUrl")
 fun setImageNormalUrl(img: AppCompatImageView, url: String?) {
     if (!TextUtils.isEmpty(url)) {
-        img.load(url) {
-            crossfade(false)
-            placeholder(R.drawable.default_img).error(R.drawable.default_img)
-            transformations(RoundedCornersTransformation(25f))
-        }
+        Glide.with(context).load(url).apply(RequestOptions()).diskCacheStrategy(
+            DiskCacheStrategy.ALL)
+            .transform(RoundedCorners(24))
+            .placeholder(R.drawable.default_img).dontAnimate().into(img);
     } else {
         img.setImageResource(R.drawable.default_img)
     }
@@ -158,7 +158,7 @@ fun setThumbnail(img: AppCompatImageView, videourl: String?) {
 
 @BindingAdapter("profileImgUrlRound", requireAll = false)
 fun setProfileImageUrl(img: AppCompatImageView, url: String?) {
-    val url1 =  url?.replace("http://", "https://")
+    val url1 = url?.replace("http://", "https://")
     if (!url.isNullOrEmpty()) {
         Glide.with(context).load(url).error(R.drawable.ic_profile)
             .apply(RequestOptions.circleCropTransform()).into(img)
@@ -171,7 +171,7 @@ fun setProfileImageUrl(img: AppCompatImageView, url: String?) {
 
 @BindingAdapter("image", "modifiedDate", requireAll = false)
 fun setImageUrl(img: AppCompatImageView, url: String?, modifiedDate: String?) {
-    var url =  url?.replace("http://", "https://");
+    var url = url?.replace("http://", "https://");
 
     if (!url.isNullOrEmpty()) {
         Glide.with(context).load(url).placeholder(R.drawable.ic_profile).dontAnimate().into(img);

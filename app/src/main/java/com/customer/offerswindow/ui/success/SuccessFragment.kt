@@ -14,6 +14,7 @@ import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.databinding.FragmentSuccessBinding
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.utils.setWhiteToolBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,6 +47,7 @@ class SuccessFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         vm.hidetoolbar.value = true
         viewModel.message.set("You have successfully \n Booked your slot")
+        activity?.setWhiteToolBar("", false)
         return root
     }
 

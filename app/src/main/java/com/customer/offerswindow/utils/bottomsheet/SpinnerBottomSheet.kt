@@ -205,11 +205,11 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
                                     binding.recyclerView.notifyDataChange()
                                 } else {
                                     selectedPos = pos
-                                    binding.recyclerView.adapter?.notifyDataSetChanged()
                                     inItemSelectedListner?.onItemSelectedListner(
                                         item,
                                         spinnerdataFlag
                                     )
+                                    binding.recyclerView.adapter?.notifyDataSetChanged()
                                     dismiss()
                                 }
                             }
