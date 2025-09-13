@@ -1,8 +1,8 @@
 package com.customer.offerswindow.ui.success
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -14,7 +14,6 @@ import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.databinding.FragmentSuccessBinding
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.utils.setWhiteToolBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,7 +46,6 @@ class SuccessFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         vm.hidetoolbar.value = true
         viewModel.message.set("You have successfully \n Booked your slot")
-        activity?.setWhiteToolBar("", true)
         return root
     }
 
@@ -55,16 +53,21 @@ class SuccessFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        Handler().postDelayed(object : Runnable {
+            override fun run() {
+                findNavController().navigate(R.id.nav_home)
+            }
+        }, 3000)
     }
 
     private fun setListeners() {
-        binding.setVariable(BR.onItemClick, View.OnClickListener {
-            when (it.id) {
-                R.id.bookdetails_btn -> {
-                    findNavController().navigate(R.id.nav_mybookings)
-                }
-            }
-        })
+//        binding.setVariable(BR.onItemClick, View.OnClickListener {
+//            when (it.id) {
+//                R.id.bookdetails_btn -> {
+//
+//                }
+//            }
+//        })
     }
 
 }

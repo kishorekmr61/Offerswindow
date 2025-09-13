@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
@@ -226,7 +227,7 @@ class HomeFragment : Fragment(), MenuProvider {
             homeViewModel.username.set(getString(R.string.signin))
         }
         binding.locationTxt.text = "All"
-        homeViewModel.getOfferCategories(categoryid)
+
     }
 
     private fun getDataIntent(item: CategoriesData, position: Int, mpreviouscat: Int) {
@@ -256,6 +257,7 @@ class HomeFragment : Fragment(), MenuProvider {
             delay(100)
             activity?.setToolbarVisibility(View.GONE)
         }
+        homeViewModel.getOfferCategories("0")
     }
 
 
@@ -745,10 +747,11 @@ class HomeFragment : Fragment(), MenuProvider {
 
     fun loadServices() {
         categoryList.firstOrNull()?.isselected = true
-        if (!categoryList.isNullOrEmpty()) {
+        if (categoryList.isNotEmpty()) {
             binding.categoriesTxt.visibility = View.VISIBLE
             binding.viewallTxt.visibility = View.VISIBLE
         }
+        Log.d("Categoriszies",categoryList.size.toString())
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
