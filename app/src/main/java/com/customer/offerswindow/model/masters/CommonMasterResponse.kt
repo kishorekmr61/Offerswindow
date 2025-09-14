@@ -52,6 +52,8 @@ data class CommonDataResponse(
     var CreatedBy: String = "",
     @SerializedName("Created_Date")
     var CreatedDate: String = "",
+    var Location_UID: String = "",
+    var Location_Name: String = "",
 ) : WidgetViewModel {
     override fun layoutId(): Int {
         return R.layout.otherservices_row

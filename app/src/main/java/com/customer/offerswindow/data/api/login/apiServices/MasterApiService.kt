@@ -38,7 +38,8 @@ interface MasterApiService {
     @GET("ShowRoomOffers/Masters?")
     suspend fun getCommonMaster(
         @Query("sMasterType") mastertype: String,
-        @Query("iParentMasterID") parentid: String
+        @Query("iParentMasterID") parentid: String,
+        @Query("lServiceId") lServiceId: String,
     ): Response<CommonMasterResponse>
 
 

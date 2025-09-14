@@ -96,8 +96,8 @@ class CustomerHelperImpl @Inject constructor(
 
     //    suspend fun getConfirmedTickets(userid: String, lMaximumTransactionID: Long) =
 //        customerApiService.getConfirmedTickets(userid, lMaximumTransactionID)
-    suspend fun getCommonMasterData(mastertype: String, parentid: String) =
-        masterApiService.getCommonMaster(mastertype, parentid)
+    suspend fun getCommonMasterData(mastertype: String, parentid: String,lServiceId : String = "0") =
+        masterApiService.getCommonMaster(mastertype, parentid,lServiceId)
 
 
 }

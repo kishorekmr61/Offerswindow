@@ -54,6 +54,7 @@ class HomeViewModel @Inject constructor(
     var profilepic = ObservableField<String>()
     var username = ObservableField<String>()
     var nodata = ObservableField(false)
+    var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 //    var filterResponse = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 
     fun getDashboardData(
@@ -125,7 +126,7 @@ class HomeViewModel @Inject constructor(
     fun getGoldRatesData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Price").collect { values ->
+                repository.getCommonMaster("Price","0").collect { values ->
                     goldratesdata.postValue(values)
                 }
             } else {
@@ -231,5 +232,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
+    fun getMstData(lServiceId : String) {
+        viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
+                repository.getCommonMaster("Location",lServiceId).collect { values ->
+                    masterdata.postValue(values)
+                }
+            } else {
+                app.showToast("No Internet")
+            }
+        }
+    }
 
 }

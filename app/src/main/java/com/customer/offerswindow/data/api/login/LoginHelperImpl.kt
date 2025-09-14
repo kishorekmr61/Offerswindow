@@ -15,8 +15,8 @@ class LoginHelperImpl @Inject constructor(private val masterApiService: MasterAp
     suspend fun getUserToken(mobilenumber: String, password: String) =
         masterApiService.getToken(mobilenumber, password)
 
-    suspend fun getCommonMasterData(mastertype: String, parentid: String) =
-        masterApiService.getCommonMaster(mastertype, parentid)
+    suspend fun getCommonMasterData(mastertype: String, parentid: String,lServiceId : String ="0") =
+        masterApiService.getCommonMaster(mastertype, parentid,lServiceId)
 
     suspend fun getOtp(mobilenumber: String) =
         masterApiService.verifyPhone(mobilenumber)

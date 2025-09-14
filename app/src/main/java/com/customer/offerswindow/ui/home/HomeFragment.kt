@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
@@ -128,42 +127,10 @@ class HomeFragment : Fragment(), MenuProvider {
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
         setListeners()
+        getLocationBasedOnCityFilter()
         vm.isvisble.value = true
         binding.viewallTxt.setOnClickListener {
             findNavController().navigate(R.id.nav_categories)
-        }
-        binding.locationTxt.setOnClickListener {
-            locationList = homeViewModel.getLocationWIthFromCities(iCityId)
-            if (locationList.isEmpty()) {
-                showToast("No data")
-            } else {
-                activity?.let { it1 ->
-                    val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                        Constants.FILTER,
-                        binding.locationTxt.text.toString(), locationList, false, object :
-                            OnItemSelectedListner {
-                            override fun onItemSelectedListner(
-                                titleData: SpinnerRowModel?,
-                                datevalue: String
-                            ) {
-                                if (titleData != null) {
-                                    binding.locationTxt.setText(titleData.title)
-                                    locationId = titleData.mstCode
-                                    dashboardOffersList()
-                                }
-                            }
-
-                            override fun onItemmultipleSelectedListner(
-                                titleData: ArrayList<SpinnerRowModel>?,
-                                value: ArrayList<SpinnerRowModel>
-                            ) {
-
-                            }
-                        }, headerlbl = "Location"
-                    )
-                    modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
-                }
-            }
         }
         binding.cityTxt.setOnClickListener {
             if (cityList.isNullOrEmpty()) {
@@ -203,6 +170,10 @@ class HomeFragment : Fragment(), MenuProvider {
                     modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
                 }
             }
+        }
+        binding.locationTxt.setOnClickListener {
+            homeViewModel.isloading.set(true)
+            homeViewModel.getMstData(categoryid)
         }
         binding.searchedit.setOnClickListener {
             homeViewModel.isloading.set(true)
@@ -259,7 +230,6 @@ class HomeFragment : Fragment(), MenuProvider {
         }
         homeViewModel.getOfferCategories("0")
     }
-
 
     private fun setObserver() {
         homeViewModel.categoriesResponse.observe(viewLifecycleOwner) { response ->
@@ -751,7 +721,6 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.categoriesTxt.visibility = View.VISIBLE
             binding.viewallTxt.visibility = View.VISIBLE
         }
-        Log.d("Categoriszies",categoryList.size.toString())
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
@@ -966,4 +935,67 @@ class HomeFragment : Fragment(), MenuProvider {
         chip.isSingleLine = true
         return chip
     }
+
+    private fun getLocationsData() {
+        if (locationList.isEmpty()) {
+            showToast("No data")
+        } else {
+            activity?.let { it1 ->
+                val modalBottomSheet = SpinnerBottomSheet.newInstance(
+                    Constants.FILTER,
+                    binding.locationTxt.text.toString(), locationList, false, object :
+                        OnItemSelectedListner {
+                        override fun onItemSelectedListner(
+                            titleData: SpinnerRowModel?,
+                            datevalue: String
+                        ) {
+                            if (titleData != null) {
+                                binding.locationTxt.setText(titleData.title)
+                                locationId = titleData.mstCode
+                                dashboardOffersList()
+                            }
+                        }
+
+                        override fun onItemmultipleSelectedListner(
+                            titleData: ArrayList<SpinnerRowModel>?,
+                            value: ArrayList<SpinnerRowModel>
+                        ) {
+
+                        }
+                    }, headerlbl = "Location"
+                )
+                modalBottomSheet.show(it1.supportFragmentManager, SpinnerBottomSheet.TAG)
+            }
+        }
+    }
+
+    private fun getLocationBasedOnCityFilter() {
+        homeViewModel.masterdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    homeViewModel.isloading.set(false)
+                    response.data?.let { resposnes ->
+                        response?.data?.data?.forEach {
+                            locationList.add(
+                                SpinnerRowModel(
+                                    it.Location_Name,
+                                    false,
+                                    false,
+                                    mstCode = it.Location_UID
+                                )
+                            )
+                        }
+                        getLocationsData()
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    homeViewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
+    }
 }
+

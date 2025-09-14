@@ -108,9 +108,9 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getCommonMaster(mastertype: String): Flow<NetworkResult<CommonMasterResponse>> {
+    suspend fun getCommonMaster(mastertype: String,lServiceId: String): Flow<NetworkResult<CommonMasterResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype, "0") })
+            emit(safeApiCall { loginHelperImpl.getCommonMasterData(mastertype, "0",lServiceId) })
         }.flowOn(Dispatchers.IO)
     }
 
