@@ -3,6 +3,7 @@ package com.customer.offerswindow.ui.webpages
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,9 @@ class WebFragment : Fragment() {
     private val cmsWebViewModel: WebViewModel by activityViewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     private lateinit var binding: FragmentWebBinding
+    private var  redirectCount = 0;
+    private var  MAX_REDIRECTS = 5
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,21 +86,19 @@ class WebFragment : Fragment() {
 
 
     fun init() {
-
-        /*requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }*/
-
         binding.webView.settings.javaScriptEnabled = true
-
         binding.webView.webViewClient = object : WebViewClient() {
-
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 cmsWebViewModel.setLoadingState(true)
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                if (redirectCount >= MAX_REDIRECTS) {
+                    Log.v("WebView", "Redirect loop detected. Stopping.");
+                    return true; // Stop loading
+                }
+                redirectCount++;
                 view?.loadUrl(cmsWebViewModel.url.get() ?: "")
                 return true
             }
