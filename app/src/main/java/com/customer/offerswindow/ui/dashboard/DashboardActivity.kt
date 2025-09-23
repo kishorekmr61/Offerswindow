@@ -6,12 +6,14 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -42,6 +44,9 @@ class DashboardActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+
+    private var selectedIndex = 0
+    private var currentIndex = 0
 
 
     private val vm: DashBoardViewModel by viewModels()
@@ -112,7 +117,7 @@ class DashboardActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        if (AppPreference.read(Constants.ISLOGGEDIN,false)) {
+        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
             vm.username.set(AppPreference.read(Constants.NAME, "") ?: "")
             vm.profilepic.set(AppPreference.read(Constants.PROFILEPIC, "") ?: "")
         }
@@ -168,53 +173,41 @@ class DashboardActivity : AppCompatActivity() {
                 binding.appBarDashboard.bottomNavigationView.visibility = View.GONE
             }
         }
-        vm.btabselectedpostion.observe(this) {
-            when (it) {
-                0 -> {
-                    navController.navigate(R.id.nav_home)
-                }
 
-                1 -> {
-                    navController.navigate(R.id.nav_categories)
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    shouldExitApp()
                 }
+            })
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.nav_home ->
+                    binding.appBarDashboard.bottomNavigationView.menu[0].isChecked = true
 
-                2 -> {
-                    navController.navigate(R.id.nav_bookings)
-                }
+                R.id.nav_categories ->
+                    binding.appBarDashboard.bottomNavigationView.menu[1].isChecked = true
 
-                3 -> {
-                    navController.navigate(R.id.nav_rewardshistory)
-                }
+                R.id.nav_bookings ->
+                    binding.appBarDashboard.bottomNavigationView.menu[2].isChecked = true
 
-                4 -> {
-                    var bundle = Bundle()
-                    navController.navigate(R.id.nav_sign_in, bundle)
-                }
+                R.id.nav_rewardshistory ->
+                    binding.appBarDashboard.bottomNavigationView.menu[3].isChecked = true
+
+                R.id.nav_webview ->
+                    binding.appBarDashboard.bottomNavigationView.menu[4].isChecked = true
             }
-            binding.appBarDashboard.bottomNavigationView.selectedItemId = it
         }
-
     }
 
 
-    override fun onSupportNavigateUp(): Boolean {
+    override fun onSupportNavigateUp()
+            : Boolean {
         val navController = findNavController(R.id.nav_host)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        when {
-            navController.currentDestination?.id == R.id.nav_home -> {
-                finishAffinity()
-                finish()
-            }
-
-            else -> {
-                super.onBackPressed()
-                overridePendingTransition(R.anim.animation_enter, R.anim.animation_exit)
-            }
-        }
-    }
 
     open fun checkPermissions() {
         try {
@@ -263,5 +256,24 @@ class DashboardActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
+
+
+    fun shouldExitApp() {
+        when {
+            navController.currentDestination?.id == R.id.nav_home -> {
+                finishAffinity()
+                finish()
+            }
+
+            else -> {
+                this.overridePendingTransition(
+                    R.anim.animation_enter,
+                    R.anim.animation_exit
+                )
+            }
+        }
+
+    }
+
 
 }

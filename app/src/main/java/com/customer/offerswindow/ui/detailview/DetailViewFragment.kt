@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -67,6 +68,14 @@ class DetailViewFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         activity?.setWhiteToolBar("Offer detail", true)
         vm.isvisble.value = false
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_home)
+                }
+            }
+        )
         return root
     }
 

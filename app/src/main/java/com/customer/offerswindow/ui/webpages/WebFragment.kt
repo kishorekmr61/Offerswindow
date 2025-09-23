@@ -11,9 +11,11 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentWebBinding
@@ -47,9 +49,14 @@ class WebFragment : Fragment() {
 //            cmsWebViewModel.setLoadingState(true)
 //            cmsWebViewModel.getMstData()
         }
-        handleHardWareBackClick {
-            backClick()
-        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_home)
+                }
+            }
+        )
         return binding.root
     }
 

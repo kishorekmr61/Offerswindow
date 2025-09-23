@@ -123,6 +123,7 @@ class HomeFragment : Fragment(), MenuProvider {
         setRecyclervewData()
         vm.hidetoolbar.value = false
         homeViewModel.isloading.set(true)
+        vm.btabselectedpostion.value = 0
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
         handleNotificationClick()
