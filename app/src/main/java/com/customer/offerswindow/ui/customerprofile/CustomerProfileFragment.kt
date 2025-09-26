@@ -513,6 +513,7 @@ class CustomerProfileFragment : Fragment() {
                                             Constants.DDMMYYYY
                                         )
                                     )
+                                    AppPreference.write(Constants.PROFILEPIC,mcustomerData.Cust_Image_URL?:"")
                                     locationid = mcustomerData.Sub_Location_Code ?: ""
                                     countryid = mcustomerData.Country ?: ""
 

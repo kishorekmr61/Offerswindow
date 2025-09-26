@@ -411,5 +411,20 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/storecategoryname"
+            style="@style/Ag_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onItemClick}"
+            android:padding="@dimen/_2sdp"
+            android:text="@{item.servicedesc}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            android:textStyle="bold"
+            android:background="@color/primary"
+            android:layout_gravity="end"
+            tools:text="Restaurents" />
     </androidx.cardview.widget.CardView>
 </layout>

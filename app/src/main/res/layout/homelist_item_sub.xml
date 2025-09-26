@@ -23,6 +23,7 @@
         android:layout_margin="@dimen/_5sdp"
         app:cardCornerRadius="@dimen/_10sdp">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,6 +31,8 @@
             android:padding="@dimen/_4sdp">
 
             <!-- Store Name -->
+
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/storeName"
                 style="@style/Ag_label"
@@ -315,6 +318,21 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/storecategoryname"
+            style="@style/Ag_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/primary"
+            android:onClick="@{onItemClick}"
+            android:padding="@dimen/_2sdp"
+            android:text="@{item.servicedesc}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            android:textStyle="bold"
+            tools:text="Restaurents" />
     </androidx.cardview.widget.CardView>
 
 </layout>

@@ -22,7 +22,6 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentWebBinding
 import com.customer.offerswindow.model.masters.CommonDataResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.setWhiteToolBar
 
 
@@ -30,8 +29,8 @@ class WebFragment : Fragment() {
     private val cmsWebViewModel: WebViewModel by activityViewModels()
     private val vm: DashBoardViewModel by activityViewModels()
     private lateinit var binding: FragmentWebBinding
-    private var  redirectCount = 0;
-    private var  MAX_REDIRECTS = 5
+    private var redirectCount = 0;
+    private var MAX_REDIRECTS = 5
 
 
     override fun onCreateView(
@@ -81,8 +80,9 @@ class WebFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.setWhiteToolBar("About Us")
-//        vm.btabselectedpostion.value = 4
+        if (arguments?.getString(Constants.ISFROM) != Constants.Web_Link_Offers) {
+            activity?.setWhiteToolBar("About Us")
+        }
     }
 
 
@@ -99,9 +99,8 @@ class WebFragment : Fragment() {
                     Log.v("WebView", "Redirect loop detected. Stopping.");
                     return true; // Stop loading
                 }
-                Log.v("URLVALUE",cmsWebViewModel.url.get() ?:"")
                 redirectCount++;
-                view?.loadUrl(cmsWebViewModel.url.get() ?: "")
+                view?.loadUrl(url ?: "")
                 return true
             }
 
