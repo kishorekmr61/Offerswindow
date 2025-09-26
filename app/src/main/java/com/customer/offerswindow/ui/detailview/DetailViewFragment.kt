@@ -38,8 +38,10 @@ import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
+import com.customer.offerswindow.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class DetailViewFragment : Fragment() {
@@ -118,6 +120,54 @@ class DetailViewFragment : Fragment() {
 
                     R.id.title_txt -> {
                         viewModel.getDetailData(item.id)
+                    }
+
+
+                    R.id.share_img -> {
+                        getUserIntrestOnclick("Share", item)
+                        activity?.shareImageFromUrl(
+                            requireActivity(),
+                            item.id,
+                            item.ImagesList?.firstOrNull()?.imagepath ?: ""
+                        )
+                    }
+
+                    R.id.call_img -> {
+                        getUserIntrestOnclick("Call", item)
+                        activity?.openDialPad(item.contact)
+                    }
+
+                    R.id.directions_img, R.id.location -> {
+                        getUserIntrestOnclick("Direction", item)
+                        activity?.navigateToGoogleMap(item.GoogleLocation)
+                    }
+
+                    R.id.website_img -> {
+                        getUserIntrestOnclick("Website", item)
+                        if (!item?.Website_link.isNullOrEmpty()) {
+                            openURL((item.Website_link ?: "").toUri())
+                        } else {
+                            showToast("vendor don't have website")
+                        }
+                    }
+
+                    R.id.whatsapp_img -> {
+                        getUserIntrestOnclick("Whatsapp", item)
+                        activity?.openWhatsAppConversation(
+                            item.contact,
+                            getString(R.string.whatsappmsg)
+                        )
+
+                    }
+
+                    R.id.video_img -> {
+                        if (!item.Video_Link.isNullOrEmpty()) {
+                            getUserIntrestOnclick("Video", item)
+                            activity?.openYoutube(item.Video_Link)
+                        } else {
+                            showToast("vendor don't have video")
+                        }
+
                     }
                 }
                 binder.executePendingBindings()
@@ -246,7 +296,7 @@ class DetailViewFragment : Fragment() {
                                 AppPreference.read(Constants.USERUID, "") ?: ""
                             )
                         } else {
-                            var postdata = PostWishlist(
+                            val postdata = PostWishlist(
                                 dataobj?.id ?: "",
                                 AppPreference.read(Constants.USERUID, "") ?: ""
                             )
@@ -254,7 +304,7 @@ class DetailViewFragment : Fragment() {
                             homeViewModel.postWishListItem(postdata)
                         }
                     } else {
-                        var bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putBoolean("isFrom", true)
                         findNavController().navigate(R.id.nav_sign_in, bundle)
                     }
@@ -293,7 +343,7 @@ class DetailViewFragment : Fragment() {
                     viewModel.postOfferBooking(postofferbookings)
                 }
 
-                R.id.share_lyout -> {
+                R.id.share_lyout, R.id.share_img -> {
                     getUserIntrestOnclick("Share", dataobj)
                     activity?.shareImageFromUrl(
                         requireActivity(),
@@ -303,7 +353,7 @@ class DetailViewFragment : Fragment() {
 
                 }
 
-                R.id.call_lyout -> {
+                R.id.call_lyout, R.id.call_img -> {
                     getUserIntrestOnclick("Call", dataobj)
                     activity?.openDialPad(dataobj?.contact ?: "")
                 }
@@ -313,7 +363,7 @@ class DetailViewFragment : Fragment() {
                     activity?.navigateToGoogleMap(dataobj?.GoogleLocation ?: "")
                 }
 
-                R.id.website_lyout -> {
+                R.id.website_lyout, R.id.website_img -> {
                     getUserIntrestOnclick("Website", dataobj)
                     openURL(Uri.parse(dataobj?.Website_link ?: ""))
                 }
@@ -326,9 +376,13 @@ class DetailViewFragment : Fragment() {
                     )
                 }
 
-                R.id.video_lyout -> {
-                    getUserIntrestOnclick("Video", dataobj)
-                    activity?.openYoutube(dataobj?.Video_Link ?: "")
+                R.id.video_lyout, R.id.video_img -> {
+                    if (!dataobj?.Video_Link.isNullOrEmpty()) {
+                        getUserIntrestOnclick("Video", dataobj)
+                        activity?.openYoutube(dataobj.Video_Link)
+                    } else {
+                        showToast("vendor don't have video")
+                    }
                 }
             }
 

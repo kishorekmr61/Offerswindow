@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
@@ -198,7 +197,6 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.locationTxt.text = "All"
 
     }
-
 
 
     override fun onResume() {
@@ -618,9 +616,9 @@ class HomeFragment : Fragment(), MenuProvider {
                         R.id.website_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Website", datavalues)
-                                if (!datavalues?.Website_link .isNullOrEmpty()) {
+                                if (!datavalues?.Website_link.isNullOrEmpty()) {
                                     openURL(Uri.parse(datavalues?.Website_link ?: ""))
-                                }else{
+                                } else {
                                     showToast("vendor don't have website")
                                 }
                             } else {
@@ -642,8 +640,12 @@ class HomeFragment : Fragment(), MenuProvider {
 
                         R.id.video_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                                getUserIntrestOnclick("Video", datavalues)
-                                activity?.openYoutube(datavalues.Video_Link)
+                                if (!item.Video_Link.isNullOrEmpty()) {
+                                    getUserIntrestOnclick("Video", datavalues)
+                                    activity?.openYoutube(datavalues.Video_Link)
+                                } else {
+                                    showToast("vendor don't have video")
+                                }
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
@@ -730,12 +732,13 @@ class HomeFragment : Fragment(), MenuProvider {
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
-                categoryList[position].isselected = item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
-                if (item.isselected){
+                categoryList[position].isselected =
+                    item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
+                if (item.isselected) {
                     previouscat = position
                 }
             }
-             binder.setVariable(BR.onItemClick, View.OnClickListener {
+            binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.category_item -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
@@ -762,7 +765,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     private fun loadViewPager(otherservices: ArrayList<CommonDataResponse>) {
         val imageList = ArrayList<SlideModel>()
-         otherservices.forEach {
+        otherservices.forEach {
             imageList.add(SlideModel(it.Image_path, it.MstDesc, ScaleTypes.FIT))
         }
         if (!imageList.isNullOrEmpty()) {
@@ -918,9 +921,9 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.getUserInterest(posuserintrest)
     }
 
-    fun navigatepagerClick(weburl : String) {
+    fun navigatepagerClick(weburl: String) {
         val bundle = Bundle()
-        bundle.putString(Constants.ISFROM,Constants.Web_Link_Offers)
+        bundle.putString(Constants.ISFROM, Constants.Web_Link_Offers)
         bundle.putString(
             Constants.WEB_URL,
             weburl
