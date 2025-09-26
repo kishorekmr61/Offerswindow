@@ -27,6 +27,7 @@ data class DashboardData(
     @Expose @SerializedName("Service_Desc") val servicedesc: String,
     @Expose @SerializedName("Offer_Type_Code") val offertypecode: String,
     @Expose @SerializedName("Offer_Type_Desc") val Offer_Type_Desc: String,
+    @Expose @SerializedName("Offer_Details") val Offer_Details: String,
     @Expose @SerializedName("Display_Date") val displaydate: String,
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
     @Expose @SerializedName("End_Date") val endate: String,
@@ -40,7 +41,7 @@ data class DashboardData(
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<Images>? = arrayListOf(),
 ) : WidgetViewModel {
     override fun layoutId(): Int {
-        return R.layout.homelist_item
+        return R.layout.homelist_item_sub
     }
 
     fun getWishlistData(): Boolean {

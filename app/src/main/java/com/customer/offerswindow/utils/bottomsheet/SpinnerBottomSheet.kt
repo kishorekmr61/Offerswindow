@@ -249,6 +249,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
                 mspinnervalues.clear()
                 mspinnervalues.addAll(hashSet)
                 spinnervalues.addAll(updateList(mspinnervalues, value))
+                hashSet.addAll(spinnervalues)
                 updateRecyclerview(spinnervalues, value)
             }
         }

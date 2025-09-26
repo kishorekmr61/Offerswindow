@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
@@ -34,13 +33,11 @@ import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.openYoutube
-import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -92,23 +89,23 @@ class DetailViewFragment : Fragment() {
             dashboaroffersList
         ) { item: OfferDeatils, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
-            var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-            viewpager.setUpViewPagerAdapter(
-                getOtherImageList(item?.ImagesList) ?: arrayListOf()
-            ) { imageitem: OfferImages, binder: ViewDataBinding, position: Int ->
-                binder.setVariable(BR.item, imageitem)
-                binder.setVariable(BR.onItemClick, View.OnClickListener {
-                    when (it.id) {
-                        R.id.img -> {
-                            viewModel.isloading.set(true)
-                            viewModel.getDetailData(item.id)
-                        }
-                    }
-                })
-            }
-            TabLayoutMediator(tabview, viewpager) { tab, position ->
-            }.attach()
+//            var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
+//            var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
+//            viewpager.setUpViewPagerAdapter(
+//                getOtherImageList(item?.ImagesList) ?: arrayListOf()
+//            ) { imageitem: OfferImages, binder: ViewDataBinding, position: Int ->
+//                binder.setVariable(BR.item, imageitem)
+//                binder.setVariable(BR.onItemClick, View.OnClickListener {
+//                    when (it.id) {
+//                        R.id.img -> {
+//                            viewModel.isloading.set(true)
+//                            viewModel.getDetailData(item.id)
+//                        }
+//                    }
+//                })
+//            }
+//            TabLayoutMediator(tabview, viewpager) { tab, position ->
+//            }.attach()
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.favourite -> {
@@ -162,7 +159,14 @@ class DetailViewFragment : Fragment() {
                                 )
                             }
                             updateImages(response.data?.Data)
-                            setRecyclervewData(dashboaroffersList)
+                            if (dashboaroffersList.isNullOrEmpty()) {
+                                binding.moreoffersTxt.visibility = View.GONE
+                                binding.rvMoreoffers.visibility = View.GONE
+                            } else {
+                                binding.moreoffersTxt.visibility = View.VISIBLE
+                                binding.rvMoreoffers.visibility = View.VISIBLE
+                                setRecyclervewData(dashboaroffersList)
+                            }
                         } else {
                             showLongToast("No data ")
                             findNavController().popBackStack()
@@ -237,7 +241,10 @@ class DetailViewFragment : Fragment() {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                         if (dataobj?.getWishlistData() == true) {
                             viewModel.isloading.set(true)
-                            wishListViewModel.removeWishListitem(dataobj.id,AppPreference.read(Constants.USERUID, "") ?: "")
+                            wishListViewModel.removeWishListitem(
+                                dataobj.id,
+                                AppPreference.read(Constants.USERUID, "") ?: ""
+                            )
                         } else {
                             var postdata = PostWishlist(
                                 dataobj?.id ?: "",
@@ -265,7 +272,7 @@ class DetailViewFragment : Fragment() {
                         bundle.putString("SERVICEID", dataobj?.serviceid)
                         bundle.putString("LOCATIONID", dataobj?.locationid)
                         bundle.putString("SHOWROOMID", dataobj?.showroomid)
-                        bundle.putString("ISFROM","SlotBooking")
+                        bundle.putString("ISFROM", "SlotBooking")
                         bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
                         findNavController().navigate(R.id.nav_slots, bundle)
                     } else {
@@ -281,7 +288,7 @@ class DetailViewFragment : Fragment() {
                         dataobj?.showroomid ?: "",
                         dataobj?.locationid ?: "",
                         dataobj?.serviceid ?: "",
-                        dataobj?.id ?: "",dataobj?.id?:""
+                        dataobj?.id ?: "", dataobj?.id ?: ""
                     )
                     viewModel.postOfferBooking(postofferbookings)
                 }
@@ -313,12 +320,15 @@ class DetailViewFragment : Fragment() {
 
                 R.id.whatsapp_lyout -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
-                    activity?.openWhatsAppConversation(dataobj?.contact ?: "", getString(R.string.whatsappmsg))
+                    activity?.openWhatsAppConversation(
+                        dataobj?.contact ?: "",
+                        getString(R.string.whatsappmsg)
+                    )
                 }
 
                 R.id.video_lyout -> {
                     getUserIntrestOnclick("Video", dataobj)
-                    activity?.openYoutube(dataobj?.Video_Link?:"")
+                    activity?.openYoutube(dataobj?.Video_Link ?: "")
                 }
             }
 

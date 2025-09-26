@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -22,7 +21,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
+        android:background="#FAFAFA"
         android:fillViewport="true"
         android:scrollbars="none"
         tools:context=".ui.detailview.DetailViewFragment">
@@ -40,222 +39,482 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">-->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/img_card"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/offersdeatils_crd"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_165sdp"
-                android:layout_margin="@dimen/_3sdp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8ssp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:contentPadding="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-                <!-- <androidx.appcompat.widget.AppCompatImageView
-                     android:id="@+id/img"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:scaleType="fitXY"
-                     imgUrl="@{ViewModel.imagepath}"
-                     tools:src="@drawable/bg_dummyimg"
-                     app:layout_constraintStart_toStartOf="parent"
-                     app:layout_constraintTop_toTopOf="parent" />-->
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/gradient_bg"
-                    app:layout_constraintBottom_toBottomOf="@id/viewPager"
-                    app:tabBackground="@drawable/tab_selector"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp" />
+                    android:background="@color/white">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/favourite"
-                    android:layout_width="@dimen/_35ssp"
-                    android:layout_height="@dimen/_35ssp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:onClick="@{onItemClick}"
-                    android:src="@{ViewModel.offerDeatils.getWishlistData ? @drawable/select :  @drawable/unselect}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/select" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/showroomname_txt"
-                    style="@style/Ag_h4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:maxLines="3"
-                    android:onClick="@{onItemClick}"
-                    android:text="@{ViewModel.offerDeatils.showroomname}"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="@string/categoriename" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/offertitle_txt"
-                style="@style/Ag_h4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:maxLines="3"
-                android:onClick="@{onItemClick}"
-                android:text="@{ViewModel.offerDeatils.offer_Type_Desc}"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_card"
-                tools:text="@string/categoriename" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/offer_txt"
-                style="@style/Ag_h4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:maxLines="3"
-                android:text="@{`Offer Validaity : `+ ViewModel.offerDeatils.convertEndDate()}"
-                android:textColor="@color/color_272727"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/contact_lyout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/offertitle_txt"
-                tools:text="@string/categoriename" />
-
-            <include
-                android:id="@+id/contact_lyout"
-                layout="@layout/contactinfosecond_lyout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/offer_txt"
-                bind:onItemClick="@{onItemClick}" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/img_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_165sdp"
+                        android:layout_margin="@dimen/_3sdp"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <!-- <androidx.appcompat.widget.AppCompatImageView
+                             android:id="@+id/img"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:scaleType="fitXY"
+                             imgUrl="@{ViewModel.imagepath}"
+                             tools:src="@drawable/bg_dummyimg"
+                             app:layout_constraintStart_toStartOf="parent"
+                             app:layout_constraintTop_toTopOf="parent" />-->
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/location_txt"
-                style="@style/AG_regular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_6sdp"
-                android:drawableStart="@drawable/ic_location"
-                android:drawablePadding="@dimen/_4sdp"
-                android:maxLines="3"
-                android:text="@{ViewModel.offerDeatils.locationname}"
-                android:textColor="@color/color_939393"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/contact_lyout"
-                tools:text="@string/categoriename" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tandc_txt"
-                style="@style/Ag_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_6sdp"
-                android:maxLines="3"
-                android:text="@string/terms_amp_condition"
-                android:textColor="@color/color_272727"
-                android:textSize="@dimen/_10ssp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_txt" />
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/gradient_bg"
+                            app:layout_constraintBottom_toBottomOf="@id/viewPager"
+                            app:tabBackground="@drawable/tab_selector"
+                            app:tabGravity="center"
+                            app:tabIndicatorHeight="0dp" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_tanc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:clipToPadding="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tandc_txt"
-                tools:listitem="@layout/row_tandc"
-                tools:visibility="visible" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/slotbooking_txt"
-                style="@style/Ag_body"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/round_black_bg"
-                android:gravity="center"
-                android:onClick="@{onItemClick}"
-                android:padding="@dimen/_8sdp"
-                android:text="@string/slot_booking"
-                android:visibility="@{ViewModel.offerDeatils.Slot_Applicable.equals(`Y`) || ViewModel.offerDeatils.Slot_Applicable.equals(`Yes`) ?View.VISIBLE : View.INVISIBLE}"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@id/bookoffer_txt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_tanc" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/bookoffer_txt"
-                style="@style/Ag_body"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/round_primary_bg"
-                android:gravity="center"
-                android:onClick="@{onItemClick}"
-                android:padding="@dimen/_8sdp"
-                android:text="@string/book_this_offer"
-                android:visibility="@{ViewModel.offerDeatils.Booking_Applicable.equals(`Y`) ?View.VISIBLE : View.INVISIBLE}"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/slotbooking_txt"
-                app:layout_constraintTop_toBottomOf="@id/rv_tanc" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/discountBadge"
+                        style="@style/Ag_body_copy_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_0CA95B"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@{ViewModel.offerDeatils.Offer_Type_Desc}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="UP TO 15% Discount" />
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/quickactions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:weightSum="5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/img_card">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/call_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{onItemClick}"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_4sdp">
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/call1_img"
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/call_s"
+                                android:padding="@dimen/_2sdp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/call_txt"
+                                style="@style/Ag_body_copy_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Call"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_8ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/location"
+                                tools:text="Call" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/share_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{onItemClick}"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/share_mg"
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/whatsapp"
+                                android:padding="@dimen/_5sdp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/share_txt"
+                                style="@style/Ag_body_copy_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="share"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_8ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/location"
+                                tools:text="Share" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/video_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{onItemClick}"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/video1_img"
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/video"
+                                android:padding="@dimen/_5sdp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/video_txt"
+                                style="@style/Ag_body_copy_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Video"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_8ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/location"
+                                tools:text="Video" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/website_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{onItemClick}"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/web_img"
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/weblink"
+                                android:padding="@dimen/_5sdp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/website_txt"
+                                style="@style/Ag_body_copy_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:onClick="@{onItemClick}"
+                                android:text="Website"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_8ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/location"
+                                tools:text="Website" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/favourite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{onItemClick}"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/favourite_img"
+                                android:layout_width="@dimen/_28sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:src="@{ViewModel.offerDeatils.getWishlistData ? @drawable/select :  @drawable/unselect}"
+                                android:tint="@color/black"
+                                tools:src="@drawable/unselect" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/favourite_txt"
+                                style="@style/Ag_body_copy_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:onClick="@{onItemClick}"
+                                android:text="Favourite"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_8ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/location"
+                                tools:text="Favourite" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/divider_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="#42424223"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/quickactions" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/showroomname_txt"
+                        style="@style/Ag_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:maxLines="3"
+                        android:onClick="@{onItemClick}"
+                        android:text="@{ViewModel.offerDeatils.showroomname}"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider_view"
+                        tools:text="@string/categoriename" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/offertitle_txt"
+                        style="@style/Ag_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:onClick="@{onItemClick}"
+                        android:text="@{ViewModel.offerDeatils.offer_Details}"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/showroomname_txt"
+                        tools:text="@string/categoriename" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/offervalidaity_lbl"
+                        style="@style/Ag_h4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:maxLines="3"
+                        android:text="@string/offer_validity"
+                        android:textColor="@color/color_272727"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/offertitle_txt" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/validaitydt_lyout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/offervalidaity_lbl">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/startdate_txt"
+                            style="@style/Ag_body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/calender"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:text="@{ViewModel.offerDeatils.getStartDate()}"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="11-11-2025" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/enddate_txt"
+                            style="@style/Ag_body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/calender"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:text="@{ViewModel.offerDeatils.getStartDate()}"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="11-11-2025" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/location_txt"
+                        style="@style/AG_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawableStart="@drawable/ic_location"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:maxLines="3"
+                        android:text="@{ViewModel.offerDeatils.locationname}"
+                        android:textColor="@color/color_939393"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/validaitydt_lyout"
+                        tools:text="@string/categoriename" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tandc_txt"
+                        style="@style/Ag_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_6sdp"
+                        android:maxLines="3"
+                        android:text="@string/terms_amp_condition"
+                        android:textColor="@color/color_272727"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/location_txt" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_tanc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:clipToPadding="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tandc_txt"
+                        tools:listitem="@layout/row_tandc"
+                        tools:visibility="visible" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/slotbooking_txt"
+                        style="@style/Ag_body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:background="@drawable/round_black_bg"
+                        android:gravity="center"
+                        android:onClick="@{onItemClick}"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/slot_booking"
+                        android:textColor="@color/black"
+                        android:visibility="@{ViewModel.offerDeatils.Slot_Applicable.equals(`Y`) || ViewModel.offerDeatils.Slot_Applicable.equals(`Yes`) ?View.VISIBLE : View.INVISIBLE}"
+                        app:layout_constraintEnd_toStartOf="@id/bookoffer_txt"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rv_tanc" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bookoffer_txt"
+                        style="@style/Ag_body"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:background="@drawable/round_primary_bg"
+                        android:gravity="center"
+                        android:onClick="@{onItemClick}"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/book_this_offer"
+                        android:textColor="@color/white"
+                        android:visibility="@{ViewModel.offerDeatils.Booking_Applicable.equals(`Y`) ?View.VISIBLE : View.INVISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/slotbooking_txt"
+                        app:layout_constraintTop_toBottomOf="@id/rv_tanc" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/moreoffers_txt"
                 style="@style/Ag_h4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
                 android:text="@string/more_offers_you_may_like"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/slotbooking_txt" />
+                app:layout_constraintTop_toBottomOf="@id/offersdeatils_crd" />
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_moreoffers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:clipToPadding="false"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moreoffers_txt"
-                tools:listitem="@layout/homelist_item"
+                tools:listitem="@layout/homelist_item_sub"
                 tools:visibility="visible" />
 
             <ProgressBar

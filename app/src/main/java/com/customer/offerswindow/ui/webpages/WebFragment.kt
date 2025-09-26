@@ -44,6 +44,7 @@ class WebFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = cmsWebViewModel
         if (arguments?.getString(Constants.ISFROM) == Constants.Web_Link_Offers) {
+            setUpObserver()
             cmsWebViewModel.url.set(arguments?.getString(Constants.WEB_URL) ?: "www.google.com")
             init()
         } else {
@@ -98,6 +99,7 @@ class WebFragment : Fragment() {
                     Log.v("WebView", "Redirect loop detected. Stopping.");
                     return true; // Stop loading
                 }
+                Log.v("URLVALUE",cmsWebViewModel.url.get() ?:"")
                 redirectCount++;
                 view?.loadUrl(cmsWebViewModel.url.get() ?: "")
                 return true

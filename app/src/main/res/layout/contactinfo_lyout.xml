@@ -52,7 +52,7 @@
                 android:tint="@color/black"
                 app:layout_constraintStart_toEndOf="@id/share_img"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/call" />
+                app:srcCompat="@drawable/call_s" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/directions_img"

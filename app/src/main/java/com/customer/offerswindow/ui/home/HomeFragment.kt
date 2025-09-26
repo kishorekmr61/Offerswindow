@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
@@ -27,7 +28,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.BuildConfig
 import com.customer.offerswindow.R
@@ -61,7 +61,6 @@ import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.customer.offerswindow.utils.setToolbarVisibility
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpPagingMultiViewRecyclerAdapter
-import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
@@ -69,8 +68,6 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.chip.Chip
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -202,26 +199,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     }
 
-    private fun getDataIntent(item: CategoriesData, position: Int, mpreviouscat: Int) {
-        if (arguments?.getString("ISFROM") == "CATEGORY") {
-            var categoryselected = Gson().fromJson(
-                arguments?.getString("Category"),
-                CategoriesData::class.java
-            )
-            previouscat = mpreviouscat
-            categoryList.forEach { _ ->
-                if (categoryselected.category_id == item.category_id) {
-                    categoryid = item.category_id ?: categoryid
-                    categoryList[previouscat].isselected = false
-                    previouscat = position
-                    categoryList[previouscat].isselected = true
-                    item.isselected = true
-                    binding.rvCategories.scrollToPosition(position)
-                    return
-                }
-            }
-        }
-    }
+
 
     override fun onResume() {
         super.onResume()
@@ -233,6 +211,9 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     private fun setObserver() {
+        if (!AppPreference.read(Constants.PROFILEPIC, "").isNullOrEmpty()) {
+            homeViewModel.profilepic.set(AppPreference.read(Constants.PROFILEPIC, ""))
+        }
         homeViewModel.categoriesResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -328,13 +309,25 @@ class HomeFragment : Fragment(), MenuProvider {
                             response?.data?.Data?.firstOrNull()?.Offer_Type ?: subCateogory
 
                         homeViewModel.getGoldRatesData()
-                        homeViewModel.getDashboardData(
-                            showroomid,
-                            locationId,
-                            categoryid, subCateogory, iCityId,
-                            AppPreference.read(Constants.USERUID, "0") ?: "0",
-                            "0"
-                        )
+                        if (arguments?.getString("ISFROM").equals("CATEGORY")) {
+                            homeViewModel.getDashboardData(
+                                showroomid,
+                                locationId,
+                                arguments?.getString("CategoryID") ?: categoryid,
+                                subCateogory,
+                                iCityId,
+                                AppPreference.read(Constants.USERUID, "0") ?: "0",
+                                "0"
+                            )
+                        } else {
+                            homeViewModel.getDashboardData(
+                                showroomid,
+                                locationId,
+                                categoryid, subCateogory, iCityId,
+                                AppPreference.read(Constants.USERUID, "0") ?: "0",
+                                "0"
+                            )
+                        }
                     }
                 }
 
@@ -370,12 +363,12 @@ class HomeFragment : Fragment(), MenuProvider {
                             gold24.plus(gold22).plus(gold18).plus(silver).plus(diamond)
                         binding.goldratesTxt.isSelected = true
                         binding.goldratesTxt.visibility = View.VISIBLE
-                        dashboardOffersList()
+//                        dashboardOffersList()
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    dashboardOffersList()
+//                    dashboardOffersList()
                 }
 
                 else -> {}
@@ -461,6 +454,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 sType
             )
             cityList.clear()
+            otherServicesList.clear()
             otherList.forEach {
                 if (it.MstType == "Web_Link_Offers")
                     otherServicesList.add(
@@ -548,23 +542,23 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.rvOfferslist.setUpPagingMultiViewRecyclerAdapter { item: WidgetViewModel, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 var datavalues = item as DashboardData
-                var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
-                var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-                viewpager.setUpViewPagerAdapter(
-                    getImageList(datavalues.ImagesList) ?: arrayListOf()
-                ) { item: Images, binder: ViewDataBinding, position: Int ->
-                    binder.setVariable(BR.item, item)
-                    binder.setVariable(BR.onItemClick, View.OnClickListener {
-                        when (it.id) {
-                            R.id.img -> {
-                                navigateOfferDeatils(datavalues, "")
-                            }
-                        }
-                        binder.executePendingBindings()
-                    })
-                }
-                TabLayoutMediator(tabview, viewpager) { tab, position ->
-                }.attach()
+//                var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
+//                var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
+//                viewpager.setUpViewPagerAdapter(
+//                    getImageList(datavalues.ImagesList) ?: arrayListOf()
+//                ) { item: Images, binder: ViewDataBinding, position: Int ->
+//                    binder.setVariable(BR.item, item)
+//                    binder.setVariable(BR.onItemClick, View.OnClickListener {
+//                        when (it.id) {
+//                            R.id.img -> {
+//                                navigateOfferDeatils(datavalues, "")
+//                            }
+//                        }
+//                        binder.executePendingBindings()
+//                    })
+//                }
+//                TabLayoutMediator(tabview, viewpager) { tab, position ->
+//                }.attach()
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
                     when (it.id) {
                         R.id.favourite -> {
@@ -586,7 +580,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             }
                         }
 
-                        R.id.title_txt -> {
+                        R.id.title_txt, R.id.discountInfo -> {
                             navigateOfferDeatils(datavalues)
                         }
 
@@ -612,7 +606,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             }
                         }
 
-                        R.id.directions_img -> {
+                        R.id.directions_img, R.id.location -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Direction", datavalues)
                                 activity?.navigateToGoogleMap(datavalues.GoogleLocation)
@@ -624,7 +618,11 @@ class HomeFragment : Fragment(), MenuProvider {
                         R.id.website_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Website", datavalues)
-                                openURL(Uri.parse(datavalues?.Website_link ?: ""))
+                                if (!datavalues?.Website_link .isNullOrEmpty()) {
+                                    openURL(Uri.parse(datavalues?.Website_link ?: ""))
+                                }else{
+                                    showToast("vendor don't have website")
+                                }
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
@@ -706,7 +704,12 @@ class HomeFragment : Fragment(), MenuProvider {
         binding.offertypeChips.removeAllViews()
         var i = 0
         offertypeList.forEach {
-            binding.offertypeChips.addView(createChip(it.filtercategory_desc ?: "", i))
+            binding.offertypeChips.addView(
+                createChip(
+                    it.filtercategory_desc ?: "",
+                    it.filtercode?.toInt() ?: 1
+                )
+            )
             binding.executePendingBindings()
             i++
         }
@@ -726,11 +729,13 @@ class HomeFragment : Fragment(), MenuProvider {
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            getDataIntent(item, position, previouscat)
-            if (arguments?.getString("ISFROM") == "CATEGORY") {
-                dashboardOffersList()
+            if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
+                categoryList[position].isselected = item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
+                if (item.isselected){
+                    previouscat = position
+                }
             }
-            binder.setVariable(BR.onItemClick, View.OnClickListener {
+             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.category_item -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
@@ -755,9 +760,9 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun loadViewPager(commonDataResponse: ArrayList<CommonDataResponse>) {
+    private fun loadViewPager(otherservices: ArrayList<CommonDataResponse>) {
         val imageList = ArrayList<SlideModel>()
-        commonDataResponse.forEach {
+         otherservices.forEach {
             imageList.add(SlideModel(it.Image_path, it.MstDesc, ScaleTypes.FIT))
         }
         if (!imageList.isNullOrEmpty()) {
@@ -765,7 +770,7 @@ class HomeFragment : Fragment(), MenuProvider {
         }
         binding.slider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
-                navigatepagerClick(position)
+                navigatepagerClick(otherservices[position].URL)
             }
 
             override fun doubleClick(position: Int) {
@@ -903,7 +908,7 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     fun getUserIntrestOnclick(flag: String, datavalues: DashboardData) {
-        var posuserintrest = PostUserIntrest(
+        val posuserintrest = PostUserIntrest(
             datavalues.showroomid,
             datavalues.locationid,
             datavalues.id,
@@ -913,11 +918,12 @@ class HomeFragment : Fragment(), MenuProvider {
         homeViewModel.getUserInterest(posuserintrest)
     }
 
-    fun navigatepagerClick(position: Int) {
-        var bundle = Bundle()
+    fun navigatepagerClick(weburl : String) {
+        val bundle = Bundle()
+        bundle.putString(Constants.ISFROM,Constants.Web_Link_Offers)
         bundle.putString(
             Constants.WEB_URL,
-            otherServicesList[position].URL
+            weburl
         )
         findNavController().navigate(R.id.nav_webview, bundle)
     }
@@ -941,6 +947,7 @@ class HomeFragment : Fragment(), MenuProvider {
         if (locationList.isEmpty()) {
             showToast("No data")
         } else {
+            locationList.add(SpinnerRowModel("All", mstCode = "0"))
             activity?.let { it1 ->
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
                     Constants.FILTER,
@@ -976,6 +983,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 is NetworkResult.Success -> {
                     homeViewModel.isloading.set(false)
                     response.data?.let { resposnes ->
+                        locationList.clear()
                         response?.data?.data?.forEach {
                             locationList.add(
                                 SpinnerRowModel(

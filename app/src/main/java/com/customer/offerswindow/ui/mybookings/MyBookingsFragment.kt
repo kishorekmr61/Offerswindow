@@ -116,7 +116,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
             mbookinglist
         ) { item: BookingData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
+           /* var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
             var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
             viewpager.setUpViewPagerAdapter(
                 getImageList(item.Offer_Image_Details) ?: arrayListOf()
@@ -131,7 +131,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
                 })
             }
             TabLayoutMediator(tabview, viewpager) { tab, position ->
-            }.attach()
+            }.attach()*/
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.title_txt -> {

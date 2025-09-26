@@ -2,7 +2,7 @@
 <resources>
     <color name="primary">#4C1012</color>
     <color name="color_3CEA99">#CB0CEA83</color>
-    <color name="secondary_red">#A24857</color>
+    <color name="secondary_red">#5B1D1F</color>
     <color name="color_F5991C">#F5991C</color>
     <color name="color_FFCB01">#FFCB01</color>
     <color name="black">#000000</color>
@@ -44,7 +44,7 @@
     <color name="color_F4F4F4">#F4F4F4</color>
     <color name="color_0044FF">#02A9F4</color>
     <color name="color_272727">#272727</color>
-    <color name="color_424242">#424242</color>
+    <color name="color_424242">#23424242</color>
     <color name="color_F0F0F0">#F0F0F0</color>
     <color name="color_939393">#939393</color>
     <color name="color_FBBA18">#FBBA18</color>

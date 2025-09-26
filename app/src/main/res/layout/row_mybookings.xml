@@ -19,7 +19,7 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_4sdp"
@@ -100,5 +100,271 @@
             app:layout_constraintTop_toBottomOf="@id/img_card"
             bind:onItemClick="@{onItemClick}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="@dimen/_4sdp">
+
+            <!-- Store Name -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/storeName"
+                style="@style/Ag_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="@{onItemClick}"
+                android:padding="@dimen/_2sdp"
+                android:text="@{item.showroom_Name}"
+                android:textColor="#000000"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="SRI BALAJI MEDICAL &amp; GENERAL STORES" />
+
+            <!-- Discount Info -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/discountInfo"
+                style="@style/AG_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:onClick="@{onItemClick}"
+                android:padding="@dimen/_2sdp"
+                android:text="@{item.Offer_Details}"
+                android:textColor="@color/secondary_red"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/storeName"
+                tools:text="UPTO 15% DISCOUNT ON MEDICINES &amp; FREE HOME DELIVERY." />
+
+            <!-- Location -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/location"
+                style="@style/Ag_body_small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="@dimen/_4sdp"
+                android:onClick="@{onItemClick}"
+                android:padding="@dimen/_2sdp"
+                android:text="@{item.location_Desc}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintEnd_toStartOf="@id/discountBadge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/discountInfo"
+                tools:text="MiyapurMiyapurMiyapurMiyapurMiyapurMiyapurMiyapurMiyapurMiyapurMiyapur" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/call4_img"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@drawable/call_s"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/location"
+                app:layout_constraintTop_toTopOf="@id/location" />
+
+
+            <!-- Discount Badge -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/discountBadge"
+                style="@style/Ag_body_copy_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_0CA95B"
+                android:padding="@dimen/_3sdp"
+                android:text="@{item.Offer_Type_Desc}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintBottom_toBottomOf="@id/location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/location"
+                app:layout_constraintTop_toTopOf="@id/location"
+                tools:text="UP TO 15% Discount" />
+
+
+            <View
+                android:id="@+id/divider_view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="#42424223"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/location" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_view">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/call_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{onItemClick}"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_4sdp">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/call1_img"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/call_s"
+                        android:padding="@dimen/_2sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/call_txt"
+                        style="@style/Ag_body_copy_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Call"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/location"
+                        tools:text="Call" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/share_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{onItemClick}"
+                    android:orientation="vertical">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/share_mg"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/whatsapp"
+                        android:padding="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/share_txt"
+                        style="@style/Ag_body_copy_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="share"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/location"
+                        tools:text="Share" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/video_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:onClick="@{onItemClick}"
+                    android:orientation="vertical">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/video1_img"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/video"
+                        android:padding="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/video_txt"
+                        style="@style/Ag_body_copy_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Video"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/location"
+                        tools:text="Video" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/website_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{onItemClick}"
+                    android:orientation="vertical">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/web_img"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/weblink"
+                        android:padding="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/website_txt"
+                        style="@style/Ag_body_copy_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:onClick="@{onItemClick}"
+                        android:text="Website"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/location"
+                        tools:text="Website" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

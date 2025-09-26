@@ -1,16 +1,15 @@
 package com.customer.offerswindow.ui.wishlist
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
@@ -22,16 +21,15 @@ import com.customer.offerswindow.model.dashboard.SelectedOffers
 import com.customer.offerswindow.model.dashboard.WishListData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
+import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
-import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.shareImageFromUrl
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,6 +53,13 @@ class WishListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         activity?.setWhiteToolBar("WishList", true)
         return root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleHardWareBackClick {
+            findNavController().navigate(R.id.nav_home)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,25 +117,25 @@ class WishListFragment : Fragment() {
             wishlistData
         ) { witem: WishListData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, witem)
-            var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
-            var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-            viewpager.setUpViewPagerAdapter(
-                getImageList(witem.Wishlist.firstOrNull()?.Selected_Offers) ?: arrayListOf()
-            ) { item: SelectedOffers, binder: ViewDataBinding, position: Int ->
-                binder.setVariable(BR.item, item)
-                binder.setVariable(BR.onItemClick, View.OnClickListener {
-                    when (it.id) {
+            /* var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
+             var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
+             viewpager.setUpViewPagerAdapter(
+                 getImageList(witem.Wishlist.firstOrNull()?.Selected_Offers) ?: arrayListOf()
+             ) { item: SelectedOffers, binder: ViewDataBinding, position: Int ->
+                 binder.setVariable(BR.item, item)
+                 binder.setVariable(BR.onItemClick, View.OnClickListener {
+                     when (it.id) {
 
-                        R.id.img -> {
-                            var bundle = Bundle()
-                            bundle.putString("OfferID", witem.Offer_ID)
-                            findNavController().navigate(R.id.nav_offer_details, bundle)
-                        }
-                    }
-                })
-            }
-            TabLayoutMediator(tabview, viewpager) { tab, position ->
-            }.attach()
+                         R.id.img -> {
+                             var bundle = Bundle()
+                             bundle.putString("OfferID", witem.Offer_ID)
+                             findNavController().navigate(R.id.nav_offer_details, bundle)
+                         }
+                     }
+                 })
+             }
+             TabLayoutMediator(tabview, viewpager) { tab, position ->
+             }.attach()*/
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.title_txt -> {
@@ -176,7 +181,11 @@ class WishListFragment : Fragment() {
                     R.id.website_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Website")
-                            openURL(Uri.parse(witem.Wishlist.firstOrNull()?.Website_Url ?: ""))
+                            if (!witem.Wishlist.firstOrNull()?.Website_Url.isNullOrEmpty()) {
+                                openURL((witem.Wishlist.firstOrNull()?.Website_Url ?: "").toUri())
+                            } else {
+                                showToast("vendor don't have website")
+                            }
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)
                         }
@@ -186,7 +195,8 @@ class WishListFragment : Fragment() {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Whatsapp")
                             activity?.openWhatsAppConversation(
-                                witem.Wishlist.firstOrNull()?.Contact_No_1 ?: "", getString(R.string.whatsappmsg)
+                                witem.Wishlist.firstOrNull()?.Contact_No_1 ?: "",
+                                getString(R.string.whatsappmsg)
                             )
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)

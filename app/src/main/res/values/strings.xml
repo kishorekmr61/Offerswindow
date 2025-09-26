@@ -80,5 +80,7 @@
     <string name="enter_verificattion_code">Enter Verificattion Code</string>
     <string name="whatsappmsg">I found this offer in OffersWindow app. I would like to know more details about this offer  Are you available to discuss now?</string>
     <string name="please_visit">Please visit my bookings page to view your booking details</string>
+    <string name="call">call</string>
+    <string name="offer_validity">Offer Validity</string>
 
 </resources>

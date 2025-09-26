@@ -90,7 +90,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:padding="@dimen/_4sdp"
                     android:scaleType="center"
-                    android:src="@drawable/call"
+                    android:src="@drawable/call_s"
                     android:tint="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

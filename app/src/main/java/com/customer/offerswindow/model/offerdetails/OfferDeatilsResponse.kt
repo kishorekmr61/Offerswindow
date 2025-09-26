@@ -27,6 +27,7 @@ data class OfferDeatils(
     @Expose @SerializedName("Service_UID") val serviceid: String,
     @Expose @SerializedName("Service_Desc") val servicedesc: String,
     @Expose @SerializedName("Offer_Type_Code") val offertypecode: String,
+    @Expose @SerializedName("Offer_Details") val Offer_Details: String,
     @Expose @SerializedName("Display_Date") val displaydate: String,
     @Expose @SerializedName("Effective_Date") val effectivedate: String,
     @Expose @SerializedName("Slot_Applicable") val Slot_Applicable: String? = "",
@@ -47,11 +48,15 @@ data class OfferDeatils(
     }
 
     fun convertEndDate(): String {
+        return  convertDate(endate, Constants.YYYYMMDDTHH, "dd-MM-yyyy")
+    }
+
+    fun getStartDate(): String{
         return convertDate(
             effectivedate,
             Constants.YYYYMMDDTHH,
             "dd-MM-yyyy"
-        ) + " to " + convertDate(endate, Constants.YYYYMMDDTHH, "dd-MM-yyyy")
+        )
     }
 
     fun getWishlistData(): Boolean {

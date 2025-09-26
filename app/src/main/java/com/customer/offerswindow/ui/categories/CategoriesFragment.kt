@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
+import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.FragmentCategoriesBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.dashboard.CategoriesData
@@ -99,7 +100,9 @@ class CategoriesFragment : Fragment() {
                     R.id.category_item -> {
                         var bundle = Bundle()
                         bundle.putString("Category", Gson().toJson(item))
-                        bundle.putString("ISFROM", "CATEGORY")
+                        bundle.putString(Constants.ISFROM, "CATEGORY")
+                        bundle.putString("CategoryID", item.category_id)
+                        bundle.putInt("POSITION", position)
                         findNavController().navigate(R.id.nav_home, bundle)
                     }
                 }
