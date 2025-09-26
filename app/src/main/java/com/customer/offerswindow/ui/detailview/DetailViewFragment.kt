@@ -379,7 +379,7 @@ class DetailViewFragment : Fragment() {
                 R.id.video_lyout, R.id.video_img -> {
                     if (!dataobj?.Video_Link.isNullOrEmpty()) {
                         getUserIntrestOnclick("Video", dataobj)
-                        activity?.openYoutube(dataobj.Video_Link)
+                        activity?.openYoutube(dataobj?.Video_Link?:"")
                     } else {
                         showToast("vendor don't have video")
                     }
