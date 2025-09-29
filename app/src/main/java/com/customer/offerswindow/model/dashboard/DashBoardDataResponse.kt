@@ -35,6 +35,7 @@ data class DashboardData(
     @Expose @SerializedName("Slot_Applicable") val Slot_Applicable: String,
     @Expose @SerializedName("Booking_Applicable") val Booking_Applicable: String,
     @Expose @SerializedName("Website_link") val Website_link: String,
+    @Expose @SerializedName("Display_Image") var DisplayImage: String,
     var Wishlist_Status: String = "",
     var isfavourite: Boolean = false,
     var Video_Link: String = "",

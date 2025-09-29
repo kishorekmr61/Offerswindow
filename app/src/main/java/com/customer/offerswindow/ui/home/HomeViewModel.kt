@@ -126,7 +126,7 @@ class HomeViewModel @Inject constructor(
     fun getGoldRatesData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Price","0").collect { values ->
+                repository.getCommonMaster("Price","0","0").collect { values ->
                     goldratesdata.postValue(values)
                 }
             } else {
@@ -233,10 +233,10 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getMstData(lServiceId : String) {
+    fun getMstData(iCityId : String, lServiceId : String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Location",lServiceId).collect { values ->
+                repository.getCommonMaster("Location",lServiceId,iCityId).collect { values ->
                     masterdata.postValue(values)
                 }
             } else {

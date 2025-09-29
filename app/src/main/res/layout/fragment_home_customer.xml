@@ -34,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_45ssp"
-        android:background="@drawable/bgimage"
         tools:context=".ui.home.HomeFragment">
 
 
@@ -42,7 +41,6 @@
             android:id="@+id/scrollview_home_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_top"
             android:fillViewport="true"
             android:overScrollMode="never"
             android:scrollbars="none"

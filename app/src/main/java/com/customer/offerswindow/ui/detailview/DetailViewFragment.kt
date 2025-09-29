@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.net.toUri
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -41,7 +42,6 @@ import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class DetailViewFragment : Fragment() {
@@ -110,12 +110,19 @@ class DetailViewFragment : Fragment() {
 //            }.attach()
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
-                    R.id.favourite -> {
-                        if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                    R.id.favourite, R.id.favourite_img -> {
+                        if (item.isfavourite) {
                             item.isfavourite = false
                         } else {
-                            findNavController().navigate(R.id.nav_sign_in)
+                            item.isfavourite = true
                         }
+                        val postdata = PostWishlist(
+                            item.id,
+                            AppPreference.read(Constants.USERUID, "") ?: ""
+                        )
+                        homeViewModel.isloading.set(true)
+                        homeViewModel.postWishListItem(postdata)
+
                     }
 
                     R.id.title_txt -> {
@@ -137,7 +144,7 @@ class DetailViewFragment : Fragment() {
                         activity?.openDialPad(item.contact)
                     }
 
-                    R.id.directions_img, R.id.location -> {
+                    R.id.directions_img, R.id.location, R.id.location_txt -> {
                         getUserIntrestOnclick("Direction", item)
                         activity?.navigateToGoogleMap(item.GoogleLocation)
                     }
@@ -271,6 +278,23 @@ class DetailViewFragment : Fragment() {
                 else -> {}
             }
         }
+        homeViewModel.postwishlistdata.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    viewModel.isloading.set(false)
+                    showLongToast(response.message ?: "")
+                    viewModel.isloading.set(true)
+                    arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
+                }
+
+                is NetworkResult.Error -> {
+                    viewModel.isloading.set(false)
+                    showLongToast(response.message ?: "")
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun updateImages(data: OfferDeatils?) {
@@ -288,48 +312,36 @@ class DetailViewFragment : Fragment() {
             var dataobj = viewModel.OfferDeatils.get()
             when (it.id) {
                 R.id.favourite -> {
-                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        if (dataobj?.getWishlistData() == true) {
-                            viewModel.isloading.set(true)
-                            wishListViewModel.removeWishListitem(
-                                dataobj.id,
-                                AppPreference.read(Constants.USERUID, "") ?: ""
-                            )
-                        } else {
-                            val postdata = PostWishlist(
-                                dataobj?.id ?: "",
-                                AppPreference.read(Constants.USERUID, "") ?: ""
-                            )
-                            viewModel.isloading.set(true)
-                            homeViewModel.postWishListItem(postdata)
-                        }
+
+                    if (dataobj?.getWishlistData() == true) {
+                        viewModel.isloading.set(true)
+                        wishListViewModel.removeWishListitem(
+                            dataobj.id,
+                            AppPreference.read(Constants.USERUID, "") ?: ""
+                        )
                     } else {
-                        val bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
-                        findNavController().navigate(R.id.nav_sign_in, bundle)
+                        val postdata = PostWishlist(
+                            dataobj?.id ?: "",
+                            AppPreference.read(Constants.USERUID, "") ?: ""
+                        )
+                        viewModel.isloading.set(true)
+                        homeViewModel.postWishListItem(postdata)
                     }
                 }
 
                 R.id.slotbooking_txt -> {
-                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-
-                        val bundle = Bundle()
-                        bundle.putString(
-                            "Location",
-                            dataobj?.showroomname + " - " + dataobj?.locationname
-                        )
-                        bundle.putString("OfferID", dataobj?.id)
-                        bundle.putString("SERVICEID", dataobj?.serviceid)
-                        bundle.putString("LOCATIONID", dataobj?.locationid)
-                        bundle.putString("SHOWROOMID", dataobj?.showroomid)
-                        bundle.putString("ISFROM", "SlotBooking")
-                        bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
-                        findNavController().navigate(R.id.nav_slots, bundle)
-                    } else {
-                        var bundle = Bundle()
-                        bundle.putBoolean("isFrom", true)
-                        findNavController().navigate(R.id.nav_sign_in, bundle)
-                    }
+                    val bundle = Bundle()
+                    bundle.putString(
+                        "Location",
+                        dataobj?.showroomname + " - " + dataobj?.locationname
+                    )
+                    bundle.putString("OfferID", dataobj?.id)
+                    bundle.putString("SERVICEID", dataobj?.serviceid)
+                    bundle.putString("LOCATIONID", dataobj?.locationid)
+                    bundle.putString("SHOWROOMID", dataobj?.showroomid)
+                    bundle.putString("ISFROM", "SlotBooking")
+                    bundle.putString("Imagepath", dataobj?.ImagesList?.firstOrNull()?.imagepath)
+                    findNavController().navigate(R.id.nav_slots, bundle)
                 }
 
                 R.id.bookoffer_txt -> {
@@ -379,7 +391,7 @@ class DetailViewFragment : Fragment() {
                 R.id.video_lyout, R.id.video_img -> {
                     if (!dataobj?.Video_Link.isNullOrEmpty()) {
                         getUserIntrestOnclick("Video", dataobj)
-                        activity?.openYoutube(dataobj?.Video_Link?:"")
+                        activity?.openYoutube(dataobj?.Video_Link ?: "")
                     } else {
                         showToast("vendor don't have video")
                     }

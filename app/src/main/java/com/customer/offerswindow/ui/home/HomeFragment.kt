@@ -144,14 +144,13 @@ class HomeFragment : Fragment(), MenuProvider {
                             ) {
                                 if (titleData != null) {
                                     binding.cityTxt.setText(titleData.title)
+                                    iCityId = titleData.mstCode
                                     homeViewModel.isloading.set(true)
                                     locationList =
                                         homeViewModel.getLocationWIthFromCities(iCityId)
                                     locationId = "0"
                                     if (locationList.isNotEmpty())
                                         binding.locationTxt.text = locationList[0].title
-
-                                    iCityId = titleData.mstCode
                                     dashboardOffersList()
                                 }
                             }
@@ -170,7 +169,7 @@ class HomeFragment : Fragment(), MenuProvider {
         }
         binding.locationTxt.setOnClickListener {
             homeViewModel.isloading.set(true)
-            homeViewModel.getMstData(categoryid)
+            homeViewModel.getMstData(iCityId,categoryid)
         }
         binding.searchedit.setOnClickListener {
             homeViewModel.isloading.set(true)
@@ -234,7 +233,6 @@ class HomeFragment : Fragment(), MenuProvider {
                             )
                         )
                     }
-                    loadServices()
                     homeViewModel.getOfferSubcategoryChips(categoryid)
                 }
 
@@ -306,6 +304,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         subCateogory =
                             response?.data?.Data?.firstOrNull()?.Offer_Type ?: subCateogory
 
+                        loadServices()
                         homeViewModel.getGoldRatesData()
                         if (arguments?.getString("ISFROM").equals("CATEGORY")) {
                             homeViewModel.getDashboardData(
@@ -540,23 +539,7 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.rvOfferslist.setUpPagingMultiViewRecyclerAdapter { item: WidgetViewModel, binder: ViewDataBinding, position: Int ->
                 binder.setVariable(BR.item, item)
                 var datavalues = item as DashboardData
-//                var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
-//                var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-//                viewpager.setUpViewPagerAdapter(
-//                    getImageList(datavalues.ImagesList) ?: arrayListOf()
-//                ) { item: Images, binder: ViewDataBinding, position: Int ->
-//                    binder.setVariable(BR.item, item)
-//                    binder.setVariable(BR.onItemClick, View.OnClickListener {
-//                        when (it.id) {
-//                            R.id.img -> {
-//                                navigateOfferDeatils(datavalues, "")
-//                            }
-//                        }
-//                        binder.executePendingBindings()
-//                    })
-//                }
-//                TabLayoutMediator(tabview, viewpager) { tab, position ->
-//                }.attach()
+
                 binder.setVariable(BR.onItemClick, View.OnClickListener {
                     when (it.id) {
                         R.id.favourite -> {
@@ -578,7 +561,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             }
                         }
 
-                        R.id.title_txt, R.id.discountInfo -> {
+                        R.id.title_txt, R.id.discountInfo,R.id.storeName,R.id.store_img -> {
                             navigateOfferDeatils(datavalues)
                         }
 
@@ -727,16 +710,15 @@ class HomeFragment : Fragment(), MenuProvider {
             binding.categoriesTxt.visibility = View.VISIBLE
             binding.viewallTxt.visibility = View.VISIBLE
         }
+
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
-                categoryList[position].isselected =
-                    item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
-                if (item.isselected) {
-                    previouscat = position
-                }
+                setCategorySeleted(position,item)
+            }else{
+                setCategorySeleted(position,item)
             }
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
@@ -760,6 +742,14 @@ class HomeFragment : Fragment(), MenuProvider {
                 }
                 binder.executePendingBindings()
             })
+        }
+    }
+
+    private fun setCategorySeleted(position : Int,item: CategoriesData) {
+        categoryList[position].isselected =
+            item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
+        if (item.isselected) {
+            previouscat = position
         }
     }
 
