@@ -36,6 +36,7 @@ data class OfferDeatils(
     @Expose @SerializedName("Offer_Status") val offerstatus: String,
     @Expose @SerializedName("Website_link") val Website_link: String,
     @Expose @SerializedName("Offer_Type_Desc") val Offer_Type_Desc: String,
+    @Expose @SerializedName("Display_Image") var DisplayImage: String,
     var Wishlist_Status: String = "",
     @Expose @SerializedName("Image_Details") var ImagesList: ArrayList<OfferImages>? = arrayListOf(),
     var Video_Link: String = "",

@@ -401,7 +401,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/location_txt"
                         style="@style/AG_regular"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:drawableStart="@drawable/ic_location"

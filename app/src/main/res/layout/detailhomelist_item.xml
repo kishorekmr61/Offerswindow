@@ -125,6 +125,18 @@
             android:background="#FFFFFF"
             android:padding="@dimen/_4sdp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/store_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:scaleType="fitXY"
+                android:onClick="@{onItemClick}"
+                imgNormalUrl="@{item.ImagesList[0].imagepath}"
+                android:visibility="@{item.displayImage.equals(`Y`) ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <!-- Store Name -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/storeName"
@@ -139,7 +151,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/store_img"
                 tools:text="SRI BALAJI MEDICAL &amp; GENERAL STORES" />
 
             <!-- Discount Info -->

@@ -144,7 +144,7 @@ class DetailViewFragment : Fragment() {
                         activity?.openDialPad(item.contact)
                     }
 
-                    R.id.directions_img, R.id.location, R.id.location_txt -> {
+                    R.id.directions_img, R.id.location-> {
                         getUserIntrestOnclick("Direction", item)
                         activity?.navigateToGoogleMap(item.GoogleLocation)
                     }
@@ -370,7 +370,7 @@ class DetailViewFragment : Fragment() {
                     activity?.openDialPad(dataobj?.contact ?: "")
                 }
 
-                R.id.direction_lyout -> {
+                R.id.direction_lyout ,R.id.location_txt -> {
                     getUserIntrestOnclick("Direction", dataobj)
                     activity?.navigateToGoogleMap(dataobj?.GoogleLocation ?: "")
                 }
