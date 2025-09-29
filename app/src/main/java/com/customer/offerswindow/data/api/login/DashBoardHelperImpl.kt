@@ -5,9 +5,11 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
-class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: DashboardApiService ) {
+class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: DashboardApiService) {
 
     suspend fun getCustomerData(userid: String) =
         dashboardApiService.getCustomerData(userid)
@@ -69,7 +71,16 @@ class DashBoardHelperImpl @Inject constructor(private val dashboardApiService: D
 
 
     suspend fun getSearchCriteria(lCustomerId: String) =
-        dashboardApiService.getSearchCriteria( lCustomerId)
+        dashboardApiService.getSearchCriteria(lCustomerId)
 
+
+    suspend fun postAddd(
+        part: MultipartBody.Part?,
+        formDataBody: RequestBody
+    ) =
+        dashboardApiService.submitPost(
+            part,
+            formDataBody
+        )
 
 }

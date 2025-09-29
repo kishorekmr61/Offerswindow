@@ -152,11 +152,11 @@
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
                         android:onClick="@{onItemClick}"
                         android:src="@drawable/favourite_heart"
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/notofication_img"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -359,6 +359,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/goldrates_lyout"
                     tools:visibility="visible" />
 
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_55sdp"
+                    android:contentDescription="@string/add"
+                    android:onClick="@{onItemClick}"
+                    android:src="@drawable/ic_add_post"
+                    android:tint="@color/white"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otherservice_lyout" />
 
                 <include
                     android:id="@+id/goldrates_lyout"

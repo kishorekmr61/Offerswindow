@@ -8,13 +8,13 @@ import com.customer.offerswindow.data.api.login.DashBoardHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerDataResponse
-import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
 import com.customer.offerswindow.model.dashboard.DashboardData
+import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.model.masters.ShowRoomsResponse
@@ -24,6 +24,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class DashBoardRepositry @Inject constructor(
@@ -125,7 +127,8 @@ class DashBoardRepositry @Inject constructor(
             })
         }.flowOn(Dispatchers.IO)
     }
- suspend fun getOffersData(
+
+    suspend fun getOffersData(
         lCustomerID: String
     ): Flow<NetworkResult<BookingsResponse>> {
         return flow {
@@ -174,18 +177,20 @@ class DashBoardRepositry @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun removeWishlist(lOfferId: String,lCustomerId:String
+    suspend fun removeWishlist(
+        lOfferId: String, lCustomerId: String
     ): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall {
                 dashBoardHelperImpl.removeWishListIteam(
-                    lOfferId,lCustomerId
+                    lOfferId, lCustomerId
                 )
             })
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getSearchCriteria(lCustomerId:String
+    suspend fun getSearchCriteria(
+        lCustomerId: String
     ): Flow<NetworkResult<SearchCriteriaResponse>> {
         return flow {
             emit(safeApiCall {
@@ -196,4 +201,13 @@ class DashBoardRepositry @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+
+    suspend fun submitPost(
+        part: MultipartBody.Part?,
+        formDataBody: RequestBody
+    ): Flow<NetworkResult<ProfileUpdateResponse>> {
+        return flow {
+            emit(safeApiCall { dashBoardHelperImpl.postAddd(part, formDataBody) })
+        }.flowOn(Dispatchers.IO)
+    }
 }

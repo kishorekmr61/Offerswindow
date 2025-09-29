@@ -82,5 +82,6 @@
     <string name="please_visit">Please visit my bookings page to view your booking details</string>
     <string name="call">call</string>
     <string name="offer_validity">Offer Validity</string>
+    <string name="add">Add</string>
 
 </resources>

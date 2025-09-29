@@ -7,15 +7,20 @@ import com.customer.offerswindow.model.customersdata.PostOfferBooking
 import com.customer.offerswindow.model.customersdata.PostSlotBooking
 import com.customer.offerswindow.model.dashboard.BookingsResponse
 import com.customer.offerswindow.model.dashboard.DashBoardDataResponse
+import com.customer.offerswindow.model.dashboard.ProfileUpdateResponse
 import com.customer.offerswindow.model.dashboard.SlotsDataResponse
 import com.customer.offerswindow.model.dashboard.WishListResponse
 import com.customer.offerswindow.model.masters.ShowRoomsResponse
 import com.customer.offerswindow.model.offerdetails.OfferDeatilsResponse
 import com.customer.offerswindow.model.offerdetails.SearchCriteriaResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface DashboardApiService {
@@ -96,4 +101,12 @@ interface DashboardApiService {
     suspend fun getSearchCriteria(
         @Query("lCustomerID") lCustomerID: String
     ): Response<SearchCriteriaResponse>
+
+
+    @Multipart
+    @POST("ShowRoomOffers/PostOfferRequest")
+    suspend fun submitPost(
+        @Part part: MultipartBody.Part?,
+        @Part("FormData") formDataBody: RequestBody
+    ): Response<ProfileUpdateResponse>
 }

@@ -169,7 +169,7 @@ class HomeFragment : Fragment(), MenuProvider {
         }
         binding.locationTxt.setOnClickListener {
             homeViewModel.isloading.set(true)
-            homeViewModel.getMstData(iCityId,categoryid)
+            homeViewModel.getMstData(iCityId, categoryid)
         }
         binding.searchedit.setOnClickListener {
             homeViewModel.isloading.set(true)
@@ -561,7 +561,7 @@ class HomeFragment : Fragment(), MenuProvider {
                             }
                         }
 
-                        R.id.title_txt, R.id.discountInfo,R.id.storeName,R.id.store_img -> {
+                        R.id.title_txt, R.id.discountInfo, R.id.storeName, R.id.store_img -> {
                             navigateOfferDeatils(datavalues)
                         }
 
@@ -716,9 +716,9 @@ class HomeFragment : Fragment(), MenuProvider {
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
             if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
-                setCategorySeleted(position,item)
-            }else{
-                setCategorySeleted(position,item)
+                setCategorySeleted(position, item)
+            } else {
+                setCategorySeleted(position, item)
             }
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
@@ -745,7 +745,7 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun setCategorySeleted(position : Int,item: CategoriesData) {
+    private fun setCategorySeleted(position: Int, item: CategoriesData) {
         categoryList[position].isselected =
             item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
         if (item.isselected) {
@@ -879,6 +879,16 @@ class HomeFragment : Fragment(), MenuProvider {
                         findNavController().navigate(R.id.nav_wishlist)
                     } else {
 
+                        var bundle = Bundle()
+                        bundle.putBoolean("isFrom", true)
+                        findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
+                    }
+                }
+
+                R.id.add_post -> {
+                    if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        findNavController().navigate(R.id.nav_addpost)
+                    } else {
                         var bundle = Bundle()
                         bundle.putBoolean("isFrom", true)
                         findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())

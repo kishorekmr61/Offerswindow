@@ -107,6 +107,16 @@
         android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.redemption.RedemptionFragment"
         android:label="Redemption" />
     <fragment
+        android:id="@+id/nav_addpost"
+        android:name="com.customer.offerswindow.ui.adddpost.AddPostFragment"
+        android:label="AddPost" />
+
+    <fragment
+        android:id="@+id/nav_manage_post"
+        android:name="com.customer.offerswindow.ui.adddpost.ManagePostFragment"
+        android:label="ManageProfile" />
+
+    <fragment
         android:id="@+id/nav_webview"
         android:name="com.customer.offerswindow.ui.webpages.WebFragment"
         android:label="Webview" />
