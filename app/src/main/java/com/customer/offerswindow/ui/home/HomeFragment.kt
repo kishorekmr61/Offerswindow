@@ -233,6 +233,9 @@ class HomeFragment : Fragment(), MenuProvider {
                             )
                         )
                     }
+                    if (!AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                        loadServices()
+                    }
                     homeViewModel.getOfferSubcategoryChips(categoryid)
                 }
 
