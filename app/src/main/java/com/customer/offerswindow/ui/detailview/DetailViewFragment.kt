@@ -380,7 +380,7 @@ class DetailViewFragment : Fragment() {
                     openURL(Uri.parse(dataobj?.Website_link ?: ""))
                 }
 
-                R.id.whatsapp_lyout -> {
+                R.id.whatsapp_lyout ,R.id.whatsapp_img -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
                     activity?.openWhatsAppConversation(
                         dataobj?.contact ?: "",
