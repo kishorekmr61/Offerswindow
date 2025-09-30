@@ -138,8 +138,8 @@ class WishListFragment : Fragment() {
              }.attach()*/
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
-                    R.id.title_txt -> {
-                        var bundle = Bundle()
+                    R.id.title_txt ,R.id.storeName,R.id.discountInfo-> {
+                        val bundle = Bundle()
                         bundle.putString("OfferID", witem.Offer_ID)
                         findNavController().navigate(R.id.nav_offer_details, bundle)
                     }
@@ -167,7 +167,7 @@ class WishListFragment : Fragment() {
                         }
                     }
 
-                    R.id.directions_img -> {
+                    R.id.directions_img,R.id.location -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Direction")
                             activity?.navigateToGoogleMap(
@@ -191,7 +191,7 @@ class WishListFragment : Fragment() {
                         }
                     }
 
-                    R.id.whatsapp_img -> {
+                    R.id.whatsapp_img,R.id.whatsappshare_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Whatsapp")
                             activity?.openWhatsAppConversation(

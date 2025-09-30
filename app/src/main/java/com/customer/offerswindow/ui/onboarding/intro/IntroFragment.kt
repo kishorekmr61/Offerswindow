@@ -56,7 +56,7 @@ class IntroFragment : Fragment() {
             IntroModel(
                 getString(R.string.app_name),
                 "Exclusive Discounts Just for You –\n Don’t Miss Out!",
-                "*quick, easy, and hassle-free!*",
+                "Quick, easy, and hassle-free!",
                 "You can even book slots or grab exclusive offers right from your mobile.",
                 R.drawable.ic_offer_tag,
                 R.drawable.ic_leftcurve,
@@ -67,7 +67,7 @@ class IntroFragment : Fragment() {
             IntroModel(
                 getString(R.string.app_name),
                 "Unbeatable Offers Inside –\n Shop & Save Now!",
-                "*Live Notifications* !!",
+                "Live Notifications* !!",
                 "Get instant alerts the moment a new offer is released.",
                 R.drawable.ic_announcment,
                 R.drawable.ic_rightcurve,

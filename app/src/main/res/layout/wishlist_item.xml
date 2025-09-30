@@ -234,7 +234,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/share_img"
+                    android:id="@+id/whatsappshare_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -249,7 +249,7 @@
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_gravity="center"
-                        android:background="@drawable/whatsapp"
+                        android:background="@drawable/whatsapp_detail"
                         android:padding="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -268,7 +268,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/directions_img"
+                    android:id="@+id/share_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -283,7 +283,7 @@
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_location"
+                        android:background="@drawable/share"
                         android:backgroundTint="@color/black"
                         android:padding="@dimen/_5sdp"
                         android:tint="@color/black" />
@@ -295,12 +295,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="location"
+                        android:text="share"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_8ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/location"
-                        tools:text="Video" />
+                        tools:text="Share" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat

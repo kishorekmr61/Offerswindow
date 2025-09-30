@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -216,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:weightSum="3"
+                android:weightSum="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_view">
@@ -256,6 +255,41 @@
                         tools:text="Call" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/whatsapp_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{onItemClick}"
+                    android:orientation="vertical">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/wshare_mg"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/whatsapp_detail"
+                        android:padding="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/wshare_txt"
+                        style="@style/Ag_body_copy_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Chat"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/location"
+                        tools:text="Chat" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/share_img"
                     android:layout_width="match_parent"
@@ -272,7 +306,7 @@
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_gravity="center"
-                        android:background="@drawable/whatsapp"
+                        android:background="@drawable/share"
                         android:padding="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -296,10 +330,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:visibility="gone"
                     android:gravity="center"
                     android:onClick="@{onItemClick}"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -361,24 +395,24 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/storecategoryname"
             style="@style/Ag_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/primary"
             android:onClick="@{onItemClick}"
             android:padding="@dimen/_2sdp"
             android:text="@{item.service_Desc}"
             android:textColor="@color/white"
             android:textSize="@dimen/_8ssp"
             android:textStyle="bold"
-            android:background="@color/primary"
-            android:layout_gravity="end"
             tools:text="Restaurents" />
     </androidx.cardview.widget.CardView>
 </layout>

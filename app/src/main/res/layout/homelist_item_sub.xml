@@ -186,7 +186,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/share_img"
+                    android:id="@+id/whatsapp_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -197,7 +197,6 @@
 
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/share_mg"
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_gravity="center"
@@ -205,7 +204,7 @@
                         android:padding="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/share_txt"
+                        android:id="@+id/wshare_txt"
                         style="@style/Ag_body_copy_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -254,7 +253,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/website_img"
+                    android:id="@+id/share_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -265,22 +264,21 @@
 
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/web_img"
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_gravity="center"
-                        android:background="@drawable/weblink"
+                        android:background="@drawable/share"
                         android:padding="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/website_txt"
+                        android:id="@+id/share_txt"
                         style="@style/Ag_body_copy_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:onClick="@{onItemClick}"
-                        android:text="Website"
+                        android:text="Share"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_8ssp"
                         app:layout_constraintEnd_toEndOf="parent"
