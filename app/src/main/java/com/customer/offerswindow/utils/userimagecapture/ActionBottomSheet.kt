@@ -356,13 +356,21 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
             getString(R.string.temp_images_dir)
         ) //gets the directory for the temporary images dir
 
-        tempImagesDir.mkdir() //Create the temp_images dir
+        if (!tempImagesDir.exists()) {
+            tempImagesDir.mkdirs()//Create the temp_images dir
+        }
 
         //Creates the temp_image.jpg file
         val tempImage = File(
             tempImagesDir, //prefix the new abstract path with the temporary images dir path
             getString(R.string.temp_image)
         ) //gets the abstract temp_image file name
+
+        tempImage.exists().let {
+            if (!it) {
+                tempFile?.createNewFile()
+            }
+        }
 
         currentPhotoPath = tempImage.absolutePath
         tempFile = tempImage
