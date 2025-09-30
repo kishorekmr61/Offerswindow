@@ -125,7 +125,7 @@ class DetailViewFragment : Fragment() {
 
                     }
 
-                    R.id.title_txt -> {
+                    R.id.title_txt,R.id.store_img,R.id.storeName,R.id.discountInfo -> {
                         viewModel.getDetailData(item.id)
                     }
 

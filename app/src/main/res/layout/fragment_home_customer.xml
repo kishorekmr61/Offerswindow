@@ -360,20 +360,6 @@
                     tools:visibility="visible" />
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_post"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_55sdp"
-                    android:contentDescription="@string/add"
-                    android:onClick="@{onItemClick}"
-                    android:src="@drawable/ic_add_post"
-                    android:tint="@color/white"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/otherservice_lyout" />
-
                 <include
                     android:id="@+id/goldrates_lyout"
                     layout="@layout/goldrates_lyout"
@@ -404,6 +390,21 @@
 
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_55sdp"
+            android:contentDescription="@string/add"
+            android:onClick="@{onItemClick}"
+            android:src="@drawable/ic_add_post"
+            android:text="Post Your Offer"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ProgressBar
             android:id="@+id/pgBar"

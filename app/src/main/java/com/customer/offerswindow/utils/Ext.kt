@@ -838,3 +838,4 @@ fun Chip.setSelectedState(activity: Activity) {
     this.chipStrokeColor = ColorStateList.valueOf(activity.getColor(R.color.primary))
 }
 
+

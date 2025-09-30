@@ -7,6 +7,7 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
@@ -181,5 +182,25 @@ fun setImageUrl(img: AppCompatImageView, url: String?, modifiedDate: String?) {
         img.setImageResource(R.drawable.default_img)
     }
 }
+
+
+@BindingAdapter("startToStartIfFlag")
+fun setStartToStartIfFlag(view: AppCompatTextView, flag: Boolean) {
+    val params = view.layoutParams
+    if (params is ConstraintLayout.LayoutParams) {
+        params.startToStart = if (flag) ConstraintLayout.LayoutParams.PARENT_ID else ConstraintLayout.LayoutParams.UNSET
+        view.layoutParams = params
+    }
+}
+
+@BindingAdapter("endtoEndIfFlag")
+fun setEndtoEndIfFlag(view: AppCompatTextView, flag: Boolean) {
+    val params = view.layoutParams
+    if (params is ConstraintLayout.LayoutParams) {
+        params.startToStart = if (flag) ConstraintLayout.LayoutParams.PARENT_ID else ConstraintLayout.LayoutParams.UNSET
+        view.layoutParams = params
+    }
+}
+
 
 

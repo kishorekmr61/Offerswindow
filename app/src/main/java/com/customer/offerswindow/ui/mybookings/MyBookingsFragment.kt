@@ -134,7 +134,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
             }.attach()*/
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
-                    R.id.title_txt -> {
+                    R.id.title_txt,R.id.storeName,R.id.discountInfo -> {
                         navigateOfferDeatils(item)
                     }
 
@@ -160,7 +160,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
                         }
                     }
 
-                    R.id.directions_img -> {
+                    R.id.directions_img,R.id.location -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(item, "Direction")
                             activity?.navigateToGoogleMap(item.Google_Location)

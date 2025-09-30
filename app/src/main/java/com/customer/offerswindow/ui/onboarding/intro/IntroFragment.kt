@@ -2,7 +2,6 @@ package com.customer.offerswindow.ui.onboarding.intro
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,39 +45,40 @@ class IntroFragment : Fragment() {
             IntroModel(
                 getString(R.string.app_name),
                 getString(R.string.grab_the_best_deal),
-                "Track order !!",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
+                "Never Miss a Deal Again!",
+                "OffersWindow brings you the best discounts, promo codes, and special offers from your favorite brands",
                 R.drawable.ic_gift_img,
                 R.drawable.ic_leftcurve,
-                Gravity.LEFT
+                1
             )
         )
         introList.add(
             IntroModel(
                 getString(R.string.app_name),
                 "Exclusive Discounts Just for You –\n Don’t Miss Out!",
-                "Purchase Online !!",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
+                "*quick, easy, and hassle-free!*",
+                "You can even book slots or grab exclusive offers right from your mobile.",
                 R.drawable.ic_offer_tag,
-                R.drawable.ic_curve,
-                Gravity.LEFT
+                R.drawable.ic_leftcurve,
+                1
             )
         )
         introList.add(
             IntroModel(
                 getString(R.string.app_name),
                 "Unbeatable Offers Inside –\n Shop & Save Now!",
-                "Get your order !!",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing, sed do eiusmod tempor ut labore",
+                "*Live Notifications* !!",
+                "Get instant alerts the moment a new offer is released.",
                 R.drawable.ic_announcment,
                 R.drawable.ic_rightcurve,
-                Gravity.RIGHT
+                0
             )
         )
         _binding?.slideVP?.setUpViewPagerAdapter(
             introList
         ) { item: IntroModel, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
+
             binder.setVariable(BR.onItemClick, View.OnClickListener {
 
             })
@@ -111,9 +111,11 @@ class IntroFragment : Fragment() {
                 super.onPageScrollStateChanged(state)
             }
         })
-        AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE) ?: Constants.DEFAULTUSERMOBILE
-        AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY) ?: Constants.DEFAULTUSERKEY
-            _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
+        AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)
+            ?: Constants.DEFAULTUSERMOBILE
+        AppPreference.read(Constants.LOGINPASSWORD, Constants.DEFAULTUSERKEY)
+            ?: Constants.DEFAULTUSERKEY
+        _binding?.slideVP?.setAdapter(_binding?.slideVP?.adapter);
         _binding?.slideVP?.let { binding.dotsIndicator.attachTo(it) }
         binding.finishTxt.setOnClickListener {
             val intent = Intent(requireActivity(), DashboardActivity::class.java)

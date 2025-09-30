@@ -201,7 +201,7 @@
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_gravity="center"
-                        android:background="@drawable/whatsapp"
+                        android:background="@drawable/whatsapp_detail"
                         android:padding="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView

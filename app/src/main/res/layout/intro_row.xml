@@ -55,10 +55,10 @@
             android:text="@{item.maintitle}"
             android:textColor="@color/white"
             android:textSize="@dimen/_20ssp"
-            android:gravity="@{item.alogn}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cart_img"
-            tools:text="@string/app_name" />
+            tools:text="@string/app_name"
+            tools:ignore="MissingConstraints" />
 
         <View
             android:id="@+id/view"

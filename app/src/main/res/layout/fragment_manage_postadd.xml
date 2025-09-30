@@ -28,7 +28,7 @@
             app:cropFixAspectRatio="true"
             app:cropInitialCropWindowPaddingRatio="0"
             app:cropScaleType="centerCrop"
-            app:cropShape="oval"
+            app:cropShape="rectangle"
             app:layout_constraintBottom_toTopOf="@+id/done_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"

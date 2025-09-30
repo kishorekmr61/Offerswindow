@@ -25,7 +25,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="verify">Verify</string>
     <string name="_email_number_resend">We have sent Otp to your email/number ? <b> Resend</b></string>
-    <string name="already_have_an_account_signin">Already have an Account ?<b> signin</b></string>
+    <string name="already_have_an_account_signin">Already have an Account ?<font fgcolor="#2B83ED"><b> signin</b></font></string>
     <string name="phone_number">Phone number</string>
     <string name="email_address">Email Address</string>
     <string name="lastname">Lastname</string>
@@ -59,7 +59,8 @@
     <string name="redeem_now">Redeem now</string>
     <string name="no_results_found">No results found</string>
     <string name="please_check_your_search_query_or_try_a_new_search">Please check your search query or try a new search</string>
-    <string name="grab_the_best_deal">Grab the Best Deals –\n Limited-Time Offers Await!</string>
+    <string name="grab_the_best_deal">Never Miss a Deal Again!</string>
+    <string name="offerswindowbring">OffersWindow brings you the best discounts, promo codes, and special offers from your favorite brands</string>
     <string name="track_order">Track order !!</string>
     <string name="proceed">Proceed</string>
     <string name="version">Version :</string>

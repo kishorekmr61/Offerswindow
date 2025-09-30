@@ -460,7 +460,7 @@
                         android:onClick="@{onItemClick}"
                         android:padding="@dimen/_8sdp"
                         android:text="@string/slot_booking"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:visibility="@{ViewModel.offerDeatils.Slot_Applicable.equals(`Y`) || ViewModel.offerDeatils.Slot_Applicable.equals(`Yes`) ?View.VISIBLE : View.INVISIBLE}"
                         app:layout_constraintEnd_toStartOf="@id/bookoffer_txt"
                         app:layout_constraintStart_toStartOf="parent"

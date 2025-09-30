@@ -16,9 +16,7 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentAddPostBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.model.dashboard.CategoriesData
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
@@ -118,10 +116,10 @@ class AddPostFragment : Fragment() {
             triggerCameraOrGallerySelection()
         }
         binding.etStartdate.setOnClickListener {
-            openCalendar(binding.etStartdate)
+            openCalendar(binding.etStartdate,Calendar.getInstance().timeInMillis)
         }
         binding.etEnddate.setOnClickListener {
-            openCalendar(binding.etEnddate)
+            openCalendar(binding.etEnddate, 0)
         }
         binding.etCity.setOnClickListener {
             activity?.let { it1 ->
@@ -326,7 +324,7 @@ class AddPostFragment : Fragment() {
         }
     }
 
-    private fun openCalendar(etDob: TextInputEditText) {
+    private fun openCalendar(etDob: TextInputEditText, timeInMillis: Long) {
         showCalenderDialog(requireActivity(), object : OnItemSelectedListner {
             override fun onItemSelectedListner(
                 titleData: SpinnerRowModel?,
@@ -342,7 +340,7 @@ class AddPostFragment : Fragment() {
                 value: ArrayList<SpinnerRowModel>
             ) {
             }
-        }, Constants.YYY_HIFUN_MM_DD, Calendar.getInstance().timeInMillis)
+        }, Constants.YYY_HIFUN_MM_DD,timeInMillis )
 
     }
 }

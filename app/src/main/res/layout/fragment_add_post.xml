@@ -264,7 +264,7 @@
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/et_style"
-                android:hint="What's app number"
+                android:hint="WhatsApp number"
                 android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLength="12"
@@ -323,7 +323,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="Image Visible"
+                android:text="Display our offer image on offerwindow"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imagename_txt" />

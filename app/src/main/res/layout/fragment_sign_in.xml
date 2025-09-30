@@ -172,6 +172,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_25sdp"
                         android:text="@string/forgetpassword"
+                        android:textColor="@color/color_2B83ED"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_pswrd" />
 
