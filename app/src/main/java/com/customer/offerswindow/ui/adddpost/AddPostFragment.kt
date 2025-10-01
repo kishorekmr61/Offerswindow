@@ -1,5 +1,6 @@
 package com.customer.offerswindow.ui.adddpost
 
+import android.app.TimePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -116,10 +117,17 @@ class AddPostFragment : Fragment() {
             triggerCameraOrGallerySelection()
         }
         binding.etStartdate.setOnClickListener {
-            openCalendar(binding.etStartdate,Calendar.getInstance().timeInMillis)
+            openCalendar(binding.etStartdate, Calendar.getInstance().timeInMillis)
         }
         binding.etEnddate.setOnClickListener {
             openCalendar(binding.etEnddate, 0)
+        }
+
+        binding.etOpentime.setOnClickListener {
+            openTimeDialog(binding.etOpentime)
+        }
+        binding.etEnddtime.setOnClickListener {
+            openTimeDialog(binding.etEnddtime)
         }
         binding.etCity.setOnClickListener {
             activity?.let { it1 ->
@@ -182,42 +190,68 @@ class AddPostFragment : Fragment() {
     }
 
     private fun validateFileds(): Boolean {
-        if (binding.etCategory.text.isNullOrEmpty()) {
+        if (binding.etCategory.text?.trim().isNullOrEmpty()) {
             showToast("Please Select Service")
             return false
         }
-        if (binding.etStorename.text.isNullOrEmpty()) {
+        if (binding.etStorename.text?.trim().isNullOrEmpty()) {
             showToast("Please enter Store name")
             return false
         }
-        if (binding.etOffertitle.text.isNullOrEmpty()) {
+        if (binding.etOffertitle.text?.trim().isNullOrEmpty()) {
             showToast("Please enter Offer title")
             return false
         }
-        if (binding.etStartdate.text.isNullOrEmpty()) {
+        if (binding.etStartdate.text?.trim().isNullOrEmpty()) {
             showToast("Please select start date")
             return false
         }
-        if (binding.etEnddate.text.isNullOrEmpty()) {
+        if (binding.etEnddate.text?.trim().isNullOrEmpty()) {
             showToast("Please select End date")
             return false
         }
-        if (binding.etCity.text.isNullOrEmpty()) {
+        if (binding.etCity.text?.trim().isNullOrEmpty()) {
             showToast("Please select city")
             return false
         }
-        if (binding.etLocation.text.isNullOrEmpty()) {
+        if (binding.etLocation.text?.trim().isNullOrEmpty()) {
             showToast("Please select Location")
             return false
         }
-        if (binding.etContactperson.text.isNullOrEmpty()) {
+
+        if (binding.etContactperson.text?.trim().isNullOrEmpty()) {
             showToast("Please enter contact person")
             return false
         }
-        if (binding.etMobilenumber.text.isNullOrEmpty()) {
+        if (binding.etMobilenumber.text?.trim().isNullOrEmpty()) {
             showToast("Please enter Mobile Number")
             return false
         }
+        if (!isValidMobile(binding.etMobilenumber.text?.trim().toString())) {
+            showToast("Please enter valid Mobile Number")
+            return false
+        }
+        if (binding.etWhatsappnumber.text?.trim().isNullOrEmpty()) {
+            showToast("Please enter whatsapp Number")
+            return false
+        }
+
+        if (!isValidMobile(binding.etWhatsappnumber.text?.trim().toString())) {
+            showToast("Please enter valid Whatsapp Number")
+        }
+        if (binding.etEmail.text?.trim().isNullOrEmpty()) {
+            showToast("Please enter Email")
+            return false
+        }
+        if (!isValidEmail(binding.etEmail.text?.trim().toString())) {
+            showToast("Please enter valid email")
+        }
+
+        if (binding.etShowroomaddress.text?.trim().isNullOrEmpty()) {
+            showToast("Please enter ShowroomAddress")
+            return false
+        }
+
         if (binding.isimageRequired.isChecked) {
             showToast("Please select image")
             return false
@@ -225,7 +259,19 @@ class AddPostFragment : Fragment() {
         return true
     }
 
-    private fun setObserver() {
+
+    fun isValidMobile(number: String): Boolean {
+        return number.matches(Regex("^[6-8]\\d{9}$"))
+    }
+
+
+    fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+
+
+        private fun setObserver() {
         viewModel.masterdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -241,7 +287,7 @@ class AddPostFragment : Fragment() {
                                     )
                                 )
                             }
-                            if (it.MstType == "Service"){
+                            if (it.MstType == "Service") {
                                 categoriesList.add(
                                     SpinnerRowModel(
                                         it.MstDesc,
@@ -286,6 +332,11 @@ class AddPostFragment : Fragment() {
         formDataJson.addProperty("ContactPersonName", binding.etContactperson.text.toString())
         formDataJson.addProperty("MobileNo", binding.etMobilenumber.text.toString())
         formDataJson.addProperty("WhatsAppNo", binding.etWhatsappnumber.text.toString())
+        formDataJson.addProperty("ShowroomAddress", binding.etShowroomaddress.text.toString())
+        formDataJson.addProperty("EmailId", binding.etEmail.text.toString())
+        formDataJson.addProperty("WebSite", binding.etWebsite.text.toString())
+        formDataJson.addProperty("OpenTime", binding.etOpentime.text.toString())
+        formDataJson.addProperty("CloseTime", binding.etEnddtime.text.toString())
         var imageRequired = "N"
         if (binding.isimageRequired.isChecked) {
             imageRequired = "Y"
@@ -340,7 +391,24 @@ class AddPostFragment : Fragment() {
                 value: ArrayList<SpinnerRowModel>
             ) {
             }
-        }, Constants.YYY_HIFUN_MM_DD,timeInMillis )
+        }, Constants.YYY_HIFUN_MM_DD, timeInMillis)
 
+    }
+
+    private fun openTimeDialog(text: TextInputEditText) {
+        activity?.let { it1 ->
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                val formattedHour = String.format("%02d", hour)
+                text.setText("$formattedHour:$minute:00")
+            }
+            val timePickerDialog = TimePickerDialog(
+                context,
+                timeSetListener,
+                14, // default hour
+                30, // default minute
+                true // 24-hour format
+            )
+            timePickerDialog.show()
+        }
     }
 }

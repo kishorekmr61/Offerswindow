@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
@@ -602,7 +603,7 @@ class HomeFragment : Fragment(), MenuProvider {
                         R.id.website_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Website", datavalues)
-                                if (!datavalues?.Website_link.isNullOrEmpty()) {
+                                if (!TextUtils.isEmpty(datavalues?.Website_link)) {
                                     openURL(Uri.parse(datavalues?.Website_link ?: ""))
                                 } else {
                                     showToast("vendor don't have website")

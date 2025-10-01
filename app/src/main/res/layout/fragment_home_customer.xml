@@ -391,8 +391,9 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_post"
+            style="@style/Ag_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
@@ -400,9 +401,10 @@
             android:layout_marginBottom="@dimen/_55sdp"
             android:contentDescription="@string/add"
             android:onClick="@{onItemClick}"
-            android:src="@drawable/ic_add_post"
             android:text="Post Your Offer"
-            android:tint="@color/white"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/primary"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

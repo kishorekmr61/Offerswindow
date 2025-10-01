@@ -76,7 +76,7 @@
                 android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:background="@drawable/et_style"
-                android:hint="Offer Title*"
+                android:hint="Offer Title(Ex : 50 % offer)*"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:paddingStart="@dimen/_8sdp"
@@ -95,10 +95,10 @@
                 android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:background="@drawable/et_style"
+                android:cursorVisible="false"
+                android:focusable="false"
                 android:hint="Start Date*"
                 android:imeOptions="actionNext"
-                android:focusable="false"
-                android:cursorVisible="false"
                 android:maxLines="1"
                 android:paddingStart="@dimen/_8sdp"
                 android:singleLine="true"
@@ -116,10 +116,10 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:background="@drawable/et_style"
+                android:cursorVisible="false"
+                android:focusable="false"
                 android:hint="End Date*"
                 android:imeOptions="actionNext"
-                android:focusable="false"
-                android:cursorVisible="false"
                 android:maxLines="1"
                 android:paddingStart="@dimen/_8sdp"
                 android:singleLine="true"
@@ -128,6 +128,47 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/et_startdate"
                 app:layout_constraintTop_toBottomOf="@id/et_offertitle" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_opentime"
+                style="@style/AG_regular"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/et_style"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="Start time*"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toStartOf="@+id/et_enddate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_startdate" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_enddtime"
+                style="@style/AG_regular"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/et_style"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="End Time*"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/et_opentime"
+                app:layout_constraintTop_toBottomOf="@id/et_startdate" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_city"
@@ -148,7 +189,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_enddate" />
+                app:layout_constraintTop_toBottomOf="@+id/et_enddtime" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_location"
@@ -175,14 +216,14 @@
                 android:id="@+id/et_maplocation"
                 style="@style/AG_regular"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_34sdp"
+                android:layout_height="@dimen/_54sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:background="@drawable/et_style"
+                android:gravity="start"
                 android:hint="Map Location*"
                 android:imeOptions="actionNext"
-                android:maxLines="1"
+                android:maxLines="3"
                 android:paddingStart="@dimen/_8sdp"
-                android:singleLine="true"
                 android:textColorHint="@color/color_272727"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -218,7 +259,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_contactperson">
 
 
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_mobilenumber"
                     style="@style/AG_regular"
@@ -228,8 +268,8 @@
                     android:background="@null"
                     android:hint="Mobile Number*"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:inputType="number"
+                    android:maxLines="1"
                     android:paddingStart="@dimen/_8sdp"
                     android:singleLine="true"
                     android:textColorHint="@color/color_272727"
@@ -255,8 +295,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_whatsappnumber"
                 style="@style/AG_regular"
@@ -264,7 +302,7 @@
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/et_style"
-                android:hint="WhatsApp number"
+                android:hint="WhatsApp number*"
                 android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLength="12"
@@ -276,6 +314,63 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mobileno_lyout" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/et_style"
+                android:hint="Email*"
+                android:imeOptions="actionNext"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_whatsappnumber" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_website"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/et_style"
+                android:hint="Website"
+                android:imeOptions="actionNext"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_email" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_showroomaddress"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/et_style"
+                android:hint="Showroom Address*"
+                android:imeOptions="actionNext"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/color_272727"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_website" />
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -294,7 +389,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_whatsappnumber" />
+                app:layout_constraintTop_toBottomOf="@+id/et_showroomaddress" />
 
 
             <androidx.appcompat.widget.AppCompatButton

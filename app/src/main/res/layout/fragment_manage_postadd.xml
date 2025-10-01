@@ -25,7 +25,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             app:cropBorderLineThickness="@dimen/_4sdp"
-            app:cropFixAspectRatio="true"
+            app:cropFixAspectRatio="false"
             app:cropInitialCropWindowPaddingRatio="0"
             app:cropScaleType="centerCrop"
             app:cropShape="rectangle"

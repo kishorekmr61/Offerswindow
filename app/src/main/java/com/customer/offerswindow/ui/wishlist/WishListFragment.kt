@@ -1,6 +1,7 @@
 package com.customer.offerswindow.ui.wishlist
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,7 +139,7 @@ class WishListFragment : Fragment() {
              }.attach()*/
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
-                    R.id.title_txt ,R.id.storeName,R.id.discountInfo-> {
+                    R.id.title_txt, R.id.storeName, R.id.discountInfo -> {
                         val bundle = Bundle()
                         bundle.putString("OfferID", witem.Offer_ID)
                         findNavController().navigate(R.id.nav_offer_details, bundle)
@@ -167,7 +168,7 @@ class WishListFragment : Fragment() {
                         }
                     }
 
-                    R.id.directions_img,R.id.location -> {
+                    R.id.directions_img, R.id.location -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Direction")
                             activity?.navigateToGoogleMap(
@@ -181,7 +182,7 @@ class WishListFragment : Fragment() {
                     R.id.website_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Website")
-                            if (!witem.Wishlist.firstOrNull()?.Website_Url.isNullOrEmpty()) {
+                            if (!TextUtils.isEmpty(witem.Wishlist.firstOrNull()?.Website_Url)) {
                                 openURL((witem.Wishlist.firstOrNull()?.Website_Url ?: "").toUri())
                             } else {
                                 showToast("vendor don't have website")
@@ -191,7 +192,7 @@ class WishListFragment : Fragment() {
                         }
                     }
 
-                    R.id.whatsapp_img,R.id.whatsappshare_img -> {
+                    R.id.whatsapp_img, R.id.whatsappshare_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Whatsapp")
                             activity?.openWhatsAppConversation(

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -457,7 +458,6 @@ fun showCalenderDialog(
 
 }
 
-
 fun Fragment.showCommonCustomIOSDialog(
     context: Context,
     title: String,
@@ -599,7 +599,7 @@ fun Fragment.openURL(uri: Uri?) {
             requireActivity().startActivity(browserIntent2)
         }
     } catch (ex: Exception) {
-        showToast("Please check meeting Link ,looks invited link is not valid.")
+        showToast("link is not valid.")
     }
 
 

@@ -2,6 +2,7 @@ package com.customer.offerswindow.ui.detailview
 
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,8 @@ import com.customer.offerswindow.model.offerdetails.Termsandconditions
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
 import com.customer.offerswindow.ui.wishlist.WishListViewModel
+import com.customer.offerswindow.utils.convertDate
+import com.customer.offerswindow.utils.getDateTime
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
@@ -125,7 +128,7 @@ class DetailViewFragment : Fragment() {
 
                     }
 
-                    R.id.title_txt,R.id.store_img,R.id.storeName,R.id.discountInfo -> {
+                    R.id.title_txt, R.id.store_img, R.id.storeName, R.id.discountInfo -> {
                         viewModel.getDetailData(item.id)
                     }
 
@@ -144,21 +147,21 @@ class DetailViewFragment : Fragment() {
                         activity?.openDialPad(item.contact)
                     }
 
-                    R.id.directions_img, R.id.location-> {
+                    R.id.directions_img, R.id.location -> {
                         getUserIntrestOnclick("Direction", item)
                         activity?.navigateToGoogleMap(item.GoogleLocation)
                     }
 
                     R.id.website_img -> {
                         getUserIntrestOnclick("Website", item)
-                        if (!item?.Website_link.isNullOrEmpty()) {
+                        if (!TextUtils.isEmpty(item?.Website_link)) {
                             openURL((item.Website_link ?: "").toUri())
                         } else {
                             showToast("vendor don't have website")
                         }
                     }
 
-                    R.id.whatsapp_img -> {
+                    R.id.whatsapp_img,R.id.whatsapp_lyout -> {
                         getUserIntrestOnclick("Whatsapp", item)
                         activity?.openWhatsAppConversation(
                             item.contact,
@@ -252,6 +255,7 @@ class DetailViewFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     viewModel.isloading.set(false)
+                    showLongToast(response.message ?: "")
                 }
 
                 else -> {}
@@ -347,10 +351,11 @@ class DetailViewFragment : Fragment() {
                 R.id.bookoffer_txt -> {
                     viewModel.isloading.set(true)
                     val postofferbookings = PostOfferBooking(
+                        convertDate(getDateTime(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd"),
                         dataobj?.showroomid ?: "",
                         dataobj?.locationid ?: "",
                         dataobj?.serviceid ?: "",
-                        dataobj?.id ?: "", dataobj?.id ?: ""
+                        dataobj?.id ?: ""
                     )
                     viewModel.postOfferBooking(postofferbookings)
                 }
@@ -370,7 +375,7 @@ class DetailViewFragment : Fragment() {
                     activity?.openDialPad(dataobj?.contact ?: "")
                 }
 
-                R.id.direction_lyout ,R.id.location_txt -> {
+                R.id.direction_lyout, R.id.location_txt -> {
                     getUserIntrestOnclick("Direction", dataobj)
                     activity?.navigateToGoogleMap(dataobj?.GoogleLocation ?: "")
                 }
@@ -380,7 +385,7 @@ class DetailViewFragment : Fragment() {
                     openURL(Uri.parse(dataobj?.Website_link ?: ""))
                 }
 
-                R.id.whatsapp_lyout ,R.id.whatsapp_img -> {
+                R.id.whatsapp_lyout, R.id.whatsapp_img -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
                     activity?.openWhatsAppConversation(
                         dataobj?.contact ?: "",
