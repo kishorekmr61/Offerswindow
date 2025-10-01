@@ -172,15 +172,19 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
     }
 
     private fun updateProfileImage(photoFile: File?) {
-        photoFile?.let {
-            val photoRequestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
-            val photoPart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "CustomerPhotoFilePath",
-                it.name,
-                photoRequestBody
-            )
-            binding.llLoader.visibility = View.VISIBLE
-            postData(true, photoPart)
+        try {
+            photoFile?.let {
+                val photoRequestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
+                val photoPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "CustomerPhotoFilePath",
+                    it.name,
+                    photoRequestBody
+                )
+                binding.llLoader.visibility = View.VISIBLE
+                postData(true, photoPart)
+            }
+        }catch (ex : Exception){
+            Firebase.crashlytics.recordException(ex)
         }
     }
 
@@ -281,8 +285,8 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
                     updateProfileImage(photoFile)
                 }
             } catch (e: Exception) {
+                updateProfileImage(photoFile)
                 Firebase.crashlytics.recordException(e)
-                showToast(getString(R.string.something_went_wrong))
             }
         }
     }

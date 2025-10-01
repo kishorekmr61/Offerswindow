@@ -117,20 +117,24 @@ class ManagePostFragment : Fragment(), CropImageView.OnSetImageUriCompleteListen
 //                updateProfileImage(result.bitmap.rowBytes.toString())
             }
         } else {
-            activity?.showToast("Image crop failed:" + result.error?.message)
+            updateProfileImage(photoFile)
         }
     }
 
     private fun updateProfileImage(photoFile: File?) {
-        photoFile?.let {
-            val photoRequestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
-            val photoPart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "file",
-                it.name,
-                photoRequestBody
-            )
-            binding.llLoader.visibility = View.VISIBLE
-            postData(true, photoPart)
+        try {
+            photoFile?.let {
+                val photoRequestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
+                val photoPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "file",
+                    it.name,
+                    photoRequestBody
+                )
+                binding.llLoader.visibility = View.VISIBLE
+                postData(true, photoPart)
+            }
+        }catch (ex : Exception){
+            Firebase.crashlytics.recordException(ex)
         }
     }
 
