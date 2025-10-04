@@ -83,9 +83,8 @@ fun getFilePathFromURI(context: Context?, contentUri: Uri?): String? {
             tempImagesDir, //prefix the new abstract path with the temporary images dir path
             context?.getString(R.string.temp_image)
         )
-        val copyFile = tempImage
-        copy(context!!, contentUri, tempImage)
-        return copyFile.absolutePath
+
+        return tempImage.absolutePath
     }
     return null
 }

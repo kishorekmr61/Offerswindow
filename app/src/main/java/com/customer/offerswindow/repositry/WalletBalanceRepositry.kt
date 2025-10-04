@@ -3,6 +3,7 @@ package com.customer.offerswindow.repositry
 import com.customer.offerswindow.data.api.login.WalletHelperImpl
 import com.customer.offerswindow.helper.BaseApiResponse
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.model.OfferWindowCommonResponse
 import com.customer.offerswindow.model.PostOfferWindowCommonResponse
 import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.model.wallet.RewardPointsHistoryResponse
@@ -28,7 +29,7 @@ class WalletBalanceRepositry @Inject constructor(
 
     suspend fun postRedemptionRequestData(
         redemptionRequestBody: RedemptionRequestBody
-    ): Flow<NetworkResult<PostOfferWindowCommonResponse>> {
+    ): Flow<NetworkResult<OfferWindowCommonResponse>> {
         return flow {
             emit(safeApiCall { walletHelperImpl.postRedemptionRequestData(redemptionRequestBody) })
         }.flowOn(Dispatchers.IO)

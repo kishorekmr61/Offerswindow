@@ -13,17 +13,14 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.FragmentRedemptionBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.utils.VISIBLE
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.setWhiteToolBar
-import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.time.times
 
 @AndroidEntryPoint
 class RedemptionFragment : Fragment() {
@@ -64,14 +61,13 @@ class RedemptionFragment : Fragment() {
         viewModel.getMstData()
         binding.redeemBtn.setOnClickListener {
             if (isValid()) {
-                viewModel.isloading.set(true)
-                val redemptionRequestBody = RedemptionRequestBody(
-                    RewardPoints = binding.etNoofpoints.text.toString(),
-                    TransactionType = transactionid,
-                    RedemptionValue = binding.etValueofpoints.text.toString(),
-                    AccountNo = binding.etWalletnumber.text.toString()
-                )
-                viewModel.postRedemption(redemptionRequestBody)
+                val bundle = Bundle()
+                bundle.putString("RewardPoints", binding.etNoofpoints.text.toString())
+                bundle.putString("TransactionType", transactionid)
+                bundle.putString("RedemptionValue", binding.etValueofpoints.text.toString())
+                bundle.putString("AccountNo", binding.etWalletnumber.text.toString())
+                findNavController().navigate(R.id.nav_pinvie, bundle)
+
             }
         }
 
@@ -116,10 +112,12 @@ class RedemptionFragment : Fragment() {
             showToast("Enter No of Points")
             return false
         }
-        if (binding.walletamountLbl.text.toString().toDouble() > binding.etNoofpoints.text.toString().toDouble()){
-            showToast("No of Points entered should be less than wallet points")
-            return false
-        }
+//        if (binding.walletamountLbl.text.toString()
+//                .toDouble() < binding.etNoofpoints.text.toString().toDouble()
+//        ) {
+//            showToast("No of Points entered should be less than wallet points")
+//            return false
+//        }
 
         if (binding.etTransactiontype.text.isNullOrEmpty()) {
             showToast("Select Transaction Type")
@@ -169,23 +167,6 @@ class RedemptionFragment : Fragment() {
                 else -> {}
             }
         }
-        viewModel.rewardsPostingResponse.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    viewModel.isloading.set(false)
-                    response.data?.let { resposnes ->
-                        showLongToast(resposnes.Message)
-                        findNavController().navigate(R.id.nav_home)
-                    }
-                }
 
-                is NetworkResult.Error -> {
-                    showLongToast(response.message ?: "")
-                    viewModel.isloading.set(false)
-                }
-
-                else -> {}
-            }
-        }
     }
 }

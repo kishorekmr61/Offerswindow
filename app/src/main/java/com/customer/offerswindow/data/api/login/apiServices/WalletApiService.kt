@@ -36,28 +36,6 @@ interface WalletApiService {
         @Query("lUserUID") lUserUID: String,
         @Query("lMaximumTransactionID") lMaximumTransactionID: Int
     ): Response<WalletHistoryResponse>
-//
-//    @GET("Transactions/RewardPointRedemptionDetails?")
-//    suspend fun getRedemptionApprovalHistory(
-//        @Query("lUserUID") lUserUID: String,
-//        @Query("lMaximumTransactionID") lMaximumTransactionID: Int
-//    ): Response<RedemptionApprovalResponse>
-//
-//    @GET("Transactions/WalletPendingApprovalRequestDetails?")
-//    suspend fun getWalletApprovalHistory(
-//        @Query("lUserID") lUserUID: String,
-//        @Query("lMaximumTransactionID") lMaximumTransactionID: Long
-//    ): Response<WalletApprovalResponse>
-//
-//    @POST("Transactions/WalletTransfer?")
-//    suspend fun postWalletTransferData(
-//        @Body postWalletTransfer: PostWalletTransfer
-//    ): Response<PostFollowUpResponse>
-//
-//    @POST("Transactions/WalletApproval")
-//    suspend fun postWalletTApprovalData(
-//        @Body postWalletTransfersApprovals: PostWalletTransfersApprovals
-//    ): Response<PostFollowUpResponse>
 
     @POST("Transactions/RewardRedemptionApproval?")
     suspend fun postRedemptionApprovalData(
@@ -67,5 +45,5 @@ interface WalletApiService {
     @POST("ShowRoomOffers/PostRewardRedemption")
     suspend fun postRedemptionRequestData(
         @Body redemptionRequestBody: RedemptionRequestBody
-    ): Response<PostOfferWindowCommonResponse>
+    ): Response<OfferWindowCommonResponse>
 }

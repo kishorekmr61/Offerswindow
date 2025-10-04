@@ -120,4 +120,9 @@
         android:id="@+id/nav_webview"
         android:name="com.customer.offerswindow.ui.webpages.WebFragment"
         android:label="Webview" />
+
+    <fragment
+        android:id="@+id/nav_pinvie"
+        android:name="com.customer.offerswindow.utils.bottomsheet.PinBottomSheetFragment"
+        android:label="PinScreen" />
 </navigation>

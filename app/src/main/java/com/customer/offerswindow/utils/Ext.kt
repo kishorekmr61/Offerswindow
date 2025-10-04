@@ -604,6 +604,42 @@ fun Fragment.openURL(uri: Uri?) {
 
 
 }
+fun Activity.openURL(uri: Uri?) {
+    try {
+        val builder = CustomTabsIntent.Builder()
+        builder.setShowTitle(true)
+        val customTabsIntent = builder.build()
+        val browserIntent =
+            Intent().setAction(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_BROWSABLE)
+                .setType("text/plain").setData(Uri.fromParts("https://", "", null))
+        var possibleBrowsers: List<ResolveInfo>
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            possibleBrowsers = this.packageManager.queryIntentActivities(
+                browserIntent, PackageManager.MATCH_DEFAULT_ONLY
+            )
+            if (possibleBrowsers.isEmpty()) {
+                possibleBrowsers = this.packageManager.queryIntentActivities(
+                    browserIntent, PackageManager.MATCH_ALL
+                )
+            }
+        } else {
+            possibleBrowsers = this.packageManager.queryIntentActivities(
+                browserIntent, PackageManager.MATCH_DEFAULT_ONLY
+            )
+        }
+        if (possibleBrowsers.size > 0) {
+            customTabsIntent.intent.setPackage(possibleBrowsers[0].activityInfo.packageName)
+            customTabsIntent.launchUrl(this, uri!!)
+        } else {
+            val browserIntent2 = Intent(Intent.ACTION_VIEW, uri)
+            this.startActivity(browserIntent2)
+        }
+    } catch (ex: Exception) {
+        showToast("link is not valid.")
+    }
+
+
+}
 
 fun handleNaviagtions(activity: Activity, flag: String, bundle: Bundle) {
     when (flag) {
@@ -668,7 +704,7 @@ fun Activity.openWhatsAppConversation(
                     "Best deals, local offers & discounts — all in one app! \n \n"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data =
-                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$msgextension$message")
+                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$message")
             startActivity(intent)
         } else {
             showToast(

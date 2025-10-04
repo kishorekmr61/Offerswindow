@@ -28,7 +28,7 @@ class RedemptionViewModel @Inject constructor(
 ) : ViewModel() {
 
     var isloading = ObservableField(false)
-    var rewardsPostingResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
+    var rewardsPostingResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
     var walletbalance = ObservableField("0")
     var masterdata = MutableLiveData<NetworkResult<CommonMasterResponse>>()
 

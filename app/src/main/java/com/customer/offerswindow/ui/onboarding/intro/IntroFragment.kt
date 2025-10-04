@@ -67,7 +67,7 @@ class IntroFragment : Fragment() {
             IntroModel(
                 getString(R.string.app_name),
                 "Unbeatable Offers Inside –\n Shop & Save Now!",
-                "Live Notifications* !!",
+                "Live Notifications!!",
                 "Get instant alerts the moment a new offer is released.",
                 R.drawable.ic_announcment,
                 R.drawable.ic_rightcurve,

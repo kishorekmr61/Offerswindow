@@ -20,7 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_top" >
+        android:background="@drawable/gradient_top">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/bg_image"
@@ -89,7 +89,7 @@
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
                             android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
+                            android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
                             android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
+                            android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -127,11 +127,31 @@
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
                             android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
+                            android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/et_lastname" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_refmobilenumber"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_34sdp" 
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Reference Mobile Number"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="12"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:singleLine="true"
+                            android:textColorHint="@color/grey_font"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,7 +162,7 @@
                             android:background="@drawable/et_style"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_email">
+                            app:layout_constraintTop_toBottomOf="@+id/et_refmobilenumber">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_mobilenumber"
@@ -158,7 +178,7 @@
                                 android:maxLines="1"
                                 android:paddingStart="@dimen/_8sdp"
                                 android:singleLine="true"
-                                android:textColorHint="@color/color_272727"
+                                android:textColorHint="@color/grey_font"
                                 android:textSize="@dimen/_12ssp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +208,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:text="@string/_email_number_resend"
-                            android:textColor="@color/color_272727"
+                            android:textColor="@color/grey_font"
                             android:textSize="@dimen/_8ssp"
                             android:visibility="invisible"
                             app:layout_constraintStart_toStartOf="parent"
@@ -203,11 +223,11 @@
                             android:background="@drawable/et_style"
                             android:hint="@string/enter_verificattion_code"
                             android:imeOptions="actionNext"
-                            android:maxLines="1"
                             android:inputType="number"
+                            android:maxLines="1"
                             android:paddingLeft="@dimen/_8sdp"
                             android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
+                            android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -223,13 +243,13 @@
                             android:background="@drawable/et_style"
                             android:hint="Set 4 digit PIN"
                             android:imeOptions="actionDone"
-                            android:visibility="gone"
+                            android:inputType="number"
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
-                            android:inputType="number"
                             android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
+                            android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
+                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/et_Otp" />
@@ -242,12 +262,12 @@
                             android:layout_marginTop="@dimen/_18sdp"
                             android:background="@drawable/et_style"
                             android:hint="Confirm  4 digit PIN"
-                            android:inputType="number"
                             android:imeOptions="actionDone"
+                            android:inputType="number"
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
                             android:singleLine="true"
-                            android:textColorHint="@color/color_272727"
+                            android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -262,9 +282,9 @@
                             android:layout_height="@dimen/_45sdp"
                             android:layout_marginTop="@dimen/_12sdp"
                             android:text="@string/sign_up"
-                            android:visibility="gone"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp"
+                            android:visibility="gone"
                             app:cornerRadius="@dimen/_8sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

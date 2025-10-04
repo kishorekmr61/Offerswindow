@@ -24,8 +24,8 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.FragmentManageProfileBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.CustomerData
-import com.customer.offerswindow.model.dashboard.ProfileUpdateRequest
 import com.customer.offerswindow.ui.customerprofile.CustomerProfileViewModel
+import com.customer.offerswindow.utils.ImageCompressor
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.convertDate
 import com.customer.offerswindow.utils.getFilePathFromURI
@@ -36,8 +36,6 @@ import com.google.firebase.crashlytics.crashlytics
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.default
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -149,25 +147,21 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
     private fun handleCropResult(result: CropImageView.CropResult) {
         var photoFile: File? = null
         if (result.error == null) {
-            if (result.uriContent != null) {
-                context?.contentResolver?.let {
-                    getFilePathFromURI(context, result.uriContent as Uri)?.let {
-                        photoFile = File(it)
+            if (result.error == null) {
+                if (result.uriContent != null) {
+                    compressAndPostImage(result.uriContent)
+                } else {
+                    val uriinfo = result.bitmap?.let { getImageUriFromBitmap(it) }
+                    if (uriinfo != null) {
+                        getFilePathFromURI(context, uriinfo)?.let {
+                            photoFile = File(it)
+                        }
                     }
+                    photoFile?.let { compressAndPostImage(result.uriContent) }
                 }
-                photoFile?.let { compressAndPostImage(it) }
             } else {
-                val uriinfo = result.bitmap?.let { getImageUriFromBitmap(it) }
-                if (uriinfo != null) {
-                    getFilePathFromURI(context, uriinfo)?.let {
-                        photoFile = File(it)
-                    }
-                }
-                photoFile?.let { compressAndPostImage(it) }
-//                updateProfileImage(result.bitmap.rowBytes.toString())
+                activity?.showToast("Image crop failed:" + result.error?.message)
             }
-        } else {
-            activity?.showToast("Image crop failed:" + result.error?.message)
         }
     }
 
@@ -183,7 +177,7 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
                 binding.llLoader.visibility = View.VISIBLE
                 postData(true, photoPart)
             }
-        }catch (ex : Exception){
+        } catch (ex: Exception) {
             Firebase.crashlytics.recordException(ex)
         }
     }
@@ -267,26 +261,26 @@ class ManageProfileFragment : Fragment(), CropImageView.OnSetImageUriCompleteLis
     }
 
     var photoPart: MultipartBody.Part? = null
-    private fun compressAndPostImage(photoFile: File) {
+    private fun compressAndPostImage(photoFile: Uri?) {
         lifecycleScope.launch {
             try {
-                val compressedImageFile =
-                    Compressor.compress(requireActivity(), photoFile) {
-                        default(width = 200, format = Bitmap.CompressFormat.PNG)
-                    }
-                compressedImageFile.let {
+                val file = File(ImageCompressor().compress(requireActivity(), photoFile.toString()))
+                if (file.exists()) {
                     val photoRequestBody =
-                        compressedImageFile.asRequestBody("image/*".toMediaTypeOrNull())
+                        file.asRequestBody("image/*".toMediaTypeOrNull())
                     photoPart = MultipartBody.Part.createFormData(
                         "AttachmentFilePath",
-                        compressedImageFile.name,
+                        file.name,
                         photoRequestBody
                     )
-                    updateProfileImage(photoFile)
+                    updateProfileImage(file)
+                } else {
+                    println("File not found.")
                 }
+
             } catch (e: Exception) {
-                updateProfileImage(photoFile)
                 Firebase.crashlytics.recordException(e)
+                showToast(getString(R.string.something_went_wrong))
             }
         }
     }

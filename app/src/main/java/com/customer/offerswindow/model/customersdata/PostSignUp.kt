@@ -14,4 +14,5 @@ data class UserSigUp(
     var LastName: String="",
     var MobileNo: String="",
     var EmailId: String="",
+    var ReferenceMobileNo : String =""
 )

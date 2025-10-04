@@ -18,6 +18,7 @@ import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.FragmentManagePostaddBinding
 import com.customer.offerswindow.helper.NetworkResult
+import com.customer.offerswindow.utils.ImageCompressor
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.getFilePathFromURI
 import com.customer.offerswindow.utils.setWhiteToolBar
@@ -25,8 +26,6 @@ import com.customer.offerswindow.utils.showToast
 import com.google.firebase.Firebase
 import com.google.firebase.crashlytics.crashlytics
 import dagger.hilt.android.AndroidEntryPoint
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.default
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -100,12 +99,13 @@ class ManagePostFragment : Fragment(), CropImageView.OnSetImageUriCompleteListen
         var photoFile: File? = null
         if (result.error == null) {
             if (result.uriContent != null) {
-                context?.contentResolver?.let {
-                    getFilePathFromURI(context, result.uriContent as Uri)?.let {
-                        photoFile = File(it)
-                    }
-                }
-                photoFile?.let { compressAndPostImage(it) }
+//                context?.contentResolver?.let {
+//                    getFilePathFromURI(context, result.uriContent as Uri)?.let {
+//                        photoFile = File(it)
+//                    }
+//                }
+//                photoFile?.let { compressAndPostImage(it) }
+                compressAndPostImage(result.uriContent)
             } else {
                 val uriinfo = result.bitmap?.let { getImageUriFromBitmap(it) }
                 if (uriinfo != null) {
@@ -113,7 +113,7 @@ class ManagePostFragment : Fragment(), CropImageView.OnSetImageUriCompleteListen
                         photoFile = File(it)
                     }
                 }
-                photoFile?.let { compressAndPostImage(it) }
+                photoFile?.let { compressAndPostImage(result.uriContent) }
 //                updateProfileImage(result.bitmap.rowBytes.toString())
             }
         } else {
@@ -133,7 +133,7 @@ class ManagePostFragment : Fragment(), CropImageView.OnSetImageUriCompleteListen
                 binding.llLoader.visibility = View.VISIBLE
                 postData(true, photoPart)
             }
-        }catch (ex : Exception){
+        } catch (ex: Exception) {
             Firebase.crashlytics.recordException(ex)
         }
     }
@@ -189,23 +189,23 @@ class ManagePostFragment : Fragment(), CropImageView.OnSetImageUriCompleteListen
     }
 
     var photoPart: MultipartBody.Part? = null
-    private fun compressAndPostImage(photoFile: File) {
+    private fun compressAndPostImage(photoFile: Uri?) {
         lifecycleScope.launch {
             try {
-                val compressedImageFile =
-                    Compressor.compress(requireActivity(), photoFile) {
-                        default(width = 200, format = Bitmap.CompressFormat.PNG)
-                    }
-                compressedImageFile.let {
+                val file = File(ImageCompressor().compress(requireActivity(), photoFile.toString()))
+                if (file.exists()) {
                     val photoRequestBody =
-                        compressedImageFile.asRequestBody("image/*".toMediaTypeOrNull())
+                        file.asRequestBody("image/*".toMediaTypeOrNull())
                     photoPart = MultipartBody.Part.createFormData(
                         "AttachmentFilePath",
-                        compressedImageFile.name,
+                        file.name,
                         photoRequestBody
                     )
-                    updateProfileImage(photoFile)
+                    updateProfileImage(file)
+                } else {
+                    println("File not found.")
                 }
+
             } catch (e: Exception) {
                 Firebase.crashlytics.recordException(e)
                 showToast(getString(R.string.something_went_wrong))

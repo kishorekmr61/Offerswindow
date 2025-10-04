@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/available_slots"
-            android:textColor="@color/color_272727"
+            android:textColor="@color/grey_font"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_calender"
             tools:text="Available Slots" />
@@ -115,7 +115,7 @@
             android:drawableStart="@drawable/slotsfull"
             android:drawablePadding="@dimen/_3sdp"
             android:text="@string/slots_full"
-            android:textColor="@color/color_272727"
+            android:textColor="@color/grey_font"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_avalibleslots" />
@@ -130,7 +130,7 @@
             android:drawableStart="@drawable/fastfilling"
             android:drawablePadding="@dimen/_3sdp"
             android:text="@string/fast_filling"
-            android:textColor="@color/color_272727"
+            android:textColor="@color/grey_font"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toEndOf="@+id/tv_slotsfull"
             app:layout_constraintTop_toBottomOf="@id/tv_avalibleslots" />

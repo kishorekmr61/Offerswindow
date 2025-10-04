@@ -18,6 +18,7 @@ import com.customer.offerswindow.databinding.FragmentAddPostBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
@@ -28,6 +29,8 @@ import com.customer.offerswindow.utils.userimagecapture.ActionBottomSheet
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import java.io.File
 import java.util.Calendar
 
@@ -80,6 +83,17 @@ class AddPostFragment : Fragment() {
         binding.saveBtn.setOnClickListener {
             if (validateFileds()) {
                 viewModel.isloading.set(true)
+                if (!binding.isimageRequired.isChecked) {
+                    val formDataBody: RequestBody =
+                        RequestBody.create(
+                            "application/json".toMediaTypeOrNull(),
+                            passData().toString()
+                        )
+                    viewModel.submitPost(
+                        null,
+                        formDataBody
+                    )
+                }
             }
         }
         binding.etCategory.setOnClickListener {
@@ -122,7 +136,6 @@ class AddPostFragment : Fragment() {
         binding.etEnddate.setOnClickListener {
             openCalendar(binding.etEnddate, 0)
         }
-
         binding.etOpentime.setOnClickListener {
             openTimeDialog(binding.etOpentime)
         }
@@ -261,7 +274,7 @@ class AddPostFragment : Fragment() {
 
 
     fun isValidMobile(number: String): Boolean {
-        return number.matches(Regex("^[6-8]\\d{9}$"))
+        return number.matches(Regex("^[6-9]\\d{9}$"))
     }
 
 
@@ -270,8 +283,7 @@ class AddPostFragment : Fragment() {
     }
 
 
-
-        private fun setObserver() {
+    private fun setObserver() {
         viewModel.masterdata.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -308,6 +320,29 @@ class AddPostFragment : Fragment() {
                 else -> {}
             }
         }
+        viewModel.addpostingResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                   viewModel.isloading.set(false)
+                    response.data.let { resposnes ->
+                        if (resposnes?.Status == 200) {
+                            findNavController().navigate(R.id.nav_home)
+                        } else {
+                            ShowFullToast(response.data?.Message ?: "")
+                        }
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    viewModel.isloading.set(false)
+                    response.message?.let { ShowFullToast(response?.message ?: "") }
+                }
+
+                is NetworkResult.Loading -> {
+                    viewModel.isloading.set(true)
+                }
+            }
+        }
     }
 
 
@@ -341,6 +376,7 @@ class AddPostFragment : Fragment() {
         if (binding.isimageRequired.isChecked) {
             imageRequired = "Y"
         }
+        formDataJson.addProperty("VideoLink", binding.etVideo.text.toString())
         formDataJson.addProperty("DisplayImage", imageRequired)
         formDataJson.addProperty("createdBy", AppPreference.read(Constants.USERUID, "") ?: "0")
         formDataJson.addProperty("createdDateTime", getDateTime())

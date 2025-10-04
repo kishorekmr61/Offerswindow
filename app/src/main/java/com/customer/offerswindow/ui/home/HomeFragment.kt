@@ -76,7 +76,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), MenuProvider {
+class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeCustomerBinding? = null
@@ -115,7 +115,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+//        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         setObserver()
         setRecyclervewData()
         vm.hidetoolbar.value = false
@@ -750,6 +750,7 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     private fun setCategorySeleted(position: Int, item: CategoriesData) {
+        binding.rvCategories.scrollToPosition(position)
         categoryList[position].isselected =
             item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
         if (item.isselected) {
@@ -845,17 +846,7 @@ class HomeFragment : Fragment(), MenuProvider {
         }
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_dashboard, menu)
-    }
 
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.action_notification) {
-            showToast("Notification clicked")
-            return true
-        }
-        return false
-    }
 
     private fun setListeners() {
         binding.setVariable(BR.onItemClick, View.OnClickListener {
