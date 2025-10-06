@@ -76,7 +76,7 @@
 
     <fragment
         android:id="@+id/nav_rewardshistory"
-        android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.RewarPointHistoryFragment"
+        android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.RewardPointLandingFragment"
         android:label="RewardsHistory" />
 
 
@@ -124,5 +124,10 @@
     <fragment
         android:id="@+id/nav_pinvie"
         android:name="com.customer.offerswindow.utils.bottomsheet.PinBottomSheetFragment"
+        android:label="PinScreen" />
+
+    <fragment
+        android:id="@+id/nav_rew_history"
+        android:name="com.customer.offerswindow.ui.wallet.rewardPointHistory.redemption.RewardsHistoryFragment"
         android:label="PinScreen" />
 </navigation>

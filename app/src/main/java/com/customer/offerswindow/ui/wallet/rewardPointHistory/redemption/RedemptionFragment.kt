@@ -112,12 +112,12 @@ class RedemptionFragment : Fragment() {
             showToast("Enter No of Points")
             return false
         }
-//        if (binding.walletamountLbl.text.toString()
-//                .toDouble() < binding.etNoofpoints.text.toString().toDouble()
-//        ) {
-//            showToast("No of Points entered should be less than wallet points")
-//            return false
-//        }
+        if (binding.walletamountLbl.text.toString()
+                .toDouble() < binding.etNoofpoints.text.toString().toDouble()
+        ) {
+            showToast("No of Points entered should be less than wallet points")
+            return false
+        }
 
         if (binding.etTransactiontype.text.isNullOrEmpty()) {
             showToast("Select Transaction Type")

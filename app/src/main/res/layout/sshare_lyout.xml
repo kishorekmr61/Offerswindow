@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_8sdp">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/share_lbl"
+        style="@style/Ag_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Share this app with friends and earn more Volume Points!"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/share1_lbl"
+        style="@style/AG_regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        android:text="Ask your friend to enter your mobile number as a reference during sign-up to help you earn more Volume Points!"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/share_lbl" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/share_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_125sdp"
+        android:scaleType="fitXY"
+        android:src="@drawable/share_banner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share1_lbl" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/redeem_txt"
+        style="@style/AG_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_35sdp"
+        android:background="@drawable/round_primary_bg"
+        android:gravity="center"
+        android:padding="@dimen/_8sdp"
+        android:drawableTint="@color/white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:text="Share app"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:textColor="@color/white"
+        app:drawableLeftCompat="@drawable/share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share_img" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

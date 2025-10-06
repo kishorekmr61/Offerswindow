@@ -9,20 +9,15 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
-import androidx.core.view.MenuProvider
 import androidx.core.view.isEmpty
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
@@ -750,7 +745,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCategorySeleted(position: Int, item: CategoriesData) {
-        binding.rvCategories.scrollToPosition(position)
+//        binding.rvCategories.scrollToPosition(position)
         categoryList[position].isselected =
             item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
         if (item.isselected) {
@@ -845,7 +840,6 @@ class HomeFragment : Fragment() {
             s == it.MstType
         }
     }
-
 
 
     private fun setListeners() {

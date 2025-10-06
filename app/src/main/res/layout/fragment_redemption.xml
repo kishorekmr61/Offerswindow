@@ -95,7 +95,6 @@
                 app:passwordToggleEnabled="true" />
 
 
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_transactiontype"
                 style="@style/AG_regular"
@@ -131,12 +130,12 @@
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_25sdp"
                 android:background="@drawable/et_style"
+                android:clickable="false"
+                android:focusable="false"
                 android:hint="@string/value_of_redemption"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"
-                android:clickable="false"
-                android:focusable="false"
                 android:paddingStart="@dimen/_8sdp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -180,11 +179,11 @@
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_25sdp"
                 android:background="@drawable/et_style"
+                android:gravity="start"
                 android:hint="@string/delivery_address"
                 android:imeOptions="actionDone"
-                android:gravity="start"
-                android:paddingStart="@dimen/_8sdp"
                 android:maxLines="3"
+                android:paddingStart="@dimen/_8sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
@@ -208,6 +207,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_address" />
+
+
 
             <ProgressBar
                 android:id="@+id/pgBar"

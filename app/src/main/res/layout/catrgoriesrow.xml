@@ -59,7 +59,7 @@
             android:maxLines="2"
             android:padding="@dimen/_4sdp"
             android:text="@{item.category_desc}"
-            android:textColor="@{item.isselected ? @color/primary : @color/black}"
+            android:textColor="@{item.isselected ? @color/primary : @color/color_F5991C}"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

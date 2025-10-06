@@ -40,7 +40,7 @@
             android:maxLines="2"
             android:padding="@dimen/_4sdp"
             android:text="@{item.filtercategory_desc}"
-            android:textColor="@{item.filetrselection ? @color/white :  @color/black}"
+            android:textColor="@{item.filetrselection ? @color/color_F5991C :  @color/black}"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
