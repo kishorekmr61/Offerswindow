@@ -18,7 +18,9 @@ import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
+import com.customer.offerswindow.utils.isValidEmail
 import com.customer.offerswindow.utils.showToast
+import com.customer.offerswindow.utils.validateMobilenumber
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,6 +66,7 @@ class SignUpFragment : Fragment() {
                 binding.etMobilenumber.error = "Please enter valid mobile number"
             } else {
                 signUpViewModel.isloading.set(true)
+                signUpViewModel.isenable.set(false)
                 signUpViewModel.getSignupOtp(
                     UserSigUp(
                         binding.etName.text.toString(),
@@ -103,7 +106,7 @@ class SignUpFragment : Fragment() {
             showToast("Please enter Mobile number")
             return false
         }
-        if (!isValidMobile(binding.etMobilenumber.text.toString())) {
+        if (!binding.etMobilenumber.text.toString().validateMobilenumber()) {
             showToast("Please enter Valid Mobile Number")
             return false
         }
@@ -111,7 +114,7 @@ class SignUpFragment : Fragment() {
             showToast("Please enter Email")
         }
 
-        if (!isValidMail(binding.etEmail.text.toString())) {
+        if (!binding.etEmail.text.toString().isValidEmail()) {
             showToast("Please enter valid Email")
             return false
         }

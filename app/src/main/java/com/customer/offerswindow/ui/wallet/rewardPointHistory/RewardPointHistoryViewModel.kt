@@ -26,6 +26,7 @@ class RewardPointHistoryViewModel @Inject constructor(
     var rewardBalance = MutableLiveData<NetworkResult<RewardBalanceResponse>>()
     var isloading = ObservableField(false)
     var walletbalance = ObservableField("0")
+    var nodata = ObservableField<Boolean>()
 
     fun getRewardsHistoryData(userid: String, imaxid: Int) {
         viewModelScope.launch {

@@ -69,6 +69,12 @@ class RewardsHistoryFragment : Fragment() {
 
 
     private fun bindRewardsHistory(rewardHistory: ArrayList<RewardHistory>) {
+        if (rewardHistory.isEmpty()) {
+            viewModel.nodata.set(true)
+            binding.nodataavaliable.textDesc.setText("No  Transactions")
+        } else {
+            viewModel.nodata.set(false)
+        }
         binding.rvRewardpoints.setUpMultiViewRecyclerAdapter(
             rewardHistory
         ) { item: RewardHistory, binder: ViewDataBinding, position: Int ->

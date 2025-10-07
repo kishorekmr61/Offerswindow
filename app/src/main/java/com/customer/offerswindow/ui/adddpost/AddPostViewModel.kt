@@ -61,9 +61,11 @@ class AddPostViewModel @Inject constructor(
         }
     }
 
-    fun getLocationWIthFromCities(citycode: String): ArrayList<SpinnerRowModel> {
+    fun getLocationWIthFromCities(citycode: String,skipall : Boolean = false): ArrayList<SpinnerRowModel> {
         var locationList = arrayListOf<SpinnerRowModel>()
-        locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
+        if (!skipall) {
+            locationList.add(SpinnerRowModel("All", false, false, mstCode = "0"))
+        }
         masterdata.value?.data?.data?.forEach {
             if (it.MstType == "Location" && citycode == "0") {
                 locationList.add(

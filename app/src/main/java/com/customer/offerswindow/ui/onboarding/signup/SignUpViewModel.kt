@@ -26,6 +26,7 @@ class SignUpViewModel @Inject constructor(
     var app: Application,
 ) : ViewModel() {
     var isloading = ObservableField(false)
+    var isenable = ObservableField(true)
     var signUpResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
     var signupOTPResponse = MutableLiveData<NetworkResult<OfferWindowCommonResponse>>()
 

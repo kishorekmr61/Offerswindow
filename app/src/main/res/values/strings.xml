@@ -19,17 +19,17 @@
     <string name="resend">We have sent Otp to your number ? <b> Resend</b></string>
     <string name="forgetpassword">Forgot password</string>
     <string name="create_account">Don\'t have an Account ? <font fgcolor="#2B83ED"><b>Create One</b></font></string>
-    <string name="email_address_or_phone_number">Phone Number</string>
+    <string name="email_address_or_phone_number">Phone Number*</string>
     <string name="enter_otp">Enter 4 digit Pin</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="verify">Verify</string>
     <string name="_email_number_resend">We have sent Otp to your email/number ? <b> Resend</b></string>
     <string name="already_have_an_account_signin">Already have an Account ?<font fgcolor="#2B83ED"><b> signin</b></font></string>
-    <string name="phone_number">Phone number</string>
-    <string name="email_address">Email Address</string>
-    <string name="lastname">Lastname</string>
-    <string name="firstname">Firstname</string>
+    <string name="phone_number">Phone number*</string>
+    <string name="email_address">Email Address*</string>
+    <string name="lastname">Lastname*</string>
+    <string name="firstname">Firstname*</string>
     <string name="we_have_sent_otp_to">We have sent Otp to</string>
     <string name="Continue">Continue</string>
     <string name="sign_up">Sign Up</string>

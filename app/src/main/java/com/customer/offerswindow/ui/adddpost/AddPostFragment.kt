@@ -22,10 +22,12 @@ import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
+import com.customer.offerswindow.utils.isValidEmail
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showCalenderDialog
 import com.customer.offerswindow.utils.showToast
 import com.customer.offerswindow.utils.userimagecapture.ActionBottomSheet
+import com.customer.offerswindow.utils.validateMobilenumber
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,7 +130,14 @@ class AddPostFragment : Fragment() {
             }
         }
         binding.uploadButton.setOnClickListener {
-            triggerCameraOrGallerySelection()
+            if (validateFileds()) {
+                if (!binding.isimageRequired.isChecked) {
+                    triggerCameraOrGallerySelection()
+                } else {
+                    showToast("Please check image required to upload image")
+                }
+            }
+
         }
         binding.etStartdate.setOnClickListener {
             openCalendar(binding.etStartdate, Calendar.getInstance().timeInMillis)
@@ -174,7 +183,7 @@ class AddPostFragment : Fragment() {
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
                     Constants.STATUS,
                     binding.etLocation.text.toString(),
-                    viewModel.getLocationWIthFromCities(cityid),
+                    viewModel.getLocationWIthFromCities(cityid, true),
                     false,
                     object :
                         OnItemSelectedListner {
@@ -240,7 +249,7 @@ class AddPostFragment : Fragment() {
             showToast("Please enter Mobile Number")
             return false
         }
-        if (!isValidMobile(binding.etMobilenumber.text?.trim().toString())) {
+        if (!binding.etMobilenumber.text?.trim().toString().validateMobilenumber()) {
             showToast("Please enter valid Mobile Number")
             return false
         }
@@ -249,15 +258,17 @@ class AddPostFragment : Fragment() {
             return false
         }
 
-        if (!isValidMobile(binding.etWhatsappnumber.text?.trim().toString())) {
+        if (!binding.etWhatsappnumber.text?.trim().toString().validateMobilenumber()) {
             showToast("Please enter valid Whatsapp Number")
+            return false
         }
         if (binding.etEmail.text?.trim().isNullOrEmpty()) {
             showToast("Please enter Email")
             return false
         }
-        if (!isValidEmail(binding.etEmail.text?.trim().toString())) {
+        if (!binding.etEmail.text?.trim().toString().isValidEmail()) {
             showToast("Please enter valid email")
+            return false
         }
 
         if (binding.etShowroomaddress.text?.trim().isNullOrEmpty()) {
@@ -270,16 +281,6 @@ class AddPostFragment : Fragment() {
             return false
         }
         return true
-    }
-
-
-    fun isValidMobile(number: String): Boolean {
-        return number.matches(Regex("^[6-9]\\d{9}$"))
-    }
-
-
-    fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
 
@@ -323,7 +324,7 @@ class AddPostFragment : Fragment() {
         viewModel.addpostingResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                   viewModel.isloading.set(false)
+                    viewModel.isloading.set(false)
                     response.data.let { resposnes ->
                         if (resposnes?.Status == 200) {
                             findNavController().navigate(R.id.nav_home)
@@ -397,7 +398,7 @@ class AddPostFragment : Fragment() {
                         file: File?
                     ) {
                         if (uri != null) {
-                            var bundle = Bundle()
+                            val bundle = Bundle()
                             bundle.putString("ADDPOST", passData().toString())
                             bundle.putString(Constants.BUNDLE_IMG_PATH, uri.toString())
                             findNavController().navigate(R.id.nav_manage_post, bundle)

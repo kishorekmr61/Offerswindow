@@ -101,6 +101,7 @@
 
 
         <include
+            android:id="@+id/share_lyout"
             layout="@layout/sshare_lyout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -17,6 +17,7 @@ import com.customer.offerswindow.databinding.RewarPointHistoryFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -52,6 +53,12 @@ class RewardPointLandingFragment : Fragment() {
                 }
             }
         )
+        binding.shareLyout.shareTxt.setOnClickListener {
+            activity?.shareImageFromUrl(
+                requireActivity(),
+                AppPreference.read(Constants.SHAREMESSAGE, "") ?: "", ""
+            )
+        }
         return root
     }
 

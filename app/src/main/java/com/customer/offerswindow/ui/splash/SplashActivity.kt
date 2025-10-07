@@ -103,6 +103,9 @@ class SplashActivity : AppCompatActivity() {
                             if (it.MstType == "Gold_Trend_Report") {
                                 AppPreference.write(Constants.GOLDTRENDREPORT, it.Image_path)
                             }
+                            if (it.MstType == "Share_Message") {
+                                AppPreference.write(Constants.SHAREMESSAGE, it.MstDesc)
+                            }
                         }
                     }
                     vm.getUserInfo(AppPreference.read(Constants.MOBILENO, "") ?: "")

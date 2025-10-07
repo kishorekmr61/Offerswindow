@@ -31,11 +31,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/offerheader"
                 style="@style/AG_altbold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="You can now upload your offers for FREE on our platform.  \n Reach more customers and boost your sales today!"
-                android:textColor="@color/black"
+                android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_13ssp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +49,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
                 android:text="@string/offer_details"
-                android:textColor="@color/black"
+                android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/offerheader" />
@@ -219,7 +220,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
                 android:text="@string/offer_location_details"
-                android:textColor="@color/black"
+                android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_tandc" />
@@ -311,7 +312,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
                 android:text="@string/ucontact_details"
-                android:textColor="@color/black"
+                android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_showroomaddress" />
@@ -471,7 +472,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:text="@string/save"
-                android:textColor="@color/white"
+                android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_14ssp"
                 app:cornerRadius="@dimen/_25sdp"
                 app:layout_constraintEnd_toEndOf="parent"

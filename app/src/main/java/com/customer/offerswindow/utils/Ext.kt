@@ -70,6 +70,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 fun View.VISIBLE() {
@@ -804,35 +806,50 @@ fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: Stri
     var offerurl = msgextension + "https://offerswindow.com/Offer_Details_Window?lOfferId="
     CoroutineScope(Dispatchers.IO).launch {
         try {
-            // 1. Download the image
-            val url = URL(imageUrl)
-            val connection = url.openConnection()
-            connection.connect()
-            val inputStream = connection.getInputStream()
-            // 2. Save to temporary file
-            val file = File(context.cacheDir, "shared_image.jpg")
-            val outputStream = FileOutputStream(file)
-            inputStream.copyTo(outputStream)
-            outputStream.close()
-            inputStream.close()
-            // 3. Get Uri using FileProvider
-            val imageUri =
-                FileProvider.getUriForFile(context, getString(R.string.authorities), file)
-            // 4. Create and launch share intent on main thread
 
             withContext(Dispatchers.Main) {
-                val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                    type = "image/*"
-                    putExtra(Intent.EXTRA_STREAM, imageUri)
-                    putExtra(Intent.EXTRA_TEXT, offerurl.plus(message))
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-                context.startActivity(
-                    Intent.createChooser(
-                        shareIntent,
-                        context.getString(R.string.app_name)
+                if (imageUrl.isNullOrEmpty()){
+                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/*"
+                         putExtra(Intent.EXTRA_TEXT, message)
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                    context.startActivity(
+                        Intent.createChooser(
+                            shareIntent,
+                            context.getString(R.string.app_name)
+                        )
                     )
-                )
+                }else {
+                    // 1. Download the image
+                    val url = URL(imageUrl)
+                    val connection = url.openConnection()
+                    connection.connect()
+                    val inputStream = connection.getInputStream()
+                    // 2. Save to temporary file
+                    val file = File(context.cacheDir, "shared_image.jpg")
+                    val outputStream = FileOutputStream(file)
+                    inputStream.copyTo(outputStream)
+                    outputStream.close()
+                    inputStream.close()
+                    // 3. Get Uri using FileProvider
+                    val imageUri =
+                        FileProvider.getUriForFile(context, getString(R.string.authorities), file)
+                    // 4. Create and launch share intent on main thread
+
+                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "image/*"
+                        putExtra(Intent.EXTRA_STREAM, imageUri)
+                        putExtra(Intent.EXTRA_TEXT, offerurl.plus(message))
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                    context.startActivity(
+                        Intent.createChooser(
+                            shareIntent,
+                            context.getString(R.string.app_name)
+                        )
+                    )
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -874,4 +891,15 @@ fun Chip.setSelectedState(activity: Activity) {
     this.chipStrokeColor = ColorStateList.valueOf(activity.getColor(R.color.primary))
 }
 
+fun String.isValidEmail(): Boolean {
+    val VALID_EMAIL_ADDRESS_REGEX: Pattern =
+        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
+    val matcher: Matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(this)
+    return matcher.matches()
+}
 
+fun String.validateMobilenumber(): Boolean {
+    val p = Pattern.compile("^[6-9]\\d{9}\$")
+    val m = p.matcher(this)
+    return m.matches()
+}

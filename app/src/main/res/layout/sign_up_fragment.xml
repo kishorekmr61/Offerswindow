@@ -60,7 +60,7 @@
                         android:paddingStart="@dimen/_25sdp"
                         android:paddingEnd="@dimen/_25sdp"
                         android:text="@string/signup"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_FFCB01"
                         android:textSize="@dimen/_20ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -88,6 +88,7 @@
                             android:imeOptions="actionNext"
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
+                            android:enabled="@{vm.isenable}"
                             android:singleLine="true"
                             android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
@@ -108,6 +109,7 @@
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
                             android:singleLine="true"
+                            android:enabled="@{vm.isenable}"
                             android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -130,6 +132,7 @@
                             android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
+                            android:enabled="@{vm.isenable}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/et_lastname" />
 
@@ -137,7 +140,7 @@
                             android:id="@+id/et_refmobilenumber"
                             style="@style/AG_regular"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_34sdp" 
+                            android:layout_height="@dimen/_34sdp"
                             android:layout_marginTop="@dimen/_18sdp"
                             android:background="@drawable/et_style"
                             android:hint="Reference Mobile Number"
@@ -147,11 +150,54 @@
                             android:maxLines="1"
                             android:paddingStart="@dimen/_8sdp"
                             android:singleLine="true"
+                            android:enabled="@{vm.isenable}"
                             android:textColorHint="@color/grey_font"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/et_email" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_pin"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_34sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Set 4 digit PIN"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:singleLine="true"
+                            android:textColorHint="@color/grey_font"
+                            android:textSize="@dimen/_12ssp"
+                            android:enabled="@{vm.isenable}"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_refmobilenumber" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/confirmet_pin"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_34sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Confirm  4 digit PIN"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:enabled="@{vm.isenable}"
+                            android:singleLine="true"
+                            android:textColorHint="@color/grey_font"
+                            android:textSize="@dimen/_12ssp"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_pin" />
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -162,7 +208,7 @@
                             android:background="@drawable/et_style"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_refmobilenumber">
+                            app:layout_constraintTop_toBottomOf="@+id/confirmet_pin">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_mobilenumber"
@@ -234,47 +280,6 @@
                             app:layout_constraintTop_toBottomOf="@+id/mobileno_lyout" />
 
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_pin"
-                            style="@style/AG_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_34sdp"
-                            android:layout_marginTop="@dimen/_18sdp"
-                            android:background="@drawable/et_style"
-                            android:hint="Set 4 digit PIN"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:singleLine="true"
-                            android:textColorHint="@color/grey_font"
-                            android:textSize="@dimen/_12ssp"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_Otp" />
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/confirmet_pin"
-                            style="@style/AG_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_34sdp"
-                            android:layout_marginTop="@dimen/_18sdp"
-                            android:background="@drawable/et_style"
-                            android:hint="Confirm  4 digit PIN"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:singleLine="true"
-                            android:textColorHint="@color/grey_font"
-                            android:textSize="@dimen/_12ssp"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_pin" />
-
-
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/signup_btn"
                             style="@style/Ag_h3"
@@ -301,7 +306,7 @@
                         android:layout_marginStart="@dimen/_25sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="@string/already_have_an_account_signin"
-                        android:textColor="@color/color_272727"
+                        android:textColor="@color/color_FFCB01"
                         android:textSize="@dimen/_9ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cell_lyout" />

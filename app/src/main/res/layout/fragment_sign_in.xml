@@ -78,7 +78,7 @@
                     android:paddingStart="@dimen/_25sdp"
                     android:paddingEnd="@dimen/_25sdp"
                     android:text="@string/signin"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_FFCB01"
                     android:textSize="@dimen/_20ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -185,7 +185,7 @@
                         android:layout_marginTop="@dimen/_18sdp"
                         android:layout_marginEnd="@dimen/_25sdp"
                         android:text="@string/login"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_FFCB01"
                         android:textSize="@dimen/_12ssp"
                         android:visibility="visible"
                         app:cornerRadius="@dimen/_8sdp"

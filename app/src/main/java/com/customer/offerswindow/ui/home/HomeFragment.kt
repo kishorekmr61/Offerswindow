@@ -419,8 +419,7 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     homeViewModel.isloading.set(false)
-                    showLongToast(response.message ?: "")
-                }
+                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
@@ -673,7 +672,7 @@ class HomeFragment : Fragment() {
                         activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.primary)) }
                     chip.chipBackgroundColor =
                         activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.primary)) }
-                    activity?.getColor(R.color.white)?.let { it1 -> chip.setTextColor(it1) }
+                    activity?.getColor(R.color.color_FFCB01)?.let { it1 -> chip.setTextColor(it1) }
                 } else {
                     chip.chipStrokeColor =
                         activity?.let { it1 -> ColorStateList.valueOf(it1.getColor(R.color.transparent)) }
