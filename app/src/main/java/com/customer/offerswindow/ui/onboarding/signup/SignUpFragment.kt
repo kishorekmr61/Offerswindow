@@ -94,11 +94,11 @@ class SignUpFragment : Fragment() {
     }
 
     private fun isValidate(): Boolean {
-        if (binding.etName.text.toString().isEmpty()) {
+        if (binding.etName.text?.trim().toString().isEmpty()) {
             showToast("Please enter name")
             return false
         }
-        if (binding.etLastname.text.toString().isEmpty()) {
+        if (binding.etLastname.text?.trim().toString().isEmpty()) {
             showToast("Please enter LastName")
             return false
         }
@@ -110,27 +110,27 @@ class SignUpFragment : Fragment() {
             showToast("Please enter Valid Mobile Number")
             return false
         }
-        if (binding.etEmail.text.toString().isEmpty()) {
+        if (binding.etEmail.text?.trim().toString().isEmpty()) {
             showToast("Please enter Email")
         }
 
-        if (!binding.etEmail.text.toString().isValidEmail()) {
+        if (!binding.etEmail.text?.trim().toString().isValidEmail()) {
             showToast("Please enter valid Email")
             return false
         }
-        if (binding.etPin.text.toString().isEmpty()) {
+        if (binding.etPin.text?.trim().toString().isEmpty()) {
             showToast("Please set 4 digit pin")
             return false
         }
-        if (binding.etPin.text.toString().length > 4) {
+        if (binding.etPin.text?.trim().toString().length > 4) {
             showToast("Please set valid PIN")
             return false
         }
-        if (binding.confirmetPin.text.toString().isEmpty()) {
+        if (binding.confirmetPin.text?.trim().toString().isEmpty()) {
             showToast("confirm 4 digit pin")
             return false
         }
-        if (binding.confirmetPin.text.toString().length > 4) {
+        if (binding.confirmetPin.text?.trim().toString().length > 4) {
             showToast("confirm 4 digit pin")
             return false
         }
