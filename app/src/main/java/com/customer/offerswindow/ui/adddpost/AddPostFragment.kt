@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,7 +19,9 @@ import com.customer.offerswindow.databinding.FragmentAddPostBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.utils.GONE
 import com.customer.offerswindow.utils.ShowFullToast
+import com.customer.offerswindow.utils.VISIBLE
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
@@ -154,7 +157,7 @@ class AddPostFragment : Fragment() {
         binding.etCity.setOnClickListener {
             activity?.let { it1 ->
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.STATUS,
+                    Constants.LOCATION,
                     binding.etCity.text.toString(), cityList, false, object :
                         OnItemSelectedListner {
                         override fun onItemSelectedListner(
@@ -164,6 +167,18 @@ class AddPostFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etCity.setText(titleData.title)
                                 cityid = titleData.mstCode
+                            } else {
+                                binding.etCity.setText(datevalue)
+                                cityid= ""
+                            }
+                            val locationslist =
+                                viewModel.getLocationWIthFromCities(cityid, true)
+                            if (locationslist.isNullOrEmpty()) {
+                                binding.etEditlocation.VISIBLE()
+                                binding.etLocation.GONE()
+                            }else{
+                                binding.etEditlocation.GONE()
+                                binding.etLocation.VISIBLE()
                             }
                         }
 
@@ -179,11 +194,13 @@ class AddPostFragment : Fragment() {
             }
         }
         binding.etLocation.setOnClickListener {
+            val locationslist =
+                viewModel.getLocationWIthFromCities(cityid, true)
             activity?.let { it1 ->
                 val modalBottomSheet = SpinnerBottomSheet.newInstance(
-                    Constants.STATUS,
+                    Constants.LOCATION,
                     binding.etLocation.text.toString(),
-                    viewModel.getLocationWIthFromCities(cityid, true),
+                    locationslist,
                     false,
                     object :
                         OnItemSelectedListner {
@@ -194,6 +211,8 @@ class AddPostFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etLocation.setText(titleData.title)
                                 locationid = titleData.mstCode
+                            } else {
+                                binding.etLocation.setText(datevalue)
                             }
                         }
 
@@ -362,8 +381,18 @@ class AddPostFragment : Fragment() {
         formDataJson.addProperty("StartDate", binding.etStartdate.text.toString())
         formDataJson.addProperty("categoryid", categoryid)
         formDataJson.addProperty("EndDate", binding.etEnddate.text.toString())
-        formDataJson.addProperty("CityName", cityid)
-        formDataJson.addProperty("AreaName", locationid)
+        formDataJson.addProperty("CityName", binding.etCity.text.toString())
+        formDataJson.addProperty("CityId", cityid)
+        formDataJson.addProperty("AreaId", locationid)
+        if (binding.etLocation.isVisible) {
+            formDataJson.addProperty("AreaName", binding.etLocation.text.toString())
+            formDataJson.addProperty("AreaId", locationid)
+        }
+        if (binding.etEditlocation.isVisible) {
+            formDataJson.addProperty("AreaName", binding.etEditlocation.text.toString())
+            formDataJson.addProperty("AreaId", "")
+        }
+
         formDataJson.addProperty("GoogleLocation", binding.etMaplocation.text.toString())
         formDataJson.addProperty("ContactPersonName", binding.etContactperson.text.toString())
         formDataJson.addProperty("MobileNo", binding.etMobilenumber.text.toString())

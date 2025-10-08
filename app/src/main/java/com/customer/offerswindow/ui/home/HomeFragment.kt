@@ -23,6 +23,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.BuildConfig
 import com.customer.offerswindow.R
@@ -419,7 +421,7 @@ class HomeFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     homeViewModel.isloading.set(false)
-                 }
+                }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
@@ -702,22 +704,17 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun loadServices() {
         categoryList.firstOrNull()?.isselected = true
         if (categoryList.isNotEmpty()) {
             binding.categoriesTxt.visibility = View.VISIBLE
             binding.viewallTxt.visibility = View.VISIBLE
         }
-
         binding.rvCategories.setUpMultiViewRecyclerAdapter(
             categoryList
         ) { item: CategoriesData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-            if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
-                setCategorySeleted(position, item)
-            } else {
-                setCategorySeleted(position, item)
-            }
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.category_item -> {
@@ -729,25 +726,32 @@ class HomeFragment : Fragment() {
                             categoryid = item.category_id ?: categoryid
                             arguments?.putString("ISFROM", "")
                             skipCriteriasearch = false
+                            setCategorySeleted(position, item)
                             homeViewModel.getOfferSubcategoryChips(item.category_id ?: categoryid)
+                            binding.rvCategories.adapter?.notifyDataSetChanged()
                         } else {
-
                             findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                         }
-
-                        binding.rvCategories.notifyDataChange()
                     }
                 }
                 binder.executePendingBindings()
             })
+            if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
+                setCategorySeleted(position, item)
+            }
         }
     }
 
+
+
     private fun setCategorySeleted(position: Int, item: CategoriesData) {
-//        binding.rvCategories.scrollToPosition(position)
-        categoryList[position].isselected =
-            item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
-        if (item.isselected) {
+        if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
+            categoryList[position].isselected =
+                item.category_id == (arguments?.getString("CategoryID") ?: categoryid)
+        } else {
+            categoryList[position].isselected = categoryid == categoryList[position].category_id
+        }
+        if (categoryList[position].isselected) {
             previouscat = position
         }
     }
@@ -951,7 +955,9 @@ class HomeFragment : Fragment() {
                             if (titleData != null) {
                                 binding.locationTxt.setText(titleData.title)
                                 locationId = titleData.mstCode
-                                dashboardOffersList()
+                                skipCriteriasearch = false
+                                homeViewModel.getOfferSubcategoryChips(categoryid)
+
                             }
                         }
 
@@ -997,5 +1003,26 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+
+    fun RecyclerView.smoothScrollToCenter(position: Int) {
+        val layoutManager = this.layoutManager as? LinearLayoutManager ?: return
+
+        val smoothScroller = object : LinearSmoothScroller(this.context) {
+            override fun getHorizontalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+
+            override fun calculateDxToMakeVisible(view: View, snapPreference: Int): Int {
+                val parentCenter = width / 2
+                val childCenter = view.left + view.width / 2
+                return childCenter - parentCenter
+            }
+        }
+
+        smoothScroller.targetPosition = position
+        layoutManager.startSmoothScroll(smoothScroller)
+    }
+
 }
 

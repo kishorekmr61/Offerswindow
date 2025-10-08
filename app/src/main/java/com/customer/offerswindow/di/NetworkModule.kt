@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     private const val CONNECT_TIMEOUT = 20L
-    private const val READ_TIMEOUT = 60L
+    private const val READ_TIMEOUT = 60
     private const val WRITE_TIMEOUT = 120L
 
     @Singleton
@@ -34,9 +34,9 @@ object NetworkModule {
 //            else HttpLoggingInterceptor.Level.NONE
         }
         return OkHttpClient.Builder()
-            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .authenticator(authAuthenticator)

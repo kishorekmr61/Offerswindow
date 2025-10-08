@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.customer.offerswindow.BR
 import com.customer.offerswindow.R
 import com.customer.offerswindow.data.constant.Constants
@@ -20,21 +19,16 @@ import com.customer.offerswindow.databinding.FragmentMyBookingsBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.customersdata.PostUserIntrest
 import com.customer.offerswindow.model.dashboard.BookingData
-import com.customer.offerswindow.model.dashboard.Images
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.home.HomeViewModel
-import com.customer.offerswindow.utils.getImageList
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
-import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.shareImageFromUrl
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -116,22 +110,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
             mbookinglist
         ) { item: BookingData, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-           /* var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
-            var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-            viewpager.setUpViewPagerAdapter(
-                getImageList(item.Offer_Image_Details) ?: arrayListOf()
-            ) { imageitem: Images, binder: ViewDataBinding, position: Int ->
-                binder.setVariable(BR.item, imageitem)
-                binder.setVariable(BR.onItemClick, View.OnClickListener {
-                    when (it.id) {
-                        R.id.img -> {
-                            navigateOfferDeatils(item)
-                        }
-                    }
-                })
-            }
-            TabLayoutMediator(tabview, viewpager) { tab, position ->
-            }.attach()*/
+
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.title_txt,R.id.storeName,R.id.discountInfo -> {

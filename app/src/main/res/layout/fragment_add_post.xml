@@ -33,10 +33,10 @@
                 style="@style/AG_altbold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="You can now upload your offers for FREE on our platform.  \n Reach more customers and boost your sales today!"
                 android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_13ssp"
-                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -245,6 +245,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/offerlocationdtls_txt" />
 
+
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_location"
                 android:layout_width="match_parent"
@@ -263,8 +265,28 @@
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_city" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_editlocation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/et_style"
+                android:drawablePadding="@dimen/_5sdp"
+                android:hint="Location/Area*"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/grey_font"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_location" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_maplocation"
@@ -282,7 +304,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_location" />
+                app:layout_constraintTop_toBottomOf="@id/et_editlocation" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_showroomaddress"

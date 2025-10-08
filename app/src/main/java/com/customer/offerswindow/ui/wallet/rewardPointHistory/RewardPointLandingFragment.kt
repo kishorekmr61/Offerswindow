@@ -54,10 +54,9 @@ class RewardPointLandingFragment : Fragment() {
             }
         )
         binding.shareLyout.shareTxt.setOnClickListener {
-            activity?.shareImageFromUrl(
-                requireActivity(),
-                AppPreference.read(Constants.SHAREMESSAGE, "") ?: "", ""
-            )
+            val applink = AppPreference.read(Constants.GOOGLEPLAYSTORELINK, "")
+            val link = AppPreference.read(Constants.SHAREMESSAGE, "")
+            activity?.shareImageFromUrl(requireActivity(), link + "\n" + applink, "")
         }
         return root
     }

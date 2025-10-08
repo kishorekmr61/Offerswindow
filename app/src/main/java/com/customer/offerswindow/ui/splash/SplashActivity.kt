@@ -106,6 +106,9 @@ class SplashActivity : AppCompatActivity() {
                             if (it.MstType == "Share_Message") {
                                 AppPreference.write(Constants.SHAREMESSAGE, it.MstDesc)
                             }
+                            if (it.MstType == "Google_Playstore_Link") {
+                                AppPreference.write(Constants.GOOGLEPLAYSTORELINK, it.MstDesc)
+                            }
                         }
                     }
                     vm.getUserInfo(AppPreference.read(Constants.MOBILENO, "") ?: "")

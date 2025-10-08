@@ -257,7 +257,7 @@
                         android:paddingStart="@dimen/_2sdp"
                         android:singleLine="true"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/color_424242"
+                        android:textColorHint="@color/color_939393"
                         android:textSize="@dimen/_10ssp" />
 
                     <androidx.appcompat.widget.AppCompatImageView

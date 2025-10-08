@@ -86,6 +86,7 @@ object Constants {
     const val PRIVACYPOLICY = "PRIVACYPOLICY"
     const val GOLDTRENDREPORT = "GOLDTRENDREPORT"
     const val SHAREMESSAGE = "Share_Message"
+    const val GOOGLEPLAYSTORELINK = "Google_Playstore_Link"
     const val PIN = "PIN"
     const val MASTERDATA = "MASTERDATA"
 }

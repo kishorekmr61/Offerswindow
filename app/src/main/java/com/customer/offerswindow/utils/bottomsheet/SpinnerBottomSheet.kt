@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.ViewDataBinding
 import com.customer.offerswindow.BR
@@ -96,6 +97,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         val view = View.inflate(context, R.layout.spinnerresults_lyout, null)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         dialog.setContentView(view)
         mBehavior = BottomSheetBehavior.from(view.parent as View)
         return dialog
@@ -235,6 +237,7 @@ class SpinnerBottomSheet : BaseBottomSheetDialog<SpinnerresultsLyoutBinding>() {
             Constants.LOCATION -> {
                 spinnervalues.clear()
                 binding.locateEdt.visibility = View.VISIBLE
+                binding.doneBtn.visibility = View.VISIBLE
                 spinnervalues.addAll(updateList(mspinnervalues, value))
                 updateRecyclerview(spinnervalues, value)
             }

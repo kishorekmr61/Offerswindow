@@ -66,7 +66,12 @@ class SignUpFragment : Fragment() {
                 binding.etMobilenumber.error = "Please enter valid mobile number"
             } else {
                 signUpViewModel.isloading.set(true)
-                signUpViewModel.isenable.set(false)
+                binding.etName.isEnabled = false
+                binding.etLastname.isEnabled = false
+                binding.etEmail.isEnabled = false
+                binding.etRefmobilenumber.isEnabled = false
+                binding.etPin.isEnabled = false
+                binding.confirmetPin.isEnabled = false
                 signUpViewModel.getSignupOtp(
                     UserSigUp(
                         binding.etName.text.toString(),
