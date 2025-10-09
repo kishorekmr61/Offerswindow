@@ -48,7 +48,7 @@ class SignUpFragment : Fragment() {
         binding.vm = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         setObserver()
-        activity?.setWhiteToolBar("Offer detail", true)
+        activity?.setWhiteToolBar("Sign Up", true)
         binding.signupBtn.setOnClickListener {
             if (isValidate()) {
                 postSignUpInfo()
