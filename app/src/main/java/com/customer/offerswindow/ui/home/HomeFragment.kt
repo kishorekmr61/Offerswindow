@@ -112,7 +112,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         setObserver()
         setRecyclervewData()
         vm.hidetoolbar.value = false
@@ -743,7 +742,6 @@ class HomeFragment : Fragment() {
     }
 
 
-
     private fun setCategorySeleted(position: Int, item: CategoriesData) {
         if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
             categoryList[position].isselected =
@@ -856,9 +854,12 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                R.id.notofication_img -> {
+
+                R.id.share_img -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        findNavController().navigate(R.id.nav_notifications)
+                        val applink = AppPreference.read(Constants.GOOGLEPLAYSTORELINK, "")
+                        val link = AppPreference.read(Constants.SHAREMESSAGE, "")
+                        activity?.shareImageFromUrl(requireActivity(), link + "\n" + applink, "")
                     } else {
                         var bundle = Bundle()
                         bundle.putBoolean("isFrom", true)
@@ -1023,6 +1024,7 @@ class HomeFragment : Fragment() {
         smoothScroller.targetPosition = position
         layoutManager.startSmoothScroll(smoothScroller)
     }
+
 
 }
 

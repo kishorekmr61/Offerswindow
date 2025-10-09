@@ -135,14 +135,14 @@
 
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/notofication_img"
+                        android:id="@+id/share_img"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
                         android:onClick="@{onItemClick}"
                         android:scaleType="fitXY"
-                        android:src="@drawable/notification"
-                        android:visibility="gone"
-                        android:tint="@color/white"
+                        android:src="@drawable/share"
+                        android:visibility="visible"
+                        android:tint="@color/color_F5991C"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -159,7 +159,7 @@
                         android:tint="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/notofication_img"
+                        app:layout_constraintStart_toEndOf="@+id/share_img"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

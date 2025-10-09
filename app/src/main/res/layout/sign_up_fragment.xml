@@ -133,25 +133,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/et_lastname" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_refmobilenumber"
-                            style="@style/AG_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_34sdp"
-                            android:layout_marginTop="@dimen/_18sdp"
-                            android:background="@drawable/et_style"
-                            android:hint="Reference Mobile Number"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:maxLength="12"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:singleLine="true"
-                            android:textColorHint="@color/grey_font"
-                            android:textSize="@dimen/_12ssp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_pin"
@@ -171,7 +152,7 @@
                             android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_refmobilenumber" />
+                            app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/confirmet_pin"
@@ -193,6 +174,25 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/et_pin" />
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_refmobilenumber"
+                            style="@style/AG_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_34sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Reference Mobile Number"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="12"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:singleLine="true"
+                            android:textColorHint="@color/grey_font"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/confirmet_pin" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/mobileno_lyout"
@@ -202,7 +202,7 @@
                             android:background="@drawable/et_style"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/confirmet_pin">
+                            app:layout_constraintTop_toBottomOf="@+id/et_refmobilenumber">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_mobilenumber"
@@ -233,12 +233,13 @@
                                 android:text="@string/verify"
                                 android:textColor="@color/color_0044FF"
                                 android:textSize="@dimen/_12ssp"
-                                android:visibility="gone"
+                                android:visibility="invisible"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/resendotp_lbl"
@@ -248,11 +249,12 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:text="@string/_email_number_resend"
-                            android:textColor="@color/grey_font"
+                            android:textColor="@color/color_FFCB01"
                             android:textSize="@dimen/_8ssp"
                             android:visibility="invisible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/mobileno_lyout" />
+
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_Otp"

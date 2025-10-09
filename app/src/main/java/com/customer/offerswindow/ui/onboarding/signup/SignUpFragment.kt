@@ -5,6 +5,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,7 +44,6 @@ class SignUpFragment : Fragment() {
     ): View? {
         _binding = SignUpFragmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        activity?.hideOnBoardingToolbar()
         setObserver()
         binding.signupBtn.setOnClickListener {
             if (isValidate()) {
@@ -95,6 +95,14 @@ class SignUpFragment : Fragment() {
         binding.signinLbl.setOnClickListener {
             findNavController().navigate(R.id.nav_sign_in)
         }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            }
+        )
         return root
     }
 
@@ -164,7 +172,9 @@ class SignUpFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     signInViewModel.isloading.set(false)
-                    response.message?.let { ShowFullToast(response.message) }
+                    response.message?.let {
+                        ShowFullToast(response.message)
+                    }
                 }
 
                 is NetworkResult.Loading -> {
@@ -191,7 +201,15 @@ class SignUpFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     signInViewModel.isloading.set(false)
-                    response.message?.let { ShowFullToast(response.message) }
+                    response.message?.let {
+                        if (response.message?.contains("reference mobile number") == true) {
+                            binding.etRefmobilenumber.isEnabled = true
+                        }
+                        if (response.message?.toLowerCase()?.contains("e-mail") == true) {
+                            binding.etEmail.isEnabled = true
+                        }
+                        ShowFullToast(response.message)
+                    }
                 }
 
                 is NetworkResult.Loading -> {
