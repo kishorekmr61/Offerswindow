@@ -16,8 +16,8 @@ import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.RewarPointHistoryFragmentBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
+import com.customer.offerswindow.utils.ReferFriend
 import com.customer.offerswindow.utils.setWhiteToolBar
-import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -54,9 +54,7 @@ class RewardPointLandingFragment : Fragment() {
             }
         )
         binding.shareLyout.shareTxt.setOnClickListener {
-            val applink = AppPreference.read(Constants.GOOGLEPLAYSTORELINK, "")
-            val link = AppPreference.read(Constants.SHAREMESSAGE, "")
-            activity?.shareImageFromUrl(requireActivity(), link + "\n" + applink, "")
+            activity?.ReferFriend()
         }
         return root
     }

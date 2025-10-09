@@ -1,8 +1,11 @@
 package com.customer.offerswindow.ui.adddpost
 
+import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +42,7 @@ import okhttp3.RequestBody
 import java.io.File
 import java.util.Calendar
 
+
 @AndroidEntryPoint
 class AddPostFragment : Fragment() {
 
@@ -71,7 +75,18 @@ class AddPostFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_home)
+                    val builder = AlertDialog.Builder(requireActivity())
+                    builder.setTitle("Exit Application")
+                    builder.setMessage("Are you sure you want to exit?")
+                    // Set the positive button (Yes)
+                    builder.setPositiveButton("Yes") { dialog: DialogInterface, which: Int ->
+                        findNavController().navigate(R.id.nav_home)
+                    }
+                    builder.setNegativeButton("No") { dialog: DialogInterface, which: Int ->
+                        dialog.dismiss() // Dismiss the dialog, keeping the app open
+                    }
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.show()
                 }
             }
         )
@@ -169,14 +184,14 @@ class AddPostFragment : Fragment() {
                                 cityid = titleData.mstCode
                             } else {
                                 binding.etCity.setText(datevalue)
-                                cityid= ""
+                                cityid = ""
                             }
                             val locationslist =
                                 viewModel.getLocationWIthFromCities(cityid, true)
                             if (locationslist.isNullOrEmpty()) {
                                 binding.etEditlocation.VISIBLE()
                                 binding.etLocation.GONE()
-                            }else{
+                            } else {
                                 binding.etEditlocation.GONE()
                                 binding.etLocation.VISIBLE()
                             }
@@ -255,9 +270,17 @@ class AddPostFragment : Fragment() {
             showToast("Please select city")
             return false
         }
-        if (binding.etLocation.text?.trim().isNullOrEmpty()) {
-            showToast("Please select Location")
-            return false
+        if (binding.etLocation.isVisible) {
+            if (binding.etLocation.text?.trim().isNullOrEmpty()) {
+                showToast("Please select Location")
+                return false
+            }
+        }
+        if (binding.etEditlocation.isVisible) {
+            if (binding.etEditlocation.text?.trim().isNullOrEmpty()) {
+                showToast("Please select Location")
+                return false
+            }
         }
 
         if (binding.etContactperson.text?.trim().isNullOrEmpty()) {
@@ -382,7 +405,11 @@ class AddPostFragment : Fragment() {
         formDataJson.addProperty("categoryid", categoryid)
         formDataJson.addProperty("EndDate", binding.etEnddate.text.toString())
         formDataJson.addProperty("CityName", binding.etCity.text.toString())
-        formDataJson.addProperty("CityId", cityid)
+        if (TextUtils.isEmpty(cityid)) {
+            formDataJson.addProperty("CityId", "0")
+        } else {
+            formDataJson.addProperty("CityId", cityid)
+        }
         formDataJson.addProperty("AreaId", locationid)
         if (binding.etLocation.isVisible) {
             formDataJson.addProperty("AreaName", binding.etLocation.text.toString())
@@ -390,7 +417,7 @@ class AddPostFragment : Fragment() {
         }
         if (binding.etEditlocation.isVisible) {
             formDataJson.addProperty("AreaName", binding.etEditlocation.text.toString())
-            formDataJson.addProperty("AreaId", "")
+            formDataJson.addProperty("AreaId", "0")
         }
 
         formDataJson.addProperty("GoogleLocation", binding.etMaplocation.text.toString())

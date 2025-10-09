@@ -46,6 +46,7 @@ import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerAdapter
 import com.customer.offerswindow.utils.MultiViewPagingRecyclerFooterAdapter
 import com.customer.offerswindow.utils.PermissionsUtil
+import com.customer.offerswindow.utils.ReferFriend
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.navigateToGoogleMap
@@ -612,10 +613,7 @@ class HomeFragment : Fragment() {
                         R.id.whatsapp_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Whatsapp", datavalues)
-                                activity?.openWhatsAppConversation(
-                                    datavalues.contact,
-                                    getString(R.string.whatsappmsg)
-                                )
+                                 activity?.openWhatsAppConversation(datavalues.contact)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
@@ -856,11 +854,9 @@ class HomeFragment : Fragment() {
                 }
 
 
-                R.id.share_img -> {
+                R.id.referfriend_img -> {
                     if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
-                        val applink = AppPreference.read(Constants.GOOGLEPLAYSTORELINK, "")
-                        val link = AppPreference.read(Constants.SHAREMESSAGE, "")
-                        activity?.shareImageFromUrl(requireActivity(), link + "\n" + applink, "")
+                        activity?.ReferFriend()
                     } else {
                         var bundle = Bundle()
                         bundle.putBoolean("isFrom", true)

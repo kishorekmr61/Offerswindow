@@ -13,10 +13,11 @@ import com.customer.offerswindow.data.constant.Constants
 import com.customer.offerswindow.databinding.FragmentRedemptionBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
-import com.customer.offerswindow.utils.VISIBLE
+import com.customer.offerswindow.model.wallet.RedemptionRequestBody
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.setWhiteToolBar
+import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -32,9 +33,6 @@ class RedemptionFragment : Fragment() {
     var transactiontype = arrayListOf<SpinnerRowModel>()
     var transactionid = ""
 
-    companion object {
-        fun newInstance() = RedemptionFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,13 +59,15 @@ class RedemptionFragment : Fragment() {
         viewModel.getMstData()
         binding.redeemBtn.setOnClickListener {
             if (isValid()) {
-                val bundle = Bundle()
-                bundle.putString("RewardPoints", binding.etNoofpoints.text.toString())
-                bundle.putString("TransactionType", transactionid)
-                bundle.putString("RedemptionValue", "0"/*binding.etValueofpoints.text.toString()*/)
-                bundle.putString("AccountNo", "0"/*binding.etWalletnumber.text.toString()*/)
-                findNavController().navigate(R.id.nav_pinvie, bundle)
-
+                viewModel.isloading.set(true)
+                val redemptionRequestBody = RedemptionRequestBody(
+                    RewardPoints = binding.etNoofpoints.text.toString(),
+                    TransactionType = transactionid,
+                    RedemptionValue = binding.etValueofpoints.text.toString(),
+                    AccountNo = binding.etWalletnumber.text.toString(),
+                    PinNo = binding.etUserpin.text.toString()
+                )
+                viewModel.postRedemption(redemptionRequestBody)
             }
         }
 
@@ -112,9 +112,11 @@ class RedemptionFragment : Fragment() {
             showToast("Enter No of Points")
             return false
         }
-        if (binding.walletamountLbl.text.toString()
-                .toDouble() < binding.etNoofpoints.text.toString().toDouble()
-        ) {
+
+        val walletAmount = binding.walletamountLbl.text.toString().toDouble()
+        val noOfPoints = binding.etNoofpoints.text.toString().toDouble()
+
+        if (walletAmount < noOfPoints) {
             showToast("No of Points entered should be less than wallet points")
             return false
         }
@@ -129,6 +131,10 @@ class RedemptionFragment : Fragment() {
 //        }
         if (binding.etAddress.text.isNullOrEmpty()) {
             showToast("Enter Address")
+            return false
+        }
+        if (binding.etUserpin.text.isNullOrEmpty()) {
+            showToast(getString(R.string.enter_otp))
             return false
         }
         return true
@@ -168,5 +174,24 @@ class RedemptionFragment : Fragment() {
             }
         }
 
+        viewModel.rewardsPostingResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    viewModel.isloading.set(false)
+                    response.data?.let { resposnes ->
+                        showLongToast(resposnes.Message)
+                        findNavController().navigate(R.id.nav_rewardshistory)
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    showLongToast(response.message ?: "")
+                    viewModel.isloading.set(false)
+                }
+
+                else -> {}
+            }
+        }
     }
+
 }

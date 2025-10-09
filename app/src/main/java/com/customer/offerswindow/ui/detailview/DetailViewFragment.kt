@@ -37,7 +37,6 @@ import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openVideoUrl
 import com.customer.offerswindow.utils.openWhatsAppConversation
-import com.customer.offerswindow.utils.openYoutube
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
 import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
@@ -162,12 +161,9 @@ class DetailViewFragment : Fragment() {
                         }
                     }
 
-                    R.id.whatsapp_img,R.id.whatsapp_lyout -> {
+                    R.id.whatsapp_img, R.id.whatsapp_lyout -> {
                         getUserIntrestOnclick("Whatsapp", item)
-                        activity?.openWhatsAppConversation(
-                            item.contact,
-                            getString(R.string.whatsappmsg)
-                        )
+                        activity?.openWhatsAppConversation(item.contact)
 
                     }
 
@@ -352,7 +348,7 @@ class DetailViewFragment : Fragment() {
                 R.id.bookoffer_txt -> {
                     viewModel.isloading.set(true)
                     val postofferbookings = PostOfferBooking(
-                        convertDate(getDateTime(),"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd"),
+                        convertDate(getDateTime(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
                         dataobj?.showroomid ?: "",
                         dataobj?.locationid ?: "",
                         dataobj?.serviceid ?: "",
@@ -363,9 +359,9 @@ class DetailViewFragment : Fragment() {
 
                 R.id.share_lyout, R.id.share_img -> {
                     getUserIntrestOnclick("Share", dataobj)
-                    activity?.shareImageFromUrl(
+                     activity?.shareImageFromUrl(
                         requireActivity(),
-                        dataobj?.id ?: "",
+                         dataobj?.id?:"",
                         dataobj?.ImagesList?.firstOrNull()?.imagepath ?: ""
                     )
 
@@ -388,10 +384,7 @@ class DetailViewFragment : Fragment() {
 
                 R.id.whatsapp_lyout, R.id.whatsapp_img -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
-                    activity?.openWhatsAppConversation(
-                        dataobj?.contact ?: "",
-                        getString(R.string.whatsappmsg)
-                    )
+                    activity?.openWhatsAppConversation(dataobj?.contact ?: "")
                 }
 
                 R.id.video_lyout, R.id.video_img -> {

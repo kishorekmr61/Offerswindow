@@ -165,7 +165,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/resend_txt"
-                        style="@style/AG_regular"
+                        style="@style/Ag_body_copy_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_25sdp"
@@ -223,7 +223,7 @@
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/privacy_txt"
-                        style="@style/AG_altbold"
+                        style="@style/Ag_body_copy_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16sdp"

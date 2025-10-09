@@ -106,6 +106,12 @@ class SplashActivity : AppCompatActivity() {
                             if (it.MstType == "Share_Message") {
                                 AppPreference.write(Constants.SHAREMESSAGE, it.MstDesc)
                             }
+                            if (it.MstType == "App_Share_Message") {//message + applink
+                                AppPreference.write(Constants.App_Share_Message, it.MstDesc)
+                            }
+                            if (it.MstType == "WhatsApp_Message") {
+                                AppPreference.write(Constants.WhatsAppMessage, it.MstDesc)
+                            }
                             if (it.MstType == "Google_Playstore_Link") {
                                 AppPreference.write(Constants.GOOGLEPLAYSTORELINK, it.MstDesc)
                             }

@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toUri
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -53,6 +54,14 @@ class WishListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         activity?.setWhiteToolBar("WishList", true)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            }
+        )
         return root
     }
 
@@ -196,8 +205,7 @@ class WishListFragment : Fragment() {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(witem, "Whatsapp")
                             activity?.openWhatsAppConversation(
-                                witem.Wishlist.firstOrNull()?.Contact_No_1 ?: "",
-                                getString(R.string.whatsappmsg)
+                                witem.Wishlist.firstOrNull()?.Contact_No_1 ?: ""
                             )
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)

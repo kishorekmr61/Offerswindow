@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -55,9 +56,14 @@ class MyBookingsFragment(flag: String) : Fragment() {
         vm.isvisble.value = false
 //        vm.btabselectedpostion.value = 2
         setMenuVisibility(true)
-        handleHardWareBackClick {
-            backPressed()
-        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            }
+        )
         return root
     }
 
@@ -120,9 +126,9 @@ class MyBookingsFragment(flag: String) : Fragment() {
                     R.id.share_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(item, "Share")
-                            activity?.shareImageFromUrl(
+                             activity?.shareImageFromUrl(
                                 requireActivity(),
-                                item.Offer_UID,
+                                 item.Offer_UID,
                                 item.Offer_Image_Details?.firstOrNull()?.imagepath ?: ""
                             )
                         } else {
@@ -160,7 +166,7 @@ class MyBookingsFragment(flag: String) : Fragment() {
                     R.id.whatsapp_img -> {
                         if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                             getUserIntrestOnclick(item, "Whatsapp")
-                            activity?.openWhatsAppConversation(item.Contact_No_1, getString(R.string.whatsappmsg))
+                            activity?.openWhatsAppConversation(item.Contact_No_1)
                         } else {
                             findNavController().navigate(R.id.nav_sign_in)
                         }

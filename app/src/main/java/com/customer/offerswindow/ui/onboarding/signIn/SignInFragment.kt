@@ -66,6 +66,7 @@ class SignInFragment : Fragment() {
             ShowFullToast(arguments?.getString("Message") ?: "")
         }
         setObserver()
+        signInViewModel.getMstData()
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
 
@@ -258,6 +259,12 @@ class SignInFragment : Fragment() {
                                 }
                                 if (it.MstType == "Google_Playstore_Link") {
                                     AppPreference.write(Constants.GOOGLEPLAYSTORELINK, it.MstDesc)
+                                }
+                                if (it.MstType == "App_Share_Message") {//message + applink
+                                    AppPreference.write(Constants.App_Share_Message, it.MstDesc)
+                                }
+                                if (it.MstType == "WhatsApp_Message") {
+                                    AppPreference.write(Constants.WhatsAppMessage, it.MstDesc)
                                 }
                             }
                         } else {

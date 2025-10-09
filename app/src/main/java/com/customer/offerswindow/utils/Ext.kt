@@ -605,6 +605,7 @@ fun Fragment.openURL(uri: Uri?) {
 
 
 }
+
 fun Activity.openURL(uri: Uri?) {
     try {
         val builder = CustomTabsIntent.Builder()
@@ -692,8 +693,6 @@ fun Double.roundTo(n: Int): Double {
 
 fun Activity.openWhatsAppConversation(
     number: String,
-    message: String?,
-    isErrorMassage: Boolean = true
 ) {
     try {
         var installed: Boolean = appInstalledOrNot("com.whatsapp")
@@ -701,11 +700,10 @@ fun Activity.openWhatsAppConversation(
             installed = appInstalledOrNot("com.whatsapp.w4b")
         }
         if (installed) {
-            var msgextension = "Check out OffersWindow! \uD83D\uDECD\uFE0F\n" +
-                    "Best deals, local offers & discounts — all in one app! \n \n"
+            var msgextension = AppPreference.read(Constants.WhatsAppMessage, "")
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data =
-                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$message")
+                Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$msgextension")
             startActivity(intent)
         } else {
             showToast(
@@ -755,7 +753,7 @@ fun extractYoutubeId(url: String): String? {
     return matchResult?.groups?.get(1)?.value
 }
 
-fun Activity.openVideoUrl(videourl: String){
+fun Activity.openVideoUrl(videourl: String) {
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(videourl))
     startActivity(browserIntent)
 }
@@ -804,26 +802,9 @@ fun getImageList(imagesList: ArrayList<Images>?): ArrayList<Images>? {
 }
 
 fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: String) {
-    var msgextension = "Check out OffersWindow! \uD83D\uDECD\uFE0F\n" +
-            "Best deals, local offers & discounts — all in one app! \n \n"
-    var offerurl = msgextension + "https://offerswindow.com/Offer_Details_Window?lOfferId="
     CoroutineScope(Dispatchers.IO).launch {
         try {
-
-            withContext(Dispatchers.Main) {
-                if (imageUrl.isNullOrEmpty()){
-                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                        type = "text/*"
-                         putExtra(Intent.EXTRA_TEXT, message)
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    }
-                    context.startActivity(
-                        Intent.createChooser(
-                            shareIntent,
-                            context.getString(R.string.app_name)
-                        )
-                    )
-                }else {
+            withContext(Dispatchers.IO) {
                     // 1. Download the image
                     val url = URL(imageUrl)
                     val connection = url.openConnection()
@@ -839,11 +820,11 @@ fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: Stri
                     val imageUri =
                         FileProvider.getUriForFile(context, getString(R.string.authorities), file)
                     // 4. Create and launch share intent on main thread
-
+                    val sharemesage = AppPreference.read(Constants.SHAREMESSAGE, "")+ "\n" + "https://offerswindow.com/Offer_Details_Window?lOfferId=" + message + "\n"+AppPreference.read(Constants.GOOGLEPLAYSTORELINK, "")
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
                         type = "image/*"
                         putExtra(Intent.EXTRA_STREAM, imageUri)
-                        putExtra(Intent.EXTRA_TEXT, offerurl.plus(message))
+                        putExtra(Intent.EXTRA_TEXT, sharemesage)
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
                     context.startActivity(
@@ -853,7 +834,6 @@ fun Activity.shareImageFromUrl(context: Context, message: String, imageUrl: Stri
                         )
                     )
                 }
-            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -905,4 +885,20 @@ fun String.validateMobilenumber(): Boolean {
     val p = Pattern.compile("^[6-9]\\d{9}\$")
     val m = p.matcher(this)
     return m.matches()
+}
+
+fun Activity.ReferFriend() {
+    val applink = AppPreference.read(Constants.GOOGLEPLAYSTORELINK, "")
+    val refermessage = AppPreference.read(Constants.App_Share_Message, "")
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/*"
+        putExtra(Intent.EXTRA_TEXT, refermessage + "\n" + applink)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    startActivity(
+        Intent.createChooser(
+            shareIntent,
+            getString(R.string.app_name)
+        )
+    )
 }

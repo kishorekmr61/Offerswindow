@@ -12,6 +12,7 @@ data class RedemptionRequestBody(
     var TransactionType: String = "",
     var RedemptionValue: String = "",
     var AccountNo: String = "",
+    var PinNo: String = "",
     var CreatedBy: String = AppPreference.read(Constants.USERUID, "") ?: "0",
     var CreatedDateTime: String = getDateTime()
 

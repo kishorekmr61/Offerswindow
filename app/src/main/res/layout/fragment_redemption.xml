@@ -192,6 +192,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_walletnumber"
                 app:passwordToggleEnabled="true" />
 
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_userpin"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:background="@drawable/et_style"
+                android:hint="@string/enter_otp"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_font"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_address"
+                app:passwordToggleEnabled="true" />
+
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/redeem_btn"
                 style="@style/Ag_body"
@@ -206,7 +231,7 @@
                 app:cornerRadius="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_address" />
+                app:layout_constraintTop_toBottomOf="@+id/et_userpin" />
 
 
 
