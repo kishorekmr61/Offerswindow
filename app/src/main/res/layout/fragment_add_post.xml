@@ -493,7 +493,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="@string/save"
+                android:text="@string/submit"
                 android:textColor="@color/color_FFCB01"
                 android:textSize="@dimen/_14ssp"
                 app:cornerRadius="@dimen/_25sdp"

@@ -64,6 +64,8 @@ class RewardPointLandingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
+        viewModel.isloading.set(true)
+        viewModel.getRewardsHistoryData(AppPreference.read(Constants.USERUID, "0") ?: "0", 0)
         binding.redeemTxt.setOnClickListener {
             var bundle = Bundle()
             bundle.putString("WALLETBALANCE", viewModel.walletbalance.get())

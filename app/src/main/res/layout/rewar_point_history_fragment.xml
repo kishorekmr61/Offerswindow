@@ -19,15 +19,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/activityblc_txt"
-            style="@style/AG_regular"
+            style="@style/Ag_h4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_18sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:text="@string/reward_points"
-            android:textColor="@color/black"
+            android:text="@string/reward_points_balance"
+            android:textColor="@color/color_FFCB01"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

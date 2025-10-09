@@ -64,8 +64,8 @@ class RedemptionFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString("RewardPoints", binding.etNoofpoints.text.toString())
                 bundle.putString("TransactionType", transactionid)
-                bundle.putString("RedemptionValue", binding.etValueofpoints.text.toString())
-                bundle.putString("AccountNo", binding.etWalletnumber.text.toString())
+                bundle.putString("RedemptionValue", "0"/*binding.etValueofpoints.text.toString()*/)
+                bundle.putString("AccountNo", "0"/*binding.etWalletnumber.text.toString()*/)
                 findNavController().navigate(R.id.nav_pinvie, bundle)
 
             }
@@ -123,10 +123,10 @@ class RedemptionFragment : Fragment() {
             showToast("Select Transaction Type")
             return false
         }
-        if (binding.etWalletnumber.text.isNullOrEmpty()) {
-            showToast("Enter Account Number")
-            return false
-        }
+//        if (binding.etWalletnumber.text.isNullOrEmpty()) {
+//            showToast("Enter Account Number")
+//            return false
+//        }
         if (binding.etAddress.text.isNullOrEmpty()) {
             showToast("Enter Address")
             return false

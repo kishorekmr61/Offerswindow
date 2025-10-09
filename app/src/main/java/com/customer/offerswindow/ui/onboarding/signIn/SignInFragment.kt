@@ -244,6 +244,12 @@ class SignInFragment : Fragment() {
                                 if (it.MstType == "Gold_Trend_Report") {
                                     AppPreference.write(Constants.GOLDTRENDREPORT, it.Image_path)
                                 }
+                                if (it.MstType == "Share_Message") {
+                                    AppPreference.write(Constants.SHAREMESSAGE, it.MstDesc)
+                                }
+                                if (it.MstType == "Google_Playstore_Link") {
+                                    AppPreference.write(Constants.GOOGLEPLAYSTORELINK, it.MstDesc)
+                                }
                             }
                         } else {
 //                            ShowFullToast(response.data?.Message ?: "")
