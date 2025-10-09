@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -28,7 +29,6 @@ import com.customer.offerswindow.utils.VISIBLE
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
-import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.isValidEmail
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showCalenderDialog
@@ -83,12 +83,7 @@ class AddPostFragment : Fragment() {
         return root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        handleHardWareBackClick {
-            handleBack()
-        }
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
