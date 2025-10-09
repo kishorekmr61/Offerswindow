@@ -28,6 +28,7 @@ import com.customer.offerswindow.utils.VISIBLE
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
+import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.isValidEmail
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showCalenderDialog
@@ -75,22 +76,18 @@ class AddPostFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val builder = AlertDialog.Builder(requireActivity())
-                    builder.setTitle("Exit Application")
-                    builder.setMessage("Are you sure you want to exit?")
-                    // Set the positive button (Yes)
-                    builder.setPositiveButton("Yes") { dialog: DialogInterface, which: Int ->
-                        findNavController().navigate(R.id.nav_home)
-                    }
-                    builder.setNegativeButton("No") { dialog: DialogInterface, which: Int ->
-                        dialog.dismiss() // Dismiss the dialog, keeping the app open
-                    }
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.show()
+                    handleBack()
                 }
             }
         )
         return root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleHardWareBackClick {
+            handleBack()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -503,5 +500,19 @@ class AddPostFragment : Fragment() {
             )
             timePickerDialog.show()
         }
+    }
+
+    fun handleBack() {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle("")
+        builder.setMessage("Are you sure you want to exit?")
+        builder.setPositiveButton("Yes") { dialog: DialogInterface, which: Int ->
+            findNavController().navigate(R.id.nav_home)
+        }
+        builder.setNegativeButton("No") { dialog: DialogInterface, which: Int ->
+            dialog.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
     }
 }
