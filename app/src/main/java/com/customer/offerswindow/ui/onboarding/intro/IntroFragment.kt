@@ -22,8 +22,6 @@ import com.customer.offerswindow.utils.setUpViewPagerAdapter
 class IntroFragment : Fragment() {
 
     private var _binding: FragmentIntroBinding? = null
-
-    private val viewModel: IntroViewModel by viewModels()
     private val binding get() = _binding!!
     var introList = arrayListOf<IntroModel>()
 
@@ -78,23 +76,12 @@ class IntroFragment : Fragment() {
             introList
         ) { item: IntroModel, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-
             binder.setVariable(BR.onItemClick, View.OnClickListener {
 
             })
         }
         _binding?.slideVP?.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            // This method is triggered when there is any scrolling activity for the current page
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            }
-
-            // triggered when you select a new page
-            override fun onPageSelected(position: Int) {
+             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (position == 2) {
                     binding.dotsIndicator.visibility = View.INVISIBLE
@@ -103,12 +90,6 @@ class IntroFragment : Fragment() {
                     binding.dotsIndicator.visibility = View.VISIBLE
                     binding.finishTxt.visibility = View.INVISIBLE
                 }
-            }
-
-            // triggered when there is
-            // scroll state will be changed
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
             }
         })
         AppPreference.read(Constants.LOGINUSERNAME, Constants.DEFAULTUSERMOBILE)

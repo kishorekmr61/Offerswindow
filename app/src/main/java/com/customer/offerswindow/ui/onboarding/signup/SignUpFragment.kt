@@ -20,6 +20,7 @@ import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
 import com.customer.offerswindow.utils.isValidEmail
+import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showToast
 import com.customer.offerswindow.utils.validateMobilenumber
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +45,10 @@ class SignUpFragment : Fragment() {
     ): View? {
         _binding = SignUpFragmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        binding.vm = signUpViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         setObserver()
+        activity?.setWhiteToolBar("Offer detail", true)
         binding.signupBtn.setOnClickListener {
             if (isValidate()) {
                 postSignUpInfo()
@@ -60,7 +64,6 @@ class SignUpFragment : Fragment() {
                 binding.verify.visibility = View.INVISIBLE
             }
         }
-
         binding.verify.setOnClickListener {
             if (binding.etMobilenumber.text.isNullOrEmpty()) {
                 binding.etMobilenumber.error = "Please enter valid mobile number"

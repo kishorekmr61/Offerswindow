@@ -52,6 +52,7 @@ import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.notifyDataChange
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
+import com.customer.offerswindow.utils.openVideoUrl
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.openYoutube
 import com.customer.offerswindow.utils.resource.WidgetViewModel
@@ -624,7 +625,7 @@ class HomeFragment : Fragment() {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 if (!item.Video_Link.isNullOrEmpty()) {
                                     getUserIntrestOnclick("Video", datavalues)
-                                    activity?.openYoutube(datavalues.Video_Link)
+                                    activity?.openVideoUrl(datavalues.Video_Link)
                                 } else {
                                     showToast("vendor don't have video")
                                 }

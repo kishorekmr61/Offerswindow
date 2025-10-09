@@ -755,6 +755,10 @@ fun extractYoutubeId(url: String): String? {
     return matchResult?.groups?.get(1)?.value
 }
 
+fun Activity.openVideoUrl(videourl: String){
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(videourl))
+    startActivity(browserIntent)
+}
 
 fun Activity.navigateToGoogleMap(sourceLocation: String) {
     val intent = Intent(

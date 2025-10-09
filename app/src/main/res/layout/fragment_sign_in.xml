@@ -59,21 +59,21 @@
                 app:layout_constraintTop_toTopOf="parent">
 
 
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/img"
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_75sdp"
                     android:layout_marginEnd="@dimen/_25sdp"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:src="@mipmap/ic_launcher"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_sign_lbl"
                     style="@style/AG_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_52sdp"
                     android:gravity="center"
                     android:paddingStart="@dimen/_25sdp"
                     android:paddingEnd="@dimen/_25sdp"
@@ -81,7 +81,7 @@
                     android:textColor="@color/color_FFCB01"
                     android:textSize="@dimen/_20ssp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/img" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout

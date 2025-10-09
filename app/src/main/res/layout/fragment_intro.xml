@@ -40,11 +40,11 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="@string/proceed"
-            android:textColor="@color/primary"
+            android:textColor="@color/color_F5991C"
             android:textSize="@dimen/_18ssp"
             android:layout_marginBottom="@dimen/_60sdp"
             android:layout_marginEnd="@dimen/_30sdp"
-            android:background="@drawable/gray_round_bg"
+            android:background="@drawable/round_primary_bg"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"  />

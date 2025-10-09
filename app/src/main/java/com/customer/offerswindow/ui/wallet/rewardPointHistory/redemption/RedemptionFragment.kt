@@ -84,8 +84,8 @@ class RedemptionFragment : Fragment() {
                             if (titleData != null) {
                                 binding.etTransactiontype.setText(titleData.title)
                                 transactionid = titleData.mstCode
-                                binding.etValueofpoints.setText(convertPointsValue(titleData).toString())
-                                binding.etValueofpoints.VISIBLE()
+//                                binding.etValueofpoints.setText(convertPointsValue(titleData).toString())
+//                                binding.etValueofpoints.VISIBLE()
                             }
                         }
 

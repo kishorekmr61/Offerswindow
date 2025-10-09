@@ -35,6 +35,7 @@ import com.customer.offerswindow.utils.getDateTime
 import com.customer.offerswindow.utils.navigateToGoogleMap
 import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
+import com.customer.offerswindow.utils.openVideoUrl
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.openYoutube
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
@@ -173,7 +174,7 @@ class DetailViewFragment : Fragment() {
                     R.id.video_img -> {
                         if (!item.Video_Link.isNullOrEmpty()) {
                             getUserIntrestOnclick("Video", item)
-                            activity?.openYoutube(item.Video_Link)
+                            activity?.openVideoUrl(item.Video_Link)
                         } else {
                             showToast("vendor don't have video")
                         }
@@ -396,7 +397,7 @@ class DetailViewFragment : Fragment() {
                 R.id.video_lyout, R.id.video_img -> {
                     if (!dataobj?.Video_Link.isNullOrEmpty()) {
                         getUserIntrestOnclick("Video", dataobj)
-                        activity?.openYoutube(dataobj?.Video_Link ?: "")
+                        activity?.openVideoUrl(dataobj?.Video_Link ?: "")
                     } else {
                         showToast("vendor don't have video")
                     }
