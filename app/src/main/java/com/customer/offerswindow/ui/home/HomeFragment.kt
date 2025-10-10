@@ -55,7 +55,6 @@ import com.customer.offerswindow.utils.openDialPad
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openVideoUrl
 import com.customer.offerswindow.utils.openWhatsAppConversation
-import com.customer.offerswindow.utils.openYoutube
 import com.customer.offerswindow.utils.resource.WidgetViewModel
 import com.customer.offerswindow.utils.setToolbarVisibility
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
@@ -613,7 +612,10 @@ class HomeFragment : Fragment() {
                         R.id.whatsapp_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Whatsapp", datavalues)
-                                 activity?.openWhatsAppConversation(datavalues.contact, datavalues.id,)
+                                activity?.openWhatsAppConversation(
+                                    datavalues.contact,
+                                    datavalues.id,
+                                )
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
@@ -763,7 +765,11 @@ class HomeFragment : Fragment() {
         }
         binding.slider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
-                navigatepagerClick(otherservices[position].URL)
+                if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
+                    navigatepagerClick(otherservices[position].URL)
+                } else {
+                    findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
+                }
             }
 
             override fun doubleClick(position: Int) {
