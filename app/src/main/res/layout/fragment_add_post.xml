@@ -239,6 +239,25 @@
                 android:maxLines="1"
                 android:paddingStart="@dimen/_8sdp"
                 android:singleLine="true"
+                android:visibility="gone"
+                android:textColorHint="@color/grey_font"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/offerlocationdtls_txt" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_editcity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/et_style"
+                android:drawablePadding="@dimen/_5sdp"
+                android:hint="City*"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -265,7 +284,7 @@
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_city" />
 
@@ -283,10 +302,9 @@
                 android:singleLine="true"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_location" />
+                app:layout_constraintTop_toBottomOf="@+id/et_editcity" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_maplocation"

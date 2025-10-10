@@ -162,6 +162,7 @@
                 android:maxLines="1"
                 android:paddingStart="@dimen/_8sdp"
                 android:singleLine="true"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"

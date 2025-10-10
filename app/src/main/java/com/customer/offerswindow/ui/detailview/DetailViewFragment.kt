@@ -163,7 +163,7 @@ class DetailViewFragment : Fragment() {
 
                     R.id.whatsapp_img, R.id.whatsapp_lyout -> {
                         getUserIntrestOnclick("Whatsapp", item)
-                        activity?.openWhatsAppConversation(item.contact)
+                        activity?.openWhatsAppConversation(item.contact, item.id,)
 
                     }
 
@@ -384,7 +384,7 @@ class DetailViewFragment : Fragment() {
 
                 R.id.whatsapp_lyout, R.id.whatsapp_img -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
-                    activity?.openWhatsAppConversation(dataobj?.contact ?: "")
+                    activity?.openWhatsAppConversation(dataobj?.contact ?: "",  dataobj?.id?:"",)
                 }
 
                 R.id.video_lyout, R.id.video_img -> {

@@ -692,7 +692,7 @@ fun Double.roundTo(n: Int): Double {
 }
 
 fun Activity.openWhatsAppConversation(
-    number: String,
+    number: String,offerid : String
 ) {
     try {
         var installed: Boolean = appInstalledOrNot("com.whatsapp")
@@ -700,7 +700,7 @@ fun Activity.openWhatsAppConversation(
             installed = appInstalledOrNot("com.whatsapp.w4b")
         }
         if (installed) {
-            var msgextension = AppPreference.read(Constants.WhatsAppMessage, "")
+            var msgextension = AppPreference.read(Constants.WhatsAppMessage, "") +"\n"+"https://offerswindow.com/Offer_Details_Window?lOfferId=" + offerid
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data =
                 Uri.parse("http://api.whatsapp.com/send?phone=+91$number&text=$msgextension")

@@ -63,7 +63,7 @@ class RedemptionFragment : Fragment() {
                 val redemptionRequestBody = RedemptionRequestBody(
                     RewardPoints = binding.etNoofpoints.text.toString(),
                     TransactionType = transactionid,
-                    RedemptionValue = binding.etValueofpoints.text.toString(),
+                    RedemptionValue = "0",
                     AccountNo = binding.etWalletnumber.text.toString(),
                     PinNo = binding.etUserpin.text.toString()
                 )

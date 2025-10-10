@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -23,9 +22,7 @@ import com.customer.offerswindow.databinding.FragmentAddPostBinding
 import com.customer.offerswindow.helper.NetworkResult
 import com.customer.offerswindow.model.SpinnerRowModel
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
-import com.customer.offerswindow.utils.GONE
 import com.customer.offerswindow.utils.ShowFullToast
-import com.customer.offerswindow.utils.VISIBLE
 import com.customer.offerswindow.utils.bottomsheet.OnItemSelectedListner
 import com.customer.offerswindow.utils.bottomsheet.SpinnerBottomSheet
 import com.customer.offerswindow.utils.getDateTime
@@ -82,7 +79,6 @@ class AddPostFragment : Fragment() {
         )
         return root
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -180,13 +176,13 @@ class AddPostFragment : Fragment() {
                             }
                             val locationslist =
                                 viewModel.getLocationWIthFromCities(cityid, true)
-                            if (locationslist.isNullOrEmpty()) {
-                                binding.etEditlocation.VISIBLE()
-                                binding.etLocation.GONE()
-                            } else {
-                                binding.etEditlocation.GONE()
-                                binding.etLocation.VISIBLE()
-                            }
+//                            if (locationslist.isNullOrEmpty()) {
+//                                binding.etEditlocation.VISIBLE()
+//                                binding.etLocation.GONE()
+//                            } else {
+//                                binding.etEditlocation.GONE()
+//                                binding.etLocation.VISIBLE()
+//                            }
                         }
 
                         override fun onItemmultipleSelectedListner(
@@ -258,22 +254,17 @@ class AddPostFragment : Fragment() {
             showToast("Please select End date")
             return false
         }
-        if (binding.etCity.text?.trim().isNullOrEmpty()) {
+        if (binding.etEditcity.text?.trim().isNullOrEmpty()) {
             showToast("Please select city")
             return false
         }
-        if (binding.etLocation.isVisible) {
-            if (binding.etLocation.text?.trim().isNullOrEmpty()) {
-                showToast("Please select Location")
-                return false
-            }
+
+
+        if (binding.etEditlocation.text?.trim().isNullOrEmpty()) {
+            showToast("Please enter Location")
+            return false
         }
-        if (binding.etEditlocation.isVisible) {
-            if (binding.etEditlocation.text?.trim().isNullOrEmpty()) {
-                showToast("Please select Location")
-                return false
-            }
-        }
+
 
         if (binding.etContactperson.text?.trim().isNullOrEmpty()) {
             showToast("Please enter contact person")

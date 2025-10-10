@@ -613,7 +613,7 @@ class HomeFragment : Fragment() {
                         R.id.whatsapp_img -> {
                             if (AppPreference.read(Constants.ISLOGGEDIN, false)) {
                                 getUserIntrestOnclick("Whatsapp", datavalues)
-                                 activity?.openWhatsAppConversation(datavalues.contact)
+                                 activity?.openWhatsAppConversation(datavalues.contact, datavalues.id,)
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
                             }
