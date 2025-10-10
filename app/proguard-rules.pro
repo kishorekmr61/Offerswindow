@@ -187,7 +187,10 @@
 -dontwarn org.codehaus.janino.ScriptEvaluator
 -dontwarn sun.reflect.Reflection
 
-
+-dontwarn java.awt.Component
+-dontwarn java.awt.GraphicsEnvironment
+-dontwarn java.awt.HeadlessException
+-dontwarn java.awt.Window
 
 -keep class com.bumptech.glide.** { *; }
 -keep interface com.bumptech.glide.** { *; }
