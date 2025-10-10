@@ -6,6 +6,8 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,11 +68,17 @@ import com.customer.offerswindow.utils.showToast
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
+import com.dotlottie.dlplayer.Fit
+import com.dotlottie.dlplayer.Mode
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lottiefiles.dotlottie.core.model.Config
+import com.lottiefiles.dotlottie.core.util.DotLottieSource
+import com.lottiefiles.dotlottie.core.util.LayoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -120,7 +129,6 @@ class HomeFragment : Fragment() {
         vm.btabselectedpostion.value = 0
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
-        handleNotificationClick()
         setListeners()
         getLocationBasedOnCityFilter()
         vm.isvisble.value = true
@@ -204,6 +212,7 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.getOfferCategories("0")
     }
+
 
     private fun setObserver() {
         if (!AppPreference.read(Constants.PROFILEPIC, "").isNullOrEmpty()) {
@@ -647,6 +656,13 @@ class HomeFragment : Fragment() {
                 binding.nodataavaliable.nodataLayout.visibility = View.GONE
                 binding.rvOfferslist.visibility = View.VISIBLE
             }
+            lifecycleScope.launch {
+                adapter.loadStateFlow.collectLatest {
+                    if (it.refresh is LoadState.NotLoading) {
+                        handleNotificationClick()
+                    }
+                }
+            }
         }
 
         val concatAdapter = adapter.withLoadStateFooter(
@@ -758,7 +774,7 @@ class HomeFragment : Fragment() {
     private fun loadViewPager(otherservices: ArrayList<CommonDataResponse>) {
         val imageList = ArrayList<SlideModel>()
         otherservices.forEach {
-            imageList.add(SlideModel(it.Image_path, it.MstDesc, ScaleTypes.FIT))
+            imageList.add(SlideModel(it.Image_path, ScaleTypes.FIT))
         }
         if (!imageList.isNullOrEmpty()) {
             binding.slider.setImageList(imageList)
@@ -809,7 +825,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun handleNotificationClick() {
-
         try {
             if (AppPreference?.read("ISFROM", "") == "NOTIFICATIONS") {
                 AppPreference.write("ISFROM", "")
@@ -820,21 +835,14 @@ class HomeFragment : Fragment() {
                     AppPreference.write(Constants.Offer_id, "")
                 }
                 if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2") {
-                    findNavController().navigate(R.id.nav_rewardshistory)
-                    AppPreference.write(Constants.Screen_Code, "")
+                    lifecycleScope.launch {
+                        loadLottieFile()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            findNavController().navigate(R.id.nav_rewardshistory)
+                            AppPreference.write(Constants.Screen_Code, "")
+                        }, 4000)
+                    }
                 }
-
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2008") {
-                    findNavController().navigate(R.id.nav_rewardshistory)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
-
-                if ((AppPreference?.read(Constants.Screen_Code, "") ?: "") == "2009") {
-                    findNavController().navigate(R.id.nav_rewardshistory)
-                    AppPreference.write(Constants.Screen_Code, "")
-                }
-
-
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -1026,6 +1034,23 @@ class HomeFragment : Fragment() {
 
         smoothScroller.targetPosition = position
         layoutManager.startSmoothScroll(smoothScroller)
+    }
+
+
+    fun loadLottieFile() {
+        val config = Config.Builder()
+            .autoplay(true)
+            .speed(0.5f)
+            .loop(false)
+            .source(DotLottieSource.Asset("Coins blow effect.json"))
+            .useFrameInterpolation(true)
+            .playMode(Mode.FORWARD)
+            .useFrameInterpolation(true)
+            .layout(Fit.FILL, LayoutUtil.Alignment.Center) // Set layout configuration
+            .build()
+        _binding?.lottieView?.load(config)
+
+
     }
 
 

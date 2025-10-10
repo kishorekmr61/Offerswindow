@@ -141,8 +141,8 @@
                         android:onClick="@{onItemClick}"
                         android:scaleType="fitXY"
                         android:src="@drawable/share"
-                        android:visibility="visible"
                         android:tint="@color/color_F5991C"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -155,8 +155,8 @@
                         android:layout_marginStart="@dimen/_8sdp"
                         android:onClick="@{onItemClick}"
                         android:src="@drawable/favourite_heart"
-                        android:visibility="gone"
                         android:tint="@color/white"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/share_img"
@@ -409,6 +409,14 @@
             app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.lottiefiles.dotlottie.core.widget.DotLottieAnimation
+            android:id="@+id/lottie_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
 
         <ProgressBar
             android:id="@+id/pgBar"

@@ -42,6 +42,7 @@ class WebFragment : Fragment() {
         binding = FragmentWebBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = cmsWebViewModel
+        vm.isvisble.value = false
         if (arguments?.getString(Constants.ISFROM) == Constants.Web_Link_Offers) {
             setUpObserver()
             cmsWebViewModel.url.set(arguments?.getString(Constants.WEB_URL) ?: "www.google.com")
@@ -100,7 +101,7 @@ class WebFragment : Fragment() {
                     return true; // Stop loading
                 }
                 redirectCount++;
-                view?.loadUrl(url ?: "")
+//                view?.loadUrl(url ?: "")
                 return true
             }
 
