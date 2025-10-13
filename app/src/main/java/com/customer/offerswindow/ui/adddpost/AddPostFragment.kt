@@ -382,6 +382,10 @@ class AddPostFragment : Fragment() {
             "OfferTitle",
             binding.etOffertitle.text.toString()
         )
+        formDataJson.addProperty(
+            "OfferDescription",
+            binding.etOfferdesc.text.toString()
+        )
         formDataJson.addProperty("ImageUrl", "")
         formDataJson.addProperty("ConditionsIfAny", binding.etTandc.text.toString())
         formDataJson.addProperty("StartDate", binding.etStartdate.text.toString())

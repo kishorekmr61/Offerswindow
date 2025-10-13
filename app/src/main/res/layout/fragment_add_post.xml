@@ -113,6 +113,26 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_offerdesc"
+                style="@style/AG_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/et_style"
+                android:gravity="start"
+                android:hint="Offer Description"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/grey_font"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_offertitle" />
+
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_startdate"
                 style="@style/AG_regular"
                 android:layout_width="0dp"
@@ -130,7 +150,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toStartOf="@+id/et_enddate"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_offertitle" />
+                app:layout_constraintTop_toBottomOf="@id/et_offerdesc" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_enddate"
@@ -151,7 +171,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/et_startdate"
-                app:layout_constraintTop_toBottomOf="@id/et_offertitle" />
+                app:layout_constraintTop_toBottomOf="@id/et_offerdesc" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_opentime"
@@ -204,7 +224,6 @@
                 android:gravity="start"
                 android:hint="Terms &amp; Condtions (if Any)"
                 android:imeOptions="actionDone"
-                android:maxLength="500"
                 android:padding="@dimen/_8sdp"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
@@ -239,9 +258,9 @@
                 android:maxLines="1"
                 android:paddingStart="@dimen/_8sdp"
                 android:singleLine="true"
-                android:visibility="gone"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/offerlocationdtls_txt" />
@@ -265,7 +284,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/offerlocationdtls_txt" />
 
 
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_location"
                 android:layout_width="match_parent"
@@ -283,8 +301,8 @@
                 android:singleLine="true"
                 android:textColorHint="@color/grey_font"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_city" />
 

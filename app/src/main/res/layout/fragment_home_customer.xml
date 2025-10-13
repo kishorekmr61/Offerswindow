@@ -307,32 +307,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/chipofferlyout"
                     tools:text="@string/categories" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/otherservice_lyout"
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/slider"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="190dp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:iss_auto_cycle="true"
+                    app:iss_delay="3000"
+                    app:iss_error_image="@mipmap/ic_launcher"
+                    app:iss_period="2000"
+                    app:iss_selected_dot="@drawable/default_selected_dot"
+                    app:iss_unselected_dot="@drawable/default_unselected_dot"
                     app:layout_constraintEnd_toEndOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/goldrates_txt">
+                    app:layout_constraintTop_toBottomOf="@+id/goldrates_txt" />
 
-
-                    <com.denzcoskun.imageslider.ImageSlider
-                        android:id="@+id/slider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="190dp"
-                        app:iss_auto_cycle="true"
-                        app:iss_delay="3000"
-                        app:iss_error_image="@mipmap/ic_launcher"
-                        app:iss_period="2000"
-                        app:iss_selected_dot="@drawable/default_selected_dot"
-                        app:iss_unselected_dot="@drawable/default_unselected_dot"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.cardview.widget.CardView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_offerslist"
@@ -345,7 +336,7 @@
                     app:layout_constraintEnd_toEndOf="@id/outer_Guide_Line_End"
                     app:layout_constraintEnd_toStartOf="@+id/outer_Guide_Line_End"
                     app:layout_constraintStart_toStartOf="@id/outer_Guide_Line_Start"
-                    app:layout_constraintTop_toBottomOf="@+id/otherservice_lyout"
+                    app:layout_constraintTop_toBottomOf="@+id/slider"
                     tools:itemCount="5"
                     tools:listitem="@layout/homelist_item_sub"
                     tools:visibility="gone" />
@@ -416,7 +407,7 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"  />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/pgBar"

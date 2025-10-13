@@ -23,7 +23,7 @@
     <string name="enter_otp">Enter 4 digit Pin</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="verify">Verify</string>
+    <string name="verify">Proceed</string>
     <string name="_email_number_resend">We have sent Otp to your email/number ? <b> Resend</b></string>
     <string name="already_have_an_account_signin">Already have an Account ?<font fgcolor="#2B83ED"><b> signin</b></font></string>
     <string name="phone_number">Phone number*</string>

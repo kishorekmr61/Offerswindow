@@ -38,12 +38,12 @@ import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.openVideoUrl
 import com.customer.offerswindow.utils.openWhatsAppConversation
 import com.customer.offerswindow.utils.setUpMultiViewRecyclerAdapter
-import com.customer.offerswindow.utils.setUpViewPagerAdapter
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.shareImageFromUrl
 import com.customer.offerswindow.utils.showLongToast
 import com.customer.offerswindow.utils.showToast
-import com.google.android.material.tabs.TabLayoutMediator
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -94,23 +94,7 @@ class DetailViewFragment : Fragment() {
             dashboaroffersList
         ) { item: OfferDeatils, binder: ViewDataBinding, position: Int ->
             binder.setVariable(BR.item, item)
-//            var viewpager = binder.root.findViewById<ViewPager2>(R.id.viewPager)
-//            var tabview = binder.root.findViewById<TabLayout>(R.id.tab_layout)
-//            viewpager.setUpViewPagerAdapter(
-//                getOtherImageList(item?.ImagesList) ?: arrayListOf()
-//            ) { imageitem: OfferImages, binder: ViewDataBinding, position: Int ->
-//                binder.setVariable(BR.item, imageitem)
-//                binder.setVariable(BR.onItemClick, View.OnClickListener {
-//                    when (it.id) {
-//                        R.id.img -> {
-//                            viewModel.isloading.set(true)
-//                            viewModel.getDetailData(item.id)
-//                        }
-//                    }
-//                })
-//            }
-//            TabLayoutMediator(tabview, viewpager) { tab, position ->
-//            }.attach()
+
             binder.setVariable(BR.onItemClick, View.OnClickListener {
                 when (it.id) {
                     R.id.favourite, R.id.favourite_img -> {
@@ -163,7 +147,7 @@ class DetailViewFragment : Fragment() {
 
                     R.id.whatsapp_img, R.id.whatsapp_lyout -> {
                         getUserIntrestOnclick("Whatsapp", item)
-                        activity?.openWhatsAppConversation(item.contact, item.id,)
+                        activity?.openWhatsAppConversation(item.contact, item.id)
 
                     }
 
@@ -299,13 +283,13 @@ class DetailViewFragment : Fragment() {
     }
 
     private fun updateImages(data: OfferDeatils?) {
-        binding.viewPager.setUpViewPagerAdapter(
-            getOtherImageList(data?.ImagesList) ?: arrayListOf()
-        ) { item: OfferImages, binder: ViewDataBinding, position: Int ->
-            binder.setVariable(BR.item, item)
+        val imagelist = arrayListOf<SlideModel>()
+        data?.ImagesList?.forEach {
+            imagelist.add(SlideModel(it.imagepath, ScaleTypes.FIT))
         }
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-        }.attach()
+        if (!imagelist.isNullOrEmpty()) {
+            binding.slider.setImageList(imagelist)
+        }
     }
 
     private fun setListeners() {
@@ -359,9 +343,9 @@ class DetailViewFragment : Fragment() {
 
                 R.id.share_lyout, R.id.share_img -> {
                     getUserIntrestOnclick("Share", dataobj)
-                     activity?.shareImageFromUrl(
+                    activity?.shareImageFromUrl(
                         requireActivity(),
-                         dataobj?.id?:"",
+                        dataobj?.id ?: "",
                         dataobj?.ImagesList?.firstOrNull()?.imagepath ?: ""
                     )
 
@@ -384,7 +368,7 @@ class DetailViewFragment : Fragment() {
 
                 R.id.whatsapp_lyout, R.id.whatsapp_img -> {
                     getUserIntrestOnclick("Whatsapp", dataobj)
-                    activity?.openWhatsAppConversation(dataobj?.contact ?: "",  dataobj?.id?:"",)
+                    activity?.openWhatsAppConversation(dataobj?.contact ?: "", dataobj?.id ?: "")
                 }
 
                 R.id.video_lyout, R.id.video_img -> {

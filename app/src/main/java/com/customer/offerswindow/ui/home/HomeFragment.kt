@@ -524,9 +524,9 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.getGoldRatesData()
         if (!otherServicesList.isNullOrEmpty()) {
-            binding.otherserviceLyout.visibility = View.VISIBLE
+            binding.slider.visibility = View.VISIBLE
         } else {
-            binding.otherserviceLyout.visibility = View.GONE
+            binding.slider.visibility = View.GONE
         }
         dashboardOffersList()
     }
@@ -623,7 +623,7 @@ class HomeFragment : Fragment() {
                                 getUserIntrestOnclick("Whatsapp", datavalues)
                                 activity?.openWhatsAppConversation(
                                     datavalues.contact,
-                                    datavalues.id,
+                                    datavalues.id
                                 )
                             } else {
                                 findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())

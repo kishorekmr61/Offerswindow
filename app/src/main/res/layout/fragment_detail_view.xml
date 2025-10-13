@@ -67,34 +67,21 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
-                        <!-- <androidx.appcompat.widget.AppCompatImageView
-                             android:id="@+id/img"
-                             android:layout_width="match_parent"
-                             android:layout_height="match_parent"
-                             android:scaleType="fitXY"
-                             imgUrl="@{ViewModel.imagepath}"
-                             tools:src="@drawable/bg_dummyimg"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent" />-->
-                        <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/viewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitXY"
+
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/slider"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            app:cardCornerRadius="@dimen/_4sdp"
+                            app:iss_auto_cycle="true"
+                            app:iss_delay="3000"
+                            app:iss_error_image="@mipmap/ic_launcher"
+                            app:iss_period="2000"
+                            app:iss_selected_dot="@drawable/default_selected_dot"
+                            app:iss_unselected_dot="@drawable/default_unselected_dot"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <com.google.android.material.tabs.TabLayout
-                            android:id="@+id/tab_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/gradient_bg"
-                            app:layout_constraintBottom_toBottomOf="@id/viewPager"
-                            app:tabBackground="@drawable/tab_selector"
-                            app:tabGravity="center"
-                            app:tabIndicatorHeight="0dp" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -456,12 +443,12 @@
                         style="@style/Ag_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_6sdp"
+                        android:layout_margin="@dimen/_14sdp"
                         android:maxLines="3"
                         android:text="@string/terms_amp_condition"
                         android:textColor="@color/grey_font"
                         android:textSize="@dimen/_10ssp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/location_txt" />
@@ -473,6 +460,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_8sdp"
                         android:clipToPadding="false"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

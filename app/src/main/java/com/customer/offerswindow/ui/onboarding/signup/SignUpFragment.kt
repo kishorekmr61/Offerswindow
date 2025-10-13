@@ -114,10 +114,10 @@ class SignUpFragment : Fragment() {
             showToast("Please enter name")
             return false
         }
-        if (binding.etLastname.text?.trim().toString().isEmpty()) {
-            showToast("Please enter LastName")
-            return false
-        }
+//        if (binding.etLastname.text?.trim().toString().isEmpty()) {
+//            showToast("Please enter LastName")
+//            return false
+//        }
         if (binding.etMobilenumber.text.toString().isEmpty()) {
             showToast("Please enter Mobile number")
             return false
@@ -126,14 +126,14 @@ class SignUpFragment : Fragment() {
             showToast("Please enter Valid Mobile Number")
             return false
         }
-        if (binding.etEmail.text?.trim().toString().isEmpty()) {
-            showToast("Please enter Email")
-        }
+//        if (binding.etEmail.text?.trim().toString().isEmpty()) {
+//            showToast("Please enter Email")
+//        }
 
-        if (!binding.etEmail.text?.trim().toString().isValidEmail()) {
-            showToast("Please enter valid Email")
-            return false
-        }
+//        if (!binding.etEmail.text?.trim().toString().isValidEmail()) {
+//            showToast("Please enter valid Email")
+//            return false
+//        }
         if (binding.etPin.text?.trim().toString().isEmpty()) {
             showToast("Please set 4 digit pin")
             return false
