@@ -19,6 +19,10 @@ data class OfferDeatils(
     @Expose @SerializedName("Showroom_Name") val showroomname: String,
     @Expose @SerializedName("Location_UID") val locationid: String,
     @Expose @SerializedName("Location_Desc") val locationname: String,
+
+    @Expose @SerializedName("City_Code") val City_Code: String,
+    @Expose @SerializedName("City_Desc") val City_Desc: String,
+
     @Expose @SerializedName("Google_Location") val GoogleLocation: String,
     @Expose @SerializedName("Contact_No_1") val contact: String,
     @Expose @SerializedName("Contact_No_2") val alaternativecontact: String,

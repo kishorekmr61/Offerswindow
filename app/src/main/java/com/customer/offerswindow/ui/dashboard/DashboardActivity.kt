@@ -114,7 +114,6 @@ class DashboardActivity : AppCompatActivity() {
         PermissionsUtil.askPermissions(this)
         PermissionsUtil.checkPermissions(this, *permissions)
         checkPermissions()
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController

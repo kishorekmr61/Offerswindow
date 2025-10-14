@@ -40,6 +40,7 @@ interface MasterApiService {
         @Query("sMasterType") mastertype: String,
         @Query("iParentMasterID") parentid: String,
         @Query("lServiceId") lServiceId: String,
+        @Query("lLanguageId") lLanguageId: String,
     ): Response<CommonMasterResponse>
 
 

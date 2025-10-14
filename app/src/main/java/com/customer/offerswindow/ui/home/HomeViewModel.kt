@@ -48,6 +48,7 @@ class HomeViewModel @Inject constructor(
     var userIntrestResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
     var postuserSerchResponse = MutableLiveData<NetworkResult<PostOfferWindowCommonResponse>>()
     var subcategoryResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
+    var clicksubcategoryResponse = MutableLiveData<NetworkResult<OfferTypeResponse>>()
     var categoriesResponse = MutableLiveData<NetworkResult<ServicesResponse>>()
     var searchcriteria = MutableLiveData<NetworkResult<SearchCriteriaResponse>>()
     var goldratesGridvalues = ObservableField<CommonDataResponse>()
@@ -97,11 +98,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getOfferSubcategoryChips(lServiceId: String,) {
+    fun getOfferSubcategoryChips(lServiceId: String, isclicked: Boolean,) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 repository.getOfferChips(lServiceId).collect { values ->
-                    subcategoryResponse.postValue(values)
+                    if (isclicked){
+                        clicksubcategoryResponse.postValue(values)
+                    }else {
+                        subcategoryResponse.postValue(values)
+                    }
                 }
             } else {
                 app.showToast("No Internet")
@@ -126,7 +131,7 @@ class HomeViewModel @Inject constructor(
     fun getGoldRatesData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Price","0","0").collect { values ->
+                repository.getCommonMaster("Price","0","0","0").collect { values ->
                     goldratesdata.postValue(values)
                 }
             } else {
@@ -236,7 +241,7 @@ class HomeViewModel @Inject constructor(
     fun getMstData(iCityId : String, lServiceId : String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Location",lServiceId,iCityId).collect { values ->
+                repository.getCommonMaster("Location",lServiceId,iCityId,"0").collect { values ->
                     masterdata.postValue(values)
                 }
             } else {

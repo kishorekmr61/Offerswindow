@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -102,7 +103,7 @@ class HomeFragment : Fragment() {
     var subCateogory = "0"
     var customerid = "0"
     var previouscat = 0
-    var skipCriteriasearch = true
+    var skipCriteriasearch = false
     private lateinit var adapter: PagingDataAdapter<WidgetViewModel, MultiViewPagingRecyclerAdapter.ViewHolder<ViewDataBinding>>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -243,13 +244,13 @@ class HomeFragment : Fragment() {
                     if (!AppPreference.read(Constants.ISLOGGEDIN, false)) {
                         loadServices()
                     }
-                    homeViewModel.getOfferSubcategoryChips(categoryid)
+                    homeViewModel.getOfferSubcategoryChips(categoryid, false)
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
                     homeViewModel.isloading.set(true)
-                    homeViewModel.getOfferSubcategoryChips(categoryid)
+                    homeViewModel.getOfferSubcategoryChips(categoryid, false)
                 }
 
                 else -> {}
@@ -265,20 +266,35 @@ class HomeFragment : Fragment() {
                         offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
                     }
                     loadFilters()
-                    if (skipCriteriasearch) {
-                        homeViewModel.getSearchCriteria(
-                            AppPreference.read(Constants.USERUID, "") ?: "0"
-                        )
-                    } else {
-                        skipCriteriasearch = true
-                        homeViewModel.getDashboardData(
-                            showroomid,
-                            locationId,
-                            categoryid, subCateogory, iCityId,
-                            AppPreference.read(Constants.USERUID, "0") ?: "0",
-                            "0"
-                        )
+                    homeViewModel.getSearchCriteria(
+                        AppPreference.read(Constants.USERUID, "") ?: "0"
+                    )
+
+                }
+
+                is NetworkResult.Error -> {
+                }
+
+                else -> {}
+            }
+        }
+        homeViewModel.clicksubcategoryResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    offertypeList.clear()
+                    offertypeList.add(FilterData("All", "0", true))
+                    response.data?.Data?.forEach {
+                        offertypeList.add(FilterData(it.Mst_Desc, it.Mst_Code))
                     }
+                    loadFilters()
+                    skipCriteriasearch = true
+                    homeViewModel.getDashboardData(
+                        showroomid,
+                        locationId,
+                        categoryid, subCateogory, iCityId,
+                        AppPreference.read(Constants.USERUID, "0") ?: "0",
+                        "0"
+                    )
                 }
 
                 is NetworkResult.Error -> {
@@ -743,7 +759,10 @@ class HomeFragment : Fragment() {
                             arguments?.putString("ISFROM", "")
                             skipCriteriasearch = false
                             setCategorySeleted(position, item)
-                            homeViewModel.getOfferSubcategoryChips(item.category_id ?: categoryid)
+                            homeViewModel.getOfferSubcategoryChips(
+                                item.category_id ?: categoryid,
+                                true
+                            )
                             binding.rvCategories.adapter?.notifyDataSetChanged()
                         } else {
                             findNavController().navigate(R.id.nav_sign_in, getLoginBundleData())
@@ -753,6 +772,8 @@ class HomeFragment : Fragment() {
                 binder.executePendingBindings()
             })
             if (arguments?.getString(Constants.ISFROM) == "CATEGORY") {
+                setCategorySeleted(position, item)
+            } else {
                 setCategorySeleted(position, item)
             }
         }
@@ -968,7 +989,7 @@ class HomeFragment : Fragment() {
                                 binding.locationTxt.setText(titleData.title)
                                 locationId = titleData.mstCode
                                 skipCriteriasearch = false
-                                homeViewModel.getOfferSubcategoryChips(categoryid)
+                                homeViewModel.getOfferSubcategoryChips(categoryid, true)
 
                             }
                         }

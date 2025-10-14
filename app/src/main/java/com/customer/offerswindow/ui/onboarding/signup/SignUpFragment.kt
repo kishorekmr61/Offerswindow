@@ -59,12 +59,12 @@ class SignUpFragment : Fragment() {
         }
         binding.etMobilenumber.doAfterTextChanged {
             if (it?.length!! >= 9) {
-                binding.verify.visibility = View.VISIBLE
+                binding.verifyBtn.visibility = View.VISIBLE
             } else {
-                binding.verify.visibility = View.INVISIBLE
+                binding.verifyBtn.visibility = View.INVISIBLE
             }
         }
-        binding.verify.setOnClickListener {
+        binding.verifyBtn.setOnClickListener {
             if (binding.etMobilenumber.text.isNullOrEmpty()) {
                 binding.etMobilenumber.error = "Please enter valid mobile number"
             } else {
@@ -163,6 +163,7 @@ class SignUpFragment : Fragment() {
         signUpViewModel.signUpResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    signUpViewModel.isloading.set(false)
                     response.data.let { resposnes ->
                         if (resposnes?.Status == 200) {
                             ShowFullToast(response.data?.Message ?: "")
@@ -174,26 +175,29 @@ class SignUpFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    signInViewModel.isloading.set(false)
+                    signUpViewModel.isloading.set(false)
                     response.message?.let {
                         ShowFullToast(response.message)
                     }
                 }
 
                 is NetworkResult.Loading -> {
-                    signInViewModel.isloading.set(true)
+                    signUpViewModel.isloading.set(true)
                 }
             }
         }
         signUpViewModel.signupOTPResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    signUpViewModel.isloading.set(false)
                     response.data.let { resposnes ->
                         if (resposnes?.Status == 200) {
-                            binding.verify.isEnabled = false
+                            signInViewModel.isloading.set(false)
+                            binding.verifyBtn.isEnabled = false
                             binding.etMobilenumber.isEnabled = false
                             binding.etPin.visibility = View.VISIBLE
                             binding.confirmetPin.visibility = View.VISIBLE
+                            binding.etOtp.visibility = View.VISIBLE
                             binding.signupBtn.visibility = View.VISIBLE
                             ShowFullToast(response.data?.Message ?: "")
                         } else {
@@ -203,7 +207,7 @@ class SignUpFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    signInViewModel.isloading.set(false)
+                    signUpViewModel.isloading.set(false)
                     response.message?.let {
                         if (response.message?.contains("reference mobile number") == true) {
                             binding.etRefmobilenumber.isEnabled = true
@@ -216,7 +220,7 @@ class SignUpFragment : Fragment() {
                 }
 
                 is NetworkResult.Loading -> {
-                    signInViewModel.isloading.set(true)
+                    signUpViewModel.isloading.set(true)
                 }
             }
         }

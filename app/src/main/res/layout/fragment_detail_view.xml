@@ -429,7 +429,7 @@
                         android:drawablePadding="@dimen/_4sdp"
                         android:maxLines="3"
                         android:onClick="@{onItemClick}"
-                        android:text="@{ViewModel.offerDeatils.locationname}"
+                        android:text="@{ViewModel.offerDeatils.locationname+` , `+ViewModel.offerDeatils.city_Desc}"
                         android:textColor="@color/color_939393"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toEndOf="parent"
