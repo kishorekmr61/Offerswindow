@@ -98,13 +98,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getOfferSubcategoryChips(lServiceId: String, isclicked: Boolean,) {
+    fun getOfferSubcategoryChips(lServiceId: String, lLocationId: String, isclicked: Boolean) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getOfferChips(lServiceId).collect { values ->
-                    if (isclicked){
+                repository.getOfferChips(lServiceId, lLocationId).collect { values ->
+                    if (isclicked) {
                         clicksubcategoryResponse.postValue(values)
-                    }else {
+                    } else {
                         subcategoryResponse.postValue(values)
                     }
                 }
@@ -131,7 +131,7 @@ class HomeViewModel @Inject constructor(
     fun getGoldRatesData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Price","0","0","0").collect { values ->
+                repository.getCommonMaster("Price", "0", "0", "0").collect { values ->
                     goldratesdata.postValue(values)
                 }
             } else {
@@ -238,10 +238,10 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getMstData(iCityId : String, lServiceId : String) {
+    fun getMstData(iCityId: String, lServiceId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                repository.getCommonMaster("Location",lServiceId,iCityId,"0").collect { values ->
+                repository.getCommonMaster("Location", lServiceId, iCityId).collect { values ->
                     masterdata.postValue(values)
                 }
             } else {
