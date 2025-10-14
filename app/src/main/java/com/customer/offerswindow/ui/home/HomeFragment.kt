@@ -244,13 +244,13 @@ class HomeFragment : Fragment() {
                     if (!AppPreference.read(Constants.ISLOGGEDIN, false)) {
                         loadServices()
                     }
-                    homeViewModel.getOfferSubcategoryChips(categoryid, false)
+                    homeViewModel.getOfferSubcategoryChips(categoryid,locationId, false)
                 }
 
                 is NetworkResult.Error -> {
                     homeViewModel.isloading.set(false)
                     homeViewModel.isloading.set(true)
-                    homeViewModel.getOfferSubcategoryChips(categoryid, false)
+                    homeViewModel.getOfferSubcategoryChips(categoryid, locationId,false)
                 }
 
                 else -> {}
@@ -760,7 +760,7 @@ class HomeFragment : Fragment() {
                             skipCriteriasearch = false
                             setCategorySeleted(position, item)
                             homeViewModel.getOfferSubcategoryChips(
-                                item.category_id ?: categoryid,
+                                item.category_id ?: categoryid,locationId,
                                 true
                             )
                             binding.rvCategories.adapter?.notifyDataSetChanged()
@@ -989,7 +989,7 @@ class HomeFragment : Fragment() {
                                 binding.locationTxt.setText(titleData.title)
                                 locationId = titleData.mstCode
                                 skipCriteriasearch = false
-                                homeViewModel.getOfferSubcategoryChips(categoryid, true)
+                                homeViewModel.getOfferSubcategoryChips(categoryid,locationId, true)
 
                             }
                         }

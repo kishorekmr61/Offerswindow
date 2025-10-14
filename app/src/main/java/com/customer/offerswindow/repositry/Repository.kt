@@ -114,9 +114,9 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getOfferChips(lServiceId: String): Flow<NetworkResult<OfferTypeResponse>> {
+    suspend fun getOfferChips(lServiceId: String,lLocationId: String): Flow<NetworkResult<OfferTypeResponse>> {
         return flow {
-            emit(safeApiCall { loginHelperImpl.getOfferChips(lServiceId) })
+            emit(safeApiCall { loginHelperImpl.getOfferChips(lServiceId,lLocationId) })
         }.flowOn(Dispatchers.IO)
     }
 
