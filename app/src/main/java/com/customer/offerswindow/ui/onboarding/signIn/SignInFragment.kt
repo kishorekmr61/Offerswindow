@@ -3,6 +3,7 @@ package com.customer.offerswindow.ui.onboarding.signIn
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,9 @@ class SignInFragment : Fragment() {
         }
         setObserver()
         signInViewModel.getMstData()
+        if (!TextUtils.isEmpty(AppPreference.read(Constants.MOBILENO, ""))) {
+            binding.etMobilenumber.setText(AppPreference.read(Constants.MOBILENO, "") ?: "")
+        }
         binding.versionTextview.text =
             getString(R.string.version).plus(" ( " + BuildConfig.VERSION_NAME + " ) ")
 

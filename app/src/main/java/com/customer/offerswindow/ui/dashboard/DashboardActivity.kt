@@ -5,12 +5,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -343,6 +345,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.DONUT)
     private fun checkUpdate() {
         val appUpdateInfoTask = appUpdateManager?.appUpdateInfo
         appUpdateInfoTask?.addOnSuccessListener { appUpdateInfo ->

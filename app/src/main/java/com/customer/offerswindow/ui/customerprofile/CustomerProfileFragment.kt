@@ -138,8 +138,9 @@ class CustomerProfileFragment : Fragment() {
                         Constants.MASTERDATA,
                         AppPreference.read(Constants.MASTERDATA, "")
                     )
-                    AppPreference.clearAll()
+                     AppPreference.clearAll()
                     AppPreference.write(Constants.MASTERDATA, intent.getStringExtra(Constants.MASTERDATA) ?: "")
+                    AppPreference.write(Constants.MOBILENO, intent.getStringExtra(Constants.MOBILENO) ?: "")
                     intent.putExtra(Constants.ISFROM, "LOGOUT")
                     intent.flags =
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

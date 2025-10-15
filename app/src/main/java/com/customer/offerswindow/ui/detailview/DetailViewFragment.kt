@@ -113,6 +113,7 @@ class DetailViewFragment : Fragment() {
                     }
 
                     R.id.title_txt, R.id.store_img, R.id.storeName, R.id.discountInfo -> {
+                        homeViewModel.isloading.set(true)
                         viewModel.getDetailData(item.id)
                     }
 
@@ -181,6 +182,7 @@ class DetailViewFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     termslist.clear()
+                    dashboaroffersList.clear()
                     response.data?.let { resposnes ->
                         if (response.data?.Data != null) {
                             viewModel.isloading.set(false)
@@ -247,7 +249,7 @@ class DetailViewFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let { resposnes ->
                         viewModel.isloading.set(false)
-                        showLongToast(response.message ?: "")
+//                        showLongToast(response.message ?: "")
                         viewModel.isloading.set(true)
                         arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
                     }
@@ -267,7 +269,7 @@ class DetailViewFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     viewModel.isloading.set(false)
-                    showLongToast(response.message ?: "")
+//                    showLongToast(response.message ?: "")
                     viewModel.isloading.set(true)
                     arguments?.getString("OfferID")?.let { viewModel.getDetailData(it) }
                 }
