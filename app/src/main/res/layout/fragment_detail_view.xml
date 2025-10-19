@@ -409,7 +409,7 @@
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/calender"
                             android:drawablePadding="@dimen/_2sdp"
-                            android:text="@{`End Date :`+ ViewModel.offerDeatils.getStartDate()}"
+                            android:text="@{`End Date :`+ ViewModel.offerDeatils.convertEndDate()}"
                             android:textSize="@dimen/_10ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"

@@ -18,8 +18,6 @@ import com.customer.offerswindow.model.customersdata.UserSigUp
 import com.customer.offerswindow.ui.onboarding.signIn.SignInViewModel
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
-import com.customer.offerswindow.utils.hideOnBoardingToolbar
-import com.customer.offerswindow.utils.isValidEmail
 import com.customer.offerswindow.utils.setWhiteToolBar
 import com.customer.offerswindow.utils.showToast
 import com.customer.offerswindow.utils.validateMobilenumber
@@ -65,24 +63,27 @@ class SignUpFragment : Fragment() {
             }
         }
         binding.verifyBtn.setOnClickListener {
-            if (binding.etMobilenumber.text.isNullOrEmpty()) {
-                binding.etMobilenumber.error = "Please enter valid mobile number"
-            } else {
-                signUpViewModel.isloading.set(true)
-                binding.etName.isEnabled = false
-                binding.etLastname.isEnabled = false
-                binding.etEmail.isEnabled = false
-                binding.etRefmobilenumber.isEnabled = false
-                binding.etPin.isEnabled = false
-                binding.confirmetPin.isEnabled = false
-                signUpViewModel.getSignupOtp(
-                    UserSigUp(
-                        binding.etName.text.toString(),
-                        binding.etLastname.text.toString(),
-                        binding.etMobilenumber.text.toString(),
-                        binding.etEmail.text.toString(), binding.etRefmobilenumber.text.toString()
+            if (isValidate()) {
+                if (binding.etMobilenumber.text.isNullOrEmpty()) {
+                    binding.etMobilenumber.error = "Please enter valid mobile number"
+                } else {
+                    signUpViewModel.isloading.set(true)
+                    binding.etName.isEnabled = false
+                    binding.etLastname.isEnabled = false
+                    binding.etEmail.isEnabled = false
+                    binding.etRefmobilenumber.isEnabled = false
+                    binding.etPin.isEnabled = false
+                    binding.confirmetPin.isEnabled = false
+                    signUpViewModel.getSignupOtp(
+                        UserSigUp(
+                            binding.etName.text.toString(),
+                            binding.etLastname.text.toString(),
+                            binding.etMobilenumber.text.toString(),
+                            binding.etEmail.text.toString(),
+                            binding.etRefmobilenumber.text.toString()
+                        )
                     )
-                )
+                }
             }
         }
         binding.resendotpLbl.setOnClickListener {
