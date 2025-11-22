@@ -213,7 +213,7 @@ class SignUpFragment : Fragment() {
                         if (response.message?.contains("reference mobile number") == true) {
                             binding.etRefmobilenumber.isEnabled = true
                         }
-                        if (response.message?.toLowerCase()?.contains("e-mail") == true) {
+                        if (response.message?.lowercase()?.contains("e-mail") == true) {
                             binding.etEmail.isEnabled = true
                         }
                         ShowFullToast(response.message)

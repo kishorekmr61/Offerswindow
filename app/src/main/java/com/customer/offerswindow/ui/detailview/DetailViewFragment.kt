@@ -287,7 +287,9 @@ class DetailViewFragment : Fragment() {
     private fun updateImages(data: OfferDeatils?) {
         val imagelist = arrayListOf<SlideModel>()
         data?.ImagesList?.forEach {
-            imagelist.add(SlideModel(it.imagepath, ScaleTypes.FIT))
+            if (!it.imagepath.isNullOrEmpty()) {
+                imagelist.add(SlideModel(it.imagepath, ScaleTypes.FIT))
+            }
         }
         if (!imagelist.isNullOrEmpty()) {
             binding.slider.setImageList(imagelist)

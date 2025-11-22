@@ -10,14 +10,14 @@ plugins {
 
 
 android {
-    compileSdk 35
-
+    compileSdk 36
+    namespace 'com.customer.offerswindow'
     defaultConfig {
         applicationId "com.customer.offerswindow"
         minSdk 26
-        targetSdk 35
-        versionCode 7
-        versionName "2025.0.8"
+        targetSdk 36
+        versionCode 8
+        versionName "2025.0.9"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -72,20 +72,20 @@ android {
             useJUnitPlatform() // <--- this is the important part
         }
     }
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
     namespace 'com.customer.offerswindow'
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.15.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.7'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
     implementation 'androidx.preference:preference-ktx:1.2.0'
@@ -193,5 +193,5 @@ dependencies {
     implementation 'com.github.AppIntro:AppIntro:6.3.1'
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
     implementation 'io.github.chaosleung:pinview:1.4.4'
-    implementation 'com.github.LottieFiles:dotlottie-android:0.5.0'
+    implementation 'com.github.LottieFiles:dotlottie-android:0.9.1'
 }

@@ -2,40 +2,31 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = '1.9.0'
+        kotlin_version = '2.1.0'
         nav_version = '2.7.5'
-        ktor_version ='2.0.1'
-        hilt_version ='2.48'
+        ktor_version = '2.0.1'
+        hilt_version = '2.57.2'
         compose_version = '1.0.5'
-        exoplayer_version = '2.16.1'
-        room_version = '2.4.2'
         coroutines_version = '1.6.1'
         paging_version = '3.1.1'
-        ext.moshi_version = '1.14.0'
-        agp_version = '8.1.1'
     }
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+            uri 'https://storage.googleapis.com/r8-releases/raw'
+        }
+
     }
+
     dependencies {
-        classpath "com.android.tools.build:gradle:$agp_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
+        classpath 'com.android.tools.build:gradle:8.9.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-
-        //For FCM
-        classpath 'com.google.gms:google-services:4.4.2'
-//        classpath "com.google.firebase.crashlytics:2.9.9"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.0'
-
-        //For Google Map
-         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "com.android.tools:r8:8.11.18"
+        classpath 'com.google.gms:google-services:4.4.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.6'
     }
 }
 
