@@ -1,8 +1,10 @@
 package com.customer.offerswindow.ui.adddpost
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -42,7 +46,7 @@ import java.util.Calendar
 
 
 @AndroidEntryPoint
-class AddPostFragment : Fragment() {
+open class AddPostFragment : Fragment() {
 
     companion object {
         fun newInstance() = AddPostFragment()
@@ -59,6 +63,7 @@ class AddPostFragment : Fragment() {
     private val binding get() = _binding!!
     private val vm: DashBoardViewModel by activityViewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,6 +73,7 @@ class AddPostFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
         activity?.setWhiteToolBar("Add Post", true)
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -504,5 +510,22 @@ class AddPostFragment : Fragment() {
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
+    }
+
+      fun checkPermissions() {
+        try {
+            val hasPermissionLocation = ContextCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!hasPermissionLocation) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    11
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

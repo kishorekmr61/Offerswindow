@@ -117,7 +117,6 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         binding.viewModel = homeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        PermissionsUtil.askPermissions(requireActivity())
         return root
     }
 

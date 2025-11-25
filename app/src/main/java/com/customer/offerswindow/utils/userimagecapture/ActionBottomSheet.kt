@@ -1,5 +1,6 @@
 package com.customer.offerswindow.utils.userimagecapture
 
+import android.Manifest
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
@@ -46,16 +47,34 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
     private lateinit var resultLauncherFromVideo: ActivityResultLauncher<Uri>
 
     private var currentPhotoPath: String? = null
-    private var currentVideoPath: String? = null
 
     private var tempImageUri: Uri? = null
-    private var tempVideoUri: Uri? = null
     var selectedtype: String = ""
     var tempFile: File? = null
 
     private val readImagePermission =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) READ_MEDIA_IMAGES
         else READ_EXTERNAL_STORAGE
+
+    private val requestCameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            openCamera()
+        } else {
+            openSettings()
+        }
+    }
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                // Permission granted, open gallery
+                openGallery()
+            } else {
+                openSettings()
+            }
+        }
+
 
     companion object {
         const val TAG = "DialogChooseImageBottomSheet"
@@ -109,24 +128,12 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
 
     private fun setClickListener() {
         binding.groupImage.setAllOnClickListener {
-            if (checkPermission()) openCamera()
-            else requestPermission(101)
+            checkAndRequestCameraPermission()
         }
-//
-//
         binding.groupGallery.setAllOnClickListener {
-            if (checkPermission()) openGallery()
-            else requestPermission(102)
+            checkAndRequestGalleryPermission()
         }
 
-    }
-
-    private fun checkPermission(): Boolean {
-        return (ContextCompat.checkSelfPermission(
-            this.requireContext(), CAMERA
-        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-            this.requireContext(), READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun requestPermission(requestCode: Int) {
@@ -138,42 +145,7 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         requestMultiplePermissions.launch(arrayOfPermissions)
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        if (grantResults.isNotEmpty()) {
-            when (requestCode) {
-                101 -> {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) openCamera()
-                }
 
-                102 -> {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) openGallery()
-                }
-
-                103 -> {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) openMyFiles()
-                }
-
-                104 -> {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) openVideo()
-                }
-            }
-        } else {
-            showToast(requireActivity().getString(R.string.permission_denied))
-        }
-    }
-
-    /*private fun openCamera() {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, "VehiclePic")
-        values.put(MediaStore.Images.Media.DESCRIPTION, "Frm_Camera")
-        image_uri =
-            activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-        resultLauncherFromCamera.launch(image_uri)
-    }*/
 
     private fun openCamera() {
         selectedtype = "Camera"
@@ -181,14 +153,7 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         resultLauncherFromCamera.launch(tempImageUri!!)
     }
 
-    private fun openVideo() {
-        selectedtype = "Camera"
-        tempVideoUri = initVideoTempUri()
-        tempVideoUri?.let { resultLauncherFromVideo.launch(it) }
 
-        /*val videoIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
-        resultLauncherFromGallery.launch(videoIntent)*/
-    }
 
     private fun openGallery() {
         selectedtype = "Gallery"
@@ -206,8 +171,6 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         } else {
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
-//            intent.type = "image/*|application/*"
-//            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "application/*"))
         }
         resultLauncherFromGallery.launch(intent)
     }
@@ -259,22 +222,6 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
                                 }
                             }
                         }
-
-                        103 -> {
-                            if (permissions[READ_EXTERNAL_STORAGE] == true) openMyFiles()
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                    requireActivity(), READ_EXTERNAL_STORAGE
-                                )
-                            ) {
-                                showDialog(permissions)
-                            } else {
-                                openMyFiles()
-                            }
-                        }
-
-                        104 -> {
-                            if (permissions[READ_EXTERNAL_STORAGE] == true) openVideo()
-                        }
                     }
                 } else {
                     showToast(requireActivity().getString(R.string.permission_denied))
@@ -295,18 +242,7 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
                 dismiss()
             }
 
-        resultLauncherFromVideo =
-            registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
-                if (it) {
-                    Log.d("videoUri--", tempVideoUri.toString())
-                    onFileSelectedListener?.onFileSelected(
-                        tempVideoUri, Constants.VIDEO, selectedtype, tempFile
-                    )
-                } else {
-                    showToast("Please record video")
-                }
-                dismiss()
-            }
+
 
         resultLauncherFromGallery =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -380,29 +316,6 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         )
     }
 
-    private fun initVideoTempUri(): Uri? {
-        try {
-            val tempVideoDir = File(
-                requireContext().filesDir, getString(R.string.temp_images_dir)
-            )
-
-            if (!tempVideoDir.exists()) {
-                tempVideoDir.mkdir()
-            }
-
-            val videoName = "vid_" + System.currentTimeMillis() + ".mp4"
-            val sdImageMainDirectory = File(tempVideoDir, videoName)
-
-            return FileProvider.getUriForFile(
-                requireContext(), getString(R.string.authorities), sdImageMainDirectory
-            )
-
-        } catch (ex: Exception) {
-            Log.d("videoError", "startRecording ${ex.localizedMessage}")
-            return null
-        }
-    }
-
     enum class MediaType {
         MediaTypeImage, MediaTypeVideo, Unknown
     }
@@ -446,16 +359,7 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         resultLauncherFromGallery.launch(chooserIntent)
     }
 
-    private fun showCameraDialog() {
-        MaterialAlertDialogBuilder(requireContext()).setTitle("Select Any Option")
-            .setNegativeButton("Take Picture") { d, _ ->
-                openCamera()
-                d.dismiss()
-            }.setPositiveButton("Capture Video") { d, _ ->
-                openVideo()
-                d.dismiss()
-            }.show()
-    }
+
 
     /*
     * Method to click group of items at single shot.
@@ -478,6 +382,50 @@ class ActionBottomSheet : BottomSheetDialogFragment() {
         return byteBuffer.toByteArray()
     }
 
+    private fun checkAndRequestCameraPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+               openCamera()
+            }
 
+            shouldShowRequestPermissionRationale(CAMERA) -> {
+                openSettings()
+            }
+
+            else -> {
+                // Request the permission
+                requestCameraPermissionLauncher.launch(CAMERA)
+            }
+        }
+    }
+
+    private fun checkAndRequestGalleryPermission() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            READ_MEDIA_IMAGES
+        } else {
+            READ_EXTERNAL_STORAGE
+        }
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                permission
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // Permission already granted, open gallery
+                openGallery()
+            }
+
+            shouldShowRequestPermissionRationale(permission) -> {
+                openSettings()
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(permission)
+            }
+        }
+    }
 }
+
 

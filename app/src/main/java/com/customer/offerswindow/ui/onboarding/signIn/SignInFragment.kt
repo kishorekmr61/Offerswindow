@@ -23,7 +23,6 @@ import com.customer.offerswindow.model.masters.CommonMasterResponse
 import com.customer.offerswindow.ui.dashboard.DashBoardViewModel
 import com.customer.offerswindow.ui.dashboard.DashboardActivity
 import com.customer.offerswindow.ui.home.HomeViewModel
-import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.ShowFullToast
 import com.customer.offerswindow.utils.handleHardWareBackClick
 import com.customer.offerswindow.utils.hideOnBoardingToolbar
@@ -110,8 +109,7 @@ class SignInFragment : Fragment() {
         binding.privacyTxt.setOnClickListener {
             openURL(Uri.parse(AppPreference.read(Constants.PRIVACYPOLICY, "www.google.com")))
         }
-        PermissionsUtil.askPermissions(requireActivity())
-        requireActivity().onBackPressedDispatcher.addCallback(
+         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {

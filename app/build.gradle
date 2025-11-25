@@ -16,8 +16,8 @@ android {
         applicationId "com.customer.offerswindow"
         minSdk 26
         targetSdk 36
-        versionCode 9
-        versionName "2025.0.10"
+        versionCode 10
+        versionName "2025.0.11"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

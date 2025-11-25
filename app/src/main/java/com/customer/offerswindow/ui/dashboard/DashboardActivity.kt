@@ -33,7 +33,6 @@ import com.customer.offerswindow.data.constant.Constants.UPDATE_REQUEST_CODE
 import com.customer.offerswindow.data.helpers.AppPreference
 import com.customer.offerswindow.databinding.ActivityDashboardBinding
 import com.customer.offerswindow.ui.onboarding.OnBoardingActivity
-import com.customer.offerswindow.utils.PermissionsUtil
 import com.customer.offerswindow.utils.openURL
 import com.customer.offerswindow.utils.showToast
 import com.google.android.material.navigation.NavigationView
@@ -55,15 +54,11 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var drawerLayout: DrawerLayout
-    private var selectedIndex = 0
-    private var currentIndex = 0
 
 
     private val vm: DashBoardViewModel by viewModels()
     private lateinit var navController: NavController
-    val permissions = arrayOf(
-        Manifest.permission.CAMERA
-    )
+
 
     private lateinit var appUpdateManager: AppUpdateManager
     private val updateLauncher = registerForActivityResult(
@@ -113,9 +108,7 @@ class DashboardActivity : AppCompatActivity() {
         appUpdateManager.registerListener(appUpdateListener)
         setSupportActionBar(binding.appBarDashboard.toolbar)
         drawerLayout = binding.drawerLayout
-        PermissionsUtil.askPermissions(this)
-        PermissionsUtil.checkPermissions(this, *permissions)
-        checkPermissions()
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController
@@ -327,24 +320,6 @@ class DashboardActivity : AppCompatActivity() {
     }
 
 
-    open fun checkPermissions() {
-        try {
-            val hasPermissionLocation = ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-            if (!hasPermissionLocation) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    11
-                )
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-
     @RequiresApi(Build.VERSION_CODES.DONUT)
     private fun checkUpdate() {
         val appUpdateInfoTask = appUpdateManager?.appUpdateInfo
@@ -391,7 +366,6 @@ class DashboardActivity : AppCompatActivity() {
                 )
             }
         }
-
     }
 
 
